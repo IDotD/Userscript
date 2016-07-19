@@ -523,11 +523,6 @@ idrinth.chat={
                     );
         },
         enableChat: function ( element ) {
-            if(element.hasAttribute('class')) {
-                element.setAttribute ( 'class', ( element.getAttribute ( 'class' ) ).replace ( /(^|\s)new-message(\s|$)/, ' ' ) + ' active' );
-            } else {
-                element.setAttribute ( 'class', 'active' );
-            }
             var tabs = document.getElementsByClassName ( 'chat-tabs' )[0].children;
             var labels = document.getElementsByClassName ( 'chat-labels' )[0].children;
             for (var counter = 0; counter < labels.length; counter++) {
@@ -537,6 +532,11 @@ idrinth.chat={
                 if ( tabs[counter].getAttribute ( 'data-id' ) === element.getAttribute ( 'data-id' ) ) {
                     tabs[counter].setAttribute ( 'class', 'active' );
                 }
+            }
+            if(element.hasAttribute('class')) {
+                element.setAttribute ( 'class', ( element.getAttribute ( 'class' ) ).replace ( /(^|\s)new-message(\s|$)/, ' ' ) + ' active' );
+            } else {
+                element.setAttribute ( 'class', 'active' );
             }
         },
         openCloseChat: function ( element ) {
