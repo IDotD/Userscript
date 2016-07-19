@@ -1156,6 +1156,7 @@ var idrinth = {
         },
         buildElement: function ( config ) {
             'use strict';
+            var count = 0;
             if ( config.type === '#text' ) {
                 return document.createTextNode ( config.content );
             }
@@ -1173,12 +1174,12 @@ var idrinth = {
                 el.appendChild ( document.createTextNode ( config.content ) );
             }
             if ( config.attributes && config.attributes.length > 0 ) {
-                for (var count = 0; count < config.attributes.length; count++) {
+                for (count = 0; count < config.attributes.length; count++) {
                     el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
                 }
             }
             if ( config.children && config.children.length > 0 ) {
-                for (var count = 0; count < config.children.length; count++) {
+                for (count = 0; count < config.children.length; count++) {
                     el.appendChild ( idrinth.ui.buildElement ( config.children[count] ) );
                 }
             }
@@ -1267,16 +1268,18 @@ var idrinth = {
         },
         reloadGame: function ( ) {
             'use strict';
-            if ( idrinth.realSite === 'kongregate' ) {
-                window.activateGame ( );
-            } else if ( idrinth.realSite === 'dawnofthedragons' ) {
-                document.getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', 'https://web1.dawnofthedragons.com/live_standalone/?idrinth_nc' + ( new Date ( ) ).getTime ( ) );
-            } else if ( idrinth.realSite === 'newgrounds' ) {
-                var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
-                frame.setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
-            } else if ( idrinth.realSite === 'armorgames' ) {
-                var frame = document.getElementById ( 'gamefilearea' ).getElementsByTagName ( 'iframe' )[0];
-                frame.setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
+            try{
+                if ( idrinth.realSite === 'kongregate' ) {
+                    window.activateGame ( );
+                } else if ( idrinth.realSite === 'dawnofthedragons' ) {
+                    document.getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', 'https://web1.dawnofthedragons.com/live_standalone/?idrinth_nc' + ( new Date ( ) ).getTime ( ) );
+                } else if ( idrinth.realSite === 'newgrounds' ) {
+                    document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
+                } else if ( idrinth.realSite === 'armorgames' ) {
+                    document.getElementById ( 'gamefilearea' ).getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
+                }
+            } catch(e) {
+                idrinth.alert('The game couldn\'t be reloaded');
             }
         },
         getPosition: function ( element ) {

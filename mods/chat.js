@@ -523,17 +523,15 @@ idrinth.chat={
                     );
         },
         enableChat: function ( element ) {
-            var lis = document.getElementsByClassName ( 'chat-labels' )[0].getElementsByTagName ( 'li' );
-            for (var counter = 0; counter < lis.length; counter++) {
-                var cur = lis[counter].getAttribute ( 'class' ) + '';
-                lis[counter].setAttribute ( 'class', cur.replace ( /(^|\s)active(\s|$)/, ' ' ) );
-            }
             element.setAttribute ( 'class', ( element.getAttribute ( 'class' ) ).replace ( /(^|\s)new-message(\s|$)/, ' ' ) + ' active' );
-            var lis = document.getElementsByClassName ( 'chat-tabs' )[0].children;
-            for (var counter = 0; counter < lis.length; counter++) {
-                lis[counter].setAttribute ( 'class', '' );
-                if ( lis[counter].getAttribute ( 'data-id' ) === element.getAttribute ( 'data-id' ) ) {
-                    lis[counter].setAttribute ( 'class', 'active' );
+            var labels = document.getElementsByClassName ( 'chat-labels' )[0].children;
+            var tabs = document.getElementsByClassName ( 'chat-tabs' )[0].children;
+            for (var counter = 0; counter < labels.length; counter++) {
+                var cur = labels[counter].getAttribute ( 'class' ) + '';
+                labels[counter].setAttribute ( 'class', cur.replace ( /(^|\s)active(\s|$)/, ' ' ) );
+                tabs[counter].setAttribute ( 'class', '' );
+                if ( tabs[counter].getAttribute ( 'data-id' ) === element.getAttribute ( 'data-id' ) ) {
+                    tabs[counter].setAttribute ( 'class', 'active' );
                 }
             }
         },

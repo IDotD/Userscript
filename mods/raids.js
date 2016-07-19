@@ -292,7 +292,7 @@ idrinth.raids= {
                             idrinth.raids.join.servers[idrinth.realSite] ( key );
                         }
                     }
-                    if ( added > 99 || ( idrinth.platform == 'facebook' && added >= idrinth.settings.windows ) ) {
+                    if ( added > 99 || ( idrinth.platform === 'facebook' && added >= idrinth.settings.windows ) ) {
                         return true;
                     }
                 }
