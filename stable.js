@@ -110,7 +110,7 @@ var idrinth = {
         idrinth.ui.removeElement ( 'idrinth-chat' );
         idrinth.ui.removeElement ( 'idrinth-war' );
         var sc = document.createElement ( 'script' );
-        sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/' + Math.random ()+'/' );
+        sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/' + Math.random () + '/' );
         document.getElementsByTagName ( 'body' )[0].appendChild ( sc );
         window.setTimeout ( function () {
             idrinth = { };
@@ -144,11 +144,11 @@ var idrinth = {
         };
         idrinth.ajax[pos].onreadystatechange = function ( event ) {
             var request = ( event || window.event ).target;
-            if ( request.readyState === 4) {
-                var successCode=(request.status > 199 && request.status < 300) || request.status === 0;
-                if( successCode  && typeof success === 'function' ) {
+            if ( request.readyState === 4 ) {
+                var successCode = ( request.status > 199 && request.status < 300 ) || request.status === 0;
+                if ( successCode && typeof success === 'function' ) {
                     success ( request.responseText );
-                } else if ( !successCode && typeof failure === 'function') {
+                } else if ( !successCode && typeof failure === 'function' ) {
                     failure ( request );
                 }
             }
@@ -242,22 +242,22 @@ var idrinth = {
             return number.toString () + post[count];
         },
         makeTierList: function ( list ) {
-            var makeField=function(listKey,difficulty,ic) {
-                var ln={type: 'td'};
-                try{
-                    ln.styles= idrinth.tier.list[listKey].os[difficulty]===idrinth.tier[listKey][difficulty][ic]?'is-os':'';
-                } catch(E) {
-                    idrinth.log( E.toString( ));
+            var makeField = function ( listKey, difficulty, ic ) {
+                var ln = { type: 'td' };
+                try {
+                    ln.styles = idrinth.tier.list[listKey].os[difficulty] === idrinth.tier[listKey][difficulty][ic] ? 'is-os' : '';
+                } catch ( E ) {
+                    idrinth.log ( E.toString ( ) );
                 }
-                try{
-                    ln.content= idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic])+' '+
-                                idrinth.tier.list[listKey].epics[difficulty][ic]+'E';
-                } catch(E2) {
-                    idrinth.log( E2.toString( ));
-                    try{
-                        ln.content= idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic]);
-                    } catch(E3) {
-                        idrinth.log( E3.toString( ));
+                try {
+                    ln.content = idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic] ) + ' ' +
+                            idrinth.tier.list[listKey].epics[difficulty][ic] + 'E';
+                } catch ( E2 ) {
+                    idrinth.log ( E2.toString ( ) );
+                    try {
+                        ln.content = idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic] );
+                    } catch ( E3 ) {
+                        idrinth.log ( E3.toString ( ) );
                     }
                 }
                 return ln;
@@ -308,11 +308,11 @@ var idrinth = {
                 for (var ic = 0; ic < maxTiers; ic++) {
                     sub.lastChild.lastChild.appendChild ( idrinth.ui.buildElement ( { type: 'tr', children: [
                             { type: 'th', content: ic + 1 },
-                            makeField(list[count],'n',ic),
-                            makeField(list[count],'h',ic),
-                            makeField(list[count],'l',ic),
-                            makeField(list[count],'nm',ic)
-                    ]}));
+                            makeField ( list[count], 'n', ic ),
+                            makeField ( list[count], 'h', ic ),
+                            makeField ( list[count], 'l', ic ),
+                            makeField ( list[count], 'nm', ic )
+                        ] } ) );
                 }
                 wrapper.appendChild ( sub );
             }
@@ -1073,8 +1073,8 @@ var idrinth = {
             },
             buildTooltip: function ( ) {
                 'use strict';
-                function getServerPart(name) {
-                    return [  {
+                function getServerPart ( name ) {
+                    return [ {
                             css: 'idrinth-line idrinth-tooltip-header',
                             type: 'a',
                             attributes: [ {
@@ -1136,19 +1136,19 @@ var idrinth = {
                                     type: 'span',
                                     content: 'Unknown'
                                 } ]
-                        },{type:'span',content:'Server: '+name} ];
+                        }, { type: 'span', content: 'Server: ' + name } ];
                 }
                 idrinth.ui.tooltip = idrinth.ui.buildElement ( {
                     css: 'idrinth-hovering-box idrinth-tooltip-overwrite',
                     type: 'div',
                     id: 'idrinth-tooltip',
-                    children:[
-                        {type:'div',children: getServerPart('Kongregate')},
-                        {type:'div',children: getServerPart('World')}
+                    children: [
+                        { type: 'div', children: getServerPart ( 'Kongregate' ) },
+                        { type: 'div', children: getServerPart ( 'World' ) }
                     ],
-                    attributes:[
-                        {name:'onmouseenter',value:'idrinth.names.isHovering=true;'},
-                        {name:'onmouseleave',value:'idrinth.names.isHovering=false;'}
+                    attributes: [
+                        { name: 'onmouseenter', value: 'idrinth.names.isHovering=true;' },
+                        { name: 'onmouseleave', value: 'idrinth.names.isHovering=false;' }
                     ]
                 } );
                 idrinth.ui.body.appendChild ( idrinth.ui.tooltip );
@@ -1188,18 +1188,18 @@ var idrinth = {
         controls: null,
         tooltipTO: null,
         showTooltip: function ( element ) {
-            function tooltip(set,element,pos,guilds,platform) {
-                element.setAttribute ( 'style','display:none');
-                if(set) {
+            function tooltip ( set, element, pos, guilds, platform ) {
+                element.setAttribute ( 'style', 'display:none' );
+                if ( set ) {
                     element.childNodes[0].setAttribute ( 'href', 'https://dotd.idrinth.de/' + platform + '/summoner/' + set.id + '/' );
                     element.childNodes[0].innerHTML = set.name;
-                    element.childNodes[1].childNodes[1].innerHTML = set.level+' ('+set['7day']+'/week, '+set['30day']+'/month)';
+                    element.childNodes[1].childNodes[1].innerHTML = set.level + ' (' + set['7day'] + '/week, ' + set['30day'] + '/month)';
                     element.childNodes[1].childNodes[3].innerHTML = idrinth.names.classes[set.class];
                     element.childNodes[2].childNodes[1].setAttribute ( 'href', 'https://dotd.idrinth.de/' + platform + '/guild/' + set.guildId + '/' );
                     element.childNodes[2].childNodes[1].innerHTML = guilds[set.guildId];
                     element.childNodes[3].childNodes[1].innerHTML = set.updated;
                     element.childNodes[3].setAttribute ( 'style', ( new Date () ) - ( new Date ( set.updated ) ) > 86400000 ? 'color:#aa0000;' : '' );
-                    element.setAttribute ( 'style','');
+                    element.setAttribute ( 'style', '' );
                     idrinth.ui.tooltip.setAttribute ( 'style', 'left:' + Math.round ( pos.left - 200 ) + 'px;top:' + Math.round ( pos.top - 100 ) + 'px;' );
                 }
             }
@@ -1209,23 +1209,23 @@ var idrinth = {
             if ( idrinth.settings.names && idrinth.ui.tooltip && idrinth.names.users[name] ) {
                 window.clearTimeout ( idrinth.ui.tooltipTO );
                 pos = element.getBoundingClientRect ( );
-                tooltip(idrinth.names.users[name].kongregate,idrinth.ui.tooltip.firstChild,pos,idrinth.names.guilds.kongregate,'kongregate');
-                tooltip(idrinth.names.users[name].world,idrinth.ui.tooltip.lastChild,pos,idrinth.names.guilds.world,'world-kongregate');
+                tooltip ( idrinth.names.users[name].kongregate, idrinth.ui.tooltip.firstChild, pos, idrinth.names.guilds.kongregate, 'kongregate' );
+                tooltip ( idrinth.names.users[name].world, idrinth.ui.tooltip.lastChild, pos, idrinth.names.guilds.world, 'world-kongregate' );
                 idrinth.ui.tooltipTO = window.setTimeout (
-                            idrinth.ui.hideTooltip,
-                            idrinth.settings.timeout ? idrinth.settings.timeout : 5000
+                        idrinth.ui.hideTooltip,
+                        idrinth.settings.timeout ? idrinth.settings.timeout : 5000
                         );
             }
         },
-        hideTooltip:function() {
-                    if(idrinth.names.isHovering) {
-                        idrinth.ui.tooltipTO = window.setTimeout (
-                            idrinth.ui.hideTooltip,
-                            idrinth.settings.timeout ? idrinth.settings.timeout : 5000
+        hideTooltip: function () {
+            if ( idrinth.names.isHovering ) {
+                idrinth.ui.tooltipTO = window.setTimeout (
+                        idrinth.ui.hideTooltip,
+                        idrinth.settings.timeout ? idrinth.settings.timeout : 5000
                         );
-                    } else {
-                        idrinth.ui.tooltip.setAttribute ( 'style', 'display:none' );
-                    }
+            } else {
+                idrinth.ui.tooltip.setAttribute ( 'style', 'display:none' );
+            }
         },
         openCloseSettings: function ( ) {
             'use strict';
@@ -1268,7 +1268,7 @@ var idrinth = {
         },
         reloadGame: function ( ) {
             'use strict';
-            try{
+            try {
                 if ( idrinth.realSite === 'kongregate' ) {
                     window.activateGame ( );
                 } else if ( idrinth.realSite === 'dawnofthedragons' ) {
@@ -1278,8 +1278,8 @@ var idrinth = {
                 } else if ( idrinth.realSite === 'armorgames' ) {
                     document.getElementById ( 'gamefilearea' ).getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
                 }
-            } catch(e) {
-                idrinth.alert('The game couldn\'t be reloaded');
+            } catch ( e ) {
+                idrinth.alert ( 'The game couldn\'t be reloaded' );
             }
         },
         getPosition: function ( element ) {
@@ -1376,8 +1376,8 @@ var idrinth = {
      * @param String text
      * @returns Null
      */
-    alert: function(text) {
-        window.alert(text);
+    alert: function ( text ) {
+        window.alert ( text );
     }
 };
 window.setTimeout ( function ( ) {
