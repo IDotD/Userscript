@@ -45,8 +45,7 @@ idrinth.names= {
         guilds: { },
         ownTimeout: null,
         add: function ( ) {
-            'use strict';
-            processName=function (element) {
+            var processName=function (element) {
                 var name = '';
                 try {
                     name = idrinth.names.parse ( element );

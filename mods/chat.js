@@ -121,7 +121,7 @@ idrinth.chat={
                     );
         },
         replaceInText: function ( message, regex, callbacks, lastField ) {
-            complexHandler=function(message,regex,callbacks,lastField) {
+            var complexHandler=function(message,regex,callbacks,lastField) {
                 var matches = message.match ( regex );
                 var text = ( message.replace ( regex, '$1########$' + lastField ) ).split ( '########' );
                 var textcontent = [ ];
@@ -144,7 +144,7 @@ idrinth.chat={
                 }
                 return textcontent;
             };
-            simpleHandler=function(message,callbacks) {
+            var simpleHandler=function(message,callbacks) {
                 if ( typeof callbacks[1] === 'function' ) {
                     var textcontent = [ ];
                     var tmp = callbacks[1] ( message );
@@ -270,7 +270,7 @@ idrinth.chat={
         },
         ranks:['','banned','user','mod','owner'],
         applyMembers: function ( data ) {
-            addMemberElement=function(data,chatId,userId) {
+            var addMemberElement=function(data,chatId,userId) {
                         var usedPlatforms='';
                         for(var pkey in data.users[userId].platforms) {
                             if(data.users[userId].platforms[pkey]) {
