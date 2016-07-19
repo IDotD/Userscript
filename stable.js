@@ -264,7 +264,7 @@ var idrinth = {
         idrinth.ui.removeElement ( 'idrinth-chat' );
         idrinth.ui.removeElement ( 'idrinth-war' );
         var sc = document.createElement ( 'script' );
-        sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/' + Math.random ()+'/' );
+        sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/###RELOAD-VERSION###/' );
         document.getElementsByTagName ( 'body' )[0].appendChild ( sc );
         window.setTimeout ( function () {
             idrinth = { };
@@ -1715,7 +1715,7 @@ var idrinth = {
                         value: 'stylesheet'
                     }, {
                         name: 'href',
-                        value: 'https://dotd.idrinth.de/idrinth-dotd-script.css?' + idrinth.version
+                        value: 'https://dotd.idrinth.de###PATH###/script-styles.css?' + idrinth.version
                     } ]
             } ) );
             if ( idrinth.realSite === 'kongregate' ) {
