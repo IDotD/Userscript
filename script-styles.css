@@ -238,14 +238,13 @@
     color:#333;
     font-style: italic;
     padding:1px;
-    cursor:pointer}
+    cursor:pointer;
+}
 #idrinth-chat .user.mod {
     color:#aa3;
-    font-style: italic;
 }
 #idrinth-chat .user.owner {
     color:#a33;
-    font-style: italic;
 }
 #idrinth-chat > button {
     right:5px;

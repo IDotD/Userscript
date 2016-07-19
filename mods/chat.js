@@ -1,4 +1,5 @@
 idrinth.chat={
+    self:0,
         maxId: 0,
         messages: [ ],
         oldMessages: [ ],
@@ -44,7 +45,7 @@ idrinth.chat={
             window.setTimeout ( idrinth.chat.refreshChats, 666 );
         },
         userclick: function ( element, user, chat ) {
-            if ( !idrinth.chat.chatRank[chat] || idrinth.chat.chatRank[chat] === 'User' ) {
+            if ( !idrinth.chat.chatRank[chat][idrinth.chat.self] || idrinth.chat.chatRank[chat][idrinth.chat.self] === 'User' ) {
                 return;//Users can't do stuff
             }
             var options = [ ];
@@ -56,7 +57,7 @@ idrinth.chat={
                                         value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Banned\');this.parentNode.parentNode.removeChild(this.parentNode);'
                                     }
                                 ] } ) );
-            if ( idrinth.chat.chatRank[chat] === 'Owner' ) {
+            if ( idrinth.chat.chatRank[chat][idrinth.chat.self] === 'Owner' ) {
                 options.push (
                         idrinth.ui.buildElement (
                                 { type: 'li', content: 'Make Moderator', attributes: [
@@ -119,7 +120,7 @@ idrinth.chat={
                     );
         },
         replaceInText: function ( message, regex, callbacks, lastField ) {
-            try {
+            complexHandler=function(message,regex,callbacks,lastField) {
                 var matches = message.match ( regex );
                 var text = ( message.replace ( regex, '$1########$' + lastField ) ).split ( '########' );
                 var textcontent = [ ];
@@ -141,7 +142,8 @@ idrinth.chat={
                     }
                 }
                 return textcontent;
-            } catch ( e ) {
+            };
+            simpleHandler=function(message,callbacks) {
                 if ( typeof callbacks[1] === 'function' ) {
                     var textcontent = [ ];
                     var tmp = callbacks[1] ( message );
@@ -151,6 +153,11 @@ idrinth.chat={
                     return textcontent;
                 }
                 return [ { type: '#text', content: message } ];
+            };
+            try {
+                return complexHandler(message,regex,callbacks,lastField);
+            } catch ( e ) {
+                return simpleHandler(message,callbacks);
             }
         },
         buildEmoticons: function ( message ) {
@@ -216,13 +223,13 @@ idrinth.chat={
                                         {
                                             type: 'li',
                                             id: 'idrinth-single-chat-message-' + key2 + ( parseInt ( key2 ) < 1 ? '-' + idrinth.getfullDateInt () : '' ),
-                                            css: ( parseInt ( data.messages[key][key2].user ) === parseInt ( data.self ) ? 'self-written' : '' ),
+                                            css: ( parseInt ( data.messages[key][key2].user ) === parseInt ( idrinth.chat.self ) ? 'self-written ' : '' ),
                                             children: [
                                                 { type: 'span', css: 'time', content: data.messages[key][key2].time.split ( ' ' )[1], attributes: [ { name: 'title', value: data.messages[key][key2].time } ] },
-                                                { type: 'span', css: 'user', content: idrinth.chat.users[data.messages[key][key2].user].name, attributes:
+                                                { type: 'span', css: 'user '+idrinth.chat.ranks[parseInt(idrinth.chat.chatRank[key][data.messages[key][key2].user])], content: idrinth.chat.users[data.messages[key][key2].user].name, attributes:
                                                             [
                                                                 { name: 'data-id', value: data.messages[key][key2].user },
-                                                                { name: 'style', value: data.messages[key][key2].user === 0 ? 'font-weight:bold' : '' },
+                                                                { name: 'style', value: (data.messages[key][key2].user === 0 ? 'font-weight:bold' : '')},
                                                                 { name: 'onclick', value: 'idrinth.chat.userclick(this,' + data.messages[key][key2].user + ',' + key + ')' }
                                                             ]
                                                 },
@@ -260,27 +267,24 @@ idrinth.chat={
                 idrinth.chat.refreshChats ();
             }, 666 );
         },
+        ranks:['','banned','user','mod','owner'],
         applyMembers: function ( data ) {
-            addMemberElement=function(data,key,key2) {
-                var ranks=['','banned','user','mod','owner'];
-                        if ( parseInt ( key2 ) === parseInt ( data.self ) ) {
-                            idrinth.chat.chatRank[key] = ranks[data.members[key][key2]];
-                        }
+            addMemberElement=function(data,chatId,userId) {
                         var usedPlatforms='';
-                        for(var pkey in data.users[key2].platforms) {
-                            if(data.users[key2].platforms[pkey]) {
+                        for(var pkey in data.users[userId].platforms) {
+                            if(data.users[userId].platforms[pkey]) {
                                 usedPlatforms+=pkey;
                             }
                         }
                         chat.appendChild ( idrinth.ui.buildElement (
                                 {
                                     type: 'li',
-                                    css: 'user ' + ranks[data.members[key][key2]],
-                                    content: (usedPlatforms===''?'':'['+usedPlatforms.toUpperCase()+'] ')+data.users[key2].name,
+                                    css: 'user ' + idrinth.chat.ranks[parseInt(data.members[chatId][userId])],
+                                    content: (usedPlatforms===''?'':'['+usedPlatforms.toUpperCase()+'] ')+data.users[userId].name,
                                     attributes:
                                             [
-                                                { name: 'data-id', value: key2 },
-                                                { name: 'onclick', value: 'idrinth.chat.userclick(this,' + key2 + ')' }
+                                                { name: 'data-id', value: userId },
+                                                { name: 'onclick', value: 'idrinth.chat.userclick(this,' + userId + ')' }
                                             ]
                                 }
                         ) );
@@ -292,19 +296,20 @@ idrinth.chat={
             if ( !data ) {
                 return idrinth.chat.returnMessages ( data );
             }
+            idrinth.chat.self=data.self;
             if ( data.users ) {
                 idrinth.chat.users = data.users;
             }
-            idrinth.chat.chatRank = { };
+            idrinth.chat.chatRank = data.members;
             if ( data.members ) {
-                for (var key in data.members) {
-                    if(document.getElementById ( 'idrinth-chat-tab-' + key )) {
-                    var chat = document.getElementById ( 'idrinth-chat-tab-' + key ).getElementsByTagName ( 'ul' )[0];
+                for (var chatId in data.members) {
+                    if(document.getElementById ( 'idrinth-chat-tab-' + chatId )) {
+                    var chat = document.getElementById ( 'idrinth-chat-tab-' + chatId ).getElementsByTagName ( 'ul' )[0];
                     while ( chat.firstChild ) {
                         chat.removeChild ( chat.firstChild );
                     }
-                    for (var key2 in data.members[key]) {
-                        addMemberElement (data,key,key2);
+                    for (var userId in data.members[chatId]) {
+                        addMemberElement (data,chatId,userId);
                     }
                 }
             }
@@ -429,12 +434,12 @@ idrinth.chat={
         },
         loginCallback: function ( data ) {
             if ( !data ) {
-                window.alert ( 'Logging in failed in an unexpected way' );
+                idrinth.alert ( 'Logging in failed in an unexpected way' );
                 return;
             }
             data = JSON.parse ( data );
             if ( !data ) {
-                window.alert ( 'Logging in failed in an unexpected way' );
+                idrinth.alert ( 'Logging in failed in an unexpected way' );
                 return;
             }
             if ( !data.success && data.message && data['allow-reg'] ) {
@@ -442,7 +447,7 @@ idrinth.chat={
                 return;
             }
             if ( !data.success && data.message ) {
-                window.alert ( data.message );
+                idrinth.alert ( data.message );
                 return;
             }
             if ( data.success ) {
@@ -453,7 +458,7 @@ idrinth.chat={
                 idrinth.chat.join ( data.data );
                 return;
             }
-            window.alert ( 'Logging in failed in an unexpected way' );
+            idrinth.alert ( 'Logging in failed in an unexpected way' );
         },
         startRegistration: function () {
             if ( window.confirm ( 'The given username for dotd.idrinth.de is unknown, do you want to register it there?' ) ) {
