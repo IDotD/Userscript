@@ -106,8 +106,9 @@ idrinth.chat={
                     function ( reply ) {
                         try {
                             reply = JSON.parse ( reply );
-                            alert ( reply.message );
+                            idrinth.alert ( reply.message );
                         } catch ( e ) {
+                            idrinth.log (e);
                         }
                     },
                     function ( reply ) {

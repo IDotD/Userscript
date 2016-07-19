@@ -51,8 +51,8 @@ idrinth.settings = {
             idrinth.settings.save ( );
         },
         start: function ( ) {
+            'use strict';
             if ( window.localStorage ) {
-                'use strict';
                 for (var key in idrinth.settings) {
                     if ( key === 'land' ) {
                         for (var building in idrinth.settings.land) {
