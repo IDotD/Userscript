@@ -33,7 +33,7 @@ idrinth.names= {
                     idrinth.names.add ( );
                 }
             } catch(e) {
-                console.log (e);
+                idrinth.log (e);
             }
             idrinth.names.counter = idrinth.names.counter + 1;
             idrinth.names.ownTimeout = window.setTimeout ( function ( ) {
