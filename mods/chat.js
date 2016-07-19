@@ -218,16 +218,16 @@ idrinth.chat={
                         var tab = document.getElementById ( 'idrinth-chat-tab-click-' + key );
                         var isNew = false;
                         for (var key2 in data.messages[key]) {
-                            if ( parseInt ( key2 ) < 1 || !document.getElementById ( 'idrinth-single-chat-message-' + key2 ) ) {
+                            if ( parseInt( key2 ,10) < 1 || !document.getElementById ( 'idrinth-single-chat-message-' + key2 ) ) {
                                 isNew = true;
                                 chat.appendChild ( idrinth.ui.buildElement (
                                         {
                                             type: 'li',
-                                            id: 'idrinth-single-chat-message-' + key2 + ( parseInt ( key2 ) < 1 ? '-' + idrinth.getfullDateInt () : '' ),
-                                            css: ( parseInt ( data.messages[key][key2].user ) === parseInt ( idrinth.chat.self ) ? 'self-written ' : '' ),
+                                            id: 'idrinth-single-chat-message-' + key2 + ( parseInt( key2 ,10) < 1 ? '-' + idrinth.getfullDateInt () : '' ),
+                                            css: ( parseInt( data.messages[key][key2].user ,10) === parseInt( idrinth.chat.self ,10) ? 'self-written ' : '' ),
                                             children: [
                                                 { type: 'span', css: 'time', content: data.messages[key][key2].time.split ( ' ' )[1], attributes: [ { name: 'title', value: data.messages[key][key2].time } ] },
-                                                { type: 'span', css: 'user '+idrinth.chat.ranks[parseInt(idrinth.chat.chatRank[key][data.messages[key][key2].user])], content: idrinth.chat.users[data.messages[key][key2].user].name, attributes:
+                                                { type: 'span', css: 'user '+idrinth.chat.ranks[parseInt(idrinth.chat.chatRank[key][data.messages[key][key2].user],10)], content: idrinth.chat.users[data.messages[key][key2].user].name, attributes:
                                                             [
                                                                 { name: 'data-id', value: data.messages[key][key2].user },
                                                                 { name: 'style', value: (data.messages[key][key2].user === 0 ? 'font-weight:bold' : '')},
@@ -239,7 +239,7 @@ idrinth.chat={
                                             ]
                                         }
                                 ) );
-                                if ( parseInt ( key2 ) > parseInt ( idrinth.chat.maxId ) ) {
+                                if ( parseInt( key2 ,10) > parseInt( idrinth.chat.maxId ,10) ) {
                                     idrinth.chat.maxId = key2;
                                 }
                             }
@@ -280,7 +280,7 @@ idrinth.chat={
                         chat.appendChild ( idrinth.ui.buildElement (
                                 {
                                     type: 'li',
-                                    css: 'user ' + idrinth.chat.ranks[parseInt(data.members[chatId][userId])],
+                                    css: 'user ' + idrinth.chat.ranks[parseInt(data.members[chatId][userId],10)],
                                     content: (usedPlatforms===''?'':'['+usedPlatforms.toUpperCase()+'] ')+data.users[userId].name,
                                     attributes:
                                             [
