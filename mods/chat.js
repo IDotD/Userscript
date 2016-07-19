@@ -270,7 +270,6 @@ idrinth.chat={
         ranks:['','banned','user','mod','owner'],
         applyMembers: function ( data ) {
             addMemberElement=function(data,chatId,userId) {
-                        idrinth.chat.chatRank[chatId][userId]=data.members[chatId][userId];
                         var usedPlatforms='';
                         for(var pkey in data.users[userId].platforms) {
                             if(data.users[userId].platforms[pkey]) {
@@ -301,7 +300,7 @@ idrinth.chat={
             if ( data.users ) {
                 idrinth.chat.users = data.users;
             }
-            idrinth.chat.chatRank = { };
+            idrinth.chat.chatRank = data.members;
             if ( data.members ) {
                 for (var chatId in data.members) {
                     if(document.getElementById ( 'idrinth-chat-tab-' + chatId )) {
