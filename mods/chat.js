@@ -223,7 +223,7 @@ idrinth.chat={
                                         {
                                             type: 'li',
                                             id: 'idrinth-single-chat-message-' + key2 + ( parseInt ( key2 ) < 1 ? '-' + idrinth.getfullDateInt () : '' ),
-                                            css: ( parseInt ( data.messages[key][key2].user ) === parseInt ( data.self ) ? 'self-written ' : '' )+idrinth.chat.ranks[idrinth.chat.chatRank[key][data.messages[key][key2].user]],
+                                            css: ( parseInt ( data.messages[key][key2].user ) === parseInt ( idrinth.chat.self ) ? 'self-written ' : '' )+idrinth.chat.ranks[parseInt(idrinth.chat.chatRank[key][data.messages[key][key2].user])],
                                             children: [
                                                 { type: 'span', css: 'time', content: data.messages[key][key2].time.split ( ' ' )[1], attributes: [ { name: 'title', value: data.messages[key][key2].time } ] },
                                                 { type: 'span', css: 'user', content: idrinth.chat.users[data.messages[key][key2].user].name, attributes:
@@ -279,7 +279,7 @@ idrinth.chat={
                         chat.appendChild ( idrinth.ui.buildElement (
                                 {
                                     type: 'li',
-                                    css: 'user ' + idrinth.chat.ranks[data.members[chatId][userId]],
+                                    css: 'user ' + idrinth.chat.ranks[parseInt(data.members[chatId][userId])],
                                     content: (usedPlatforms===''?'':'['+usedPlatforms.toUpperCase()+'] ')+data.users[userId].name,
                                     attributes:
                                             [
