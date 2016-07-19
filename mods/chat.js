@@ -206,8 +206,8 @@ idrinth.chat={
                                 id: 'idrinth-single-chat-message-' + messageId + ( parseInt( messageId ,10) < 1 ? '-' + idrinth.getfullDateInt () : '' ),
                                 css: ( parseInt( message.user ,10) === parseInt( idrinth.chat.self ,10) ? 'self-written ' : '' ),
                                 children: [
-                                    { type: 'span', css: 'time', content: message.time.split ( ' ' )[1], attributes: [ { name: 'title', value: data.message.time } ] },
-                                    { type: 'span', css: 'user '+idrinth.chat.ranks[parseInt(idrinth.chat.chatRank[chatId][data.message.user],10)], content: idrinth.chat.users[data.message.user].name, attributes:
+                                    { type: 'span', css: 'time', content: message.time.split ( ' ' )[1], attributes: [ { name: 'title', value: message.time } ] },
+                                    { type: 'span', css: 'user '+idrinth.chat.ranks[parseInt(idrinth.chat.chatRank[chatId][message.user],10)], content: idrinth.chat.users[message.user].name, attributes:
                                                 [
                                                     { name: 'data-id', value: message.user },
                                                     { name: 'style', value: (message.user === 0 ? 'font-weight:bold' : '')},
