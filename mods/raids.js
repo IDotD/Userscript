@@ -8,8 +8,8 @@ idrinth.raids= {
             try {
                 window.clearInterval ( idrinth.raids.interval );
             } catch ( e ) {
+                idrinth.raids.interval=null;
             }
-            ;
             idrinth.raids.interval = window.setInterval ( function ( ) {
                 idrinth.raids.join.process ( );
             }, 1500 );
@@ -67,19 +67,14 @@ idrinth.raids= {
             var list = JSON.parse ( responseText );
             for (var key in list) {
                 if ( list[key].delete ) {
-                    if ( idrinth.raids.list[key] ) {
-                        try {
-                            delete idrinth.raids.list[key];
-                        } catch ( e1 ) {
-                        }
-                        try {
-                            delete idrinth.raids.joined[key];
-                        } catch ( e2 ) {
-                        }
-                        try {
-                            idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
-                        } catch ( e ) {
-                        }
+                    if(key in idrinth.raids.list) {
+                        delete idrinth.raids.list[key];
+                    }
+                    if(key in idrinth.raids.joined) {
+                        delete idrinth.raids.joined[key];
+                    }
+                    if(document.getElementById('idrinth-raid-link-' + key )) {
+                        idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
                     }
                 } else if ( idrinth.raids.list[key] === undefined ) {
                     idrinth.raids.list[key] = list[key];
@@ -297,7 +292,7 @@ idrinth.raids= {
                             idrinth.raids.join.servers[idrinth.realSite] ( key );
                         }
                     }
-                    if ( added > 99 || ( idrinth.platform == 'facebook' && added >= idrinth.settings.windows ) ) {
+                    if ( added > 99 || ( idrinth.platform === 'facebook' && added >= idrinth.settings.windows ) ) {
                         return true;
                     }
                 }

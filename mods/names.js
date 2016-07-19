@@ -45,24 +45,29 @@ idrinth.names= {
         guilds: { },
         ownTimeout: null,
         add: function ( ) {
-            'use strict';
-            var el = document.getElementsByClassName ( 'username' );
-            var name = '';
-            var count = 0;
-            for (count = el.length - 1; count >= 0; count--) {
+            var processName=function (element) {
+                var name = '';
                 try {
-                    name = idrinth.names.parse ( el[count] );
-                    if ( el[count].getAttribute ( 'onmouseover' ) !== 'idrinth.ui.showTooltip()(this);' && idrinth.ui.childOf ( el[count], 'chat_message_window' ) ) {
-                        el[count].setAttribute ( 'onmouseover', 'idrinth.ui.showTooltip(this);' );
-                    }
-                    if ( !idrinth.names.users[name.toLowerCase ( )] && name.length > 0 ) {
-                        idrinth.names.users[name.toLowerCase()] = { };
-                        idrinth.runAjax (
-                           'https://dotd.idrinth.de/' + idrinth.platform + '/users-service/add/'+encodeURIComponent(name)+'/'
-                        );
-                    }
-                } catch ( e ) {
+                    name = idrinth.names.parse ( element );
+                } catch(e) {
+                    return;
                 }
+                if(!name) {
+                    return;
+                }
+                if ( element.getAttribute ( 'onmouseover' ) !== 'idrinth.ui.showTooltip()(this);' && idrinth.ui.childOf ( element, 'chat_message_window' ) ) {
+                    element.setAttribute ( 'onmouseover', 'idrinth.ui.showTooltip(this);' );
+                }
+                if ( !idrinth.names.users[name.toLowerCase ( )] && name.length > 0 ) {
+                    idrinth.names.users[name.toLowerCase()] = { };
+                    idrinth.runAjax (
+                       'https://dotd.idrinth.de/' + idrinth.platform + '/users-service/add/'+encodeURIComponent(name)+'/'
+                    );
+                }
+            };
+            var el = document.getElementsByClassName ( 'username' );
+            for (var count = el.length - 1; count >= 0; count--) {
+                processName(el[count]);
             }
         },
         parse: function ( element ) {

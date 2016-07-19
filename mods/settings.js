@@ -33,14 +33,13 @@ idrinth.settings = {
             'use strict';
             if ( window.localStorage ) {
                 for (var key in idrinth.settings) {
-                    if ( key === 'land' ) {
-                        for (var building in idrinth.settings.land) {
-                            if ( typeof idrinth.settings[key] !== 'function' ) {
-                                window.localStorage.setItem ( 'idrinth-dotd-land-' + building, idrinth.settings.land[building] );
-                            }
-                        }
-                    } else if ( typeof idrinth.settings[key] !== 'function' ) {
+                    if ( key !== 'land' && typeof idrinth.settings[key] !== 'function' ) {
                         window.localStorage.setItem ( 'idrinth-dotd-' + key, idrinth.settings[key] );
+                    }
+                }
+                for (var building in idrinth.settings.land) {
+                    if ( typeof idrinth.settings[key] !== 'function' ) {
+                        window.localStorage.setItem ( 'idrinth-dotd-land-' + building, idrinth.settings.land[building] );
                     }
                 }
             }
@@ -51,8 +50,8 @@ idrinth.settings = {
             idrinth.settings.save ( );
         },
         start: function ( ) {
+            'use strict';
             if ( window.localStorage ) {
-                'use strict';
                 for (var key in idrinth.settings) {
                     if ( key === 'land' ) {
                         for (var building in idrinth.settings.land) {
