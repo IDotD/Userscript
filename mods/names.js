@@ -1,0 +1,87 @@
+idrinth.names= {
+        load: function ( added) {
+            'use strict';
+            idrinth.runAjax (
+                    'https://dotd.idrinth.de/' + idrinth.platform + '/users-service/'+added,
+                    function ( text ) {
+                        idrinth.names.import ( text );
+                    }
+                );
+        },
+        import: function ( data ) {
+            'use strict';
+            data = JSON.parse ( data );
+            if ( !data ) {
+                return;
+            }
+            if ( data.users ) {
+                idrinth.names.users = data.users;
+            }
+            if ( data.guilds ) {
+                idrinth.names.guilds = data.guilds;
+            }
+            if ( data.classes ) {
+                idrinth.names.classes = data.classes;
+            }
+        },
+        run: function ( ) {
+            'use strict';
+            try{
+                if ( idrinth.names.counter % 300 === 0 || Object.keys ( idrinth.names.users ).length === 0) {
+                    idrinth.names.load ( Object.keys ( idrinth.names.classes ).length === 0?'init/':'get/' );
+                } else if ( Object.keys ( idrinth.names.users ).length > 0 ) {
+                    idrinth.names.add ( );
+                }
+            } catch(e) {
+                console.log (e);
+            }
+            idrinth.names.counter = idrinth.names.counter + 1;
+            idrinth.names.ownTimeout = window.setTimeout ( function ( ) {
+                idrinth.names.run ( );
+            }, 6666 );
+        },
+        users: { },
+        classes: { },
+        guilds: { },
+        ownTimeout: null,
+        add: function ( ) {
+            'use strict';
+            var el = document.getElementsByClassName ( 'username' );
+            var name = '';
+            var count = 0;
+            for (count = el.length - 1; count >= 0; count--) {
+                try {
+                    name = idrinth.names.parse ( el[count] );
+                    if ( el[count].getAttribute ( 'onmouseover' ) !== 'idrinth.ui.showTooltip()(this);' && idrinth.ui.childOf ( el[count], 'chat_message_window' ) ) {
+                        el[count].setAttribute ( 'onmouseover', 'idrinth.ui.showTooltip(this);' );
+                    }
+                    if ( !idrinth.names.users[name.toLowerCase ( )] && name.length > 0 ) {
+                        idrinth.names.users[name.toLowerCase()] = { };
+                        idrinth.runAjax (
+                           'https://dotd.idrinth.de/' + idrinth.platform + '/users-service/add/'+encodeURIComponent(name)+'/'
+                        );
+                    }
+                } catch ( e ) {
+                }
+            }
+        },
+        parse: function ( element ) {
+            'use strict';
+            if ( element.getAttribute ( 'dotdxname' ) ) {
+                return ( element.getAttribute ( 'dotdxname' ) );
+            }
+            if ( element.getAttribute ( 'username' ) ) {
+                return ( element.getAttribute ( 'username' ) );
+            }
+            return ( element.innerHTML ).replace ( /(<([^>]+)>)/ig, "" );
+        },
+        start: function ( ) {
+            'use strict';
+            if ( idrinth.platform === 'kongregate' ) {
+                idrinth.names.ownTimeout = window.setTimeout ( function ( ) {
+                    idrinth.names.run ( );
+                }, 10000 );
+            }
+        },
+        counter: 0
+    };

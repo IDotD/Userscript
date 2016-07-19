@@ -429,12 +429,12 @@ idrinth.chat={
         },
         loginCallback: function ( data ) {
             if ( !data ) {
-                window.alert ( 'Logging in failed in an unexpected way' );
+                idrinth.alert ( 'Logging in failed in an unexpected way' );
                 return;
             }
             data = JSON.parse ( data );
             if ( !data ) {
-                window.alert ( 'Logging in failed in an unexpected way' );
+                idrinth.alert ( 'Logging in failed in an unexpected way' );
                 return;
             }
             if ( !data.success && data.message && data['allow-reg'] ) {
@@ -442,7 +442,7 @@ idrinth.chat={
                 return;
             }
             if ( !data.success && data.message ) {
-                window.alert ( data.message );
+                idrinth.alert ( data.message );
                 return;
             }
             if ( data.success ) {
@@ -453,7 +453,7 @@ idrinth.chat={
                 idrinth.chat.join ( data.data );
                 return;
             }
-            window.alert ( 'Logging in failed in an unexpected way' );
+            idrinth.alert ( 'Logging in failed in an unexpected way' );
         },
         startRegistration: function () {
             if ( window.confirm ( 'The given username for dotd.idrinth.de is unknown, do you want to register it there?' ) ) {
