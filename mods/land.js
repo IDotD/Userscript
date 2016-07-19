@@ -5,7 +5,7 @@ idrinth.land = {
             }
             var results = idrinth.settings.landMax ? idrinth.land.useUp () : idrinth.land.bestPrice ();
             if(Object.keys (results).length===0) {
-                idrinth.alert('You lack gold to buy any more buildings at the moment.');
+                idrinth. idrinth.alert('You lack gold to buy any more buildings at the moment.');
             }
             idrinth.land.putResults ( results );
         },

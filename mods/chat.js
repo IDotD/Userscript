@@ -112,10 +112,10 @@ idrinth.chat={
                         }
                     },
                     function ( reply ) {
-                        alert ( 'Can\'t modify that user at the moment' );
+ idrinth.alert ( 'Can\'t modify that user at the moment' );
                     },
                     function ( reply ) {
-                        alert ( 'Can\'t modify that user at the moment' );
+ idrinth.alert ( 'Can\'t modify that user at the moment' );
                     },
                     JSON.stringify ( { chat: chat, user: user, access: rank } )
                     );
@@ -361,29 +361,29 @@ idrinth.chat={
                     'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/create/',
                     idrinth.chat.joinCallback,
                     function ( reply ) {
-                        alert ( 'Can\'t create at the moment' );
+ idrinth.alert ( 'Can\'t create at the moment' );
                     },
                     function ( reply ) {
-                        alert ( 'Can\'t create at the moment' );
+ idrinth.alert ( 'Can\'t create at the moment' );
                     },
                     document.getElementById ( 'idrinth-make-chat' ).getElementsByTagName ( 'input' )[0].value
                     );
         },
         joinCallback: function ( reply ) {
             if ( !reply ) {
-                alert ( 'Can\'t join at the moment' );
+ idrinth.alert ( 'Can\'t join at the moment' );
                 return;
             }
             reply = JSON.parse ( reply );
             if ( !reply ) {
-                alert ( 'Can\'t join at the moment' );
+ idrinth.alert ( 'Can\'t join at the moment' );
                 return;
             }
             if ( !reply.success ) {
                 if ( reply.message ) {
-                    alert ( reply.message );
+ idrinth.alert ( reply.message );
                 } else {
-                    alert ( 'Joining didn\'t work' );
+ idrinth.alert ( 'Joining didn\'t work' );
                 }
                 return;
             }
@@ -398,10 +398,10 @@ idrinth.chat={
                     'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/join/',
                     idrinth.chat.joinCallback,
                     function ( reply ) {
-                        alert ( 'Can\'t join at the moment' );
+ idrinth.alert ( 'Can\'t join at the moment' );
                     },
                     function ( reply ) {
-                        alert ( 'Can\'t join at the moment' );
+ idrinth.alert ( 'Can\'t join at the moment' );
                     },
                     JSON.stringify ( {
                         id: document.getElementById ( 'idrinth-add-chat' ).getElementsByTagName ( 'input' )[0].value,
@@ -471,7 +471,7 @@ idrinth.chat={
                     'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/register/',
                     idrinth.chat.loginCallback,
                     function ( reply ) {
-                        alert ( 'Logging in failed in an unexpected way' );
+ idrinth.alert ( 'Logging in failed in an unexpected way' );
                     },
                     function ( reply ) {
                         window.setTimeout ( function () {
@@ -489,7 +489,7 @@ idrinth.chat={
                     'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/login/',
                     idrinth.chat.loginCallback,
                     function ( reply ) {
-                        alert ( 'Logging in failed in an unexpected way' );
+ idrinth.alert ( 'Logging in failed in an unexpected way' );
                     },
                     function ( reply ) {
                         window.setTimeout ( function () {
@@ -509,7 +509,7 @@ idrinth.chat={
                         window.setTimeout ( idrinth.chat.refreshChats, 1500 );
                     },
                     function ( reply ) {
-                        alert ( 'Logging in failed in an unexpected way' );
+ idrinth.alert ( 'Logging in failed in an unexpected way' );
                     },
                     function ( reply ) {
                         window.setTimeout ( function () {
