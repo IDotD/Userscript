@@ -523,9 +523,13 @@ idrinth.chat={
                     );
         },
         enableChat: function ( element ) {
-            element.setAttribute ( 'class', ( element.getAttribute ( 'class' ) ).replace ( /(^|\s)new-message(\s|$)/, ' ' ) + ' active' );
-            var labels = document.getElementsByClassName ( 'chat-labels' )[0].children;
+            if(element.hasAttribute('class')) {
+                element.setAttribute ( 'class', ( element.getAttribute ( 'class' ) ).replace ( /(^|\s)new-message(\s|$)/, ' ' ) + ' active' );
+            } else {
+                element.setAttribute ( 'class', 'active' );
+            }
             var tabs = document.getElementsByClassName ( 'chat-tabs' )[0].children;
+            var labels = document.getElementsByClassName ( 'chat-labels' )[0].children;
             for (var counter = 0; counter < labels.length; counter++) {
                 var cur = labels[counter].getAttribute ( 'class' ) + '';
                 labels[counter].setAttribute ( 'class', cur.replace ( /(^|\s)active(\s|$)/, ' ' ) );
