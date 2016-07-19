@@ -238,7 +238,7 @@ idrinth.chat = {
                     var cssClass = element.getAttribute ( 'class' );
                     return !( !cssClass ) && !( !cssClass.match ( /(^|\s)active(\s|$)/ ) );
                 };
-                var chatActive = isActive ( document.getElementById ( 'idrinth-chat' ).getAttribute ( 'class' ) );
+                var chatActive = isActive ( document.getElementById ( 'idrinth-chat' ) );
                 if ( isNew && !chatActive ) {
                     document.getElementById ( 'idrinth-chat' ).setAttribute ( 'class', 'new-message' );
                 }
