@@ -764,7 +764,7 @@ var idrinth = {
                                 id: 'idrinth-chat-tab-click-' + id,
                                 attributes: [
                                     { name: 'data-id', value: id },
-                                    { name: 'title', value: name + "\n" + 'ID:' + id + "\nPassword: " + pass },
+                                    { name: 'title', value: name + "\nID:" + id + "\nPassword: " + pass },
                                     { name: 'onclick', value: 'idrinth.chat.enableChat(this);' }
                                 ]
                             }
