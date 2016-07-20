@@ -52,27 +52,26 @@ idrinth.settings = {
     start: function ( ) {
         'use strict';
         if ( window.localStorage ) {
-            for (var key in idrinth.settings) {
-                if ( key === 'land' ) {
-                    for (var building in idrinth.settings.land) {
-                        if ( typeof idrinth.settings[key] !== 'function' ) {
-                            var tmp = window.localStorage.getItem ( 'idrinth-dotd-land-' + building );
-                            if ( tmp ) {
-                                idrinth.settings.land[building] = tmp;
-                            }
-                        }
-                    }
-                } else if ( typeof idrinth.settings[key] !== 'function' ) {
-                    var tmp = window.localStorage.getItem ( 'idrinth-dotd-' + key );
+            var itemHandler=function(prefix,key,item) {
+                if ( typeof idrinth.settings[key] !== 'function' ) {
+                    var tmp = window.localStorage.getItem ( 'idrinth-dotd-'+prefix + key );
                     if ( tmp ) {
                         if ( tmp === 'false' ) {
                             tmp = false;
                         } else if ( tmp === 'true' ) {
                             tmp = true;
                         }
-                        idrinth.settings[key] = tmp;
+                        item = tmp;
                     }
                 }
+            };
+            for (var key in idrinth.settings) {
+                if(key!=='land') {
+                    itemHandler('',key,idrinth.settings[key]);
+                }
+            }
+            for (var building in idrinth.settings.land) {
+                itemHandler('land-',building,idrinth.settings.land);
             }
         }
     }
