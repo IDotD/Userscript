@@ -37,6 +37,7 @@ var idrinth = {
             try {
                 window.clearInterval ( idrinth.raids.interval );
             } catch ( e ) {
+                idrinth.log(e);
             }
             idrinth.facebook.popup = window.open ( "https://apps.facebook.com/dawnofthedragons/" );
             idrinth.facebook.popup.onload = function () {
@@ -55,7 +56,9 @@ var idrinth = {
         raids: [ ],
         joinRaids: function () {
             for (var key in idrinth.raids.list) {
-                idrinth.newgrounds.raids.push ( key );
+                if(idrinth.raids.list[key].hash&&idrinth.raids.list[key].raidId) {
+                    idrinth.newgrounds.raids.push ( key );
+                }
             }
             idrinth.newgrounds.join ();
         },
@@ -260,27 +263,36 @@ var idrinth = {
                 var head = [ ];
                 var first = true;
                 var body = [ ];
-                for (var name in config) {
-                    head.push ( {
+                var buildHead=function(name,width,first) {
+                    return {
                         type: 'li',
                         content: name,
                         css: 'tab-activator' + ( first ? ' active' : '' ),
                         id: 'tab-activator-' + name.toLowerCase (),
                         attributes: [
                             { name: 'onclick', value: 'idrinth.ui.activateTab(\'' + name.toLowerCase () + '\');' },
-                            { name: 'style', value: 'width:' + Math.floor ( 100 / ( Object.keys ( config ) ).length ) + '%;' }
+                            { name: 'style', value: 'width:' + width + '%;' }
                         ]
-                    } );
-                    body.push ( {
+                    };
+                };
+                var buildBody=function(name,children,first){
+                    return {
                         type: 'li',
                         css: 'tab-element',
                         id: 'tab-element-' + name.toLowerCase (),
                         attributes: [
                             { name: 'style', value: first ? 'display:block;' : 'display:none;' }
                         ],
-                        children: config[name]
-                    } );
-                    first = false;
+                        children: children
+                    };
+                };
+                var width=Math.floor ( 100 / ( Object.keys ( config ) ).length );
+                for (var name in config) {
+                    if(typeof name === 'String') {
+                        head.push ( buildHead(name,width,first) );
+                        body.push ( buildBody(name,config[name],first) );
+                        first = false;
+                    }
                 }
                 return [
                     { type: 'ul', children: head, attributes: [ { name: 'style', value: 'margin:0;padding:0;overflow:hidden;width:100%;' } ] },
