@@ -1,33 +1,20 @@
 idrinth.land = {
     calculate: function () {
-        var bestPrice = function ( building, factor, res ) {
-            if (
-                    res.min === null ||
-                    ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base / idrinth.land.data[building].perHour < res.min )
-            {
-                res.min = ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base / idrinth.land.data[building].perHour;
-                res.key = building;
-            }
-            return res;
-        };
-        var useUp = function ( building, factor, res ) {
-            if (
-                    ( res.min === null ||
-                            ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base / idrinth.land.data[building].perHour < res.min )
-                    && ( 10 + idrinth.settings.land[building] ) * factor * idrinth.land.data[building].base / 10 <= idrinth.settings.land.gold )
-            {
-                res.min = ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base / idrinth.land.data[building].perHour;
-                res.key = building;
-            }
-            return res;
-        };
         var baseCalculator = function ( checkElementFunc ) {
             var factor = idrinth.settings.factor ? 10 : 1;
             var results = { };
+            var check = function ( checkElementFunc, building, factor, res ) {
+                for (var count = 0; count < checkElementFunc.length; count++) {
+                    if ( !checkElementFunc[count] ( building, factor, res ) ) {
+                        return res;
+                    }
+                }
+                return  { min: ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base / idrinth.land.data[building].perHour, key: building };
+            };
             while ( idrinth.settings.land.gold >= 0 ) {
                 var res = { key: null, min: null };
                 for (var building in idrinth.land.data) {
-                    res = checkElementFunc ( building, factor, res );
+                    res = check ( checkElementFunc, building, factor, res );
                 }
                 if ( res.key === null ) {
                     return results;
@@ -37,6 +24,19 @@ idrinth.land = {
                 idrinth.settings.land[res.key] = idrinth.settings.land[res.key] + factor;
             }
             return results;
+        };
+        var getRequirements = function () {
+            var bestPrice = function ( building, factor, res ) {
+                return res.min === null || ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base / idrinth.land.data[building].perHour < res.min;
+            };
+            var useUp = function ( building, factor, res ) {
+                return ( 10 + idrinth.settings.land[building] ) * factor * idrinth.land.data[building].base / 10 <= idrinth.settings.land.gold;
+            };
+            var funcs = [ useUp ];
+            if ( idrinth.settings.landMax ) {
+                funcs.push ( bestPrice );
+            }
+            return funcs;
         };
         var putResults = function ( results ) {
             for (var key in results) {
@@ -49,7 +49,7 @@ idrinth.land = {
         for (var key in idrinth.settings.land) {
             idrinth.settings.land[key] = parseInt ( document.getElementById ( 'idrinth-land-' + key ).value, 10 );
         }
-        var results = baseCalculator ( idrinth.settings.landMax ? useUp : bestPrice );
+        var results = baseCalculator ( getRequirements () );
         if ( Object.keys ( results ).length === 0 ) {
             idrinth.alert ( 'You lack gold to buy any more buildings at the moment.' );
         }
