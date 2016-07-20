@@ -46,13 +46,16 @@ idrinth.chat = {
     },
     userclick: function (element, user, chat) {
         function hasRights(id) {
-            return id === '3' || id === '4';
+            return id === 3 || id === 4;
         }
-        var rankId = idrinth.chat.chatRank[chat][idrinth.chat.self];
-        if (!rankId || !hasRights()) {
+        if(!idrinth.chat.chatRank[chat][idrinth.chat.self]){
+            return
+        }
+        var rankId = parseInt(idrinth.chat.chatRank[chat][idrinth.chat.self], 10),
+            options = [];
+        if (!hasRights(rankId)) {
             return;//Banned, Empty or Users can't do stuff
         }
-        var options = [];
         options.push(
             idrinth.ui.buildElement({
                 type: 'li', content: 'Ban User', attributes: [{
@@ -61,7 +64,7 @@ idrinth.chat = {
                     }
                 ]
             }));
-        if (rankId === '4') {
+        if (rankId === 4) {
             options.push(
                 idrinth.ui.buildElement({
                     type: 'li', content: 'Make Moderator', attributes: [{
