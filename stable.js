@@ -288,7 +288,7 @@ var idrinth = {
                 };
                 var width=Math.floor ( 100 / ( Object.keys ( config ) ).length );
                 for (var name in config) {
-                    if(typeof name === 'String') {
+                    if(typeof name === 'string') {
                         head.push ( buildHead(name,width,first) );
                         body.push ( buildBody(name,config[name],first) );
                         first = false;
