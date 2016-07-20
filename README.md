@@ -5,6 +5,10 @@ A script for dawn of the dragons, that works based on data provided to https://d
 [![Code Climate](https://codeclimate.com/github/Idrinth/IDotD/badges/gpa.svg)](https://codeclimate.com/github/Idrinth/IDotD)
 [![Issue Count](https://codeclimate.com/github/Idrinth/IDotD/badges/issue_count.svg)](https://codeclimate.com/github/Idrinth/IDotD)
 
+# Bugs, desired Features etc.
+
+We prefer the usage of the [tracker](https://github.com/Idrinth/IDotD/issues) here, otherwise we do import requests from [Google Docs](https://docs.google.com/document/d/1ozOWQuAEKCNnt2cwQ4SZtkpYM_pvrl8Bnj0e_O1KKWs/edit) from time to time.
+
 # Features
 This script allows for some additional functionality around the game Dawn of the Dragons, including the following:
 - A raid tier lookup based on data provided by mutik(thank you)
