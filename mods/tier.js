@@ -96,6 +96,9 @@ idrinth.tier = {
                 wrapper.appendChild ( sub );
             }
         };
+        if(!name || name.length===0) {
+            return;
+        }
         var result = [ ];
         var regExp = new RegExp ( name, 'i' );
         for (var key in idrinth.tier.list) {
