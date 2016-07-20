@@ -371,9 +371,9 @@ var idrinth = {
         },
         buildBasis: {
             makeTabs: function ( config ) {
-                var head = new Array ();
+                var head = [];
                 var first = true;
-                var body = new Array ();
+                var body = [];
                 for (var name in config) {
                     head.push ( {
                         type: 'li',
