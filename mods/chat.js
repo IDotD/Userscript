@@ -285,7 +285,7 @@ idrinth.chat = {
         if ( data.messages ) {
             processMessages ( data.messages );
         }
-        idrinth.chat.oldMessages = new Array ();
+        idrinth.chat.oldMessages = [];
         idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 666 );
     },
     ranks: [ '', 'banned', 'user', 'mod', 'owner' ],
