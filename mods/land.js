@@ -1,75 +1,59 @@
 idrinth.land = {
     calculate: function () {
+        var bestPrice = function ( building, factor, res ) {
+            if (
+                    res.min === null ||
+                    ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base / idrinth.land.data[building].perHour < res.min )
+            {
+                res.min = ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base / idrinth.land.data[building].perHour;
+                res.key = building;
+            }
+            return res;
+        };
+        var useUp = function ( building, factor, res ) {
+            if (
+                    ( res.min === null ||
+                            ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base / idrinth.land.data[building].perHour < res.min )
+                    && ( 10 + idrinth.settings.land[building] ) * factor * idrinth.land.data[building].base / 10 <= idrinth.settings.land.gold )
+            {
+                res.min = ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base / idrinth.land.data[building].perHour;
+                res.key = building;
+            }
+            return res;
+        };
+        var baseCalculator = function ( checkElementFunc ) {
+            var factor = idrinth.settings.factor ? 10 : 1;
+            var results = { };
+            while ( idrinth.settings.land.gold >= 0 ) {
+                var res = { key: null, min: null };
+                for (var key in idrinth.land.data) {
+                    res = checkElementFunc ( idrinth.settings.land[key], factor, res );
+                }
+                if ( res.key === null ) {
+                    return results;
+                }
+                idrinth.settings.land.gold = idrinth.settings.land.gold - ( 10 + idrinth.settings.land[res.key] ) * factor * idrinth.land.data[res.key].base / 10;
+                results[res.key] = ( results[res.key] === undefined ? 0 : results[res.key] ) + factor;
+                idrinth.settings.land[res.key] = idrinth.settings.land[res.key] + factor;
+            }
+            return results;
+        };
+        var putResults = function ( results ) {
+            for (var key in results) {
+                document.getElementById ( 'idrinth-land-' + key ).value = idrinth.settings.land[key];
+                document.getElementById ( 'idrinth-land-' + key ).parentNode.nextSibling.innerHTML = '+' + results[key];
+            }
+            document.getElementById ( 'idrinth-land-gold' ).value = idrinth.settings.land.gold;
+            idrinth.settings.save ();
+        };
         for (var key in idrinth.settings.land) {
             idrinth.settings.land[key] = parseInt ( document.getElementById ( 'idrinth-land-' + key ).value, 10 );
         }
-        var results = idrinth.settings.landMax ? idrinth.land.useUp () : idrinth.land.bestPrice ();
+        var results = baseCalculator ( idrinth.settings.landMax ? useUp : bestPrice );
         if ( Object.keys ( results ).length === 0 ) {
-            idrinth.idrinth.alert ( 'You lack gold to buy any more buildings at the moment.' );
+            idrinth.alert ( 'You lack gold to buy any more buildings at the moment.' );
         }
-        idrinth.land.putResults ( results );
-    },
-    bestPrice: function () {
-        var factor = idrinth.settings.factor ? 10 : 1;
-        var results = { };
-        while ( idrinth.settings.land.gold >= 0 ) {
-            var min = null;
-            var minKey = null;
-            for (var key in idrinth.land.data) {
-                if (
-                        min === null ||
-                        ( 10 + idrinth.settings.land[key] ) * idrinth.land.data[key].base / idrinth.land.data[key].perHour < min )
-                {
-                    min = ( 10 + idrinth.settings.land[key] ) * idrinth.land.data[key].base / idrinth.land.data[key].perHour;
-                    minKey = key;
-                }
-            }
-            if ( minKey === null ) {
-                return results;
-            }
-            var price = ( 10 + idrinth.settings.land[minKey] ) * factor * idrinth.land.data[minKey].base / 10;
-            if ( price > idrinth.settings.land.gold ) {
-                idrinth.land.putResults ( results );
-                return;
-            }
-            idrinth.settings.land.gold = idrinth.settings.land.gold - price;
-            results[minKey] = ( results[minKey] === undefined ? 0 : results[minKey] ) + factor;
-            idrinth.settings.land[minKey] = idrinth.settings.land[minKey] + factor;
-        }
-        return results;
-    },
-    useUp: function () {
-        var factor = idrinth.settings.factor ? 10 : 1;
-        var results = { };
-        while ( idrinth.settings.land.gold >= 0 ) {
-            var min = null;
-            var minKey = null;
-            for (var key in idrinth.land.data) {
-                if (
-                        ( min === null ||
-                                ( 10 + idrinth.settings.land[key] ) * idrinth.land.data[key].base / idrinth.land.data[key].perHour < min )
-                        && ( 10 + idrinth.settings.land[key] ) * factor * idrinth.land.data[key].base / 10 <= idrinth.settings.land.gold )
-                {
-                    min = ( 10 + idrinth.settings.land[key] ) * idrinth.land.data[key].base / idrinth.land.data[key].perHour;
-                    minKey = key;
-                }
-            }
-            if ( minKey === null ) {
-                return results;
-            }
-            idrinth.settings.land.gold = idrinth.settings.land.gold - ( 10 + idrinth.settings.land[minKey] ) * factor * idrinth.land.data[minKey].base / 10;
-            results[minKey] = ( results[minKey] === undefined ? 0 : results[minKey] ) + factor;
-            idrinth.settings.land[minKey] = idrinth.settings.land[minKey] + factor;
-        }
-        return results;
-    },
-    putResults: function ( results ) {
-        for (var key in results) {
-            document.getElementById ( 'idrinth-land-' + key ).value = idrinth.settings.land[key];
-            document.getElementById ( 'idrinth-land-' + key ).parentNode.nextSibling.innerHTML = '+' + results[key];
-        }
-        document.getElementById ( 'idrinth-land-gold' ).value = idrinth.settings.land.gold;
-        idrinth.settings.save ();
+        putResults ( results );
     },
     data: {
         cornfield: { perHour: 100, base: 4000 },
