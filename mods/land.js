@@ -26,8 +26,8 @@ idrinth.land = {
             var results = { };
             while ( idrinth.settings.land.gold >= 0 ) {
                 var res = { key: null, min: null };
-                for (var key in idrinth.land.data) {
-                    res = checkElementFunc ( idrinth.settings.land[key], factor, res );
+                for (var building in idrinth.land.data) {
+                    res = checkElementFunc ( building, factor, res );
                 }
                 if ( res.key === null ) {
                     return results;
