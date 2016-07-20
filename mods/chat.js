@@ -295,7 +295,7 @@ idrinth.chat = {
                 chat.appendChild ( idrinth.ui.buildElement (
                         {
                             type: 'li',
-                            css: 'user ' + idrinth.chat.ranks[parseInt ( idrinth.chat.members[chatId][userId], 10 )],
+                            css: 'user ' + idrinth.chat.ranks[parseInt ( idrinth.chat.users[chatId][userId], 10 )],
                             content: ( usedPlatforms === '' ? '' : '[' + usedPlatforms.toUpperCase () + '] ' ) + idrinth.chat.users[userId].name,
                             attributes:
                                     [
@@ -305,13 +305,13 @@ idrinth.chat = {
                         }
                 ) );
             };
-            for (var chatId in idrinth.chat.members) {
+            for (var chatId in idrinth.chat.users) {
                 if ( document.getElementById ( 'idrinth-chat-tab-' + chatId ) ) {
                     var chat = document.getElementById ( 'idrinth-chat-tab-' + chatId ).getElementsByTagName ( 'ul' )[0];
                     while ( chat.firstChild ) {
                         chat.removeChild ( chat.firstChild );
                     }
-                    for (var userId in idrinth.chat.members[chatId]) {
+                    for (var userId in idrinth.chat.users[chatId]) {
                         addMemberElement ( chat, chatId, userId );
                     }
                 }
