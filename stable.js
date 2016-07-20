@@ -144,15 +144,15 @@ var idrinth = {
         };
         idrinth.ajax[pos].onreadystatechange = function ( event ) {
             var request = ( event || window.event ).target;
-            var call=function(func,value) {
-                if(!typeof func === 'function') {
+            var call = function ( func, value ) {
+                if ( !typeof func === 'function' ) {
                     return;
                 }
-                return name(value);
+                return name ( value );
             };
             if ( request.readyState === 4 ) {
                 var status = ( request.status > 199 && request.status < 300 ) || request.status === 0;
-                call(status?success:failure,status?request.responseText:request);
+                call ( status ? success : failure, status ? request.responseText : request );
                 request._remove ( request );
             }
         };
@@ -1106,7 +1106,7 @@ var idrinth = {
         },
         buildElement: function ( config ) {
             'use strict';
-            var setBase=function(el,config) {
+            var setBase = function ( el, config ) {
                 if ( config.id ) {
                     el.id = config.id;
                 }
@@ -1117,7 +1117,7 @@ var idrinth = {
                     el.appendChild ( document.createTextNode ( config.content ) );
                 }
             };
-            var addChildren=function(el,config) {
+            var addChildren = function ( el, config ) {
                 if ( !config.children || config.children.length === 0 ) {
                     return;
                 }
@@ -1125,7 +1125,7 @@ var idrinth = {
                     el.appendChild ( idrinth.ui.buildElement ( config.children[count] ) );
                 }
             };
-            var addAttributes=function(el,config) {
+            var addAttributes = function ( el, config ) {
                 if ( !config.attributes || config.attributes.length === 0 ) {
                     return;
                 }
@@ -1133,7 +1133,7 @@ var idrinth = {
                     el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
                 }
             };
-            var makeInputLabel= function ( config ) {
+            var makeInputLabel = function ( config ) {
                 'use strict';
                 var input = [ {
                         name: 'type',
@@ -1190,9 +1190,9 @@ var idrinth = {
                 return makeInputLabel ( config );
             }
             var el = document.createElement ( config.type );
-            setBase(el,config);
-            addChildren(el,config);
-            addAttributes(el,config);
+            setBase ( el, config );
+            addChildren ( el, config );
+            addAttributes ( el, config );
             return el;
         },
         controls: null,

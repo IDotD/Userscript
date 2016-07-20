@@ -20,7 +20,7 @@ idrinth.user = {
         window.setTimeout ( idrinth.user.sendAlive, 20000 );
     },
     sendAlive: function () {
-        var getIdentifier = function() {
+        var getIdentifier = function () {
             var guid = function () {
                 //from http://stackoverflow.com/a/105074
                 var s4 = function () {
@@ -45,6 +45,6 @@ idrinth.user = {
         }
         idrinth.runAjax ( 'https://dotd.idrinth.de/' +
                 ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform +
-                '/i-am-alive/' + getIdentifier() + '/' );
+                '/i-am-alive/' + getIdentifier () + '/' );
     }
 };

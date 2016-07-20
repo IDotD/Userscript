@@ -85,7 +85,7 @@ idrinth.raids = {
         try {
             window.clearInterval ( idrinth.raids.interval );
         } catch ( e ) {
-            idrinth.raids.interval=null;
+            idrinth.raids.interval = null;
         }
         while ( document.getElementById ( "idrinth-raid-link-list" ).firstChild ) {
             idrinth.ui.removeElement ( document.getElementById ( "idrinth-raid-link-list" ).firstChild.id );
@@ -121,7 +121,7 @@ idrinth.raids = {
         },
         servers: {
             getServerLink: function ( key ) {
-                var getLink=function(list,key,prefix,tag) {
+                var getLink = function ( list, key, prefix, tag ) {
                     var build = function ( data, tag, prefix ) {
                         try {
                             return prefix +

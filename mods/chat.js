@@ -284,7 +284,7 @@ idrinth.chat = {
     },
     ranks: [ '', 'banned', 'user', 'mod', 'owner' ],
     applyMembers: function ( data ) {
-        var applyMemberData=function() {
+        var applyMemberData = function () {
             var addMemberElement = function ( chat, chatId, userId ) {
                 var usedPlatforms = '';
                 for (var pkey in idrinth.chat.users[userId].platforms) {
@@ -327,7 +327,7 @@ idrinth.chat = {
         idrinth.chat.self = data.self;
         idrinth.chat.users = data.users;
         idrinth.chat.chatRank = data.members;
-        applyMemberData();
+        applyMemberData ();
     },
     emotes: { },
     start: function () {

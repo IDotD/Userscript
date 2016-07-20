@@ -52,9 +52,9 @@ idrinth.settings = {
     start: function ( ) {
         'use strict';
         if ( window.localStorage ) {
-            var itemHandler=function(prefix,key,item) {
+            var itemHandler = function ( prefix, key, item ) {
                 if ( typeof idrinth.settings[key] !== 'function' ) {
-                    var tmp = window.localStorage.getItem ( 'idrinth-dotd-'+prefix + key );
+                    var tmp = window.localStorage.getItem ( 'idrinth-dotd-' + prefix + key );
                     if ( tmp ) {
                         if ( tmp === 'false' ) {
                             tmp = false;
@@ -66,12 +66,12 @@ idrinth.settings = {
                 }
             };
             for (var key in idrinth.settings) {
-                if(key!=='land') {
-                    itemHandler('',key,idrinth.settings[key]);
+                if ( key !== 'land' ) {
+                    itemHandler ( '', key, idrinth.settings[key] );
                 }
             }
             for (var building in idrinth.settings.land) {
-                itemHandler('land-',building,idrinth.settings.land);
+                itemHandler ( 'land-', building, idrinth.settings.land );
             }
         }
     }
