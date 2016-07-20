@@ -68,7 +68,7 @@ idrinth.raids = {
         for (var key in list) {
             if ( list[key].delete ) {
                 delHandler(key);
-            } else if ( idrinth.raids.list[key] === undefined ) {
+            } else {//worst case: overwriting itself
                 idrinth.raids.list[key] = list[key];
             }
         }
