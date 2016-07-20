@@ -141,10 +141,10 @@ idrinth.war = {
                 return;
             }
             if ( data === "{}" ) {
-                toggleGUI('false');
+                toggleGUI(false);
                 return;
             }
-            toggleGUI('true');
+            toggleGUI(true);
             try {
                 processJson ( JSON.parse ( data ) );
             } catch ( e ) {
