@@ -143,11 +143,11 @@ idrinth.raids = {
                 };
                 var prefix = idrinth.raids.join.data.makePrefix ();
                 var tag = idrinth.raids.join.data.tag[idrinth.realSite];
-                var link = getLink ( idrinth.raids.list, key, tag, prefix );
+                var link = getLink ( idrinth.raids.list, key, prefix, tag );
                 if ( link ) {
                     return link;
                 }
-                link = getLink ( idrinth.raids.joined, key, tag, prefix );
+                link = getLink ( idrinth.raids.joined, key, prefix, tag );
                 if ( link ) {
                     return link;
                 }
