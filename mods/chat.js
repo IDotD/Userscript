@@ -11,7 +11,7 @@ idrinth.chat = {
     refreshCount: 0,
     refreshChats: function () {
         idrinth.chat.oldMessages = JSON.parse ( JSON.stringify ( idrinth.chat.messages ) );
-        idrinth.chat.messages = new Array ();
+        idrinth.chat.messages = [];
         idrinth.runAjax (
                 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/update/',
                 idrinth.chat.applyMessages,
@@ -41,7 +41,7 @@ idrinth.chat = {
         for (var count = idrinth.chat.oldMessages.length - 1; count >= 0; count--) {
             idrinth.chat.messages.unshift ( idrinth.chat.oldMessages[count] );
         }
-        idrinth.chat.oldMessages = new Array ();
+        idrinth.chat.oldMessages = [];
         window.setTimeout ( idrinth.chat.refreshChats, 666 );
     },
     userclick: function ( element, user, chat ) {
@@ -277,7 +277,7 @@ idrinth.chat = {
         if ( data.messages ) {
             processMessages ( data.messages );
         }
-        idrinth.chat.oldMessages = new Array ();
+        idrinth.chat.oldMessages = [];
         window.setTimeout ( function () {
             idrinth.chat.refreshChats ();
         }, 666 );
@@ -300,7 +300,7 @@ idrinth.chat = {
                             attributes:
                                     [
                                         { name: 'data-id', value: userId },
-                                        { name: 'onclick', value: 'idrinth.chat.userclick(this,' + userId + ')' }
+                                        { name: 'onclick', value: 'idrinth.chat.userclick(this,' + userId + ', ' + chatId + ')' }
                                     ]
                         }
                 ) );
