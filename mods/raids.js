@@ -14,20 +14,22 @@ idrinth.raids = {
             idrinth.raids.join.process ( );
         }, 1500 );
     },
-    getImportLink: function ( toImport ) {
-        return 'https://dotd.idrinth.de/' + ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform +
-                '/raid-service/' + ( toImport === '' ? '_' : toImport ) + '/';
-    },
     import: function ( ) {
+        'use strict';
+        idrinth.raids.importId(idrinth.settings.raids ? idrinth.settings.favs : '-1');
+    },
+    importId:function(id) {
         'use strict';
         if ( !idrinth.platform ) {
             return;
         }
+        var getImportLink = function ( toImport ) {
+            return 'https://dotd.idrinth.de/' + ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform +
+                    '/raid-service/' + ( toImport === '' ? '_' : toImport ) + '/';
+        };
         idrinth.runAjax (
-                idrinth.raids.getImportLink ( idrinth.settings.raids ? idrinth.settings.favs : '-1' ),
-                function ( text ) {
-                    idrinth.raids.importProcess ( text );
-                },
+                getImportLink ( id ),
+                idrinth.raids.importProcess,
                 function ( ) {
                 },
                 function ( ) {
@@ -47,20 +49,7 @@ idrinth.raids = {
     },
     importManually: function ( all ) {
         'use strict';
-        if ( !idrinth.platform ) {
-            return;
-        }
-        idrinth.runAjax (
-                idrinth.raids.getImportLink ( all ? '_' : idrinth.settings.favs ),
-                function ( text ) {
-                    idrinth.raids.importProcess ( text );
-                },
-                function ( ) {
-                },
-                function ( ) {
-                },
-                idrinth.raids.knowRaids ()
-                );
+        idrinth.raids.importId(all ? '_' : idrinth.settings.favs);
     },
     importProcess: function ( responseText ) {
         'use strict';
