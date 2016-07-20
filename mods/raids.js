@@ -14,20 +14,22 @@ idrinth.raids = {
             idrinth.raids.join.process ( );
         }, 1500 );
     },
-    getImportLink: function ( toImport ) {
-        return 'https://dotd.idrinth.de/' + ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform +
-                '/raid-service/' + ( toImport === '' ? '_' : toImport ) + '/';
-    },
     import: function ( ) {
+        'use strict';
+        idrinth.raids.importId ( idrinth.settings.raids ? idrinth.settings.favs : '-1' );
+    },
+    importId: function ( id ) {
         'use strict';
         if ( !idrinth.platform ) {
             return;
         }
+        var getImportLink = function ( toImport ) {
+            return 'https://dotd.idrinth.de/' + ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform +
+                    '/raid-service/' + ( toImport === '' ? '_' : toImport ) + '/';
+        };
         idrinth.runAjax (
-                idrinth.raids.getImportLink ( idrinth.settings.raids ? idrinth.settings.favs : '-1' ),
-                function ( text ) {
-                    idrinth.raids.importProcess ( text );
-                },
+                getImportLink ( id ),
+                idrinth.raids.importProcess,
                 function ( ) {
                 },
                 function ( ) {
@@ -47,24 +49,11 @@ idrinth.raids = {
     },
     importManually: function ( all ) {
         'use strict';
-        if ( !idrinth.platform ) {
-            return;
-        }
-        idrinth.runAjax (
-                idrinth.raids.getImportLink ( all ? '_' : idrinth.settings.favs ),
-                function ( text ) {
-                    idrinth.raids.importProcess ( text );
-                },
-                function ( ) {
-                },
-                function ( ) {
-                },
-                idrinth.raids.knowRaids ()
-                );
+        idrinth.raids.importId ( all ? '_' : idrinth.settings.favs );
     },
     importProcess: function ( responseText ) {
         'use strict';
-        var delHandler = function(key) {
+        var delHandler = function ( key ) {
             if ( key in idrinth.raids.list ) {
                 delete idrinth.raids.list[key];
             }
@@ -78,8 +67,8 @@ idrinth.raids = {
         var list = JSON.parse ( responseText );
         for (var key in list) {
             if ( list[key].delete ) {
-                delHandler(key);
-            } else if ( idrinth.raids.list[key] === undefined ) {
+                delHandler ( key );
+            } else {//worst case: overwriting itself
                 idrinth.raids.list[key] = list[key];
             }
         }
@@ -102,18 +91,20 @@ idrinth.raids = {
             prefix: null,
             makePrefix: function () {
                 if ( idrinth.raids.join.data.prefix === null ) {
-                    if ( idrinth.realSite === 'armorgames' ) {
-                        idrinth.raids.join.data.prefix = 'http://50.18.191.15/armor/raidjoin.php?user_id=' + idrinth.user.id +
-                                '&auth_token=' + idrinth.user.token + '&';
-                    } else if ( idrinth.realSite === 'kongregate' ) {
-                        idrinth.raids.join.data.prefix = 'http://50.18.191.15/kong/raidjoin.php?kongregate_username=' + idrinth.user.name +
-                                '&kongregate_user_id=' + idrinth.user.id + '&kongregate_game_auth_token=' +
-                                idrinth.user.token + '&';
-                    } else if ( idrinth.realSite === 'newgrounds' ) {
-                        idrinth.raids.join.data.prefix = 'https://newgrounds.com/portal/view/609826?';
-                    } else if ( idrinth.realSite === 'dawnofthedragons' || idrinth.realSite === 'facebook' ) {
-                        idrinth.raids.join.data.prefix = 'https://web1.dawnofthedragons.com/live_iframe/raidjoin.php?';
-                    }
+                    var sites={
+                        armorgames:'http://50.18.191.15/armor/raidjoin.php?user_id=###id###&auth_token=###token###&',
+                        kongregate:'http://50.18.191.15/kong/raidjoin.php?kongregate_username=###name###&kongregate_user_id=###id###&kongregate_game_auth_token=###token###&',
+                        newgrounds:'https://newgrounds.com/portal/view/609826?',
+                        dawnofthedragons:'https://web1.dawnofthedragons.com/live_iframe/raidjoin.php?',
+                        facebook:'https://web1.dawnofthedragons.com/live_iframe/raidjoin.php?'
+                    };
+                    idrinth.raids.join.data.prefix=(((sites[idrinth.realSite].replace (
+                        '###id###',idrinth.user.id
+                        )).replace (
+                        '###token###',idrinth.user.token
+                        )).replace (
+                        '###name###',idrinth.user.name
+                        ));
                 }
                 return idrinth.raids.join.data.prefix;
             },
