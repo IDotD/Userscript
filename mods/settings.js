@@ -53,7 +53,7 @@ idrinth.settings = {
         'use strict';
         if ( window.localStorage ) {
             var itemHandler = function ( prefix, key, item ) {
-                if ( typeof idrinth.settings[key] !== 'function' ) {
+                if ( typeof item !== 'function' ) {
                     var tmp = window.localStorage.getItem ( 'idrinth-dotd-' + prefix + key );
                     if ( tmp ) {
                         if ( tmp === 'false' ) {
@@ -64,14 +64,15 @@ idrinth.settings = {
                         item = tmp;
                     }
                 }
+                return item;
             };
             for (var key in idrinth.settings) {
                 if ( key !== 'land' ) {
-                    itemHandler ( '', key, idrinth.settings[key] );
+                    idrinth.settings[key]=itemHandler ( '', key, idrinth.settings[key] );
                 }
             }
             for (var building in idrinth.settings.land) {
-                itemHandler ( 'land-', building, idrinth.settings.land );
+                idrinth.settings.land[building]=itemHandler ( 'land-', building, idrinth.settings.land[building] );
             }
         }
     }
