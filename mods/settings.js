@@ -53,7 +53,7 @@ idrinth.settings = {
         'use strict';
         if ( window.localStorage ) {
             var itemHandler = function ( prefix, key, item ) {
-                if ( typeof idrinth.settings[key] !== 'function' ) {
+                if ( typeof item !== 'function' ) {
                     var tmp = window.localStorage.getItem ( 'idrinth-dotd-' + prefix + key );
                     if ( tmp ) {
                         if ( tmp === 'false' ) {
