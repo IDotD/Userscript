@@ -148,7 +148,7 @@ var idrinth = {
                 if ( !typeof func === 'function' ) {
                     return;
                 }
-                return name ( value );
+                return func ( value );
             };
             if ( request.readyState === 4 ) {
                 var status = ( request.status > 199 && request.status < 300 ) || request.status === 0;
