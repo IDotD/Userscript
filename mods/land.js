@@ -1,7 +1,7 @@
 idrinth.land = {
     calculate: function () {
         for (var key in idrinth.settings.land) {
-            idrinth.settings.land[key] = parseInt ( document.getElementById ( 'idrinth-land-' + key, 10 ).value );
+            idrinth.settings.land[key] = parseInt ( document.getElementById ( 'idrinth-land-' + key ).value , 10 );
         }
         var results = idrinth.settings.landMax ? idrinth.land.useUp () : idrinth.land.bestPrice ();
         if ( Object.keys ( results ).length === 0 ) {
