@@ -62,43 +62,46 @@ idrinth.chat = {
                 type: 'li', content: 'Ban User', attributes: [{
                     name: 'onclick',
                     value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Banned\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                }
-                ]
+                }]
             }));
         if (rankId === 4) {
-            options.push(
-                idrinth.ui.buildElement({
-                    type: 'li', content: 'Make Moderator', attributes: [{
+            var promotionModes = [
+                {
+                    content: 'Make Moderator',
+                    attr: [{
                         name: 'onclick',
                         value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Mod\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                    }
-                    ]
-                }));
-            options.push(
-                idrinth.ui.buildElement({
-                    type: 'li', content: 'Make Admin', attributes: [{
+                    }]
+                },
+                {
+                    content: 'Make Admin',
+                    attr: [{
                         name: 'onclick',
                         value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Owner\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                    }
-                    ]
-                }));
-            options.push(
-                idrinth.ui.buildElement({
-                    type: 'li', content: 'Make User', attributes: [{
+                    }]
+                },
+                {
+                    attr: [{
                         name: 'onclick',
                         value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'User\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                    }
-                    ]
-                }));
-        }
-        options.push(
-            idrinth.ui.buildElement({
-                type: 'li', content: 'Close', attributes: [{
-                    name: 'onclick',
-                    value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
+                    }]
                 }
-                ]
-            }));
+            ];
+            for (var i = 0, l = promotionModes.length; i < l; l++) {
+                var prom = promotionModes[i],
+                    baseType = {type: 'li', content: prom.content, attributes: prom.attr};
+                options.push(idrinth.ui.buildElement(baseType));
+            }
+        }
+        var closeButn = {
+            type: 'li',
+            content: 'Close',
+            attributes: [{
+                name: 'onclick',
+                value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
+            }]
+        };
+        options.push(idrinth.ui.buildElement(closeButn));
         var list = document.createElement('ul');
         for (var count = 0; count < options.length; count++) {
             list.appendChild(options[count]);
@@ -142,10 +145,8 @@ idrinth.chat = {
                 };
                 if (count % 2 === 0 && typeof callbacks[1] === 'function') {
                     textcontent = callbackHandler(textcontent, callbacks[1], text[Math.ceil(count / 2)]);
-                } else if (count % 2 === 0) {
-                    if (text[Math.ceil(count / 2)] !== undefined) {
-                        textcontent.push({type: '#text', content: text[Math.ceil(count / 2)]});
-                    }
+                } else if (count % 2 === 0 && text[Math.ceil(count / 2)] !== undefined) {
+                    textcontent.push({type: '#text', content: text[Math.ceil(count / 2)]});
                 } else {
                     textcontent.push(callbacks[0](matches[Math.ceil(( count - 1 ) / 2)]));
                 }
@@ -279,6 +280,7 @@ idrinth.chat = {
                     try {
                         chat.lastChild.scrollIntoView(false);
                     } catch (e) {
+                        idrinth.log(e);
                     }
                     chat.lastChild.scrollTop = chat.lastChild.scrollHeight;
                 }
@@ -287,8 +289,9 @@ idrinth.chat = {
                 idrinth.chat.maxId = 1;
             }
             for (var key in messages) {
-                if (document.getElementById('idrinth-chat-tab-' + key) && document.getElementById('idrinth-chat-tab-' + key).getElementsByTagName('ul')[1]) {
-                    var chat = document.getElementById('idrinth-chat-tab-' + key).getElementsByTagName('ul')[1];
+                var chatTab = document.getElementById('idrinth-chat-tab-' + key);
+                if (chatTab && chatTab.getElementsByTagName('ul')[1]) {
+                    var chat = chatTab.getElementsByTagName('ul')[1];
                     setChatClass(addMessages(messages[key], key, chat), chat, key);
                 }
             }
@@ -319,8 +322,7 @@ idrinth.chat = {
                         usedPlatforms += pkey;
                     }
                 }
-                chat.appendChild(idrinth.ui.buildElement(
-                    {
+                chat.appendChild(idrinth.ui.buildElement({
                         type: 'li',
                         css: 'user ' + idrinth.chat.ranks[parseInt(idrinth.chat.chatRank[chatId][userId], 10)],
                         content: ( usedPlatforms === '' ? '' : '[' + usedPlatforms.toUpperCase() + '] ' ) + idrinth.chat.users[userId].name,
@@ -338,6 +340,7 @@ idrinth.chat = {
                         chat.removeChild(chat.firstChild);
                     }
                     for (var userId in idrinth.chat.chatRank[chatId]) {
+                        if (!idrinth.chat.chatRank[chatId].hasOwnProperty(userId)) continue;
                         addMemberElement(chat, chatId, userId);
                     }
                 }
@@ -502,7 +505,7 @@ idrinth.chat = {
         idrinth.alert('Logging in failed in an unexpected way');
     },
     startRegistration: function () {
-        if (window.confirm('The given username for dotd.idrinth.de is unknown, do you want to register it there?')) {
+        if (idrinth.confirm('The given username for dotd.idrinth.de is unknown, do you want to register it there?')) {
             idrinth.chat.register();
         }
     },
