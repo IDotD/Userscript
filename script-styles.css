@@ -16,17 +16,18 @@
     font-family: sans-serif;
     font-size:11px;
 }
-.idrinth-emoticon{
+.idrinth-emoticon,
+.idrinth-emoticon > span{
     background:url(https://dotd.idrinth.de/static/emoticons/);
     background-size: 100% auto;
+}
+.idrinth-emoticon{
     display:inline-block;
     width:16px;
     height:16px;
 }
 .idrinth-emoticon > span{
     display:none;
-    background:url(https://dotd.idrinth.de/static/emoticons/);
-    background-size: 100% auto;
     width:64px;
     height:64px;
     position:absolute;

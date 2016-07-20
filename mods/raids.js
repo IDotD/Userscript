@@ -85,8 +85,8 @@ idrinth.raids = {
         try {
             window.clearInterval ( idrinth.raids.interval );
         } catch ( e ) {
+            idrinth.raids.interval = null;
         }
-        ;
         while ( document.getElementById ( "idrinth-raid-link-list" ).firstChild ) {
             idrinth.ui.removeElement ( document.getElementById ( "idrinth-raid-link-list" ).firstChild.id );
         }
@@ -121,31 +121,35 @@ idrinth.raids = {
         },
         servers: {
             getServerLink: function ( key ) {
-                function build ( data, tag, prefix ) {
-                    try {
-                        return prefix +
-                                tag + 'action_type=raidhelp&' +
-                                tag + 'raid_id=' + data.raidId + '&' +
-                                tag + 'difficulty=' + data.difficulty + '&' +
-                                tag + 'hash=' + data.hash +
-                                ( idrinth.settings.isWorldServer ? '&' + tag + 'serverid=' + 2 : '' );
-                    } catch ( e1 ) {
-                        return false;
+                var getLink = function ( list, key, prefix, tag ) {
+                    var build = function ( data, tag, prefix ) {
+                        try {
+                            return prefix +
+                                    tag + 'action_type=raidhelp&' +
+                                    tag + 'raid_id=' + data.raidId + '&' +
+                                    tag + 'difficulty=' + data.difficulty + '&' +
+                                    tag + 'hash=' + data.hash +
+                                    ( idrinth.settings.isWorldServer ? '&' + tag + 'serverid=' + 2 : '' );
+                        } catch ( e1 ) {
+                            return false;
+                        }
+                    };
+                    if ( list[key] ) {
+                        var link = build ( list[key], tag, prefix );
+                        if ( link ) {
+                            return link;
+                        }
                     }
-                }
+                };
                 var prefix = idrinth.raids.join.data.makePrefix ();
                 var tag = idrinth.raids.join.data.tag[idrinth.realSite];
-                if ( idrinth.raids.list[key] ) {
-                    var link = build ( idrinth.raids.list[key], tag, prefix );
-                    if ( link ) {
-                        return link;
-                    }
+                var link = getLink ( idrinth.raids.list, key, tag, prefix );
+                if ( link ) {
+                    return link;
                 }
-                if ( idrinth.raids.joined[key] ) {
-                    var link = build ( idrinth.raids.joined[key], tag, prefix );
-                    if ( link ) {
-                        return link;
-                    }
+                link = getLink ( idrinth.raids.joined, key, tag, prefix );
+                if ( link ) {
+                    return link;
                 }
                 return prefix;
             },

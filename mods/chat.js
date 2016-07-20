@@ -284,25 +284,38 @@ idrinth.chat = {
     },
     ranks: [ '', 'banned', 'user', 'mod', 'owner' ],
     applyMembers: function ( data ) {
-        var addMemberElement = function ( data, chatId, userId ) {
-            var usedPlatforms = '';
-            for (var pkey in data.users[userId].platforms) {
-                if ( data.users[userId].platforms[pkey] ) {
-                    usedPlatforms += pkey;
+        var applyMemberData = function () {
+            var addMemberElement = function ( chat, chatId, userId ) {
+                var usedPlatforms = '';
+                for (var pkey in idrinth.chat.users[userId].platforms) {
+                    if ( idrinth.chat.users[userId].platforms[pkey] ) {
+                        usedPlatforms += pkey;
+                    }
+                }
+                chat.appendChild ( idrinth.ui.buildElement (
+                        {
+                            type: 'li',
+                            css: 'user ' + idrinth.chat.ranks[parseInt ( idrinth.chat.chatRank[chatId][userId], 10 )],
+                            content: ( usedPlatforms === '' ? '' : '[' + usedPlatforms.toUpperCase () + '] ' ) + idrinth.chat.users[userId].name,
+                            attributes:
+                                    [
+                                        { name: 'data-id', value: userId },
+                                        { name: 'onclick', value: 'idrinth.chat.userclick(this,' + userId + ')' }
+                                    ]
+                        }
+                ) );
+            };
+            for (var chatId in idrinth.chat.chatRank) {
+                if ( document.getElementById ( 'idrinth-chat-tab-' + chatId ) ) {
+                    var chat = document.getElementById ( 'idrinth-chat-tab-' + chatId ).getElementsByTagName ( 'ul' )[0];
+                    while ( chat.firstChild ) {
+                        chat.removeChild ( chat.firstChild );
+                    }
+                    for (var userId in idrinth.chat.chatRank[chatId]) {
+                        addMemberElement ( chat, chatId, userId );
+                    }
                 }
             }
-            chat.appendChild ( idrinth.ui.buildElement (
-                    {
-                        type: 'li',
-                        css: 'user ' + idrinth.chat.ranks[parseInt ( data.members[chatId][userId], 10 )],
-                        content: ( usedPlatforms === '' ? '' : '[' + usedPlatforms.toUpperCase () + '] ' ) + data.users[userId].name,
-                        attributes:
-                                [
-                                    { name: 'data-id', value: userId },
-                                    { name: 'onclick', value: 'idrinth.chat.userclick(this,' + userId + ')' }
-                                ]
-                    }
-            ) );
         };
         if ( !data ) {
             return idrinth.chat.returnMessages ( data );
@@ -312,23 +325,9 @@ idrinth.chat = {
             return idrinth.chat.returnMessages ( data );
         }
         idrinth.chat.self = data.self;
-        if ( data.users ) {
-            idrinth.chat.users = data.users;
-        }
+        idrinth.chat.users = data.users;
         idrinth.chat.chatRank = data.members;
-        if ( data.members ) {
-            for (var chatId in data.members) {
-                if ( document.getElementById ( 'idrinth-chat-tab-' + chatId ) ) {
-                    var chat = document.getElementById ( 'idrinth-chat-tab-' + chatId ).getElementsByTagName ( 'ul' )[0];
-                    while ( chat.firstChild ) {
-                        chat.removeChild ( chat.firstChild );
-                    }
-                    for (var userId in data.members[chatId]) {
-                        addMemberElement ( data, chatId, userId );
-                    }
-                }
-            }
-        }
+        applyMemberData ();
     },
     emotes: { },
     start: function () {
