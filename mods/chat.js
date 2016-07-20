@@ -277,7 +277,7 @@ idrinth.chat = {
         if ( data.messages ) {
             processMessages ( data.messages );
         }
-        idrinth.chat.oldMessages = new Array ();
+        idrinth.chat.oldMessages = [];
         window.setTimeout ( function () {
             idrinth.chat.refreshChats ();
         }, 666 );
@@ -300,7 +300,7 @@ idrinth.chat = {
                             attributes:
                                     [
                                         { name: 'data-id', value: userId },
-                                        { name: 'onclick', value: 'idrinth.chat.userclick(this,' + userId + ')' }
+                                        { name: 'onclick', value: 'idrinth.chat.userclick(this,' + userId + ', ' + chatId + ')' }
                                     ]
                         }
                 ) );
