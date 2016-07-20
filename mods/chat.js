@@ -431,9 +431,9 @@ idrinth.chat = {
         document.getElementById ( 'idrinth-chat-input-' + id ).value = '';
     },
     join: function ( list ) {
-        for (var key in list) {
-            if ( !document.getElementById ( 'idrinth-chat-tab-' + key ) ) {
-                idrinth.ui.buildChat ( key, list[key].name, list[key].access, list[key].pass );
+        for (var chatId in list) {
+            if ( !document.getElementById ( 'idrinth-chat-tab-' + chatId ) ) {
+                idrinth.ui.buildChat ( chatId, list[chatId].name, list[chatId].access, list[chatId].pass );
             }
         }
         if ( idrinth.chat.updateTimeout ) {
