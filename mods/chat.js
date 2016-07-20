@@ -53,19 +53,30 @@ idrinth.chat = {
             return
         }
         var rankId = parseInt(idrinth.chat.chatRank[chat][idrinth.chat.self], 10),
-            options = [];
+            options = [],
+            popupContent,
+            promotionModes;
         if (!hasRights(rankId)) {
             return;//Banned, Empty or Users can't do stuff
         }
-        options.push(
-            idrinth.ui.buildElement({
-                type: 'li', content: 'Ban User', attributes: [{
+        popupContent = [
+            {
+                content: 'Ban User',
+                attr: [{
                     name: 'onclick',
                     value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Banned\');this.parentNode.parentNode.removeChild(this.parentNode);'
                 }]
-            }));
+            },
+            {
+                content: 'Close',
+                attr: [{
+                    name: 'onclick',
+                    value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
+                }]
+            }
+        ];
         if (rankId === 4) {
-            var promotionModes = [
+            promotionModes = [
                 {
                     content: 'Make Moderator',
                     attr: [{
@@ -87,23 +98,17 @@ idrinth.chat = {
                     }]
                 }
             ];
-            for (var i = 0, l = promotionModes.length; i < l; l++) {
-                var prom = promotionModes[i],
-                    baseType = {type: 'li', content: prom.content, attributes: prom.attr};
-                options.push(idrinth.ui.buildElement(baseType));
-            }
+            promotionModes.unshift(popupContent[0]);
+            promotionModes.push(popupContent[1]);
+            popupContent = promotionModes;
         }
-        var closeButn = {
-            type: 'li',
-            content: 'Close',
-            attributes: [{
-                name: 'onclick',
-                value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
-            }]
-        };
-        options.push(idrinth.ui.buildElement(closeButn));
+        for (var i = 0, l = popupContent.length; i < l; l++) {
+            var prom = popupContent[i],
+                baseType = {type: 'li', content: prom.content, attributes: prom.attr};
+            options.push(idrinth.ui.buildElement(baseType));
+        }
         var list = document.createElement('ul');
-        for (var count = 0; count < options.length; count++) {
+        for (var count = 0, len = options.length; count < len; count++) {
             list.appendChild(options[count]);
         }
         list.setAttribute('class', 'idrinth-userinfo-box');
@@ -137,9 +142,10 @@ idrinth.chat = {
                 var callbackHandler = function (textcontent, func, text) {
                     var tmp = func(text);
                     for (var c2 = 0; c2 < tmp.length; c2++) {
-                        if (tmp[c2] !== undefined) {
-                            textcontent.push(tmp[c2]);
+                        if (tmp[c2] === undefined) {
+                            continue;
                         }
+                        textcontent.push(tmp[c2]);
                     }
                     return textcontent;
                 };
@@ -187,16 +193,16 @@ idrinth.chat = {
         return idrinth.chat.replaceInText(message, reg, [function (match) {
             var el = idrinth.chat.emotes.positions[idrinth.chat.emotes.lookup[match.replace(/ /g, '')]];
             return {
-                type: 'span', css: 'idrinth-emoticon',
+                type: 'span',
+                css: 'idrinth-emoticon',
                 attributes: [
                     {name: 'style', value: 'background-position: 0px -' + el / 8 + 'px;'},
                     {name: 'title', value: message}
-                ], children: [
+                ],
+                children: [
                     {
                         type: 'span',
-                        attributes: [
-                            {name: 'style', value: 'background-position: 0px -' + el / 2 + 'px;'}
-                        ]
+                        attributes: [{name: 'style', value: 'background-position: 0px -' + el / 2 + 'px;'}]
                     }
                 ]
             };
@@ -204,17 +210,18 @@ idrinth.chat = {
     },
     buildMessageText: function (message) {
         var reg = new RegExp('(^|\\W)(https?://([^/ ]+)(/.*?)?)($| )', 'ig');
-        return idrinth.chat.replaceInText(message, reg, [function (match) {
-            return {
-                type: 'a',
-                content: match.match(/:\/\/([^\/]+?)(\/|$)/)[1],
-                attributes: [
-                    {name: 'href', value: match},
-                    {name: 'title', value: 'Go to ' + match},
-                    {name: 'target', value: '_blank'}
-                ]
-            };
-        }, idrinth.chat.buildEmoticons], 5);
+        return idrinth.chat.replaceInText(message, reg, [
+            function (match) {
+                return {
+                    type: 'a',
+                    content: match.match(/:\/\/([^\/]+?)(\/|$)/)[1],
+                    attributes: [
+                        {name: 'href', value: match},
+                        {name: 'title', value: 'Go to ' + match},
+                        {name: 'target', value: '_blank'}
+                    ]
+                };
+            }, idrinth.chat.buildEmoticons], 5);
     },
     applyMessages: function (data) {
         var processMessages = function (messages) {
