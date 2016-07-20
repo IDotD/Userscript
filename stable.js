@@ -1129,7 +1129,7 @@ var idrinth = {
                 if ( !config.attributes || !config.attributes.length ) {
                     return;
                 }
-                for (count = 0; count < config.attributes.length; count++) {
+                for (var count = 0; count < config.attributes.length; count++) {
                     el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
                 }
             };
