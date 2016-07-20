@@ -20,27 +20,31 @@ idrinth.user = {
         window.setTimeout ( idrinth.user.sendAlive, 20000 );
     },
     sendAlive: function () {
-        function guid () {
-            //from http://stackoverflow.com/a/105074
-            function s4 () {
-                return Math.floor ( ( 1 + Math.random () ) * 0x10000 ).toString ( 36 );
-            }
-            return s4 () + '-' +
-                    s4 () + s4 () + '-' +
-                    s4 () + s4 () + s4 () + '-' +
-                    s4 () + s4 () + s4 () + s4 () + '-' +
-                    s4 () + s4 () + s4 () + s4 () + s4 () + '-' +
-                    s4 () + s4 () + s4 () + s4 () + s4 () + s4 ();
-        }
-        if ( window.localStorage ) {
+        var getIdentifier = function() {
+            var guid = function () {
+                //from http://stackoverflow.com/a/105074
+                var s4 = function () {
+                    return Math.floor ( ( 1 + Math.random () ) * 0x10000 ).toString ( 36 );
+                };
+                return s4 () + '-' +
+                        s4 () + s4 () + '-' +
+                        s4 () + s4 () + s4 () + '-' +
+                        s4 () + s4 () + s4 () + s4 () + '-' +
+                        s4 () + s4 () + s4 () + s4 () + s4 () + '-' +
+                        s4 () + s4 () + s4 () + s4 () + s4 () + s4 ();
+            };
             idrinth.user.identifier = window.localStorage.getItem ( 'idrinth-dotd-uuid' );
             if ( !idrinth.user.identifier || idrinth.user.identifier === '' || idrinth.user.identifier === null || !idrinth.user.identifier.match ( /^[a-z0-9]{4}-[a-z0-9]{8}-[a-z0-9]{12}-[a-z0-9]{16}-[a-z0-9]{20}-[a-z0-9]{24}$/ ) ) {
                 idrinth.user.identifier = guid ();
             }
             window.localStorage.setItem ( 'idrinth-dotd-uuid', idrinth.user.identifier );
-            idrinth.runAjax ( 'https://dotd.idrinth.de/' +
-                    ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform +
-                    '/i-am-alive/' + idrinth.user.identifier + '/' );
+            return idrinth.user.identifier;
+        };
+        if ( !window.localStorage ) {
+            return;
         }
+        idrinth.runAjax ( 'https://dotd.idrinth.de/' +
+                ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform +
+                '/i-am-alive/' + getIdentifier() + '/' );
     }
 };
