@@ -64,18 +64,21 @@ idrinth.raids = {
     },
     importProcess: function ( responseText ) {
         'use strict';
+        var delHandler = function(key) {
+            if ( key in idrinth.raids.list ) {
+                delete idrinth.raids.list[key];
+            }
+            if ( key in idrinth.raids.joined ) {
+                delete idrinth.raids.joined[key];
+            }
+            if ( document.getElementById ( 'idrinth-raid-link-' + key ) ) {
+                idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
+            }
+        };
         var list = JSON.parse ( responseText );
         for (var key in list) {
             if ( list[key].delete ) {
-                if ( key in idrinth.raids.list ) {
-                    delete idrinth.raids.list[key];
-                }
-                if ( key in idrinth.raids.joined ) {
-                    delete idrinth.raids.joined[key];
-                }
-                if ( document.getElementById ( 'idrinth-raid-link-' + key ) ) {
-                    idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
-                }
+                delHandler(key);
             } else if ( idrinth.raids.list[key] === undefined ) {
                 idrinth.raids.list[key] = list[key];
             }
@@ -102,16 +105,13 @@ idrinth.raids = {
                     if ( idrinth.realSite === 'armorgames' ) {
                         idrinth.raids.join.data.prefix = 'http://50.18.191.15/armor/raidjoin.php?user_id=' + idrinth.user.id +
                                 '&auth_token=' + idrinth.user.token + '&';
-                    }
-                    if ( idrinth.realSite === 'kongregate' ) {
+                    } else if ( idrinth.realSite === 'kongregate' ) {
                         idrinth.raids.join.data.prefix = 'http://50.18.191.15/kong/raidjoin.php?kongregate_username=' + idrinth.user.name +
                                 '&kongregate_user_id=' + idrinth.user.id + '&kongregate_game_auth_token=' +
                                 idrinth.user.token + '&';
-                    }
-                    if ( idrinth.realSite === 'newgrounds' ) {
+                    } else if ( idrinth.realSite === 'newgrounds' ) {
                         idrinth.raids.join.data.prefix = 'https://newgrounds.com/portal/view/609826?';
-                    }
-                    if ( idrinth.realSite === 'dawnofthedragons' || idrinth.realSite === 'facebook' ) {
+                    } else if ( idrinth.realSite === 'dawnofthedragons' || idrinth.realSite === 'facebook' ) {
                         idrinth.raids.join.data.prefix = 'https://web1.dawnofthedragons.com/live_iframe/raidjoin.php?';
                     }
                 }

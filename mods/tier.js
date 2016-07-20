@@ -8,14 +8,10 @@ idrinth.tier = {
                     idrinth.tier.import ( text );
                 },
                 function ( ) {
-                    window.setTimeout ( function () {
-                        idrinth.tier.start ();
-                    }, 10000 );
+                    window.setTimeout (idrinth.tier.start, 10000 );
                 },
                 function ( ) {
-                    window.setTimeout ( function () {
-                        idrinth.tier.start ();
-                    }, 10000 );
+                    window.setTimeout ( idrinth.tier.start, 10000 );
                 }
         );
     },
