@@ -128,10 +128,10 @@ idrinth.chat = {
                 }
             },
             function (reply) {
-                idrinth.alert('Can\'t modify that user at the moment');
+                idrinth.alert(this.getMsg('modify.fail'));
             },
             function (reply) {
-                idrinth.alert('Can\'t modify that user at the moment');
+                idrinth.alert(this.getMsg('modify.fail'));
             },
             JSON.stringify({chat: chat, user: user, access: rank})
         );
@@ -407,29 +407,29 @@ idrinth.chat = {
             'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/create/',
             idrinth.chat.joinCallback,
             function (reply) {
-                idrinth.alert('Can\'t create at the moment');
+                idrinth.alert(this.getMsg('create.fail'));
             },
             function (reply) {
-                idrinth.alert('Can\'t create at the moment');
+                idrinth.alert(this.getMsg('create.fail'));
             },
             document.getElementById('idrinth-make-chat').getElementsByTagName('input')[0].value
         );
     },
     joinCallback: function (reply) {
         if (!reply) {
-            idrinth.alert('Can\'t join at the moment');
+            idrinth.alert(this.getMsg('join.fail'));
             return;
         }
         reply = JSON.parse(reply);
         if (!reply) {
-            idrinth.alert('Can\'t join at the moment');
+            idrinth.alert(this.getMsg('join.fail'));
             return;
         }
         if (!reply.success) {
             if (reply.message) {
                 idrinth.alert(reply.message);
             } else {
-                idrinth.alert('Joining didn\'t work');
+                idrinth.alert(this.getMsg('join.notwork'));
             }
             return;
         }
@@ -445,10 +445,10 @@ idrinth.chat = {
             'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/join/',
             idrinth.chat.joinCallback,
             function (reply) {
-                idrinth.alert('Can\'t join at the moment');
+                idrinth.alert(this.getMsg('join.fail'));
             },
             function (reply) {
-                idrinth.alert('Can\'t join at the moment');
+                idrinth.alert(this.getMsg('join.fail'));
             },
             JSON.stringify({
                 id: document.getElementById('idrinth-add-chat').getElementsByTagName('input')[0].value,
@@ -485,12 +485,12 @@ idrinth.chat = {
     },
     loginCallback: function (data) {
         if (!data) {
-            idrinth.alert('Logging in failed in an unexpected way');
+            idrinth.alert(this.getMsg('login.fail'));
             return;
         }
         data = JSON.parse(data);
         if (!data) {
-            idrinth.alert('Logging in failed in an unexpected way');
+            idrinth.alert(this.getMsg('login.fail'));
             return;
         }
         if (!data.success && data.message && data['allow-reg']) {
@@ -509,10 +509,10 @@ idrinth.chat = {
             idrinth.chat.join(data.data);
             return;
         }
-        idrinth.alert('Logging in failed in an unexpected way');
+        idrinth.alert(this.getMsg('login.fail'));
     },
     startRegistration: function () {
-        if (idrinth.confirm('The given username for dotd.idrinth.de is unknown, do you want to register it there?')) {
+        if (idrinth.confirm(this.getMsg('user.unknown'))) {
             idrinth.chat.register();
         }
     },
@@ -521,7 +521,7 @@ idrinth.chat = {
             'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/register/',
             idrinth.chat.loginCallback,
             function (reply) {
-                idrinth.alert('Logging in failed in an unexpected way');
+                idrinth.alert(this.getMsg('login.fail'));
             },
             function (reply) {
                 window.setTimeout(function () {
@@ -539,7 +539,7 @@ idrinth.chat = {
             'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/login/',
             idrinth.chat.loginCallback,
             function (reply) {
-                idrinth.alert('Logging in failed in an unexpected way');
+                idrinth.alert(this.getMsg('login.fail'));
             },
             function (reply) {
                 window.setTimeout(function () {
@@ -559,7 +559,7 @@ idrinth.chat = {
                 idrinth.chat.updateTimeout = window.setTimeout(idrinth.chat.refreshChats, 1500);
             },
             function (reply) {
-                idrinth.alert('Logging in failed in an unexpected way');
+                idrinth.alert(this.getMsg('login.fail'));
             },
             function (reply) {
                 window.setTimeout(function () {
@@ -598,5 +598,24 @@ idrinth.chat = {
             chat.setAttribute('class', 'idrinth-hovering-box active' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ));
         }
         element.innerHTML = '&gt;&gt;';
+    },
+    getMsg: function(key){
+        var textKey = key || '';
+        switch (textKey){
+            case 'modify.fail':
+                return 'Can\'t modify that user at the moment';
+            case 'create.fail':
+                return 'Can\'t create at the moment';
+            case 'join.fail':
+                return 'Can\'t join at the moment';
+            case 'join.notwork':
+                return 'Joining didn\'t work';
+            case 'user.unknown':
+                return 'The given username for dotd.idrinth.de is unknown, do you want to register it there?';
+            case 'login.fail':
+                return 'Login failed in an unexpected way';
+            default:
+                return '';
+        }
     }
 };
