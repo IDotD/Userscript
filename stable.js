@@ -145,10 +145,14 @@ var idrinth = {
         idrinth.ajax[pos].onreadystatechange = function ( event ) {
             var request = ( event || window.event ).target;
             var call = function ( func, value ) {
-                if ( !typeof func === 'function' ) {
+                if ( typeof func !== 'function' ) {
                     return;
                 }
-                return func ( value );
+                try{
+                    return func ( value );
+                } catch(e) {
+                    return null;
+                }
             };
             if ( request.readyState === 4 ) {
                 var status = ( request.status > 199 && request.status < 300 ) || request.status === 0;
