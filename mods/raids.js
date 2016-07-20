@@ -64,18 +64,21 @@ idrinth.raids = {
     },
     importProcess: function ( responseText ) {
         'use strict';
+        var delHandler = function(key) {
+            if ( key in idrinth.raids.list ) {
+                delete idrinth.raids.list[key];
+            }
+            if ( key in idrinth.raids.joined ) {
+                delete idrinth.raids.joined[key];
+            }
+            if ( document.getElementById ( 'idrinth-raid-link-' + key ) ) {
+                idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
+            }
+        };
         var list = JSON.parse ( responseText );
         for (var key in list) {
             if ( list[key].delete ) {
-                if ( key in idrinth.raids.list ) {
-                    delete idrinth.raids.list[key];
-                }
-                if ( key in idrinth.raids.joined ) {
-                    delete idrinth.raids.joined[key];
-                }
-                if ( document.getElementById ( 'idrinth-raid-link-' + key ) ) {
-                    idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
-                }
+                delHandler(key);
             } else if ( idrinth.raids.list[key] === undefined ) {
                 idrinth.raids.list[key] = list[key];
             }
