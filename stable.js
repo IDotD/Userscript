@@ -1118,7 +1118,7 @@ var idrinth = {
                 }
             };
             var addChildren=function(el,config) {
-                if ( config.children && config.children.length === 0 ) {
+                if ( !config.children || config.children.length === 0 ) {
                     return;
                 }
                 for (var count = 0; count < config.children.length; count++) {
@@ -1126,7 +1126,7 @@ var idrinth = {
                 }
             };
             var addAttributes=function(el,config) {
-                if ( config.attributes && config.attributes.length === 0 ) {
+                if ( !config.attributes || config.attributes.length === 0 ) {
                     return;
                 }
                 for (count = 0; count < config.attributes.length; count++) {
