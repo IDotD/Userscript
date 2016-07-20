@@ -29,18 +29,40 @@ idrinth.war = {
     },
     updateData: function ( data ) {
         var process=function ( data ) {
-            var hideGui = function () {
-                idrinth.war.element.setAttribute ( 'style', 'display:none' );
-                while ( idrinth.war.element.childNodes[1].childNodes[1].firstChild ) {
-                    idrinth.war.element.childNodes[1].childNodes[1].removeChild ( idrinth.war.element.childNodes[1].firstChild.firstChild );
+            var toggleGUI = function(onOff){
+                var toggle = onOff || false;
+                if(toggle === true){
+                    idrinth.war.element.setAttribute ( 'style', '' );
+                    var classes = idrinth.war.element.getAttribute ( 'class' );
+                    idrinth.war.element.setAttribute ( 'class', idrinth.settings.warBottom ? classes + ' bottom' : classes.replace ( / bottom/g, '' ) );
+                } else {
+                    idrinth.war.element.setAttribute ( 'style', 'display:none' );
+                    while ( idrinth.war.element.childNodes[1].childNodes[1].firstChild ) {
+                        idrinth.war.element.childNodes[1].childNodes[1].removeChild ( idrinth.war.element.childNodes[1].firstChild.firstChild );
+                    }
                 }
             };
-            var showGui = function () {
-                idrinth.war.element.setAttribute ( 'style', '' );
-                var classes = idrinth.war.element.getAttribute ( 'class' );
-                idrinth.war.element.setAttribute ( 'class', idrinth.settings.warBottom ? classes + ' bottom' : classes.replace ( / bottom/g, '' ) );
-            };
             var processJson = function ( data ) {
+                var magicIgmSrv = 'https://dotd.idrinth.de/static/magic-image-service/';
+                var getMagic = function (data) {
+                    var magics = [],
+                        tmp;
+                    if (!data || (data.magics === null || data.magics === '')) {
+                        return [];
+                    }
+                    tmp = data.magics.split(',');
+                    for (var key = 0; key < tmp.length; key++) {
+                        var magic = tmp[key];
+                        var magicObj = {
+                            type: 'img',
+                            attributes: [
+                                {name: 'src', value: magicIgmSrv + magic + '/'},
+                                {name: 'width', value: '20'}]
+                        };
+                        magics.push(magicObj);
+                    }
+                    return magics;
+                };
                 function addRaids ( raids ) {
                     for (var key in raids) {
                         if ( idrinth.raids.joined[key] === undefined && idrinth.raids.list[key] === undefined ) {
@@ -49,43 +71,23 @@ idrinth.war = {
                     }
                 }
                 function updateBoss ( data, element ) {
-                    while ( element.getElementsByTagName ( 'td' )[3].firstChild ) {
-                        element.getElementsByTagName ( 'td' )[3].removeChild ( element.getElementsByTagName ( 'td' )[3].firstChild );
-                    }
-                    if ( data.magics !== null && data.magics !== '' ) {
-                        var tmp = data.magics.split ( ',' );
-                        for (var key = 0; key < tmp.length; key++) {
-                            element.getElementsByTagName ( 'td' )[3].appendChild (
-                                    idrinth.ui.buildElement ( {
-                                        type: 'img',
-                                        attributes: [
-                                            { name: 'src', value: 'https://dotd.idrinth.de/static/magic-image-service/' + data.magics.split ( ',' )[key] + '/' },
-                                            { name: 'width', value: '20' }
-                                        ] } )
-                                    );
+                    //TODO: Dummy function, should be removed
+                    function cleanUp() {
+                        while (element.getElementsByTagName('td')[3].firstChild) {
+                            element.getElementsByTagName('td')[3].removeChild(element.getElementsByTagName('td')[3].firstChild);
                         }
                     }
-                    element.getElementsByTagName ( 'td' )[0].setAttribute ( "class", 'traffic ' + ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) ) );
-                    element.getElementsByTagName ( 'td' )[0].setAttribute ( "title", data.amount + '/100' );
-                    element.getElementsByTagName ( 'td' )[0].firstChild.innerHTML = ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) );
+
+                    cleanUp();
+                    var tmpMagics = getMagic(data);
+                    for (var m = 0; m < tmpMagics.length; m++) {
+                        element.getElementsByTagName('td')[3].appendChild(idrinth.ui.buildElement(tmpMagics[m]));
+                    }
+                    element.getElementsByTagName('td')[0].setAttribute("class", 'traffic ' + ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) ));
+                    element.getElementsByTagName('td')[0].setAttribute("title", data.amount + '/100');
+                    element.getElementsByTagName('td')[0].firstChild.innerHTML = ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) );
                 }
                 function newBoss ( data, boss ) {
-                    var getMagic = function ( data ) {
-                        var magics = [ ];
-                        if ( data.magics !== null && data.magics !== '' ) {
-                            var tmp = data.magics.split ( ',' );
-                            for (var key = 0; key < tmp.length; key++) {
-                                magics.push ( {
-                                    type: 'img',
-                                    attributes: [
-                                        { name: 'src', value: 'https://dotd.idrinth.de/static/magic-image-service/' + data.magics.split ( ',' )[key] + '/' },
-                                        { name: 'width', value: '20' }
-                                    ] }
-                                );
-                            }
-                        }
-                        return magics;
-                    };
                     idrinth.war.element.childNodes[1].appendChild ( idrinth.ui.buildElement (
                             {
                                 type: 'tr',
@@ -139,10 +141,10 @@ idrinth.war = {
                 return;
             }
             if ( data === "{}" ) {
-                hideGui ();
+                toggleGUI(false);
                 return;
             }
-            showGui ();
+            toggleGUI(true);
             try {
                 processJson ( JSON.parse ( data ) );
             } catch ( e ) {
