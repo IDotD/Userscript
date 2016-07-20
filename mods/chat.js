@@ -44,61 +44,65 @@ idrinth.chat = {
         idrinth.chat.oldMessages = [];
         window.setTimeout ( idrinth.chat.refreshChats, 666 );
     },
-    userclick: function ( element, user, chat ) {
-        if ( !idrinth.chat.chatRank[chat][idrinth.chat.self] || idrinth.chat.chatRank[chat][idrinth.chat.self] === 'User' ) {
-            return;//Users can't do stuff
+    userclick: function (element, user, chat) {
+        function hasRights(id) {
+            return id === '3' || id === '4';
         }
-        var options = [ ];
-        options.push (
-                idrinth.ui.buildElement (
-                        { type: 'li', content: 'Ban User', attributes: [
-                                {
-                                    name: 'onclick',
-                                    value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Banned\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                                }
-                            ] } ) );
-        if ( idrinth.chat.chatRank[chat][idrinth.chat.self] === 'Owner' ) {
-            options.push (
-                    idrinth.ui.buildElement (
-                            { type: 'li', content: 'Make Moderator', attributes: [
-                                    {
-                                        name: 'onclick',
-                                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Mod\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                                    }
-                                ] } ) );
-            options.push (
-                    idrinth.ui.buildElement (
-                            { type: 'li', content: 'Make Admin', attributes: [
-                                    {
-                                        name: 'onclick',
-                                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Owner\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                                    }
-                                ] } ) );
-            options.push (
-                    idrinth.ui.buildElement (
-                            { type: 'li', content: 'Make User', attributes: [
-                                    {
-                                        name: 'onclick',
-                                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'User\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                                    }
-                                ] } ) );
+        var rankId = idrinth.chat.chatRank[chat][idrinth.chat.self];
+        if (!rankId || !hasRights()) {
+            return;//Banned, Empty or Users can't do stuff
         }
-        options.push (
-                idrinth.ui.buildElement (
-                        { type: 'li', content: 'Close', attributes: [
-                                {
-                                    name: 'onclick',
-                                    value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
-                                }
-                            ] } ) );
-        var list = document.createElement ( 'ul' );
+        var options = [];
+        options.push(
+            idrinth.ui.buildElement({
+                type: 'li', content: 'Ban User', attributes: [{
+                        name: 'onclick',
+                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Banned\');this.parentNode.parentNode.removeChild(this.parentNode);'
+                    }
+                ]
+            }));
+        if (rankId === '4') {
+            options.push(
+                idrinth.ui.buildElement({
+                    type: 'li', content: 'Make Moderator', attributes: [{
+                            name: 'onclick',
+                            value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Mod\');this.parentNode.parentNode.removeChild(this.parentNode);'
+                        }
+                    ]
+                }));
+            options.push(
+                idrinth.ui.buildElement({
+                    type: 'li', content: 'Make Admin', attributes: [{
+                            name: 'onclick',
+                            value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Owner\');this.parentNode.parentNode.removeChild(this.parentNode);'
+                        }
+                    ]
+                }));
+            options.push(
+                idrinth.ui.buildElement({
+                    type: 'li', content: 'Make User', attributes: [{
+                            name: 'onclick',
+                            value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'User\');this.parentNode.parentNode.removeChild(this.parentNode);'
+                        }
+                    ]
+                }));
+        }
+        options.push(
+            idrinth.ui.buildElement({
+                type: 'li', content: 'Close', attributes: [{
+                        name: 'onclick',
+                        value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
+                    }
+                ]
+            }));
+        var list = document.createElement('ul');
         for (var count = 0; count < options.length; count++) {
-            list.appendChild ( options[count] );
+            list.appendChild(options[count]);
         }
-        list.setAttribute ( 'class', 'idrinth-userinfo-box' );
-        var pos = idrinth.ui.getPosition ( element );
-        list.setAttribute ( 'style', 'left:' + pos.x + 'px;top:' + pos.y + 'px' );
-        idrinth.ui.body.appendChild ( list );
+        list.setAttribute('class', 'idrinth-userinfo-box');
+        var pos = idrinth.ui.getPosition(element);
+        list.setAttribute('style', 'left:' + pos.x + 'px;top:' + pos.y + 'px');
+        idrinth.ui.body.appendChild(list);
     },
     useroptions: function ( chat, user, rank ) {
         idrinth.runAjax (
