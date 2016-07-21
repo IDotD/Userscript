@@ -1314,6 +1314,4 @@ var idrinth = {
         idrinth.ui.buildModal ('Do you?',text,callback);
     }
 };
-window.setTimeout ( function ( ) {
-    idrinth.start ( );
-}, 6666 );
+window.setTimeout (idrinth.start, 6666 );
