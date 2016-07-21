@@ -52,31 +52,31 @@ idrinth.chat = {
         var getPopupContent=function(chat,user,rankId) {
             var getPromotionOptions=function(chat) {
                 var promotionModes=[
-                    {label:'Ban User',rank:'Banned',requiredRank:3},
-                    {label:'Make Moderator',rank:'Mod',requiredRank:3},
-                    {label:'Make Admin',rank:'Owner',requiredRank:4},
-                    {label:'Make User',rank:'User',requiredRank:3}
+                    {chat:chat,label:'Ban User',rank:'Banned',requiredRank:3},
+                    {chat:chat,label:'Make Moderator',rank:'Mod',requiredRank:3},
+                    {chat:chat,label:'Make Admin',rank:'Owner',requiredRank:4},
+                    {chat:chat,label:'Make User',rank:'User',requiredRank:3}
                 ];
                 for(var chatId in idrinth.chat.chatRank) {
                     if(parseInt(chatId)!==parseInt(chat)&&parseInt(chatId)>1&&!(user in idrinth.chat.chatRank[chatId])) {
-                        promotionModes.push({label:'Invite to Chat '+document.getElementById('idrinth-chat-tab-click-'+chatId).innerHTML,rank:'User',requiredRank:1});
+                        promotionModes.push({chat:chatId,label:'Invite to Chat '+document.getElementById('idrinth-chat-tab-click-'+chatId).innerHTML,rank:'User',requiredRank:1});
                     }
                 }
                 return promotionModes;
             };
-            var promoteNode=function(label,chat,rank,user,requiredRank,ownRank) {
+            var promoteNode=function(node,user,ownRank) {
                 var hasRights=function (reqRank,ownRank) {
                     return reqRank<=ownRank;
                 };
-                if(!hasRights(requiredRank,ownRank)) {
+                if(!hasRights(node.requiredRank,ownRank)) {
                     return;
                 }
                 return {
-                    content: label,
+                    content: node.label,
                     type:'li',
                     attributes: [{
                         name: 'onclick',
-                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\''+rank+'\');'
+                        value: 'idrinth.chat.useroptions(' + node.chat + ',' + user + ',\''+node.rank+'\');'
                                 +'this.parentNode.parentNode.removeChild(this.parentNode);'
                     }]
                 };
@@ -84,7 +84,7 @@ idrinth.chat = {
             var popupContent = [];
             var promotionModes=getPromotionOptions(chat,user);
             for(var count=0;count < promotionModes.length;count++) {
-                var tmp = promoteNode(promotionModes[count].label,chat,promotionModes[count].rank,user,promotionModes[count].requiredRank,rankId);
+                var tmp = promoteNode(promotionModes[count],user,rankId);
                 if(tmp) {
                     popupContent.push (tmp);
                 }
