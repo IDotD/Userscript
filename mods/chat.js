@@ -142,10 +142,9 @@ idrinth.chat = {
                 var callbackHandler = function (textcontent, func, text) {
                     var tmp = func(text);
                     for (var c2 = 0; c2 < tmp.length; c2++) {
-                        if (tmp[c2] === undefined) {
-                            continue;
+                        if (tmp[c2] !== undefined) {
+                            textcontent.push(tmp[c2]);
                         }
-                        textcontent.push(tmp[c2]);
                     }
                     return textcontent;
                 };
@@ -347,7 +346,9 @@ idrinth.chat = {
                         chat.removeChild(chat.firstChild);
                     }
                     for (var userId in idrinth.chat.chatRank[chatId]) {
-                        if (!idrinth.chat.chatRank[chatId].hasOwnProperty(userId)) continue;
+                        if (!idrinth.chat.chatRank[chatId].hasOwnProperty(userId)) {
+                            continue;
+                        }
                         addMemberElement(chat, chatId, userId);
                     }
                 }
@@ -552,17 +553,19 @@ idrinth.chat = {
         }
         element.innerHTML = '&gt;&gt;';
     },
-    getMsg: function(key){
+    getMsg: function (key) {
         var textKey = key || '';
         var text = {
-            'modify.fail' : 'Can\'t modify that user at the moment',
-            'create.fail' : 'Can\'t create at the moment',
+            'modify.fail': 'Can\'t modify that user at the moment',
+            'create.fail': 'Can\'t create at the moment',
             'join.fail': 'Can\'t join at the moment',
-            'join.notwork':'Joining didn\'t work',
-            'user.unknown':'The given username for dotd.idrinth.de is unknown, do you want to register it there?',
-            'login.fail':'Login failed in an unexpected way'
+            'join.notwork': 'Joining didn\'t work',
+            'user.unknown': 'The given username for dotd.idrinth.de is unknown, do you want to register it there?',
+            'login.fail': 'Login failed in an unexpected way',
+            'default.error' : 'Unexpected error occurred. Please contact script developers'
+                              + ' (https://github.com/Idrinth/IDotD).'
         };
-        return text[textKey];
+        return text.hasOwnProperty(textKey) ? text[textKey] : text['default.error'];
     },
     loginActions: function (key) {
         var chatLogin,
