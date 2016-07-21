@@ -67,7 +67,8 @@ idrinth.chat = {
                     return;
                 }
                 return {
-                    title: label,
+                    content: label,
+                    type:'li',
                     attr: [{
                         name: 'onclick',
                         value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\''+rank+'\');'
