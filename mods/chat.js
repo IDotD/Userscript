@@ -517,60 +517,13 @@ idrinth.chat = {
         }
     },
     register: function () {
-        idrinth.runAjax(
-            'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/register/',
-            idrinth.chat.loginCallback,
-            function (reply) {
-                idrinth.alert(this.getMsg('login.fail'));
-            },
-            function (reply) {
-                window.setTimeout(function () {
-                    idrinth.chat.login();
-                }, 1);
-            },
-            JSON.stringify({
-                user: document.getElementById('idrinth-chat-login').getElementsByTagName('input')[0].value,
-                pass: document.getElementById('idrinth-chat-login').getElementsByTagName('input')[1].value
-            })
-        );
+        this.loginActions('login');
     },
     login: function () {
-        idrinth.runAjax(
-            'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/login/',
-            idrinth.chat.loginCallback,
-            function (reply) {
-                idrinth.alert(this.getMsg('login.fail'));
-            },
-            function (reply) {
-                window.setTimeout(function () {
-                    idrinth.chat.login();
-                }, 1);
-            },
-            JSON.stringify({
-                user: document.getElementById('idrinth-chat-login').getElementsByTagName('input')[0].value,
-                pass: document.getElementById('idrinth-chat-login').getElementsByTagName('input')[1].value
-            })
-        );
+        this.loginActions('login');
     },
     relogin: function () {
-        idrinth.runAjax(
-            'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/login/',
-            function () {
-                idrinth.chat.updateTimeout = window.setTimeout(idrinth.chat.refreshChats, 1500);
-            },
-            function (reply) {
-                idrinth.alert(this.getMsg('login.fail'));
-            },
-            function (reply) {
-                window.setTimeout(function () {
-                    idrinth.chat.login();
-                }, 1);
-            },
-            JSON.stringify({
-                user: idrinth.settings.chatuser,
-                pass: idrinth.settings.chatpass
-            })
-        );
+        this.loginActions('relogin');
     },
     enableChat: function (element) {
         var tabs = document.getElementsByClassName('chat-tabs')[0].children,
@@ -610,5 +563,41 @@ idrinth.chat = {
             'login.fail':'Login failed in an unexpected way'
         };
         return text[textKey];
+    },
+    loginActions: function (key) {
+        var chatLogin,
+            success,
+            urls = {
+                'register': 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/register/',
+                'login': 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/login/',
+                'relogin': 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/login/'
+            },
+            fail = function () {
+                idrinth.alert(this.getMsg('login.fail'));
+            },
+            timeout = function () {
+                window.setTimeout(function () {
+                    idrinth.chat.login();
+                }, 1);
+            },
+            headers = {user: '', pass: ''};
+
+        if (!urls[key]) {
+            return;
+        }
+
+        if (key === 'relogin') {
+            success = function () {
+                idrinth.chat.updateTimeout = window.setTimeout(idrinth.chat.refreshChats, 1500);
+            };
+            headers.user = idrinth.settings.chatuser;
+            headers.pass = idrinth.settings.chatpass;
+        } else {
+            chatLogin = document.getElementById('idrinth-chat-login').getElementsByTagName('input');
+            headers.user = chatLogin[0].value;
+            headers.pass = chatLogin[1].value;
+            success = idrinth.chat.loginCallback;
+        }
+        idrinth.runAjax(urls[key], success, fail, timeout, JSON.stringify(headers));
     }
 };
