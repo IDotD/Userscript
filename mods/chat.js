@@ -69,7 +69,7 @@ idrinth.chat = {
                 return {
                     content: label,
                     type:'li',
-                    attr: [{
+                    attributes: [{
                         name: 'onclick',
                         value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\''+rank+'\');'
                                 +'this.parentNode.parentNode.removeChild(this.parentNode);'
@@ -94,7 +94,7 @@ idrinth.chat = {
         popupContent.push ({
                 type:'li',
                 content: 'Close',
-                attr: [{
+                attributes: [{
                     name: 'onclick',
                     value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
                 }]
