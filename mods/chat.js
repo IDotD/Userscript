@@ -287,7 +287,7 @@ idrinth.chat = {
             }
             for (var key in messages) {
                 if (
-                        ( typeof key === 'int' || typeof key === 'string' )
+                        ( parseInt(key,10) !== NaN )
                         && document.getElementById ( 'idrinth-chat-tab-' + key )
                         && document.getElementById ( 'idrinth-chat-tab-' + key ).getElementsByTagName ( 'ul' )[1] ) {
                     var chat = document.getElementById ( 'idrinth-chat-tab-' + key ).getElementsByTagName ( 'ul' )[1];
