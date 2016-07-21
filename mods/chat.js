@@ -517,7 +517,7 @@ idrinth.chat = {
         }
     },
     register: function () {
-        this.loginActions('login');
+        this.loginActions('register');
     },
     login: function () {
         this.loginActions('login');
