@@ -1006,95 +1006,95 @@ var idrinth = {
                 idrinth.ui.body.appendChild ( idrinth.ui.tooltip );
             }
         },
-        buildElement: function ( config ) {
+        buildElement: function (config) {
             'use strict';
-            var setBase = function ( el, config ) {
-                if ( config.id ) {
+            var setBase = function (el, config) {
+                if (config.id) {
                     el.id = config.id;
                 }
-                if ( config.css ) {
-                    el.setAttribute ( 'class', config.css );
+                if (config.css) {
+                    el.setAttribute('class', config.css);
                 }
-                if ( config.content ) {
-                    el.appendChild ( document.createTextNode ( config.content ) );
+                if (config.content) {
+                    el.appendChild(document.createTextNode(config.content));
                 }
             };
-            var addChildren = function ( el, config ) {
-                if ( !config.children || !config.children.length ) {
+            var addChildren = function (el, config) {
+                if (!config.children || !config.children.length) {
                     return;
                 }
                 for (var count = 0; count < config.children.length; count++) {
-                    el.appendChild ( idrinth.ui.buildElement ( config.children[count] ) );
+                    el.appendChild(idrinth.ui.buildElement(config.children[count]));
                 }
             };
-            var addAttributes = function ( el, config ) {
-                if ( !config.attributes || !config.attributes.length ) {
+            var addAttributes = function (el, config) {
+                if (!config.attributes || !config.attributes.length) {
                     return;
                 }
                 for (var count = 0; count < config.attributes.length; count++) {
-                    el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
+                    el.setAttribute(config.attributes[count].name, config.attributes[count].value);
                 }
             };
-            var makeInputLabel = function ( config ) {
+            var makeInputLabel = function (config) {
                 'use strict';
-                var input = [ {
-                        name: 'type',
-                        value: config.type
-                    } ];
-                if ( idrinth.settings[config.name] && config.type === 'checkbox' ) {
-                    input.push ( {
+                var input = [{
+                    name: 'type',
+                    value: config.type
+                }];
+                if (idrinth.settings[config.name] && config.type === 'checkbox') {
+                    input.push({
                         name: 'checked',
                         value: 'checked'
-                    } );
+                    });
                 }
-                if ( config.type !== 'checkbox' ) {
-                    input.push ( {
+                if (config.type !== 'checkbox') {
+                    input.push({
                         name: 'value',
                         value: idrinth.settings[config.name]
-                    } );
-                    input.push ( {
+                    });
+                    input.push({
                         name: 'onchange',
                         value: 'idrinth.settings.change(\'' + config.name + '\',this.value)'
-                    } );
+                    });
                 } else {
-                    input.push ( {
+                    input.push({
                         name: 'onchange',
                         value: 'idrinth.settings.change(\'' + config.name + '\',this.checked)'
-                    } );
+                    });
                 }
-                return idrinth.ui.buildElement ( {
+                return idrinth.ui.buildElement({
                     css: 'idrinth-line',
                     type: 'div',
-                    attributes: [ {
-                            name: 'style',
-                            value: config.platforms && !idrinth.inArray ( idrinth.realSite, config.platforms ) ? 'display:none;' : ''
-                        } ],
-                    children: [ {
-                            type: 'label',
-                            css: 'idrinth-float-half',
-                            content: config.label,
-                            attributes: [ {
-                                    name: 'for',
-                                    value: 'idrinth-' + config.name
-                                } ]
-                        }, {
-                            type: 'input',
-                            css: 'idrinth-float-half',
-                            id: 'idrinth-' + config.name,
-                            attributes: input
-                        } ]
-                } );
+                    attributes: [{
+                        name: 'style',
+                        value: config.platforms && !idrinth.inArray(idrinth.realSite, config.platforms) ? 'display:none;' : ''
+                    }],
+                    children: [{
+                        type: 'label',
+                        css: 'idrinth-float-half',
+                        content: config.label,
+                        attributes: [{
+                            name: 'for',
+                            value: 'idrinth-' + config.name
+                        }]
+                    }, {
+                        type: 'input',
+                        css: 'idrinth-float-half',
+                        id: 'idrinth-' + config.name,
+                        attributes: input
+                    }]
+                });
             };
-            if ( config.type === '#text' ) {
-                return document.createTextNode ( config.content );
+            if (config.type === '#text') {
+                return document.createTextNode(config.content);
             }
-            if ( config.rType === '#input' ) {
-                return makeInputLabel ( config );
+            if (config.rType === '#input') {
+                return makeInputLabel(config);
             }
-            var el = document.createElement ( config.type );
-            setBase ( el, config );
-            addChildren ( el, config );
-            addAttributes ( el, config );
+            var el = document.createElement(config.type);
+            setBase(el, config);
+            addChildren(el, config);
+            addAttributes(el, config);
             return el;
         },
         controls: null,
@@ -1288,8 +1288,11 @@ var idrinth = {
      * @param String text
      * @returns Null
      */
-    alert: function ( text ) {
-        window.alert ( text );
+    alert: function (text) {
+        window.alert(text);
+    },
+    confirm: function (text) {
+        window.confirm(text);
     }
 };
 window.setTimeout ( function ( ) {
