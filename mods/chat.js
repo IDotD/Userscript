@@ -42,7 +42,7 @@ idrinth.chat = {
             idrinth.chat.messages.unshift(idrinth.chat.oldMessages[count]);
         }
         idrinth.chat.oldMessages = [];
-        window.setTimeout(idrinth.chat.refreshChats, 666);
+        window.setTimeout(idrinth.chat.refreshChats, 999);
     },
     userclick: function (element, user, chat) {
         'use strict';
@@ -307,7 +307,7 @@ idrinth.chat = {
             processMessages(data.messages);
         }
         idrinth.chat.oldMessages = [];
-        idrinth.chat.updateTimeout = window.setTimeout(idrinth.chat.refreshChats, 666);
+        idrinth.chat.updateTimeout = window.setTimeout(idrinth.chat.refreshChats, 999);
     },
     ranks: ['', 'banned', 'user', 'mod', 'owner'],
     applyMembers: function (data) {
