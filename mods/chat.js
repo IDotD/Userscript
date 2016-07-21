@@ -601,21 +601,14 @@ idrinth.chat = {
     },
     getMsg: function(key){
         var textKey = key || '';
-        switch (textKey){
-            case 'modify.fail':
-                return 'Can\'t modify that user at the moment';
-            case 'create.fail':
-                return 'Can\'t create at the moment';
-            case 'join.fail':
-                return 'Can\'t join at the moment';
-            case 'join.notwork':
-                return 'Joining didn\'t work';
-            case 'user.unknown':
-                return 'The given username for dotd.idrinth.de is unknown, do you want to register it there?';
-            case 'login.fail':
-                return 'Login failed in an unexpected way';
-            default:
-                return '';
-        }
+        var text = {
+            'modify.fail' : 'Can\'t modify that user at the moment',
+            'create.fail' : 'Can\'t create at the moment',
+            'join.fail': 'Can\'t join at the moment',
+            'join.notwork':'Joining didn\'t work',
+            'user.unknown':'The given username for dotd.idrinth.de is unknown, do you want to register it there?',
+            'login.fail':'Login failed in an unexpected way'
+        };
+        return text[textKey];
     }
 };
