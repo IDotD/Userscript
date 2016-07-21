@@ -80,7 +80,7 @@ idrinth.chat = {
             var promotionModes=getPromotionOptions(chat);
             for(var count=0;count < promotionModes.length;count++) {
                 var tmp = promoteNode(promotionModes[count].label,chat,promotionModes[count].rank,user,promotionModes[count].requiredRank,rankId);
-                if(tmp!==null) {
+                if(tmp) {
                     popupContent.push (tmp);
                 }
             }
