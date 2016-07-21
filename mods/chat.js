@@ -58,7 +58,7 @@ idrinth.chat = {
                     {chat:chat,label:'Make User',rank:'User',requiredRank:3}
                 ];
                 for(var chatId in idrinth.chat.chatRank) {
-                    if(parseInt(chatId,10)!==parseInt(chat,10)&&parseInt(chatId,10)>1&&!(user in idrinth.chat.chatRank[chatId])) {
+                    if(document.getElementById('idrinth-chat-tab-click-'+chatId)&&parseInt(chatId,10)!==parseInt(chat,10)&&parseInt(chatId,10)>1&&!(user in idrinth.chat.chatRank[chatId])) {
                         promotionModes.push({chat:chatId,label:'Invite to Chat '+document.getElementById('idrinth-chat-tab-click-'+chatId).innerHTML,rank:'User',requiredRank:1});
                     }
                 }
