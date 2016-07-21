@@ -59,7 +59,7 @@ idrinth.chat = {
                 ];
                 for(var chatId in idrinth.chat.chatRank) {
                     if(parseInt(chatId)!==parseInt(chat)&&parseInt(chatId)>1&&!(user in idrinth.chat.chatRank[chatId])) {
-                        promotionModes.push({label:'Invite to Chat '+document.getElementById('idrinth-chat-tab-click-'+chatId).innerHtml,rank:'User',requiredRank:1});
+                        promotionModes.push({label:'Invite to Chat '+document.getElementById('idrinth-chat-tab-click-'+chatId).innerHTML,rank:'User',requiredRank:1});
                     }
                 }
                 return promotionModes;
