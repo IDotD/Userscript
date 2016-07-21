@@ -587,6 +587,7 @@ td.is-os {
 idrinth-hovering-box.idrinth-popup {
     left: 45%;
     top:5%;
+    position:fixed;
 }
 idrinth-hovering-box.idrinth-popup > .header{
     background:#000;
