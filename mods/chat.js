@@ -92,7 +92,8 @@ idrinth.chat = {
             return;
         }
         popupContent.push ({
-                title: 'Close',
+                type:'li',
+                content: 'Close',
                 attr: [{
                     name: 'onclick',
                     value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
