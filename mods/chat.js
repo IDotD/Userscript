@@ -61,14 +61,14 @@ idrinth.chat = {
         }
         popupContent = [
             {
-                content: 'Ban User',
+                title: 'Ban User',
                 attr: [{
                     name: 'onclick',
                     value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Banned\');this.parentNode.parentNode.removeChild(this.parentNode);'
                 }]
             },
             {
-                content: 'Close',
+                title: 'Close',
                 attr: [{
                     name: 'onclick',
                     value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
@@ -78,14 +78,14 @@ idrinth.chat = {
         if (rankId === 4) {
             promotionModes = [
                 {
-                    content: 'Make Moderator',
+                    title: 'Make Moderator',
                     attr: [{
                         name: 'onclick',
                         value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Mod\');this.parentNode.parentNode.removeChild(this.parentNode);'
                     }]
                 },
                 {
-                    content: 'Make Admin',
+                    title: 'Make Admin',
                     attr: [{
                         name: 'onclick',
                         value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Owner\');this.parentNode.parentNode.removeChild(this.parentNode);'
@@ -104,7 +104,7 @@ idrinth.chat = {
         }
         for (var i = 0, l = popupContent.length; i < l; l++) {
             var prom = popupContent[i],
-                baseType = {type: 'li', content: prom.content, attributes: prom.attr};
+                baseType = {type: 'li', content: prom.title, attributes: prom.attr};
             options.push(idrinth.ui.buildElement(baseType));
         }
         var list = document.createElement('ul');
