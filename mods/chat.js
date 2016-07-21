@@ -46,7 +46,7 @@ idrinth.chat = {
     },
     userclick: function (element, user, chat) {
         'use strict';
-        if (!idrinth.chat.chatRank[chat][idrinth.chat.self]||parseInt(user)===parseInt(idrinth.chat.self)) {
+        if (!idrinth.chat.chatRank[chat][idrinth.chat.self]||parseInt(user,10)===parseInt(idrinth.chat.self,10)) {
             return;
         }
         var getPopupContent=function(chat,user,rankId) {
@@ -58,7 +58,7 @@ idrinth.chat = {
                     {chat:chat,label:'Make User',rank:'User',requiredRank:3}
                 ];
                 for(var chatId in idrinth.chat.chatRank) {
-                    if(parseInt(chatId)!==parseInt(chat)&&parseInt(chatId)>1&&!(user in idrinth.chat.chatRank[chatId])) {
+                    if(parseInt(chatId,10)!==parseInt(chat,10)&&parseInt(chatId,10)>1&&!(user in idrinth.chat.chatRank[chatId])) {
                         promotionModes.push({chat:chatId,label:'Invite to Chat '+document.getElementById('idrinth-chat-tab-click-'+chatId).innerHTML,rank:'User',requiredRank:1});
                     }
                 }
