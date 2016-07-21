@@ -1310,8 +1310,8 @@ var idrinth = {
     alert: function (text) {
         idrinth.ui.buildModal ('Info',text);
     },
-    confirm: function (text) {
-        window.confirm(text);
+    confirm: function (text,callback) {
+        idrinth.ui.buildModal ('Do you?',text,callback);
     }
 };
 window.setTimeout ( function ( ) {

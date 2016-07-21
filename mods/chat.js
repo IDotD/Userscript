@@ -485,7 +485,7 @@ idrinth.chat = {
             return;
         }
         if (!data.success && data.message && data['allow-reg']) {
-            idrinth.chat.startRegistration();
+            idrinth.confirm (this.getMsg('user.unknown'),'idrinth.chat.register();');
             return;
         }
         if (!data.success && data.message) {
@@ -501,11 +501,6 @@ idrinth.chat = {
             return;
         }
         idrinth.alert(this.getMsg('login.fail'));
-    },
-    startRegistration: function () {
-        if (idrinth.confirm(this.getMsg('user.unknown'))) {
-            idrinth.chat.register();
-        }
     },
     register: function () {
         this.loginActions('login');
