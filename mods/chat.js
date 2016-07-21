@@ -45,76 +45,60 @@ idrinth.chat = {
         window.setTimeout(idrinth.chat.refreshChats, 666);
     },
     userclick: function (element, user, chat) {
-        function hasRights(id) {
-            return id === 3 || id === 4;
-        }
-
+        'use strict';
         if (!idrinth.chat.chatRank[chat][idrinth.chat.self]) {
-            return
+            return;
         }
-        var rankId = parseInt(idrinth.chat.chatRank[chat][idrinth.chat.self], 10),
-            options = [],
-            popupContent,
-            promotionModes;
-        if (!hasRights(rankId)) {
-            return;//Banned, Empty or Users can't do stuff
+        var getPopupContent=function(chat,user,rankId) {
+            var getPromotionOptions=function(chat) {
+                var promotionModes=[
+                    {label:'Ban User',rank:'Banned',requiredRank:3},
+                    {label:'Make Moderator',rank:'Mod',requiredRank:3},
+                    {label:'Make Admin',rank:'Owner',requiredRank:4},
+                    {label:'Make User',rank:'User',requiredRank:3}
+                ];
+                return promotionModes;
+            };
+            var promoteNode=function(label,chat,rank,user,requiredRank,ownRank) {
+                var hasRights=function (rank,ownRank) {
+                    return rank>=ownRank;
+                };
+                if(!hasRights(requiredRank,ownRank)) {
+                    return;
+                }
+                return {
+                    title: label,
+                    attr: [{
+                        name: 'onclick',
+                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\''+rank+'\');'
+                                +'this.parentNode.parentNode.removeChild(this.parentNode);'
+                    }]
+                };
+            };
+            var popupContent = [];
+            var promotionModes=getPromotionOptions(chat);
+            for(var count=0;count < promotionModes.length;count++) {
+                var tmp = promoteNode(promotionModes[count].label,chat,promotionModes[count].rank,user,promotionModes[count].requiredRank,rankId);
+                if(tmp!==null) {
+                    popupContent.push (tmp);
+                }
+            }
+            return popupContent;
+        };
+        var rankId = parseInt(idrinth.chat.chatRank[chat][idrinth.chat.self], 10);
+        var popupContent = getPopupContent(chat,user,rankId);
+        if(popupContent.length===0) {
+            return;
         }
-        popupContent = [
-            {
-                title: 'Ban User',
-                attr: [{
-                    name: 'onclick',
-                    value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Banned\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                }]
-            },
-            {
+        popupContent.push ({
                 title: 'Close',
                 attr: [{
                     name: 'onclick',
                     value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
                 }]
-            }
-        ];
-        if (rankId === 4) {
-            promotionModes = [
-                {
-                    title: 'Make Moderator',
-                    attr: [{
-                        name: 'onclick',
-                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Mod\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                    }]
-                },
-                {
-                    title: 'Make Admin',
-                    attr: [{
-                        name: 'onclick',
-                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Owner\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                    }]
-                },
-                {
-                    attr: [{
-                        name: 'onclick',
-                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'User\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                    }]
-                }
-            ];
-            promotionModes.unshift(popupContent[0]);
-            promotionModes.push(popupContent[1]);
-            popupContent = promotionModes;
-        }
-        for (var i = 0, l = popupContent.length; i < l; l++) {
-            var prom = popupContent[i],
-                baseType = {type: 'li', content: prom.title, attributes: prom.attr};
-            options.push(idrinth.ui.buildElement(baseType));
-        }
-        var list = document.createElement('ul');
-        for (var count = 0, len = options.length; count < len; count++) {
-            list.appendChild(options[count]);
-        }
-        list.setAttribute('class', 'idrinth-userinfo-box');
+            });
         var pos = idrinth.ui.getPosition(element);
-        list.setAttribute('style', 'left:' + pos.x + 'px;top:' + pos.y + 'px');
-        idrinth.ui.body.appendChild(list);
+        idrinth.ui.body.appendChild(idrinth.ui.buildElement ({type:'ul',children:popupContent,css:'idrinth-userinfo-box',attributes:[{name:'style',value:'left:' + pos.x + 'px;top:' + pos.y + 'px'}]}));
     },
     useroptions: function (chat, user, rank) {
         idrinth.runAjax(
