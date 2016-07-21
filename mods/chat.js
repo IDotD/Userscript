@@ -346,7 +346,9 @@ idrinth.chat = {
                         chat.removeChild(chat.firstChild);
                     }
                     for (var userId in idrinth.chat.chatRank[chatId]) {
-                        addMemberElement(chat, chatId, userId);
+-                       if (idrinth.chat.chatRank[chatId].hasOwnProperty(userId)) {
+                            addMemberElement(chat, chatId, userId);
+ -                      }
                     }
                 }
             }
