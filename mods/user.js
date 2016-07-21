@@ -5,12 +5,22 @@ idrinth.user = {
     identifier: '',
     start: function ( ) {
         'use strict';
+        var getCookie=function(name) {
+            var ca = document.cookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                ca[i] = ca[i].replace(/^\s*|\s*$/,'');
+                if (ca[i].indexOf(name+'=') === 0) {
+                    return ca[i].substring(name.length+1,ca[i].length);
+                }
+            }
+            return "";
+        };
         if ( idrinth.realSite === 'kongregate' ) {
             idrinth.user.name = active_user._attributes.get ( 'username' );
             idrinth.user.token = active_user.gameAuthToken ( );
             idrinth.user.id = active_user.id ( );
         } else if ( idrinth.realSite === 'newgrounds' ) {
-            idrinth.user.name = Cookies.get ( 'NG_GG_username' );
+            idrinth.user.name = getCookie ( 'NG_GG_username' );
         } else if ( idrinth.realSite === 'armorgames' ) {
             var ag = document.getElementById ( 'gamefilearea' ).children[0].src.match ( /^.+user_id=([a-f\d]{32})&auth_token=([a-f\d]{32}).+$/ );
             idrinth.user.name = window.u_name;

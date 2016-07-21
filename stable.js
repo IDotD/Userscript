@@ -30,12 +30,14 @@ var idrinth = {
                 idrinth.ui.reloadGame ();
                 idrinth.raids.clearAll ();
             } catch ( e ) {
+                idrinth.log ( e );
             }
         },
         rejoin: function () {
             try {
                 window.clearInterval ( idrinth.raids.interval );
             } catch ( e ) {
+                idrinth.log(e);
             }
             idrinth.facebook.popup = window.open ( "https://apps.facebook.com/dawnofthedragons/" );
             idrinth.facebook.popup.onload = function () {
@@ -54,7 +56,9 @@ var idrinth = {
         raids: [ ],
         joinRaids: function () {
             for (var key in idrinth.raids.list) {
-                idrinth.newgrounds.raids.push ( key );
+                if(idrinth.raids.list[key].hash&&idrinth.raids.list[key].raidId) {
+                    idrinth.newgrounds.raids.push ( key );
+                }
             }
             idrinth.newgrounds.join ();
         },
@@ -85,19 +89,21 @@ var idrinth = {
                             try {
                                 idrinth.raids.joined[key].joined = true;
                             } catch ( f ) {
+                                idrinth.log ( "We seem to have joined a dead raid" );
                             }
                         }
-                        try {
+                        if ( document.getElementById ( 'idrinth-raid-link-' + key ) ) {
                             idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
-                        } catch ( e1 ) {
                         }
                         try {
                             idrinth.raids.joined[key] = idrinth.raids.list[key];
                         } catch ( e2 ) {
+                            //lost?
                         }
                         try {
                             delete idrinth.raids.list[key];
                         } catch ( e3 ) {
+                            //already gone, nothing to do
                         }
                         idrinth.raids.join.messages.trying ( key );
                         idrinth.newgrounds.join ();
@@ -148,9 +154,9 @@ var idrinth = {
                 if ( typeof func !== 'function' ) {
                     return;
                 }
-                try{
+                try {
                     return func ( value );
-                } catch(e) {
+                } catch ( e ) {
                     return null;
                 }
             };
@@ -254,30 +260,39 @@ var idrinth = {
         },
         buildBasis: {
             makeTabs: function ( config ) {
-                var head = [];
+                var head = [ ];
                 var first = true;
-                var body = [];
-                for (var name in config) {
-                    head.push ( {
+                var body = [ ];
+                var buildHead=function(name,width,first) {
+                    return {
                         type: 'li',
                         content: name,
                         css: 'tab-activator' + ( first ? ' active' : '' ),
                         id: 'tab-activator-' + name.toLowerCase (),
                         attributes: [
                             { name: 'onclick', value: 'idrinth.ui.activateTab(\'' + name.toLowerCase () + '\');' },
-                            { name: 'style', value: 'width:' + Math.floor ( 100 / ( Object.keys ( config ) ).length ) + '%;' }
+                            { name: 'style', value: 'width:' + width + '%;' }
                         ]
-                    } );
-                    body.push ( {
+                    };
+                };
+                var buildBody=function(name,children,first){
+                    return {
                         type: 'li',
                         css: 'tab-element',
                         id: 'tab-element-' + name.toLowerCase (),
                         attributes: [
                             { name: 'style', value: first ? 'display:block;' : 'display:none;' }
                         ],
-                        children: config[name]
-                    } );
-                    first = false;
+                        children: children
+                    };
+                };
+                var width=Math.floor ( 100 / ( Object.keys ( config ) ).length );
+                for (var name in config) {
+                    if(typeof name === 'string') {
+                        head.push ( buildHead(name,width,first) );
+                        body.push ( buildBody(name,config[name],first) );
+                        first = false;
+                    }
                 }
                 return [
                     { type: 'ul', children: head, attributes: [ { name: 'style', value: 'margin:0;padding:0;overflow:hidden;width:100%;' } ] },
@@ -1085,6 +1100,7 @@ var idrinth = {
         controls: null,
         tooltipTO: null,
         showTooltip: function ( element ) {
+            'use strict';
             function tooltip ( set, element, pos, guilds, platform ) {
                 element.setAttribute ( 'style', 'display:none' );
                 if ( set ) {
@@ -1100,7 +1116,6 @@ var idrinth = {
                     idrinth.ui.tooltip.setAttribute ( 'style', 'left:' + Math.round ( pos.left - 200 ) + 'px;top:' + Math.round ( pos.top - 100 ) + 'px;' );
                 }
             }
-            'use strict';
             var pos = null;
             var name = idrinth.names.parse ( element ).toLowerCase ( );
             if ( idrinth.settings.names && idrinth.ui.tooltip && idrinth.names.users[name] ) {
