@@ -1099,6 +1099,25 @@ var idrinth = {
         },
         controls: null,
         tooltipTO: null,
+        buildModal:function(title,content,altFunc) {
+            var mod = {children:[],type:'div',css:'idrinth-hovering-box idrinth-popup idrinth-'+(typeof altFunc === 'string'?'confim':'alert')};
+            if(typeof title === 'string') {
+                mod.children.push({type:'div',content:title,css:'header'});
+            }
+            if(typeof content === 'string') {
+                mod.children.push({type:'div',content:content,css:'content'});
+            } else if(typeof content === 'object'&&content.type) {
+                mod.children.push({type:'div',children:content,css:'content'});
+            }
+            mod.children.push({type:'div',css:'buttons'});
+            var closeFunc='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);';
+            if(typeof altFunc === 'string') {
+                mod.children[mod.children.length-1].children=[{type:'button',content:'Ok',attributes:[{name:'onclick',value:altFunc}]},{type:'button',content:'Cancel',attributes:[{name:'onclick',value:closeFunc}]}];
+            } else {
+                mod.children[mod.children.length-1].children=[{type:'button',content:'Ok',attributes:[{name:'onclick',value:closeFunc}]}];
+             }
+            idrinth.ui.body.appendChild (idrinth.ui.buildElement (mod));
+        },
         showTooltip: function ( element ) {
             'use strict';
             function tooltip ( set, element, pos, guilds, platform ) {
@@ -1289,7 +1308,7 @@ var idrinth = {
      * @returns Null
      */
     alert: function (text) {
-        window.alert(text);
+        idrinth.ui.buildModal ('Info',text);
     },
     confirm: function (text) {
         window.confirm(text);
