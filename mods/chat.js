@@ -60,8 +60,8 @@ idrinth.chat = {
                 return promotionModes;
             };
             var promoteNode=function(label,chat,rank,user,requiredRank,ownRank) {
-                var hasRights=function (rank,ownRank) {
-                    return rank>=ownRank;
+                var hasRights=function (reqRank,ownRank) {
+                    return reqRank<=ownRank;
                 };
                 if(!hasRights(requiredRank,ownRank)) {
                     return;
