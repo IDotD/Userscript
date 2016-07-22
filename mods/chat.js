@@ -45,76 +45,67 @@ idrinth.chat = {
         window.setTimeout(idrinth.chat.refreshChats, 666);
     },
     userclick: function (element, user, chat) {
-        function hasRights(id) {
-            return id === 3 || id === 4;
+        'use strict';
+        if (!idrinth.chat.chatRank[chat][idrinth.chat.self]||parseInt(user,10)===parseInt(idrinth.chat.self,10)) {
+            return;
         }
-
-        if (!idrinth.chat.chatRank[chat][idrinth.chat.self]) {
-            return
+        var getPopupContent=function(chat,user,rankId) {
+            var getPromotionOptions=function(chat) {
+                var promotionModes=[
+                    {chat:chat,label:'Ban User',rank:'Banned',requiredRank:3},
+                    {chat:chat,label:'Make Moderator',rank:'Mod',requiredRank:3},
+                    {chat:chat,label:'Make Admin',rank:'Owner',requiredRank:4},
+                    {chat:chat,label:'Make User',rank:'User',requiredRank:3}
+                ];
+                for(var chatId in idrinth.chat.chatRank) {
+                    if(parseInt(chatId,10)!==parseInt(chat,10)&&parseInt(chatId,10)>1&&!(user in idrinth.chat.chatRank[chatId])) {
+                        promotionModes.push({chat:chatId,label:'Invite to Chat '+document.getElementById('idrinth-chat-tab-click-'+chatId).innerHTML,rank:'User',requiredRank:1});
+                    }
+                }
+                return promotionModes;
+            };
+            var promoteNode=function(node,user,ownRank) {
+                var hasRights=function (reqRank,ownRank) {
+                    return reqRank<=ownRank;
+                };
+                if(!hasRights(node.requiredRank,ownRank)) {
+                    return;
+                }
+                return {
+                    content: node.label,
+                    type:'li',
+                    attributes: [{
+                        name: 'onclick',
+                        value: 'idrinth.chat.useroptions(' + node.chat + ',' + user + ',\''+node.rank+'\');'
+                                +'this.parentNode.parentNode.removeChild(this.parentNode);'
+                    }]
+                };
+            };
+            var popupContent = [];
+            var promotionModes=getPromotionOptions(chat,user);
+            for(var count=0;count < promotionModes.length;count++) {
+                var tmp = promoteNode(promotionModes[count],user,rankId);
+                if(tmp) {
+                    popupContent.push (tmp);
+                }
+            }
+            return popupContent;
+        };
+        var rankId = parseInt(idrinth.chat.chatRank[chat][idrinth.chat.self], 10);
+        var popupContent = getPopupContent(chat,user,rankId);
+        if(popupContent.length===0) {
+            return;
         }
-        var rankId = parseInt(idrinth.chat.chatRank[chat][idrinth.chat.self], 10),
-            options = [],
-            popupContent,
-            promotionModes;
-        if (!hasRights(rankId)) {
-            return;//Banned, Empty or Users can't do stuff
-        }
-        popupContent = [
-            {
-                title: 'Ban User',
-                attr: [{
-                    name: 'onclick',
-                    value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Banned\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                }]
-            },
-            {
-                title: 'Close',
-                attr: [{
+        popupContent.push ({
+                type:'li',
+                content: 'Close',
+                attributes: [{
                     name: 'onclick',
                     value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
                 }]
-            }
-        ];
-        if (rankId === 4) {
-            promotionModes = [
-                {
-                    title: 'Make Moderator',
-                    attr: [{
-                        name: 'onclick',
-                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Mod\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                    }]
-                },
-                {
-                    title: 'Make Admin',
-                    attr: [{
-                        name: 'onclick',
-                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'Owner\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                    }]
-                },
-                {
-                    attr: [{
-                        name: 'onclick',
-                        value: 'idrinth.chat.useroptions(' + chat + ',' + user + ',\'User\');this.parentNode.parentNode.removeChild(this.parentNode);'
-                    }]
-                }
-            ];
-            promotionModes.unshift(popupContent[0]);
-            promotionModes.push(popupContent[1]);
-            popupContent = promotionModes;
-        }
-        for (var i = 0, l = popupContent.length; i < l; l++) {
-            var prom = popupContent[i],
-                baseType = {type: 'li', content: prom.title, attributes: prom.attr};
-            options.push(idrinth.ui.buildElement(baseType));
-        }
-        var list = document.createElement('ul');
-        for (var count = 0, len = options.length; count < len; count++) {
-            list.appendChild(options[count]);
-        }
-        list.setAttribute('class', 'idrinth-userinfo-box');
+            });
         var pos = idrinth.ui.getPosition(element);
-        list.setAttribute('style', 'left:' + pos.x + 'px;top:' + pos.y + 'px');
-        idrinth.ui.body.appendChild(list);
+        idrinth.ui.body.appendChild(idrinth.ui.buildElement ({type:'ul',children:popupContent,css:'idrinth-userinfo-box',attributes:[{name:'style',value:'left:' + pos.x + 'px;top:' + pos.y + 'px'}]}));
     },
     useroptions: function (chat, user, rank) {
         idrinth.runAjax(
