@@ -37,7 +37,7 @@ var idrinth = {
             try {
                 window.clearInterval ( idrinth.raids.interval );
             } catch ( e ) {
-                idrinth.log(e);
+                idrinth.log ( e );
             }
             idrinth.facebook.popup = window.open ( "https://apps.facebook.com/dawnofthedragons/" );
             idrinth.facebook.popup.onload = function () {
@@ -56,7 +56,7 @@ var idrinth = {
         raids: [ ],
         joinRaids: function () {
             for (var key in idrinth.raids.list) {
-                if(idrinth.raids.list[key].hash&&idrinth.raids.list[key].raidId) {
+                if ( idrinth.raids.list[key].hash && idrinth.raids.list[key].raidId ) {
                     idrinth.newgrounds.raids.push ( key );
                 }
             }
@@ -263,7 +263,7 @@ var idrinth = {
                 var head = [ ];
                 var first = true;
                 var body = [ ];
-                var buildHead=function(name,width,first) {
+                var buildHead = function ( name, width, first ) {
                     return {
                         type: 'li',
                         content: name,
@@ -275,7 +275,7 @@ var idrinth = {
                         ]
                     };
                 };
-                var buildBody=function(name,children,first){
+                var buildBody = function ( name, children, first ) {
                     return {
                         type: 'li',
                         css: 'tab-element',
@@ -286,11 +286,11 @@ var idrinth = {
                         children: children
                     };
                 };
-                var width=Math.floor ( 100 / ( Object.keys ( config ) ).length );
+                var width = Math.floor ( 100 / ( Object.keys ( config ) ).length );
                 for (var name in config) {
-                    if(typeof name === 'string') {
-                        head.push ( buildHead(name,width,first) );
-                        body.push ( buildBody(name,config[name],first) );
+                    if ( typeof name === 'string' ) {
+                        head.push ( buildHead ( name, width, first ) );
+                        body.push ( buildBody ( name, config[name], first ) );
                         first = false;
                     }
                 }
@@ -1006,99 +1006,122 @@ var idrinth = {
                 idrinth.ui.body.appendChild ( idrinth.ui.tooltip );
             }
         },
-        buildElement: function (config) {
+        buildElement: function ( config ) {
             'use strict';
-            var setBase = function (el, config) {
-                if (config.id) {
+            var setBase = function ( el, config ) {
+                if ( config.id ) {
                     el.id = config.id;
                 }
-                if (config.css) {
-                    el.setAttribute('class', config.css);
+                if ( config.css ) {
+                    el.setAttribute ( 'class', config.css );
                 }
-                if (config.content) {
-                    el.appendChild(document.createTextNode(config.content));
+                if ( config.content ) {
+                    el.appendChild ( document.createTextNode ( config.content ) );
                 }
             };
-            var addChildren = function (el, config) {
-                if (!config.children || !config.children.length) {
+            var addChildren = function ( el, config ) {
+                if ( !config.children || !config.children.length ) {
                     return;
                 }
                 for (var count = 0; count < config.children.length; count++) {
-                    el.appendChild(idrinth.ui.buildElement(config.children[count]));
+                    el.appendChild ( idrinth.ui.buildElement ( config.children[count] ) );
                 }
             };
-            var addAttributes = function (el, config) {
-                if (!config.attributes || !config.attributes.length) {
+            var addAttributes = function ( el, config ) {
+                if ( !config.attributes || !config.attributes.length ) {
                     return;
                 }
                 for (var count = 0; count < config.attributes.length; count++) {
-                    el.setAttribute(config.attributes[count].name, config.attributes[count].value);
+                    el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
                 }
             };
-            var makeInputLabel = function (config) {
+            var makeInputLabel = function ( config ) {
                 'use strict';
-                var input = [{
-                    name: 'type',
-                    value: config.type
-                }];
-                if (idrinth.settings[config.name] && config.type === 'checkbox') {
-                    input.push({
+                var input = [ {
+                        name: 'type',
+                        value: config.type
+                    } ];
+                if ( idrinth.settings[config.name] && config.type === 'checkbox' ) {
+                    input.push ( {
                         name: 'checked',
                         value: 'checked'
-                    });
+                    } );
                 }
-                if (config.type !== 'checkbox') {
-                    input.push({
+                if ( config.type !== 'checkbox' ) {
+                    input.push ( {
                         name: 'value',
                         value: idrinth.settings[config.name]
-                    });
-                    input.push({
+                    } );
+                    input.push ( {
                         name: 'onchange',
                         value: 'idrinth.settings.change(\'' + config.name + '\',this.value)'
-                    });
+                    } );
                 } else {
-                    input.push({
+                    input.push ( {
                         name: 'onchange',
                         value: 'idrinth.settings.change(\'' + config.name + '\',this.checked)'
-                    });
+                    } );
                 }
-                return idrinth.ui.buildElement({
+                return idrinth.ui.buildElement ( {
                     css: 'idrinth-line',
                     type: 'div',
-                    attributes: [{
-                        name: 'style',
-                        value: config.platforms && !idrinth.inArray(idrinth.realSite, config.platforms) ? 'display:none;' : ''
-                    }],
-                    children: [{
-                        type: 'label',
-                        css: 'idrinth-float-half',
-                        content: config.label,
-                        attributes: [{
-                            name: 'for',
-                            value: 'idrinth-' + config.name
-                        }]
-                    }, {
-                        type: 'input',
-                        css: 'idrinth-float-half',
-                        id: 'idrinth-' + config.name,
-                        attributes: input
-                    }]
-                });
+                    attributes: [ {
+                            name: 'style',
+                            value: config.platforms && !idrinth.inArray ( idrinth.realSite, config.platforms ) ? 'display:none;' : ''
+                        } ],
+                    children: [ {
+                            type: 'label',
+                            css: 'idrinth-float-half',
+                            content: config.label,
+                            attributes: [ {
+                                    name: 'for',
+                                    value: 'idrinth-' + config.name
+                                } ]
+                        }, {
+                            type: 'input',
+                            css: 'idrinth-float-half',
+                            id: 'idrinth-' + config.name,
+                            attributes: input
+                        } ]
+                } );
             };
-            if (config.type === '#text') {
-                return document.createTextNode(config.content);
+            if ( config.type === '#text' ) {
+                return document.createTextNode ( config.content );
             }
-            if (config.rType === '#input') {
-                return makeInputLabel(config);
+            if ( config.rType === '#input' ) {
+                return makeInputLabel ( config );
             }
-            var el = document.createElement(config.type);
-            setBase(el, config);
-            addChildren(el, config);
-            addAttributes(el, config);
+            var el = document.createElement ( config.type );
+            setBase ( el, config );
+            addChildren ( el, config );
+            addAttributes ( el, config );
             return el;
         },
         controls: null,
         tooltipTO: null,
+        buildModal: function ( title, content, altFunc ) {
+            var mod = { children: [ ], type: 'div', css: 'idrinth-hovering-box idrinth-popup idrinth-' + ( typeof altFunc === 'string' ? 'confim' : 'alert' ) };
+            if ( typeof title === 'string' ) {
+                mod.children.push ( { type: 'div', content: title, css: 'header' } );
+            } else {
+                mod.children.push ( { type: 'div', content: 'Title missing', css: 'header' } );
+            }
+            if ( typeof content === 'string' ) {
+                mod.children.push ( { type: 'div', content: content, css: 'content' } );
+            } else if ( typeof content === 'object' && content.type ) {
+                mod.children.push ( { type: 'div', children: content, css: 'content' } );
+            } else {
+                mod.children.push ( { type: 'div', children: 'Content missing', css: 'content' } );
+            }
+            mod.children.push ( { type: 'div', css: 'buttons' } );
+            var closeFunc = 'this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);';
+            if ( typeof altFunc === 'string' ) {
+                mod.children[mod.children.length - 1].children = [ { type: 'button', content: 'Ok', attributes: [ { name: 'onclick', value: altFunc } ] }, { type: 'button', content: 'Cancel', attributes: [ { name: 'onclick', value: closeFunc } ] } ];
+            } else {
+                mod.children[mod.children.length - 1].children = [ { type: 'button', content: 'Ok', attributes: [ { name: 'onclick', value: closeFunc } ] } ];
+            }
+            idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( mod ) );
+        },
         showTooltip: function ( element ) {
             'use strict';
             function tooltip ( set, element, pos, guilds, platform ) {
@@ -1288,13 +1311,11 @@ var idrinth = {
      * @param String text
      * @returns Null
      */
-    alert: function (text) {
-        window.alert(text);
+    alert: function ( text ) {
+        idrinth.ui.buildModal ( 'Info', text );
     },
-    confirm: function (text) {
-        window.confirm(text);
+    confirm: function ( text, callback ) {
+        idrinth.ui.buildModal ( 'Do you?', text, callback );
     }
 };
-window.setTimeout ( function ( ) {
-    idrinth.start ( );
-}, 6666 );
+window.setTimeout ( idrinth.start, 6666 );

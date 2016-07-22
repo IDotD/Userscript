@@ -584,3 +584,31 @@ td.is-os {
 #idrinth-tooltip > div:hover > .idrinth-line {
     display: block;
 }
+.idrinth-hovering-box.idrinth-popup {
+    left: 45%;
+    top:5%;
+    position:fixed;
+}
+.idrinth-hovering-box.idrinth-popup > .header{
+    background:#000;
+    color:#fff;
+    text-align:center;
+    font-weight:bold;
+}
+.idrinth-hovering-box.idrinth-popup > .buttons{
+    width:100%;
+    height:auto;
+    overflow:hidden;
+}
+.idrinth-hovering-box.idrinth-popup > .buttons > button{
+    width:45%;
+    padding:2%;
+    margin:0 0.25%;
+    display:block;
+}
+.idrinth-hovering-box idrinth-popup idrinth-alert {
+    margin:0 25.25%;
+}
+.idrinth-hovering-box.idrinth-popup.idrinth-confirm > .buttons > button{
+    float:left;
+}
