@@ -58,7 +58,8 @@ idrinth.chat = {
                     { chat: chat, label: 'Make User', rank: 'User', requiredRank: 3 }
                 ];
                 for (var chatId in idrinth.chat.chatRank) {
-                    if ( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ) && parseInt ( chatId, 10 ) !== parseInt ( chat, 10 ) && parseInt ( chatId, 10 ) > 1 && !( user in idrinth.chat.chatRank[chatId] ) ) {
+                    var intChatId = parseInt ( chatId, 10 );
+                    if ( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ) && intChatId !== chat && intChatId > 1 && !( user in idrinth.chat.chatRank[chatId] ) ) {
                         promotionModes.push ( { chat: chatId, label: 'Invite to Chat ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML, rank: 'User', requiredRank: 1 } );
                     }
                 }
@@ -82,7 +83,7 @@ idrinth.chat = {
                 };
             };
             var popupContent = [ ];
-            var promotionModes = getPromotionOptions ( chat, user );
+            var promotionModes = getPromotionOptions ( parseInt ( chat, 10 ), user );
             for (var count = 0; count < promotionModes.length; count++) {
                 var tmp = promoteNode ( promotionModes[count], user, rankId );
                 if ( tmp ) {
@@ -287,7 +288,7 @@ idrinth.chat = {
             }
             for (var key in messages) {
                 if (
-                        !isNaN(parseInt(key,10))
+                        !isNaN ( parseInt ( key, 10 ) )
                         && document.getElementById ( 'idrinth-chat-tab-' + key )
                         && document.getElementById ( 'idrinth-chat-tab-' + key ).getElementsByTagName ( 'ul' )[1] ) {
                     var chat = document.getElementById ( 'idrinth-chat-tab-' + key ).getElementsByTagName ( 'ul' )[1];
@@ -505,7 +506,7 @@ idrinth.chat = {
         idrinth.alert ( this.getMsg ( 'login.fail' ) );
     },
     register: function () {
-        this.loginActions('register');
+        this.loginActions ( 'register' );
     },
     login: function () {
         this.loginActions ( 'login' );
