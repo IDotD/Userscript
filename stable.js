@@ -1091,7 +1091,7 @@ var idrinth = {
             if ( config.rType === '#input' ) {
                 return makeInputLabel ( config );
             }
-            var el = document.createElement ( config.type );
+            var el = document.createElement ( config.type ? config.type : 'div' );
             setBase ( el, config );
             addChildren ( el, config );
             addAttributes ( el, config );
