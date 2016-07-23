@@ -1032,7 +1032,7 @@ var idrinth = {
                     return;
                 }
                 for (var count = 0; count < config.attributes.length; count++) {
-                    if ( config.attributes[count].name && config.attributes[count].VALUE !== undefined ) {
+                    if ( config.attributes[count].name && config.attributes[count].value !== undefined ) {
                         el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
                     }
                 }
