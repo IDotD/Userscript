@@ -22,4 +22,4 @@ Pushes to your branch are usually deployed to it automatically within secods.
 
 # Server-Side changes
 
-Please create an issue in the related tracker [here](https://github.com/Idrinth/Idrinths-Raidsearch-Bugtracker/issues)
+Serverside code is not publicly accessible, so changes can only be implemented by  Idrinth. Please label your tickets accordingly, so they are easy to find.
