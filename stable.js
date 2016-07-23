@@ -1032,7 +1032,9 @@ var idrinth = {
                     return;
                 }
                 for (var count = 0; count < config.attributes.length; count++) {
-                    el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
+                    if ( config.attributes[count].name && config.attributes[count].VALUE !== undefined ) {
+                        el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
+                    }
                 }
             };
             var makeInputLabel = function ( config ) {
