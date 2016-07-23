@@ -19,3 +19,7 @@
 
 The test version of a branch is avabile at https::/dotd.idrinth.de/static/userscript/[branch] and is uncached.
 Pushes to your branch are usually deployed to it automatically within secods.
+
+# Server-Side changes
+
+Please create an issue in the related tracker [here](https://github.com/Idrinth/Idrinths-Raidsearch-Bugtracker/issues)
