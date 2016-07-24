@@ -1032,7 +1032,9 @@ var idrinth = {
                     return;
                 }
                 for (var count = 0; count < config.attributes.length; count++) {
-                    el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
+                    if ( config.attributes[count].name && config.attributes[count].value !== undefined ) {
+                        el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
+                    }
                 }
             };
             var makeInputLabel = function ( config ) {
@@ -1091,7 +1093,7 @@ var idrinth = {
             if ( config.rType === '#input' ) {
                 return makeInputLabel ( config );
             }
-            var el = document.createElement ( config.type );
+            var el = document.createElement ( config.type ? config.type : 'div' );
             setBase ( el, config );
             addChildren ( el, config );
             addAttributes ( el, config );
