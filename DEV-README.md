@@ -19,3 +19,7 @@
 
 The test version of a branch is avabile at https::/dotd.idrinth.de/static/userscript/[branch] and is uncached.
 Pushes to your branch are usually deployed to it automatically within secods.
+
+# Server-Side changes
+
+Serverside code is not publicly accessible, so changes can only be implemented by  Idrinth. Please label your tickets accordingly, so they are easy to find.
