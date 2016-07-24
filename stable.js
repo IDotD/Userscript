@@ -191,7 +191,6 @@ var idrinth = {
         idrinth.ajax[pos].send ( );
     },
     platform: '',
-    realSite: '',
     log: function ( string ) {
         'use strict';
         console.log ( '[IDotDS] ' + string );
@@ -771,7 +770,7 @@ var idrinth = {
                                         value: 'button'
                                     }, {
                                         name: 'style',
-                                        value: idrinth.realSite === 'newgrounds' ? '' : 'display:none'
+                                        value: idrinth.platform === 'newgrounds' ? '' : 'display:none'
                                     }, {
                                         name: 'onclick',
                                         value: 'idrinth.newgrounds.joinRaids();'
@@ -785,7 +784,7 @@ var idrinth = {
                                         value: 'button'
                                     }, {
                                         name: 'style',
-                                        value: idrinth.realSite === 'newgrounds' ? '' : 'display:none'
+                                        value: idrinth.platform === 'newgrounds' ? '' : 'display:none'
                                     }, {
                                         name: 'onclick',
                                         value: 'idrinth.settings.change(\'alarmActive\',!idrinth.settings.alarmActive);this.innerHTML=idrinth.settings.alarmActive?\'disable timed Autojoin\':\'enable timed Autojoin\''
@@ -1023,7 +1022,7 @@ var idrinth = {
                 if ( !config.children || !config.children.length ) {
                     return;
                 }
-                for (var count = 0; count < config.children.length; count++) {
+                for (var count = 0,l = config.children.length; count < l; count++) {
                     el.appendChild ( idrinth.ui.buildElement ( config.children[count] ) );
                 }
             };
@@ -1031,7 +1030,7 @@ var idrinth = {
                 if ( !config.attributes || !config.attributes.length ) {
                     return;
                 }
-                for (var count = 0; count < config.attributes.length; count++) {
+                for (var count = 0, l = config.attributes.length; count < l; count++) {
                     if ( config.attributes[count].name && config.attributes[count].value !== undefined ) {
                         el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
                     }
@@ -1069,7 +1068,7 @@ var idrinth = {
                     type: 'div',
                     attributes: [ {
                             name: 'style',
-                            value: config.platforms && !idrinth.inArray ( idrinth.realSite, config.platforms ) ? 'display:none;' : ''
+                            value: config.platforms && !idrinth.inArray ( idrinth.platform, config.platforms ) ? 'display:none;' : ''
                         } ],
                     children: [ {
                             type: 'label',
@@ -1206,13 +1205,13 @@ var idrinth = {
         reloadGame: function ( ) {
             'use strict';
             try {
-                if ( idrinth.realSite === 'kongregate' ) {
+                if ( idrinth.platform === 'kongregate' ) {
                     window.activateGame ( );
-                } else if ( idrinth.realSite === 'dawnofthedragons' ) {
+                } else if ( idrinth.platform === 'dawnofthedragons' ) {
                     document.getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', 'https://web1.dawnofthedragons.com/live_standalone/?idrinth_nc' + ( new Date ( ) ).getTime ( ) );
-                } else if ( idrinth.realSite === 'newgrounds' ) {
+                } else if ( idrinth.platform === 'newgrounds' ) {
                     document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
-                } else if ( idrinth.realSite === 'armorgames' ) {
+                } else if ( idrinth.platform === 'armorgames' ) {
                     document.getElementById ( 'gamefilearea' ).getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
                 }
             } catch ( e ) {
@@ -1252,7 +1251,7 @@ var idrinth = {
                         value: 'https://dotd.idrinth.de###PATH###/script-styles.css'
                     } ]
             } ) );
-            if ( idrinth.realSite === 'kongregate' ) {
+            if ( idrinth.platform === 'kongregate' ) {
                 idrinth.ui.buildBasis.buildTooltip ( );
             }
             idrinth.ui.buildBasis.do ( );
@@ -1261,7 +1260,7 @@ var idrinth = {
         }
     },
     startInternal: function () {
-        if ( idrinth.realSite === 'newgrounds' ) {
+        if ( idrinth.platform === 'newgrounds' ) {
             try {
                 var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
                 idrinth.newgrounds.originalUrl = frame.getAttribute ( 'src' );
@@ -1295,8 +1294,7 @@ var idrinth = {
     start: function ( ) {
         'use strict';
         idrinth.log ( 'Starting Idrinth\'s DotD Script' );
-        idrinth.realSite = location.hostname.split ( '.' )[location.hostname.split ( '.' ).length - 2];
-        idrinth.platform = idrinth.realSite;
+        idrinth.platform = location.hostname.split ( '.' )[location.hostname.split ( '.' ).length - 2];
         if ( idrinth.platform === 'dawnofthedragons' ) {
             idrinth.platform = 'facebook';
         }
