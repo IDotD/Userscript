@@ -221,7 +221,10 @@ var idrinth = {
                 id: 'idrinth-chat-tab-' + id,
                 css: rank.toLowerCase (),
                 attributes: [
-                    { name: 'data-id', value: id }
+                    {
+                        name: 'data-id',
+                        value: id
+                    }
                 ],
                 children: [
                     {
@@ -237,8 +240,14 @@ var idrinth = {
                         css: 'add-chat-box',
                         id: "idrinth-chat-input-" + id,
                         attributes: [
-                            { name: 'title', value: 'press ENTER or RETURN to send' },
-                            { name: 'onkeyup', value: 'if(event.keyCode===13||event.which===13){idrinth.chat.send(' + id + ');}' }
+                            {
+                                name: 'title',
+                                value: 'press ENTER or RETURN to send'
+                            },
+                            {
+                                name: 'onkeyup',
+                                value: 'if(event.keyCode===13||event.which===13){idrinth.chat.send(' + id + ');}'
+                            }
                         ]
                     }
                 ]
@@ -250,9 +259,18 @@ var idrinth = {
                                 content: name,
                                 id: 'idrinth-chat-tab-click-' + id,
                                 attributes: [
-                                    { name: 'data-id', value: id },
-                                    { name: 'title', value: name + "\nID:" + id + "\nPassword: " + pass },
-                                    { name: 'onclick', value: 'idrinth.chat.enableChat(this);' }
+                                    {
+                                        name: 'data-id',
+                                        value: id
+                                    },
+                                    {
+                                        name: 'title',
+                                        value: name + "\nID:" + id + "\nPassword: " + pass
+                                    },
+                                    {
+                                        name: 'onclick',
+                                        value: 'idrinth.chat.enableChat(this);'
+                                    }
                                 ]
                             }
                     )
@@ -270,8 +288,14 @@ var idrinth = {
                         css: 'tab-activator' + ( first ? ' active' : '' ),
                         id: 'tab-activator-' + name.toLowerCase (),
                         attributes: [
-                            { name: 'onclick', value: 'idrinth.ui.activateTab(\'' + name.toLowerCase () + '\');' },
-                            { name: 'style', value: 'width:' + width + '%;' }
+                            {
+                                name: 'onclick',
+                                value: 'idrinth.ui.activateTab(\'' + name.toLowerCase () + '\');'
+                            },
+                            {
+                                name: 'style',
+                                value: 'width:' + width + '%;'
+                            }
                         ]
                     };
                 };
@@ -281,7 +305,10 @@ var idrinth = {
                         css: 'tab-element',
                         id: 'tab-element-' + name.toLowerCase (),
                         attributes: [
-                            { name: 'style', value: first ? 'display:block;' : 'display:none;' }
+                            {
+                                name: 'style',
+                                value: first ? 'display:block;' : 'display:none;'
+                            }
                         ],
                         children: children
                     };
@@ -295,8 +322,22 @@ var idrinth = {
                     }
                 }
                 return [
-                    { type: 'ul', children: head, attributes: [ { name: 'style', value: 'margin:0;padding:0;overflow:hidden;width:100%;' } ] },
-                    { type: 'ul', children: body, attributes: [ { name: 'style', value: 'margin:0;padding:0;overflow-x:hidden;width:100%;max-height: 500px;overflow-y: scroll;' } ] }
+                    {
+                        type: 'ul',
+                        children: head,
+                        attributes: [ {
+                                name: 'style',
+                                value: 'margin:0;padding:0;overflow:hidden;width:100%;'
+                            } ]
+                    },
+                    {
+                        type: 'ul',
+                        children: body,
+                        attributes: [ {
+                                name: 'style',
+                                value: 'margin:0;padding:0;overflow-x:hidden;width:100%;max-height: 500px;overflow-y: scroll;'
+                            } ]
+                    }
                 ];
             },
             wrapper: function ( ) {
@@ -315,8 +356,14 @@ var idrinth = {
                     css: 'idrinth-line',
                     type: 'strong',
                     children: [
-                        { type: 'span', content: 'Idrinth\'s' },
-                        { type: 'span', content: ' DotD Script v' + idrinth.version }
+                        {
+                            type: 'span',
+                            content: 'Idrinth\'s'
+                        },
+                        {
+                            type: 'span',
+                            content: ' DotD Script v' + idrinth.version
+                        }
                     ],
                     attributes: [ {
                             name: 'title',
@@ -344,7 +391,9 @@ var idrinth = {
                 document.getElementById ( 'idrinth-favs' ).setAttribute ( 'onkeyup', 'this.value=this.value.replace(/[^a-f0-9,]/g,\'\')' );
             },
             buildLandItem: function ( label ) {
-                return { type: 'tr', children: [ {
+                return {
+                    type: 'tr',
+                    children: [ {
                             type: 'th',
                             content: label
                         }, {
@@ -353,19 +402,33 @@ var idrinth = {
                                     type: 'input',
                                     id: 'idrinth-land-' + label.toLowerCase (),
                                     attributes: [
-                                        { name: 'value', value: idrinth.settings.land[label.toLowerCase ()] },
-                                        { name: 'type', value: 'number' }
+                                        {
+                                            name: 'value',
+                                            value: idrinth.settings.land[label.toLowerCase ()]
+                                        },
+                                        {
+                                            name: 'type',
+                                            value: 'number'
+                                        }
                                     ]
                                 } ]
                         }, {
                             type: 'td',
                             content: '-'
-                        } ], attributes: [
-                        { name: 'title', value: idrinth.land.data[label.toLowerCase ()].perHour + ' gold per hour each' }
-                    ] };
+                        } ],
+                    attributes: [
+                        {
+                            name: 'title',
+                            value: idrinth.land.data[label.toLowerCase ()].perHour + ' gold per hour each'
+                        }
+                    ]
+                };
             },
             buildLand: function () {
-                return [ { type: 'table', id: 'idrinth-land-buy-table', children: [
+                return [ {
+                        type: 'table',
+                        id: 'idrinth-land-buy-table',
+                        children: [
                             idrinth.ui.buildBasis.buildLandItem ( 'Cornfield' ),
                             idrinth.ui.buildBasis.buildLandItem ( 'Stable' ),
                             idrinth.ui.buildBasis.buildLandItem ( 'Barn' ),
@@ -375,8 +438,19 @@ var idrinth = {
                             idrinth.ui.buildBasis.buildLandItem ( 'Tower' ),
                             idrinth.ui.buildBasis.buildLandItem ( 'Fort' ),
                             idrinth.ui.buildBasis.buildLandItem ( 'Castle' ),
-                            { type: 'tr', children: [ { type: 'td' }, { type: 'td' }, { type: 'td' } ] },
-                            { type: 'tr', children: [ {
+                            {
+                                type: 'tr',
+                                children: [ {
+                                        type: 'td'
+                                    }, {
+                                        type: 'td'
+                                    }, {
+                                        type: 'td'
+                                    } ]
+                            },
+                            {
+                                type: 'tr',
+                                children: [ {
                                         type: 'th',
                                         content: 'Avaible Gold'
                                     }, {
@@ -385,8 +459,14 @@ var idrinth = {
                                                 type: 'input',
                                                 id: 'idrinth-land-gold',
                                                 attributes: [
-                                                    { name: 'value', value: idrinth.settings.land.gold },
-                                                    { name: 'type', value: 'number' }
+                                                    {
+                                                        name: 'value',
+                                                        value: idrinth.settings.land.gold
+                                                    },
+                                                    {
+                                                        name: 'type',
+                                                        value: 'number'
+                                                    }
                                                 ]
                                             } ]
                                     }, {
@@ -395,19 +475,29 @@ var idrinth = {
                                                 type: 'button',
                                                 content: 'Calculate',
                                                 attributes: [
-                                                    { name: 'onclick', value: 'idrinth.land.calculate();' },
-                                                    { name: 'type', value: 'button' }
+                                                    {
+                                                        name: 'onclick',
+                                                        value: 'idrinth.land.calculate();'
+                                                    },
+                                                    {
+                                                        name: 'type',
+                                                        value: 'button'
+                                                    }
                                                 ]
                                             } ]
-                                    } ] }
-                        ] } ];
+                                    } ]
+                            }
+                        ]
+                    } ];
             },
             buildRaidJoinList: function () {
                 return [ {
                         content: 'click to copy raid link',
-                        type: 'strong' }, {
+                        type: 'strong'
+                    }, {
                         id: 'idrinth-raid-link-list',
-                        type: 'div' } ];
+                        type: 'div'
+                    } ];
             },
             buildChat: function () {
                 return idrinth.ui.buildElement ( {
@@ -418,7 +508,10 @@ var idrinth = {
                         {
                             type: 'button',
                             content: '>>',
-                            attributes: [ { name: 'onclick', value: 'idrinth.chat.openCloseChat(this);' } ]
+                            attributes: [ {
+                                    name: 'onclick',
+                                    value: 'idrinth.chat.openCloseChat(this);'
+                                } ]
                         }, {
                             type: 'ul',
                             css: 'styles-scrollbar chat-labels',
@@ -427,8 +520,14 @@ var idrinth = {
                                     css: 'active',
                                     content: "\u2699",
                                     attributes: [
-                                        { name: 'onclick', value: 'idrinth.chat.enableChat(this);' },
-                                        { name: 'data-id', value: '0' }
+                                        {
+                                            name: 'onclick',
+                                            value: 'idrinth.chat.enableChat(this);'
+                                        },
+                                        {
+                                            name: 'data-id',
+                                            value: '0'
+                                        }
                                     ]
                                 } ]
                         }, {
@@ -438,7 +537,10 @@ var idrinth = {
                                     type: 'li',
                                     css: 'styles-scrollbar active',
                                     attributes: [
-                                        { name: 'data-id', value: '0' }
+                                        {
+                                            name: 'data-id',
+                                            value: '0'
+                                        }
                                     ],
                                     children: [
                                         {
@@ -467,21 +569,45 @@ var idrinth = {
                                                         {
                                                             type: 'li',
                                                             children: [
-                                                                { type: 'label', content: 'Username' },
-                                                                { type: 'input', attributes: [
-                                                                        { name: 'type', value: 'text' },
-                                                                        { name: 'onchange', value: 'this.setAttribute(\'value\',this.value);' }
-                                                                    ] }
+                                                                {
+                                                                    type: 'label',
+                                                                    content: 'Username'
+                                                                },
+                                                                {
+                                                                    type: 'input',
+                                                                    attributes: [
+                                                                        {
+                                                                            name: 'type',
+                                                                            value: 'text'
+                                                                        },
+                                                                        {
+                                                                            name: 'onchange',
+                                                                            value: 'this.setAttribute(\'value\',this.value);'
+                                                                        }
+                                                                    ]
+                                                                }
                                                             ]
                                                         },
                                                         {
                                                             type: 'li',
                                                             children: [
-                                                                { type: 'label', content: 'Password' },
-                                                                { type: 'input', attributes: [
-                                                                        { name: 'type', value: 'text' },
-                                                                        { name: 'onchange', value: 'this.setAttribute(\'value\',this.value);' }
-                                                                    ] }
+                                                                {
+                                                                    type: 'label',
+                                                                    content: 'Password'
+                                                                },
+                                                                {
+                                                                    type: 'input',
+                                                                    attributes: [
+                                                                        {
+                                                                            name: 'type',
+                                                                            value: 'text'
+                                                                        },
+                                                                        {
+                                                                            name: 'onchange',
+                                                                            value: 'this.setAttribute(\'value\',this.value);'
+                                                                        }
+                                                                    ]
+                                                                }
                                                             ]
                                                         },
                                                         {
@@ -490,8 +616,14 @@ var idrinth = {
                                                                 {
                                                                     type: 'button',
                                                                     attributes: [
-                                                                        { name: 'type', value: 'button' },
-                                                                        { name: 'onclick', value: 'idrinth.chat.login()' }
+                                                                        {
+                                                                            name: 'type',
+                                                                            value: 'button'
+                                                                        },
+                                                                        {
+                                                                            name: 'onclick',
+                                                                            value: 'idrinth.chat.login()'
+                                                                        }
                                                                     ],
                                                                     content: 'Not logged in, click to login/register'
                                                                 }
@@ -516,21 +648,45 @@ var idrinth = {
                                                         {
                                                             type: 'li',
                                                             children: [
-                                                                { type: 'label', content: 'Chat-ID' },
-                                                                { type: 'input', attributes: [
-                                                                        { name: 'type', value: 'text' },
-                                                                        { name: 'onchange', value: 'this.setAttribute(\'value\',this.value);' }
-                                                                    ] }
+                                                                {
+                                                                    type: 'label',
+                                                                    content: 'Chat-ID'
+                                                                },
+                                                                {
+                                                                    type: 'input',
+                                                                    attributes: [
+                                                                        {
+                                                                            name: 'type',
+                                                                            value: 'text'
+                                                                        },
+                                                                        {
+                                                                            name: 'onchange',
+                                                                            value: 'this.setAttribute(\'value\',this.value);'
+                                                                        }
+                                                                    ]
+                                                                }
                                                             ]
                                                         },
                                                         {
                                                             type: 'li',
                                                             children: [
-                                                                { type: 'label', content: 'Chat-Password' },
-                                                                { type: 'input', attributes: [
-                                                                        { name: 'type', value: 'text' },
-                                                                        { name: 'onchange', value: 'this.setAttribute(\'value\',this.value);' }
-                                                                    ] }
+                                                                {
+                                                                    type: 'label',
+                                                                    content: 'Chat-Password'
+                                                                },
+                                                                {
+                                                                    type: 'input',
+                                                                    attributes: [
+                                                                        {
+                                                                            name: 'type',
+                                                                            value: 'text'
+                                                                        },
+                                                                        {
+                                                                            name: 'onchange',
+                                                                            value: 'this.setAttribute(\'value\',this.value);'
+                                                                        }
+                                                                    ]
+                                                                }
                                                             ]
                                                         },
                                                         {
@@ -539,8 +695,14 @@ var idrinth = {
                                                                 {
                                                                     type: 'button',
                                                                     attributes: [
-                                                                        { name: 'type', value: 'button' },
-                                                                        { name: 'onclick', value: 'idrinth.chat.add()' }
+                                                                        {
+                                                                            name: 'type',
+                                                                            value: 'button'
+                                                                        },
+                                                                        {
+                                                                            name: 'onclick',
+                                                                            value: 'idrinth.chat.add()'
+                                                                        }
                                                                     ],
                                                                     content: 'Click to Join additional chat'
                                                                 }
@@ -565,11 +727,23 @@ var idrinth = {
                                                         {
                                                             type: 'li',
                                                             children: [
-                                                                { type: 'label', content: 'Name' },
-                                                                { type: 'input', attributes: [
-                                                                        { name: 'type', value: 'text' },
-                                                                        { name: 'onchange', value: 'this.setAttribute(\'value\',this.value);' }
-                                                                    ] }
+                                                                {
+                                                                    type: 'label',
+                                                                    content: 'Name'
+                                                                },
+                                                                {
+                                                                    type: 'input',
+                                                                    attributes: [
+                                                                        {
+                                                                            name: 'type',
+                                                                            value: 'text'
+                                                                        },
+                                                                        {
+                                                                            name: 'onchange',
+                                                                            value: 'this.setAttribute(\'value\',this.value);'
+                                                                        }
+                                                                    ]
+                                                                }
                                                             ]
                                                         },
                                                         {
@@ -578,8 +752,14 @@ var idrinth = {
                                                                 {
                                                                     type: 'button',
                                                                     attributes: [
-                                                                        { name: 'type', value: 'button' },
-                                                                        { name: 'onclick', value: 'idrinth.chat.create()' }
+                                                                        {
+                                                                            name: 'type',
+                                                                            value: 'button'
+                                                                        },
+                                                                        {
+                                                                            name: 'onclick',
+                                                                            value: 'idrinth.chat.create()'
+                                                                        }
                                                                     ],
                                                                     content: 'Click to Create additional chat'
                                                                 }
@@ -591,22 +771,54 @@ var idrinth = {
                                         }, {
                                             type: 'li',
                                             children: [
-                                                { type: '#text', content: 'More settings at ' },
-                                                { type: 'a', content: 'dotd.idrinth.de/' + idrinth.platform + '/chat/', attributes: [
-                                                        { name: 'target', value: '_blank' },
-                                                        { name: 'href', value: 'https://dotd.idrinth.de/' + idrinth.platform + '/chat/' }
-                                                    ] },
-                                                { type: '#text', content: '.' }
+                                                {
+                                                    type: '#text',
+                                                    content: 'More settings at '
+                                                },
+                                                {
+                                                    type: 'a',
+                                                    content: 'dotd.idrinth.de/' + idrinth.platform + '/chat/',
+                                                    attributes: [
+                                                        {
+                                                            name: 'target',
+                                                            value: '_blank'
+                                                        },
+                                                        {
+                                                            name: 'href',
+                                                            value: 'https://dotd.idrinth.de/' + idrinth.platform + '/chat/'
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    type: '#text',
+                                                    content: '.'
+                                                }
                                             ]
                                         }, {
                                             type: 'li',
                                             children: [
-                                                { type: '#text', content: 'Emoticons provided by ' },
-                                                { type: 'a', content: 'emoticonshd.com', attributes: [
-                                                        { name: 'target', value: '_blank' },
-                                                        { name: 'href', value: 'http://emoticonshd.com/' }
-                                                    ] },
-                                                { type: '#text', content: '.' }
+                                                {
+                                                    type: '#text',
+                                                    content: 'Emoticons provided by '
+                                                },
+                                                {
+                                                    type: 'a',
+                                                    content: 'emoticonshd.com',
+                                                    attributes: [
+                                                        {
+                                                            name: 'target',
+                                                            value: '_blank'
+                                                        },
+                                                        {
+                                                            name: 'href',
+                                                            value: 'http://emoticonshd.com/'
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    type: '#text',
+                                                    content: '.'
+                                                }
                                             ]
                                         }
                                     ]
@@ -633,8 +845,14 @@ var idrinth = {
                                         {
                                             type: 'span',
                                             attributes: [
-                                                { name: 'style', value: 'padding:0.2em;width:1em;height:1em;float:right;cursor:pointer;background:#000;color:#fff;border-radius:50%;' },
-                                                { name: 'onclick', value: 'idrinth.war.oc();' }
+                                                {
+                                                    name: 'style',
+                                                    value: 'padding:0.2em;width:1em;height:1em;float:right;cursor:pointer;background:#000;color:#fff;border-radius:50%;'
+                                                },
+                                                {
+                                                    name: 'onclick',
+                                                    value: 'idrinth.war.oc();'
+                                                }
                                             ],
                                             content: '\u2195'
                                         }
@@ -791,34 +1009,53 @@ var idrinth = {
                                         value: 'idrinth.settings.change(\'alarmActive\',!idrinth.settings.alarmActive);this.innerHTML=idrinth.settings.alarmActive?\'disable timed Autojoin\':\'enable timed Autojoin\''
                                     } ]
                             }
-                        ] }, {
+                        ]
+                    }, {
                         css: 'idrinth-line',
                         type: 'div',
                         id: 'idrinth-joined-raids',
                         content: 'Last raids joined:',
                         children: [
-                            { type: 'ul' }
+                            {
+                                type: 'ul'
+                            }
                         ]
                     } ];
             },
             buildTiers: function () {
-                return [ { type: 'div', css: 'idrinth-line', children: [ {
+                return [ {
+                        type: 'div',
+                        css: 'idrinth-line',
+                        children: [ {
                                 type: 'label',
                                 content: 'Enter Boss\' Name',
                                 css: 'idrinth-float-half',
                                 attributes: [
-                                    { name: 'for', value: 'idrinth-tierlist-bosssearch' }
+                                    {
+                                        name: 'for',
+                                        value: 'idrinth-tierlist-bosssearch'
+                                    }
                                 ]
                             }, {
                                 type: 'input',
                                 css: 'idrinth-float-half',
                                 id: 'idrinth-tierlist-bosssearch',
                                 attributes: [
-                                    { name: 'onkeyup', value: 'idrinth.tier.getTierForName(this.value);' },
-                                    { name: 'onchange', value: 'idrinth.tier.getTierForName(this.value);' },
-                                    { name: 'onblur', value: 'idrinth.tier.getTierForName(this.value);' }
+                                    {
+                                        name: 'onkeyup',
+                                        value: 'idrinth.tier.getTierForName(this.value);'
+                                    },
+                                    {
+                                        name: 'onchange',
+                                        value: 'idrinth.tier.getTierForName(this.value);'
+                                    },
+                                    {
+                                        name: 'onblur',
+                                        value: 'idrinth.tier.getTierForName(this.value);'
+                                    }
                                 ]
-                            } ] }, {
+                            } ]
+                    }, {
                         type: 'div',
                         id: 'idrinth-tierlist'
                     } ];
@@ -988,19 +1225,34 @@ var idrinth = {
                                     type: 'span',
                                     content: 'Unknown'
                                 } ]
-                        }, { type: 'span', content: 'Server: ' + name } ];
+                        }, {
+                            type: 'span',
+                            content: 'Server: ' + name
+                        } ];
                 }
                 idrinth.ui.tooltip = idrinth.ui.buildElement ( {
                     css: 'idrinth-hovering-box idrinth-tooltip-overwrite',
                     type: 'div',
                     id: 'idrinth-tooltip',
                     children: [
-                        { type: 'div', children: getServerPart ( 'Kongregate' ) },
-                        { type: 'div', children: getServerPart ( 'World' ) }
+                        {
+                            type: 'div',
+                            children: getServerPart ( 'Kongregate' )
+                        },
+                        {
+                            type: 'div',
+                            children: getServerPart ( 'World' )
+                        }
                     ],
                     attributes: [
-                        { name: 'onmouseenter', value: 'idrinth.names.isHovering=true;' },
-                        { name: 'onmouseleave', value: 'idrinth.names.isHovering=false;' }
+                        {
+                            name: 'onmouseenter',
+                            value: 'idrinth.names.isHovering=true;'
+                        },
+                        {
+                            name: 'onmouseleave',
+                            value: 'idrinth.names.isHovering=false;'
+                        }
                     ]
                 } );
                 idrinth.ui.body.appendChild ( idrinth.ui.tooltip );
@@ -1102,25 +1354,73 @@ var idrinth = {
         controls: null,
         tooltipTO: null,
         buildModal: function ( title, content, altFunc ) {
-            var mod = { children: [ ], type: 'div', css: 'idrinth-hovering-box idrinth-popup idrinth-' + ( typeof altFunc === 'string' ? 'confim' : 'alert' ) };
+            var mod = {
+                children: [ ],
+                type: 'div',
+                css: 'idrinth-hovering-box idrinth-popup idrinth-' + ( typeof altFunc === 'string' ? 'confim' : 'alert' )
+            };
             if ( typeof title === 'string' ) {
-                mod.children.push ( { type: 'div', content: title, css: 'header' } );
+                mod.children.push ( {
+                    type: 'div',
+                    content: title,
+                    css: 'header'
+                } );
             } else {
-                mod.children.push ( { type: 'div', content: 'Title missing', css: 'header' } );
+                mod.children.push ( {
+                    type: 'div',
+                    content: 'Title missing',
+                    css: 'header'
+                } );
             }
             if ( typeof content === 'string' ) {
-                mod.children.push ( { type: 'div', content: content, css: 'content' } );
+                mod.children.push ( {
+                    type: 'div',
+                    content: content,
+                    css: 'content'
+                } );
             } else if ( typeof content === 'object' && content.type ) {
-                mod.children.push ( { type: 'div', children: content, css: 'content' } );
+                mod.children.push ( {
+                    type: 'div',
+                    children: content,
+                    css: 'content'
+                } );
             } else {
-                mod.children.push ( { type: 'div', children: 'Content missing', css: 'content' } );
+                mod.children.push ( {
+                    type: 'div',
+                    children: 'Content missing',
+                    css: 'content'
+                } );
             }
-            mod.children.push ( { type: 'div', css: 'buttons' } );
+            mod.children.push ( {
+                type: 'div',
+                css: 'buttons'
+            } );
             var closeFunc = 'this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);';
             if ( typeof altFunc === 'string' ) {
-                mod.children[mod.children.length - 1].children = [ { type: 'button', content: 'Ok', attributes: [ { name: 'onclick', value: altFunc } ] }, { type: 'button', content: 'Cancel', attributes: [ { name: 'onclick', value: closeFunc } ] } ];
+                mod.children[mod.children.length - 1].children = [ {
+                        type: 'button',
+                        content: 'Ok',
+                        attributes: [ {
+                                name: 'onclick',
+                                value: altFunc
+                            } ]
+                    }, {
+                        type: 'button',
+                        content: 'Cancel',
+                        attributes: [ {
+                                name: 'onclick',
+                                value: closeFunc
+                            } ]
+                    } ];
             } else {
-                mod.children[mod.children.length - 1].children = [ { type: 'button', content: 'Ok', attributes: [ { name: 'onclick', value: closeFunc } ] } ];
+                mod.children[mod.children.length - 1].children = [ {
+                        type: 'button',
+                        content: 'Ok',
+                        attributes: [ {
+                                name: 'onclick',
+                                value: closeFunc
+                            } ]
+                    } ];
             }
             idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( mod ) );
         },
@@ -1224,7 +1524,10 @@ var idrinth = {
             var yPosition = 0;
             xPosition = element.getBoundingClientRect ().left;
             yPosition = element.getBoundingClientRect ().top;
-            return { x: xPosition, y: yPosition };
+            return {
+                x: xPosition,
+                y: yPosition
+            };
         },
         activateTab: function ( name ) {
             var head = document.getElementById ( 'tab-activator-' + name ).parentNode.childNodes;

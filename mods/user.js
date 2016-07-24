@@ -5,12 +5,12 @@ idrinth.user = {
     identifier: '',
     start: function ( ) {
         'use strict';
-        var getCookie=function(name) {
-            var ca = document.cookie.split(';');
-            for(var i = 0; i <ca.length; i++) {
-                ca[i] = ca[i].replace(/^\s*|\s*$/,'');
-                if (ca[i].indexOf(name+'=') === 0) {
-                    return ca[i].substring(name.length+1,ca[i].length);
+        var getCookie = function ( name ) {
+            var ca = document.cookie.split ( ';' );
+            for (var i = 0; i < ca.length; i++) {
+                ca[i] = ca[i].replace ( /^\s*|\s*$/, '' );
+                if ( ca[i].indexOf ( name + '=' ) === 0 ) {
+                    return ca[i].substring ( name.length + 1, ca[i].length );
                 }
             }
             return "";
