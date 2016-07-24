@@ -15,13 +15,13 @@ idrinth.user = {
             }
             return "";
         };
-        if ( idrinth.realSite === 'kongregate' ) {
+        if ( idrinth.platform === 'kongregate' ) {
             idrinth.user.name = active_user._attributes.get ( 'username' );
             idrinth.user.token = active_user.gameAuthToken ( );
             idrinth.user.id = active_user.id ( );
-        } else if ( idrinth.realSite === 'newgrounds' ) {
+        } else if ( idrinth.platform === 'newgrounds' ) {
             idrinth.user.name = getCookie ( 'NG_GG_username' );
-        } else if ( idrinth.realSite === 'armorgames' ) {
+        } else if ( idrinth.platform === 'armorgames' ) {
             var ag = document.getElementById ( 'gamefilearea' ).children[0].src.match ( /^.+user_id=([a-f\d]{32})&auth_token=([a-f\d]{32}).+$/ );
             idrinth.user.name = window.u_name;
             idrinth.user.id = ag[1];

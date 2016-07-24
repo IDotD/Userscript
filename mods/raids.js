@@ -98,13 +98,13 @@ idrinth.raids = {
                         dawnofthedragons: 'https://web1.dawnofthedragons.com/live_iframe/raidjoin.php?',
                         facebook: 'https://web1.dawnofthedragons.com/live_iframe/raidjoin.php?'
                     };
-                    idrinth.raids.join.data.prefix = ( ( ( sites[idrinth.realSite].replace (
-                            '###id###', idrinth.user.id
-                            ) ).replace (
-                            '###token###', idrinth.user.token
-                            ) ).replace (
-                            '###name###', idrinth.user.name
-                            ) );
+                    idrinth.raids.join.data.prefix=(((sites[idrinth.platform].replace (
+                        '###id###',idrinth.user.id
+                        )).replace (
+                        '###token###',idrinth.user.token
+                        )).replace (
+                        '###name###',idrinth.user.name
+                        ));
                 }
                 return idrinth.raids.join.data.prefix;
             },
@@ -139,7 +139,7 @@ idrinth.raids = {
                     }
                 };
                 var prefix = idrinth.raids.join.data.makePrefix ();
-                var tag = idrinth.raids.join.data.tag[idrinth.realSite];
+                var tag = idrinth.raids.join.data.tag[idrinth.platform];
                 var link = getLink ( idrinth.raids.list, key, prefix, tag );
                 if ( link ) {
                     return link;
@@ -308,8 +308,8 @@ idrinth.raids = {
                     added++;
                     idrinth.raids.join.servers.postLink ( key );
                     idrinth.raids.list[key].joined = true;
-                    if ( typeof idrinth.raids.join.servers[idrinth.realSite] === 'function' ) {
-                        idrinth.raids.join.servers[idrinth.realSite] ( key );
+                    if ( typeof idrinth.raids.join.servers[idrinth.platform] === 'function' ) {
+                        idrinth.raids.join.servers[idrinth.platform] ( key );
                     }
                 }
                 if ( added > 99 || ( idrinth.platform === 'facebook' && added >= idrinth.settings.windows ) ) {
