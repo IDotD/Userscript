@@ -627,7 +627,7 @@ idrinth.chat = {
             ],
             attributes: [ {
                     name: 'style',
-                    value: 'left:' + pos.x + 'px;top:' + pos.y + 'px'
+                    value: 'position:fixed;left:' + pos.x + 'px;top:' + pos.y + 'px'
                 } ]
         } ) );
     },
