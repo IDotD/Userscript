@@ -1548,6 +1548,16 @@ var idrinth = {
         }
     },
     startInternal: function () {
+        var startModules = function () {
+            idrinth.settings.start ( );
+            idrinth.ui.start ( );
+            idrinth.user.start ( );
+            idrinth.names.start ( );
+            idrinth.raids.start ( );
+            idrinth.tier.start ();
+            idrinth.chat.start ();
+            idrinth.war.start ();
+        }
         if ( idrinth.platform === 'newgrounds' ) {
             try {
                 var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
@@ -1563,14 +1573,7 @@ var idrinth = {
             }
             window.setTimeout ( idrinth.newgrounds.alarmCheck, 3333 );
         }
-        idrinth.settings.start ( );
-        idrinth.ui.start ( );
-        idrinth.user.start ( );
-        idrinth.names.start ( );
-        idrinth.raids.start ( );
-        idrinth.tier.start ();
-        idrinth.chat.start ();
-        idrinth.war.start ();
+        startModules ();
         window.setTimeout ( function () {
             var clipboard = new Clipboard ( '#idrinth-raid-link-list span' );
             clipboard.on ( 'success', function ( e ) {
