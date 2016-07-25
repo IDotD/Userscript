@@ -624,10 +624,11 @@ idrinth.chat = {
         if ( chat.getAttribute ( 'class' ) === 'idrinth-hovering-box active' || chat.getAttribute ( 'class' ) === 'idrinth-hovering-box active left-sided' ) {
             chat.setAttribute ( 'class', 'idrinth-hovering-box' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ) +
                     ( chat.getElementsByClassName ( 'new-message' ) && chat.getElementsByClassName ( 'new-message' ).length ? ' new-message' : '' ) );
+            element.innerHTML = '&lt;&lt;';
         } else {
             chat.setAttribute ( 'class', 'idrinth-hovering-box active' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ) );
+            element.innerHTML = '&gt;&gt;';
         }
-        element.innerHTML = '&gt;&gt;';
     },
     getMsg: function ( key ) {
         var textKey = key || '';
