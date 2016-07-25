@@ -502,7 +502,7 @@ var idrinth = {
                 return idrinth.ui.buildElement ( {
                     type: 'div',
                     id: 'idrinth-chat',
-                    css: 'idrinth-hovering-box' + ( !idrinth.settings.chatHiddenOnStart ? ' active': '' ) + + ( idrinth.settings.moveLeft ? ' left-sided' : '' ),
+                    css: 'idrinth-hovering-box' + ( !idrinth.settings.chatHiddenOnStart ? ' active': '' ) + ( idrinth.settings.moveLeft ? ' left-sided' : '' ),
                     children: [
                         {
                             type: 'button',
