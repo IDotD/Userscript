@@ -25,6 +25,10 @@ idrinth.tier = {
         }
     },
     getTierForName: function ( name ) {
+        var clearInnerHtml =  function clearInnerHtmlF ( elem ) {
+            elem.innerHTML = '';
+        };
+
         var makeList = function ( list ) {
             var makeField = function ( listKey, difficulty, ic ) {
                 var ln = {
@@ -76,7 +80,7 @@ idrinth.tier = {
                 };
             };
             var wrapper = document.getElementById ( 'idrinth-tierlist' );
-            wrapper.innerHTML = '';
+            clearInnerHtml ( wrapper );
             for (var count = list.length - 1; count >= 0; count--) {
                 var sub = idrinth.ui.buildElement ( {
                     type: 'div',
@@ -167,6 +171,7 @@ idrinth.tier = {
             }
         };
         if ( !name || name.length === 0 ) {
+            clearInnerHtml( document.getElementById ( 'idrinth-tierlist' ) );
             return;
         }
         var result = [ ];
