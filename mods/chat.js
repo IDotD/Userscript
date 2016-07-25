@@ -617,6 +617,20 @@ idrinth.chat = {
                             value: element.getAttribute ( 'title' )
                         } ]
                 }, {
+                    content: 'Leave Room',
+                    type: 'li',
+                    attributes: [ {
+                            name: 'onclick',
+                            value: 'idrinth.chat.useroptions(' + element.getAttribute ( 'data-id' ) + ',' + idrinth.chat.self + ',\'Leave\');this.parentNode.parentNode.removeChild(this.parentNode);'
+                        } ]
+                }, {
+                    content: 'Delete Room',
+                    type: 'li',
+                    attributes: [ {
+                            name: 'onclick',
+                            value: 'idrinth.runAjax(\'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/delete/' + element.getAttribute ( 'data-id' ) + '/\',idrinth.alert,idrinth.alert,idrinth.alert);this.parentNode.parentNode.removeChild(this.parentNode);'
+                        } ]
+                }, {
                     type: 'li',
                     content: 'Close',
                     attributes: [ {
