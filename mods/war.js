@@ -3,7 +3,7 @@ idrinth.war = {
     to: null,
     element: null,
     getData: function () {
-        var raids2Join= function () {
+        var raids2Join = function () {
             var list = [ ];
             for (var input in idrinth.war.element.getElementsByTagName ( 'input' )) {
                 if ( idrinth.war.element.getElementsByTagName ( 'input' )[input].checked ) {
@@ -28,10 +28,10 @@ idrinth.war = {
                 );
     },
     updateData: function ( data ) {
-        var process=function ( data ) {
-            var toggleGUI = function(onOff){
+        var process = function ( data ) {
+            var toggleGUI = function ( onOff ) {
                 var toggle = onOff || false;
-                if(toggle === true){
+                if ( toggle === true ) {
                     idrinth.war.element.setAttribute ( 'style', '' );
                     var classes = idrinth.war.element.getAttribute ( 'class' );
                     idrinth.war.element.setAttribute ( 'class', idrinth.settings.warBottom ? classes + ' bottom' : classes.replace ( / bottom/g, '' ) );
@@ -44,22 +44,28 @@ idrinth.war = {
             };
             var processJson = function ( data ) {
                 var magicIgmSrv = 'https://dotd.idrinth.de/static/magic-image-service/';
-                var getMagic = function (data) {
-                    var magics = [],
-                        tmp;
-                    if (!data || (data.magics === null || data.magics === '')) {
-                        return [];
+                var getMagic = function ( data ) {
+                    var magics = [ ],
+                            tmp;
+                    if ( !data || ( data.magics === null || data.magics === '' ) ) {
+                        return [ ];
                     }
-                    tmp = data.magics.split(',');
+                    tmp = data.magics.split ( ',' );
                     for (var key = 0; key < tmp.length; key++) {
                         var magic = tmp[key];
                         var magicObj = {
                             type: 'img',
                             attributes: [
-                                {name: 'src', value: magicIgmSrv + magic + '/'},
-                                {name: 'width', value: '20'}]
+                                {
+                                    name: 'src',
+                                    value: magicIgmSrv + magic + '/'
+                                },
+                                {
+                                    name: 'width',
+                                    value: '20'
+                                } ]
                         };
-                        magics.push(magicObj);
+                        magics.push ( magicObj );
                     }
                     return magics;
                 };
@@ -72,20 +78,20 @@ idrinth.war = {
                 }
                 function updateBoss ( data, element ) {
                     //TODO: Dummy function, should be removed
-                    function cleanUp() {
-                        while (element.getElementsByTagName('td')[3].firstChild) {
-                            element.getElementsByTagName('td')[3].removeChild(element.getElementsByTagName('td')[3].firstChild);
+                    function cleanUp () {
+                        while ( element.getElementsByTagName ( 'td' )[3].firstChild ) {
+                            element.getElementsByTagName ( 'td' )[3].removeChild ( element.getElementsByTagName ( 'td' )[3].firstChild );
                         }
                     }
 
-                    cleanUp();
-                    var tmpMagics = getMagic(data);
+                    cleanUp ();
+                    var tmpMagics = getMagic ( data );
                     for (var m = 0; m < tmpMagics.length; m++) {
-                        element.getElementsByTagName('td')[3].appendChild(idrinth.ui.buildElement(tmpMagics[m]));
+                        element.getElementsByTagName ( 'td' )[3].appendChild ( idrinth.ui.buildElement ( tmpMagics[m] ) );
                     }
-                    element.getElementsByTagName('td')[0].setAttribute("class", 'traffic ' + ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) ));
-                    element.getElementsByTagName('td')[0].setAttribute("title", data.amount + '/100');
-                    element.getElementsByTagName('td')[0].firstChild.innerHTML = ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) );
+                    element.getElementsByTagName ( 'td' )[0].setAttribute ( "class", 'traffic ' + ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) ) );
+                    element.getElementsByTagName ( 'td' )[0].setAttribute ( "title", data.amount + '/100' );
+                    element.getElementsByTagName ( 'td' )[0].firstChild.innerHTML = ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) );
                 }
                 function newBoss ( data, boss ) {
                     idrinth.war.element.childNodes[1].appendChild ( idrinth.ui.buildElement (
@@ -96,9 +102,15 @@ idrinth.war = {
                                     {
                                         type: 'td',
                                         css: 'traffic ' + ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) ),
-                                        children: [ { type: 'span', content: ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) ) } ],
+                                        children: [ {
+                                                type: 'span',
+                                                content: ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) )
+                                            } ],
                                         attributes: [
-                                            { name: 'title', value: data.amount + '/100' }
+                                            {
+                                                name: 'title',
+                                                value: data.amount + '/100'
+                                            }
                                         ]
                                     },
                                     {
@@ -111,9 +123,18 @@ idrinth.war = {
                                             {
                                                 type: 'input',
                                                 attributes: [
-                                                    { name: 'type', value: 'checkbox' },
-                                                    { name: 'data-id', value: boss },
-                                                    { name: 'title', value: 'join ' + data.name }
+                                                    {
+                                                        name: 'type',
+                                                        value: 'checkbox'
+                                                    },
+                                                    {
+                                                        name: 'data-id',
+                                                        value: boss
+                                                    },
+                                                    {
+                                                        name: 'title',
+                                                        value: 'join ' + data.name
+                                                    }
                                                 ]
                                             }
                                         ]
@@ -141,10 +162,10 @@ idrinth.war = {
                 return;
             }
             if ( data === "{}" ) {
-                toggleGUI(false);
+                toggleGUI ( false );
                 return;
             }
-            toggleGUI(true);
+            toggleGUI ( true );
             try {
                 processJson ( JSON.parse ( data ) );
             } catch ( e ) {
