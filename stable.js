@@ -502,11 +502,11 @@ var idrinth = {
                 return idrinth.ui.buildElement ( {
                     type: 'div',
                     id: 'idrinth-chat',
-                    css: 'idrinth-hovering-box active' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ),
+                    css: 'idrinth-hovering-box' + ( !idrinth.settings.chatHiddenOnStart ? ' active': '' ) + + ( idrinth.settings.moveLeft ? ' left-sided' : '' ),
                     children: [
                         {
                             type: 'button',
-                            content: '>>',
+                            content: ( idrinth.settings.chatHiddenOnStart ? '<<' : '>>'),
                             attributes: [ {
                                     name: 'onclick',
                                     value: 'idrinth.chat.openCloseChat(this);'
@@ -1072,6 +1072,11 @@ var idrinth = {
                         rType: '#input',
                         type: 'checkbox',
                         label: 'Minimalist Layout'
+                    }, {
+                        name: 'chatHiddenOnStart',
+                        rType: '#input',
+                        type: 'checkbox',
+                        label: 'Hide chat window on Start'
                     }, {
                         name: 'moveLeft',
                         rType: '#input',
