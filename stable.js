@@ -599,9 +599,7 @@ var idrinth = {
                     frame.setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&' + ( window.location.search ).replace ( /^\?/, '' ) );
                 }
             } catch ( e ) {
-                window.setTimeout ( function () {
-                    idrinth.startInternal ();
-                }, 500 );
+                window.setTimeout ( idrinth.startInternal, 500 );
                 return;
             }
             window.setTimeout ( idrinth.newgrounds.alarmCheck, 3333 );
