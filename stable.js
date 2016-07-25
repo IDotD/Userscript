@@ -271,7 +271,7 @@ var idrinth = {
                                         value: 'idrinth.chat.enableChat(this);'
                                     },
                                     {
-                                        name: 'oncontextmenu ',
+                                        name: 'oncontextmenu',
                                         value: 'idrinth.chat.showOptions(event,this);'
                                     }
                                 ]
