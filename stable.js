@@ -395,7 +395,6 @@ var idrinth = {
                 } );
                 idrinth.ui.controls = idrinth.ui.buildElement ( {
                     css: 'idrinth-hovering-box idrinth-controls-overwrite inactive' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ) + ( idrinth.settings.minimalist ? ' small' : '' ),
-                    type: 'div',
                     id: 'idrinth-controls',
                     children: children
                 } );
@@ -512,13 +511,11 @@ var idrinth = {
                         content: 'click to copy raid link',
                         type: 'strong'
                     }, {
-                        id: 'idrinth-raid-link-list',
-                        type: 'div'
+                        id: 'idrinth-raid-link-list'
                     } ];
             },
             buildChat: function () {
                 return idrinth.ui.buildElement ( {
-                    type: 'div',
                     id: 'idrinth-chat',
                     css: 'idrinth-hovering-box active' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ),
                     children: [
@@ -568,7 +565,6 @@ var idrinth = {
                                             type: 'p',
                                             content: 'This part of the script is optional, so logging in is unneeded for raid catching etc.'
                                         }, {
-                                            type: 'div',
                                             id: 'idrinth-chat-login',
                                             children: [
                                                 {
@@ -651,7 +647,6 @@ var idrinth = {
                                             ]
                                         },
                                         {
-                                            type: 'div',
                                             id: 'idrinth-add-chat',
                                             children: [
                                                 {
@@ -730,7 +725,6 @@ var idrinth = {
                                             ]
                                         },
                                         {
-                                            type: 'div',
                                             id: 'idrinth-make-chat',
                                             children: [
                                                 {
@@ -848,12 +842,10 @@ var idrinth = {
             war: function () {
                 return idrinth.ui.buildElement (
                         {
-                            type: 'div',
                             id: 'idrinth-war',
                             css: 'idrinth-central-box idrinth-hovering-box',
                             children: [
                                 {
-                                    type: 'div',
                                     children: [
                                         {
                                             type: 'span',
@@ -916,7 +908,6 @@ var idrinth = {
             buildActions: function () {
                 return [ {
                         css: 'idrinth-line',
-                        type: 'div',
                         children: [ {
                                 css: 'idrinth-float-half',
                                 type: 'button',
@@ -1029,7 +1020,6 @@ var idrinth = {
                         ]
                     }, {
                         css: 'idrinth-line',
-                        type: 'div',
                         id: 'idrinth-joined-raids',
                         content: 'Last raids joined:',
                         children: [
@@ -1041,7 +1031,6 @@ var idrinth = {
             },
             buildTiers: function () {
                 return [ {
-                        type: 'div',
                         css: 'idrinth-line',
                         children: [ {
                                 type: 'label',
@@ -1073,7 +1062,6 @@ var idrinth = {
                                 ]
                             } ]
                     }, {
-                        type: 'div',
                         id: 'idrinth-tierlist'
                     } ];
             },
@@ -1249,15 +1237,12 @@ var idrinth = {
                 }
                 idrinth.ui.tooltip = idrinth.ui.buildElement ( {
                     css: 'idrinth-hovering-box idrinth-tooltip-overwrite',
-                    type: 'div',
                     id: 'idrinth-tooltip',
                     children: [
                         {
-                            type: 'div',
                             children: getServerPart ( 'Kongregate' )
                         },
                         {
-                            type: 'div',
                             children: getServerPart ( 'World' )
                         }
                     ],
@@ -1335,7 +1320,6 @@ var idrinth = {
                 }
                 return idrinth.ui.buildElement ( {
                     css: 'idrinth-line',
-                    type: 'div',
                     attributes: [ {
                             name: 'style',
                             value: config.platforms && !idrinth.inArray ( idrinth.platform, config.platforms ) ? 'display:none;' : ''
@@ -1373,43 +1357,36 @@ var idrinth = {
         buildModal: function ( title, content, altFunc ) {
             var mod = {
                 children: [ ],
-                type: 'div',
                 css: 'idrinth-hovering-box idrinth-popup idrinth-' + ( typeof altFunc === 'string' ? 'confim' : 'alert' )
             };
             if ( typeof title === 'string' ) {
                 mod.children.push ( {
-                    type: 'div',
                     content: title,
                     css: 'header'
                 } );
             } else {
                 mod.children.push ( {
-                    type: 'div',
                     content: 'Title missing',
                     css: 'header'
                 } );
             }
             if ( typeof content === 'string' ) {
                 mod.children.push ( {
-                    type: 'div',
                     content: content,
                     css: 'content'
                 } );
             } else if ( typeof content === 'object' && content.type ) {
                 mod.children.push ( {
-                    type: 'div',
                     children: content,
                     css: 'content'
                 } );
             } else {
                 mod.children.push ( {
-                    type: 'div',
                     children: 'Content missing',
                     css: 'content'
                 } );
             }
             mod.children.push ( {
-                type: 'div',
                 css: 'buttons'
             } );
             var closeFunc = 'this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);';
