@@ -269,6 +269,10 @@ var idrinth = {
                                     {
                                         name: 'onclick',
                                         value: 'idrinth.chat.enableChat(this);'
+                                    },
+                                    {
+                                        name: 'oncontextmenu ',
+                                        value: 'idrinth.chat.showOptions(event,this);'
                                     }
                                 ]
                             }
@@ -1274,7 +1278,7 @@ var idrinth = {
                 if ( !config.children || !config.children.length ) {
                     return;
                 }
-                for (var count = 0,l = config.children.length; count < l; count++) {
+                for (var count = 0, l = config.children.length; count < l; count++) {
                     el.appendChild ( idrinth.ui.buildElement ( config.children[count] ) );
                 }
             };
@@ -1591,6 +1595,13 @@ var idrinth = {
             clipboard.on ( 'success', function ( e ) {
                 e = e || window.event;
                 e.trigger.parentNode.removeChild ( e.trigger );
+            } );
+        }, 1000 );
+        window.setTimeout ( function () {
+            var clipboard = new Clipboard ( '.clipboard-copy' );
+            clipboard.on ( 'success', function ( e ) {
+                e = e || window.event;
+                e.trigger.parentNode.parentNode.removeChild ( e.trigger.parentNode );
             } );
         }, 1000 );
     },

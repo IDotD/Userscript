@@ -602,6 +602,35 @@ idrinth.chat = {
     relogin: function () {
         this.loginActions ( 'relogin' );
     },
+    showOptions: function ( event, element ) {
+        event.preventDefault ();
+        var pos = idrinth.ui.getPosition ( element );
+        idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( {
+            type: 'ul',
+            css: 'idrinth-hovering-box',
+            children: [ {
+                    css: 'clipboard-copy',
+                    content: 'Copy Password&Id',
+                    type: 'li',
+                    attributes: [ {
+                            name: 'data-clipboard-text',
+                            value: element.getAttribute ( 'title' )
+                        } ]
+                }, {
+                    type: 'li',
+                    content: 'Close',
+                    attributes: [ {
+                            name: 'onclick',
+                            value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
+                        } ]
+                }
+            ],
+            attributes: [ {
+                    name: 'style',
+                    value: 'left:' + pos.x + 'px;top:' + pos.y + 'px'
+                } ]
+        } ) );
+    },
     enableChat: function ( element ) {
         var tabs = document.getElementsByClassName ( 'chat-tabs' )[0].children,
                 labels = document.getElementsByClassName ( 'chat-labels' )[0].children;
