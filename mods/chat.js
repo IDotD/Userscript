@@ -133,14 +133,13 @@ idrinth.chat = {
                     value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
                 } ]
         } );
-        var pos = idrinth.ui.getPosition ( element );
         idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( {
             type: 'ul',
             children: popupContent,
             css: 'idrinth-userinfo-box',
             attributes: [ {
                     name: 'style',
-                    value: 'left:' + pos.x + 'px;top:' + pos.y + 'px'
+                    value: idrinth.ui.getElementPositioning ( element )
                 } ]
         } ) );
     },
@@ -604,7 +603,6 @@ idrinth.chat = {
     },
     showOptions: function ( event, element ) {
         event.preventDefault ();
-        var pos = idrinth.ui.getPosition ( element );
         idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( {
             type: 'ul',
             css: 'idrinth-hovering-box',
@@ -641,7 +639,7 @@ idrinth.chat = {
             ],
             attributes: [ {
                     name: 'style',
-                    value: 'position:fixed;left:' + pos.x + 'px;top:' + pos.y + 'px'
+                    value: idrinth.ui.getPosition ( element )
                 } ]
         } ) );
     },

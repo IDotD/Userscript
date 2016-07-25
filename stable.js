@@ -279,6 +279,20 @@ var idrinth = {
                     )
                     );
         },
+        getElementPositioning: function ( element ) {
+            var getCoordinates = function ( element ) {
+                var xPosition = 0;
+                var yPosition = 0;
+                xPosition = element.getBoundingClientRect ().left;
+                yPosition = element.getBoundingClientRect ().top;
+                return {
+                    x: xPosition,
+                    y: yPosition
+                };
+            };
+            var pos = getCoordinates ( element );
+            return 'position:fixed;left:' + pos.x + 'px;top:' + pos.y + 'px';
+        },
         buildBasis: {
             makeTabs: function ( config ) {
                 var head = [ ];
@@ -1521,16 +1535,6 @@ var idrinth = {
             } catch ( e ) {
                 idrinth.alert ( 'The game couldn\'t be reloaded' );
             }
-        },
-        getPosition: function ( element ) {
-            var xPosition = 0;
-            var yPosition = 0;
-            xPosition = element.getBoundingClientRect ().left;
-            yPosition = element.getBoundingClientRect ().top;
-            return {
-                x: xPosition,
-                y: yPosition
-            };
         },
         activateTab: function ( name ) {
             var head = document.getElementById ( 'tab-activator-' + name ).parentNode.childNodes;
