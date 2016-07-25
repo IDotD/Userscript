@@ -83,7 +83,6 @@ idrinth.tier = {
             clearInnerHtml ( wrapper );
             for (var count = list.length - 1; count >= 0; count--) {
                 var sub = idrinth.ui.buildElement ( {
-                    type: 'div',
                     css: 'tier-wrapper',
                     children: [
                         {

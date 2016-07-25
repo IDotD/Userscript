@@ -133,14 +133,13 @@ idrinth.chat = {
                     value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
                 } ]
         } );
-        var pos = idrinth.ui.getPosition ( element );
         idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( {
             type: 'ul',
             children: popupContent,
             css: 'idrinth-userinfo-box',
             attributes: [ {
                     name: 'style',
-                    value: 'left:' + pos.x + 'px;top:' + pos.y + 'px'
+                    value: idrinth.ui.getElementPositioning ( element )
                 } ]
         } ) );
     },
@@ -601,6 +600,48 @@ idrinth.chat = {
     },
     relogin: function () {
         this.loginActions ( 'relogin' );
+    },
+    showOptions: function ( event, element ) {
+        event.preventDefault ();
+        idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( {
+            type: 'ul',
+            css: 'idrinth-hovering-box',
+            children: [ {
+                    css: 'clipboard-copy',
+                    content: 'Copy Password&Id',
+                    type: 'li',
+                    attributes: [ {
+                            name: 'data-clipboard-text',
+                            value: element.getAttribute ( 'title' )
+                        } ]
+                }, {
+                    content: 'Leave Room',
+                    type: 'li',
+                    attributes: [ {
+                            name: 'onclick',
+                            value: 'idrinth.chat.useroptions(' + element.getAttribute ( 'data-id' ) + ',' + idrinth.chat.self + ',\'Leave\');this.parentNode.parentNode.removeChild(this.parentNode);'
+                        } ]
+                }, {
+                    content: 'Delete Room',
+                    type: 'li',
+                    attributes: [ {
+                            name: 'onclick',
+                            value: 'idrinth.runAjax(\'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/delete/' + element.getAttribute ( 'data-id' ) + '/\',idrinth.alert,idrinth.alert,idrinth.alert);this.parentNode.parentNode.removeChild(this.parentNode);'
+                        } ]
+                }, {
+                    type: 'li',
+                    content: 'Close',
+                    attributes: [ {
+                            name: 'onclick',
+                            value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
+                        } ]
+                }
+            ],
+            attributes: [ {
+                    name: 'style',
+                    value: idrinth.ui.getPosition ( element )
+                } ]
+        } ) );
     },
     enableChat: function ( element ) {
         var tabs = document.getElementsByClassName ( 'chat-tabs' )[0].children,
