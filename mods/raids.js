@@ -219,11 +219,13 @@ idrinth.raids = {
                 try {
                     idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
                 } catch ( e ) {
+                    idrinth.log(e.toString())
                 }
                 try {
                     idrinth.raids.joined[key] = idrinth.raids.list[key];
                     delete idrinth.raids.list[key];
                 } catch ( e1 ) {
+                    idrinth.log(e1.toString())
                 }
             },
             failed: function ( key ) {
@@ -232,7 +234,14 @@ idrinth.raids = {
             },
             trying: function ( key ) {
                 'use strict';
-                eval ( "window.setTimeout(function(){try{idrinth.ui.removeElement ('idrinth-raid-link-'+key);}catch(e){}},300)" );
+                ((function(key){
+                    window.setTimeout(function(){
+                        var id = 'idrinth-raid-link-' + key;
+                        if ( document.getElementById ( id ) ) {
+                            idrinth.ui.removeElement ( id );
+                        }
+                    },300)
+                })(key));
                 if ( idrinth.raids.list[key] ) {
                     idrinth.raids.join.messages.log ( 'Trying to join ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
                 }
@@ -240,6 +249,7 @@ idrinth.raids = {
                     idrinth.raids.joined[key] = idrinth.raids.list[key];
                     delete idrinth.raids.list[key];
                 } catch ( e1 ) {
+                    idrinth.log(e1.toString())
                 }
             }
         },
@@ -277,7 +287,11 @@ idrinth.raids = {
                                         }
                                     ]
                                 } );
-                        idrinth.raids.join.byFrame.timeouts[count] = eval ( 'window.setTimeout(function(){idrinth.raids.join.byFrame.remove(' + count + ',\'' + key + '\');},30000);' );
+                        idrinth.raids.join.byFrame.timeouts[count] = ((function(count, key){
+                            return window.setTimeout(function(){
+                                idrinth.raids.join.byFrame.remove( count, key );
+                            }, 30000 )
+                        })(count, key));
                         idrinth.ui.body.appendChild ( idrinth.raids.join.byFrame.windows[count] );
                         idrinth.raids.join.messages.trying ( key );
                         return;
@@ -289,14 +303,17 @@ idrinth.raids = {
                 try {
                     window.clearTimeout ( idrinth.raids.join.byFrame.timeouts[count] );
                 } catch ( e0 ) {
+                    idrinth.log(e0.toString())
                 }
                 try {
                     idrinth.raids.join.byFrame.windows[count] = null;
                 } catch ( e1 ) {
+                    idrinth.log(e1.toString())
                 }
                 try {
                     idrinth.ui.removeElement ( 'join-' + key );
                 } catch ( e2 ) {
+                    idrinth.log(e2.toString())
                 }
             }
         },
