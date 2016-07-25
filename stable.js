@@ -1557,7 +1557,7 @@ var idrinth = {
             idrinth.tier.start ();
             idrinth.chat.start ();
             idrinth.war.start ();
-        }
+        };
         if ( idrinth.platform === 'newgrounds' ) {
             try {
                 var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
