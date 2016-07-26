@@ -42,13 +42,9 @@ var idrinth = {
             idrinth.facebook.popup = window.open ( "https://apps.facebook.com/dawnofthedragons/" );
             idrinth.facebook.popup.onload = function () {
                 window.clearTimeout ( idrinth.facebook.timeout );
-                idrinth.facebook.timeout = window.setTimeout ( function () {
-                    idrinth.facebook.restart ();
-                }, 3333 );
+                idrinth.facebook.timeout = window.setTimeout ( idrinth.facebook.restart, 3333 );
             };
-            idrinth.facebook.timeout = window.setTimeout ( function () {
-                idrinth.facebook.restart ();
-            }, 11111 );
+            idrinth.facebook.timeout = window.setTimeout ( idrinth.facebook.restart, 11111 );
         }
     },
     newgrounds: {
@@ -475,18 +471,14 @@ var idrinth = {
                 pos = element.getBoundingClientRect ( );
                 tooltip ( idrinth.names.users[name].kongregate, idrinth.ui.tooltip.firstChild, pos, idrinth.names.guilds.kongregate, 'kongregate' );
                 tooltip ( idrinth.names.users[name].world, idrinth.ui.tooltip.lastChild, pos, idrinth.names.guilds.world, 'world-kongregate' );
-                idrinth.ui.tooltipTO = window.setTimeout (
-                        idrinth.ui.hideTooltip,
-                        idrinth.settings.timeout ? idrinth.settings.timeout : 5000
-                        );
+                var delay = idrinth.settings.timeout ? idrinth.settings.timeout : 5000;
+                idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, delay );
             }
         },
         hideTooltip: function () {
             if ( idrinth.names.isHovering ) {
-                idrinth.ui.tooltipTO = window.setTimeout (
-                        idrinth.ui.hideTooltip,
-                        idrinth.settings.timeout ? idrinth.settings.timeout : 5000
-                        );
+                var delay = idrinth.settings.timeout ? idrinth.settings.timeout : 5000;
+                idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, delay );
             } else {
                 idrinth.ui.tooltip.setAttribute ( 'style', 'display:none' );
             }
@@ -599,9 +591,7 @@ var idrinth = {
                     frame.setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&' + ( window.location.search ).replace ( /^\?/, '' ) );
                 }
             } catch ( e ) {
-                window.setTimeout ( function () {
-                    idrinth.startInternal ();
-                }, 500 );
+                window.setTimeout ( idrinth.startInternal, 500 );
                 return;
             }
             window.setTimeout ( idrinth.newgrounds.alarmCheck, 3333 );
@@ -630,9 +620,7 @@ var idrinth = {
             idrinth.platform = 'facebook';
         }
         if ( idrinth.platform === 'armorgames' ) {
-            window.setTimeout ( function () {
-                idrinth.startInternal ();
-            }, 2222 );
+            window.setTimeout ( idrinth.startInternal, 2222 );
             return;
         }
         idrinth.startInternal ();
