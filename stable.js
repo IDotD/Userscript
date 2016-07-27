@@ -625,11 +625,6 @@ var idrinth = {
         }
         idrinth.startInternal ();
     },
-    /**
-     * @todo replace with a properly styled elements
-     * @param String text
-     * @returns Null
-     */
     alert: function ( text ) {
         idrinth.ui.buildModal ( 'Info', text );
     },
