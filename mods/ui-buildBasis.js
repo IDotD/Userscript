@@ -222,7 +222,7 @@ idrinth.ui.buildBasis = {
     buildChat: function () {
         return idrinth.ui.buildElement ( {
             id: 'idrinth-chat',
-            css: 'idrinth-hovering-box active' + ( !idrinth.settings.chatHiddenOnStart ? ' active': '' ) + ( idrinth.settings.moveLeft ? ' left-sided' : '' ),
+            css: 'idrinth-hovering-box' + ( !idrinth.settings.chatHiddenOnStart ? ' active': '' ) + ( idrinth.settings.moveLeft ? ' left-sided' : '' ),
             children: [
                 {
                     type: 'button',
