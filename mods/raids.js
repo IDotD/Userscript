@@ -4,12 +4,15 @@ idrinth.raids = {
     joined: { },
     interval: null,
     requested: 0,
-    restartInterval: function () {
+    clearInterval: function () {
         try {
             window.clearInterval ( idrinth.raids.interval );
         } catch ( e ) {
             idrinth.raids.interval = null;
         }
+    },
+    restartInterval: function () {
+        this.clearInterval ();
         idrinth.raids.interval = window.setInterval ( function ( ) {
             idrinth.raids.join.process ( );
         }, 1500 );
@@ -74,11 +77,7 @@ idrinth.raids = {
         }
     },
     clearAll: function () {
-        try {
-            window.clearInterval ( idrinth.raids.interval );
-        } catch ( e ) {
-            idrinth.raids.interval = null;
-        }
+        this.clearInterval ( );
         while ( document.getElementById ( "idrinth-raid-link-list" ).firstChild ) {
             idrinth.ui.removeElement ( document.getElementById ( "idrinth-raid-link-list" ).firstChild.id );
         }
@@ -213,20 +212,16 @@ idrinth.raids = {
                 idrinth.log ( string );
                 idrinth.raids.join.messages.writeToGui ( string );
             },
-            success: function ( key ) {
+            addToJoined: function ( key ) {
+                if ( key && idrinth.raids.list.hasOwnProperty ( key ) ) {
+                    idrinth.raids.joined[ key ] = idrinth.raids.list[ key ];
+                    delete idrinth.raids.list[ key ];
+                }
+            }, success: function ( key ) {
                 'use strict';
                 idrinth.raids.join.messages.log ( 'Joined ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
-                try {
-                    idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
-                } catch ( e ) {
-                    idrinth.log(e.toString())
-                }
-                try {
-                    idrinth.raids.joined[key] = idrinth.raids.list[key];
-                    delete idrinth.raids.list[key];
-                } catch ( e1 ) {
-                    idrinth.log(e1.toString())
-                }
+                idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
+                this.addToJoined ( key );
             },
             failed: function ( key ) {
                 'use strict';
@@ -245,12 +240,7 @@ idrinth.raids = {
                 if ( idrinth.raids.list[key] ) {
                     idrinth.raids.join.messages.log ( 'Trying to join ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
                 }
-                try {
-                    idrinth.raids.joined[key] = idrinth.raids.list[key];
-                    delete idrinth.raids.list[key];
-                } catch ( e1 ) {
-                    idrinth.log(e1.toString())
-                }
+               this.addToJoined( key );
             }
         },
         byFrame: {
@@ -305,16 +295,10 @@ idrinth.raids = {
                 } catch ( e0 ) {
                     idrinth.log(e0.toString())
                 }
-                try {
+                if( idrinth.raids.join.byFrame.windows.indexOf(count) ){
                     idrinth.raids.join.byFrame.windows[count] = null;
-                } catch ( e1 ) {
-                    idrinth.log(e1.toString())
                 }
-                try {
-                    idrinth.ui.removeElement ( 'join-' + key );
-                } catch ( e2 ) {
-                    idrinth.log(e2.toString())
-                }
+                idrinth.ui.removeElement ( 'join-' + key );
             }
         },
         'do': function ( ) {
