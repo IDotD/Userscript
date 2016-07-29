@@ -36,9 +36,7 @@ idrinth.names = {
             idrinth.log ( e );
         }
         idrinth.names.counter = idrinth.names.counter + 1;
-        idrinth.names.ownTimeout = window.setTimeout ( function ( ) {
-            idrinth.names.run ( );
-        }, 6666 );
+        idrinth.names.ownTimeout = window.setTimeout ( idrinth.names.run, 6666 );
     },
     users: { },
     classes: { },
@@ -83,9 +81,7 @@ idrinth.names = {
     start: function ( ) {
         'use strict';
         if ( idrinth.platform === 'kongregate' ) {
-            idrinth.names.ownTimeout = window.setTimeout ( function ( ) {
-                idrinth.names.run ( );
-            }, 10000 );
+            idrinth.names.ownTimeout = window.setTimeout ( idrinth.names.run, 10000 );
         }
     },
     counter: 0
