@@ -697,9 +697,7 @@ idrinth.chat = {
             idrinth.alert ( this.getMsg ( 'login.fail' ) );
         },
                 timeout = function () {
-                    window.setTimeout ( function () {
-                        idrinth.chat.login ();
-                    }, 1 );
+                    window.setTimeout ( idrinth.chat.login, 1 );
                 },
                 headers = {
                     user: '',
