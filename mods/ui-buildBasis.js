@@ -422,7 +422,7 @@ idrinth.ui.buildBasis = {
                 ]
             };
         };
-        makeButton = function ( label, onclick ) {
+        var makeButton = function ( label, onclick ) {
             return {
                 type: 'li',
                 children: [
