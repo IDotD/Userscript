@@ -509,7 +509,7 @@ idrinth.ui.buildBasis = {
                                             children: [
                                                 makeInput ( 'Username' ),
                                                 makeInput ( 'Password' ),
-                                                makeButton ( "Not logged in, click to login/register", "idrinth.chat.login()" ),
+                                                makeButton ( "Not logged in, click to login/register", "idrinth.chat.login()" )
                                             ]
                                         }
                                     ]
@@ -526,7 +526,7 @@ idrinth.ui.buildBasis = {
                                             children: [
                                                 makeInput ( 'Chat-ID' ),
                                                 makeInput ( 'Chat-Password' ),
-                                                makeButton ( "Click to join additional chat", "idrinth.chat.add()" ),
+                                                makeButton ( "Click to join additional chat", "idrinth.chat.add()" )
                                             ]
                                         }
                                     ]
@@ -544,47 +544,8 @@ idrinth.ui.buildBasis = {
                                     type: 'ul',
                                     css: 'settings',
                                     children: [
-                                        {
-                                            type: 'li',
-                                            children: [
-                                                {
-                                                    type: 'label',
-                                                    content: 'Name'
-                                                },
-                                                {
-                                                    type: 'input',
-                                                    attributes: [
-                                                        {
-                                                            name: 'type',
-                                                            value: 'text'
-                                                        },
-                                                        {
-                                                            name: 'onchange',
-                                                            value: 'this.setAttribute(\'value\',this.value);'
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            type: 'li',
-                                            children: [
-                                                {
-                                                    type: 'button',
-                                                    attributes: [
-                                                        {
-                                                            name: 'type',
-                                                            value: 'button'
-                                                        },
-                                                        {
-                                                            name: 'onclick',
-                                                            value: 'idrinth.chat.create()'
-                                                        }
-                                                    ],
-                                                    content: 'Click to Create additional chat'
-                                                }
-                                            ]
-                                        }
+                                        makeInput ( "Name" ),
+                                        makeButton ( "Click to create additional chat", "idrinth.chat.create()" )
                                     ]
                                 }
                             ]
