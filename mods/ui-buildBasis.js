@@ -1,5 +1,6 @@
 idrinth.ui.buildBasis = {
     'do': function () {
+        'use strict';
         var wrapper = function ( ) {
             var buildActions = function () {
                 var buttonMaker = function ( label, onclick, platform ) {
@@ -358,7 +359,6 @@ idrinth.ui.buildBasis = {
                 'Land': buildLand ()
             } );
         };
-        'use strict';
         var children = wrapper ();
         children.unshift ( {
             css: 'idrinth-line',
