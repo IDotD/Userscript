@@ -1,74 +1,397 @@
 idrinth.ui.buildBasis = {
-    makeTabs: function ( config ) {
-        var head = [ ];
-        var first = true;
-        var body = [ ];
-        var buildHead = function ( name, width, first ) {
-            return {
-                type: 'li',
-                content: name,
-                css: 'tab-activator' + ( first ? ' active' : '' ),
-                id: 'tab-activator-' + name.toLowerCase (),
-                attributes: [
-                    {
-                        name: 'onclick',
-                        value: 'idrinth.ui.activateTab(\'' + name.toLowerCase () + '\');'
-                    },
-                    {
-                        name: 'style',
-                        value: 'width:' + width + '%;'
-                    }
-                ]
-            };
-        };
-        var buildBody = function ( name, children, first ) {
-            return {
-                type: 'li',
-                css: 'tab-element',
-                id: 'tab-element-' + name.toLowerCase (),
-                attributes: [
-                    {
-                        name: 'style',
-                        value: first ? 'display:block;' : 'display:none;'
-                    }
-                ],
-                children: children
-            };
-        };
-        var width = Math.floor ( 100 / ( Object.keys ( config ) ).length );
-        for (var name in config) {
-            if ( typeof name === 'string' ) {
-                head.push ( buildHead ( name, width, first ) );
-                body.push ( buildBody ( name, config[name], first ) );
-                first = false;
-            }
-        }
-        return [
-            {
-                type: 'ul',
-                children: head,
-                attributes: [ {
-                        name: 'style',
-                        value: 'margin:0;padding:0;overflow:hidden;width:100%;'
-                    } ]
-            },
-            {
-                type: 'ul',
-                children: body,
-                attributes: [ {
-                        name: 'style',
-                        value: 'margin:0;padding:0;overflow-x:hidden;width:100%;max-height: 500px;overflow-y: scroll;'
-                    } ]
-            }
-        ];
-    },
     wrapper: function ( ) {
-        return idrinth.ui.buildBasis.makeTabs ( {
-            'Actions': idrinth.ui.buildBasis.buildActions (),
-            'Raids': idrinth.ui.buildBasis.buildRaidJoinList (),
-            'Settings': idrinth.ui.buildBasis.buildControls (),
-            'Tiers': idrinth.ui.buildBasis.buildTiers (),
-            'Land': idrinth.ui.buildBasis.buildLand ()
+        var buildActions = function () {
+            var buttonMaker = function ( label, onclick ) {
+                return {
+                    css: 'idrinth-float-half',
+                    type: 'button',
+                    content: label,
+                    attributes: [ {
+                            name: 'type',
+                            value: 'button'
+                        }, {
+                            name: 'onclick',
+                            value: onclick
+                        } ]
+                };
+            };
+            return [ {
+                    children: [
+                        buttonMaker ( 'Import all manually', 'idrinth.raids.importManually(true);' ),
+                        buttonMaker ( 'Import favs manually', 'idrinth.raids.importManually(false);' ),
+                        buttonMaker ( 'Reload game', 'idrinth.ui.reloadGame();' ),
+                        buttonMaker ( 'Clear Raids', 'idrinth.raids.clearAll();' ),
+                        buttonMaker ( 'Reload Script', 'idrinth.reload();' ),
+                        buttonMaker ( 'Restart Raidjoin', 'idrinth.raids.restartInterval();' ),
+                        {
+                            css: 'idrinth-float-half',
+                            type: 'button',
+                            content: 'Refresh FB Game Login',
+                            attributes: [ {
+                                    name: 'type',
+                                    value: 'button'
+                                }, {
+                                    name: 'style',
+                                    value: idrinth.platform === 'facebook' ? '' : 'display:none'
+                                }, {
+                                    name: 'onclick',
+                                    value: 'idrinth.facebook.rejoin();'
+                                } ]
+                        }, {
+                            css: 'idrinth-float-half',
+                            type: 'button',
+                            content: 'NG Raid Join(slow!)',
+                            attributes: [ {
+                                    name: 'type',
+                                    value: 'button'
+                                }, {
+                                    name: 'style',
+                                    value: idrinth.platform === 'newgrounds' ? '' : 'display:none'
+                                }, {
+                                    name: 'onclick',
+                                    value: 'idrinth.newgrounds.joinRaids();'
+                                } ]
+                        }, {
+                            css: 'idrinth-float-half',
+                            type: 'button',
+                            content: idrinth.settings.alarmActive ? 'disable timed Autojoin' : 'enable timed Autojoin',
+                            attributes: [ {
+                                    name: 'type',
+                                    value: 'button'
+                                }, {
+                                    name: 'style',
+                                    value: idrinth.platform === 'newgrounds' ? '' : 'display:none'
+                                }, {
+                                    name: 'onclick',
+                                    value: 'idrinth.settings.change(\'alarmActive\',!idrinth.settings.alarmActive);this.innerHTML=idrinth.settings.alarmActive?\'disable timed Autojoin\':\'enable timed Autojoin\''
+                                } ]
+                        }
+                    ]
+                }, {
+                    css: 'idrinth-line',
+                    id: 'idrinth-joined-raids',
+                    content: 'Last raids joined:',
+                    children: [
+                        {
+                            type: 'ul'
+                        }
+                    ]
+                }
+            ];
+        };
+        var buildTiers = function () {
+            return [ {
+                    css: 'idrinth-line',
+                    children: [ {
+                            type: 'label',
+                            content: 'Enter Boss\' Name',
+                            css: 'idrinth-float-half',
+                            attributes: [
+                                {
+                                    name: 'for',
+                                    value: 'idrinth-tierlist-bosssearch'
+                                }
+                            ]
+                        }, {
+                            type: 'input',
+                            css: 'idrinth-float-half',
+                            id: 'idrinth-tierlist-bosssearch',
+                            attributes: [
+                                {
+                                    name: 'onkeyup',
+                                    value: 'idrinth.tier.getTierForName(this.value);'
+                                },
+                                {
+                                    name: 'onchange',
+                                    value: 'idrinth.tier.getTierForName(this.value);'
+                                },
+                                {
+                                    name: 'onblur',
+                                    value: 'idrinth.tier.getTierForName(this.value);'
+                                }
+                            ]
+                        } ]
+                }, {
+                    id: 'idrinth-tierlist'
+                } ];
+        };
+        var buildControls = function () {
+            'use strict';
+            return [ {
+                    name: 'names',
+                    rType: '#input',
+                    type: 'checkbox',
+                    platforms: [ 'kongregate' ],
+                    label: 'Enable extended Characterinformation?'
+                }, {
+                    name: 'minimalist',
+                    rType: '#input',
+                    type: 'checkbox',
+                    label: 'Minimalist Layout'
+                }, {
+                    name: 'moveLeft',
+                    rType: '#input',
+                    type: 'checkbox',
+                    label: 'Move settings left'
+                }, {
+                    name: 'warBottom',
+                    rType: '#input',
+                    type: 'checkbox',
+                    label: 'Show war at the bottom of the page'
+                }, {
+                    name: 'landMax',
+                    rType: '#input',
+                    type: 'checkbox',
+                    label: 'Check to try and use up the gold as efficient as possible - uncheck to only use the most efficient buy in the land buy calculator'
+                }, {
+                    name: 'factor',
+                    rType: '#input',
+                    type: 'checkbox',
+                    label: 'Buy 10 Buildings at once?(Rec)'
+                }, {
+                    name: 'timeout',
+                    rType: '#input',
+                    type: 'number',
+                    platforms: [ 'kongregate' ],
+                    label: 'Milliseconds until the extended Characterinformation disappears'
+                }, {
+                    name: 'newgroundLoad',
+                    rType: '#input',
+                    type: 'number',
+                    platforms: [ 'newgrounds' ],
+                    label: 'Seconds needed to load the game for joining'
+                }, {
+                    name: 'chatting',
+                    rType: '#input',
+                    type: 'checkbox',
+                    label: 'Enable chat(needs script reload)'
+                }, {
+                    css: 'idrinth-line',
+                    type: 'span',
+                    content: 'This script will always import the raids you manually set to be imported on the website and if it\'s enabled it will also import all raids matched by one of the faved searches provided.'
+                }, {
+                    name: 'raids',
+                    rType: '#input',
+                    type: 'checkbox',
+                    label: 'Enable Auto-Raid-Request for Favorites?'
+                }, {
+                    name: 'favs',
+                    rType: '#input',
+                    type: 'text',
+                    label: 'FavoriteIds to join (separate multiple by comma)'
+                }, {
+                    name: 'isWorldServer',
+                    rType: '#input',
+                    type: 'checkbox',
+                    label: 'Worldserver?'
+                }, {
+                    name: 'windows',
+                    rType: '#input',
+                    type: 'number',
+                    platforms: [ 'dawnofthedragons' ],
+                    label: 'Maximum Popups/Frames for joining raids'
+                }, {
+                    name: 'alarmTime',
+                    rType: '#input',
+                    type: 'text',
+                    platforms: [ 'newgrounds' ],
+                    label: 'Time to automatically join raids slowly(reloads game multiple times). Format is [Hours]:[Minutes] without leading zeros, so 7:1 is fine, 07:01 is not'
+                }, {
+                    css: 'idrinth-line',
+                    type: 'p',
+                    children: [ {
+                            type: '#text',
+                            content: 'Get your search-favorites from '
+                        }, {
+                            type: 'a',
+                            attributes: [ {
+                                    name: 'href',
+                                    value: 'https://dotd.idrinth.de/' + idrinth.platform + '/'
+                                }, {
+                                    name: 'target',
+                                    value: '_blank'
+                                } ],
+                            content: 'Idrinth\'s Raidsearch'
+                        } ]
+                } ];
+        };
+        var buildLand = function () {
+            var buildItem = function ( label ) {
+                return {
+                    type: 'tr',
+                    children: [ {
+                            type: 'th',
+                            content: label
+                        }, {
+                            type: 'td',
+                            children: [ {
+                                    type: 'input',
+                                    id: 'idrinth-land-' + label.toLowerCase (),
+                                    attributes: [
+                                        {
+                                            name: 'value',
+                                            value: idrinth.settings.land[label.toLowerCase ()]
+                                        },
+                                        {
+                                            name: 'type',
+                                            value: 'number'
+                                        }
+                                    ]
+                                } ]
+                        }, {
+                            type: 'td',
+                            content: '-'
+                        } ],
+                    attributes: [
+                        {
+                            name: 'title',
+                            value: idrinth.land.data[label.toLowerCase ()].perHour + ' gold per hour each'
+                        }
+                    ]
+                };
+            };
+            return [ {
+                    type: 'table',
+                    id: 'idrinth-land-buy-table',
+                    children: [
+                        buildItem ( 'Cornfield' ),
+                        buildItem ( 'Stable' ),
+                        buildItem ( 'Barn' ),
+                        buildItem ( 'Store' ),
+                        buildItem ( 'Pub' ),
+                        buildItem ( 'Inn' ),
+                        buildItem ( 'Tower' ),
+                        buildItem ( 'Fort' ),
+                        buildItem ( 'Castle' ),
+                        {
+                            type: 'tr',
+                            children: [ {
+                                    type: 'td'
+                                }, {
+                                    type: 'td'
+                                }, {
+                                    type: 'td'
+                                } ]
+                        },
+                        {
+                            type: 'tr',
+                            children: [ {
+                                    type: 'th',
+                                    content: 'Avaible Gold'
+                                }, {
+                                    type: 'td',
+                                    children: [ {
+                                            type: 'input',
+                                            id: 'idrinth-land-gold',
+                                            attributes: [
+                                                {
+                                                    name: 'value',
+                                                    value: idrinth.settings.land.gold
+                                                },
+                                                {
+                                                    name: 'type',
+                                                    value: 'number'
+                                                }
+                                            ]
+                                        } ]
+                                }, {
+                                    type: 'td',
+                                    children: [ {
+                                            type: 'button',
+                                            content: 'Calculate',
+                                            attributes: [
+                                                {
+                                                    name: 'onclick',
+                                                    value: 'idrinth.land.calculate();'
+                                                },
+                                                {
+                                                    name: 'type',
+                                                    value: 'button'
+                                                }
+                                            ]
+                                        } ]
+                                } ]
+                        }
+                    ]
+                } ];
+        };
+        var makeTabs = function ( config ) {
+            var head = [ ];
+            var first = true;
+            var body = [ ];
+            var buildHead = function ( name, width, first ) {
+                return {
+                    type: 'li',
+                    content: name,
+                    css: 'tab-activator' + ( first ? ' active' : '' ),
+                    id: 'tab-activator-' + name.toLowerCase (),
+                    attributes: [
+                        {
+                            name: 'onclick',
+                            value: 'idrinth.ui.activateTab(\'' + name.toLowerCase () + '\');'
+                        },
+                        {
+                            name: 'style',
+                            value: 'width:' + width + '%;'
+                        }
+                    ]
+                };
+            };
+            var buildBody = function ( name, children, first ) {
+                return {
+                    type: 'li',
+                    css: 'tab-element',
+                    id: 'tab-element-' + name.toLowerCase (),
+                    attributes: [
+                        {
+                            name: 'style',
+                            value: first ? 'display:block;' : 'display:none;'
+                        }
+                    ],
+                    children: children
+                };
+            };
+            var width = Math.floor ( 100 / ( Object.keys ( config ) ).length );
+            for (var name in config) {
+                if ( typeof name === 'string' ) {
+                    head.push ( buildHead ( name, width, first ) );
+                    body.push ( buildBody ( name, config[name], first ) );
+                    first = false;
+                }
+            }
+            return [
+                {
+                    type: 'ul',
+                    children: head,
+                    attributes: [ {
+                            name: 'style',
+                            value: 'margin:0;padding:0;overflow:hidden;width:100%;'
+                        } ]
+                },
+                {
+                    type: 'ul',
+                    children: body,
+                    attributes: [ {
+                            name: 'style',
+                            value: 'margin:0;padding:0;overflow-x:hidden;width:100%;max-height: 500px;overflow-y: scroll;'
+                        } ]
+                }
+            ];
+        };
+        var buildRaidJoinList = function () {
+            return [ {
+                    content: 'click to copy raid link',
+                    type: 'strong'
+                }, {
+                    id: 'idrinth-raid-link-list'
+                } ];
+        };
+        return makeTabs ( {
+            'Actions': buildActions (),
+            'Raids': buildRaidJoinList (),
+            'Settings': buildControls (),
+            'Tiers': buildTiers (),
+            'Land': buildLand ()
         } );
     },
     'do': function () {
@@ -110,114 +433,6 @@ idrinth.ui.buildBasis = {
             idrinth.chat.elements.menu = document.getElementById ( 'idrinth-chat' ).getElementsByTagName ( 'ul' )[0];
         }
         document.getElementById ( 'idrinth-favs' ).setAttribute ( 'onkeyup', 'this.value=this.value.replace(/[^a-f0-9,]/g,\'\')' );
-    },
-    buildLandItem: function ( label ) {
-        return {
-            type: 'tr',
-            children: [ {
-                    type: 'th',
-                    content: label
-                }, {
-                    type: 'td',
-                    children: [ {
-                            type: 'input',
-                            id: 'idrinth-land-' + label.toLowerCase (),
-                            attributes: [
-                                {
-                                    name: 'value',
-                                    value: idrinth.settings.land[label.toLowerCase ()]
-                                },
-                                {
-                                    name: 'type',
-                                    value: 'number'
-                                }
-                            ]
-                        } ]
-                }, {
-                    type: 'td',
-                    content: '-'
-                } ],
-            attributes: [
-                {
-                    name: 'title',
-                    value: idrinth.land.data[label.toLowerCase ()].perHour + ' gold per hour each'
-                }
-            ]
-        };
-    },
-    buildLand: function () {
-        return [ {
-                type: 'table',
-                id: 'idrinth-land-buy-table',
-                children: [
-                    idrinth.ui.buildBasis.buildLandItem ( 'Cornfield' ),
-                    idrinth.ui.buildBasis.buildLandItem ( 'Stable' ),
-                    idrinth.ui.buildBasis.buildLandItem ( 'Barn' ),
-                    idrinth.ui.buildBasis.buildLandItem ( 'Store' ),
-                    idrinth.ui.buildBasis.buildLandItem ( 'Pub' ),
-                    idrinth.ui.buildBasis.buildLandItem ( 'Inn' ),
-                    idrinth.ui.buildBasis.buildLandItem ( 'Tower' ),
-                    idrinth.ui.buildBasis.buildLandItem ( 'Fort' ),
-                    idrinth.ui.buildBasis.buildLandItem ( 'Castle' ),
-                    {
-                        type: 'tr',
-                        children: [ {
-                                type: 'td'
-                            }, {
-                                type: 'td'
-                            }, {
-                                type: 'td'
-                            } ]
-                    },
-                    {
-                        type: 'tr',
-                        children: [ {
-                                type: 'th',
-                                content: 'Avaible Gold'
-                            }, {
-                                type: 'td',
-                                children: [ {
-                                        type: 'input',
-                                        id: 'idrinth-land-gold',
-                                        attributes: [
-                                            {
-                                                name: 'value',
-                                                value: idrinth.settings.land.gold
-                                            },
-                                            {
-                                                name: 'type',
-                                                value: 'number'
-                                            }
-                                        ]
-                                    } ]
-                            }, {
-                                type: 'td',
-                                children: [ {
-                                        type: 'button',
-                                        content: 'Calculate',
-                                        attributes: [
-                                            {
-                                                name: 'onclick',
-                                                value: 'idrinth.land.calculate();'
-                                            },
-                                            {
-                                                name: 'type',
-                                                value: 'button'
-                                            }
-                                        ]
-                                    } ]
-                            } ]
-                    }
-                ]
-            } ];
-    },
-    buildRaidJoinList: function () {
-        return [ {
-                content: 'click to copy raid link',
-                type: 'strong'
-            }, {
-                id: 'idrinth-raid-link-list'
-            } ];
     },
     buildChat: function () {
         return idrinth.ui.buildElement ( {
@@ -609,266 +824,6 @@ idrinth.ui.buildBasis = {
                     ]
                 }
         );
-    },
-    buildActions: function () {
-        return [ {
-                css: 'idrinth-line',
-                children: [ {
-                        css: 'idrinth-float-half',
-                        type: 'button',
-                        content: 'import all manually',
-                        attributes: [ {
-                                name: 'type',
-                                value: 'button'
-                            }, {
-                                name: 'onclick',
-                                value: 'idrinth.raids.importManually(true);'
-                            } ]
-                    }, {
-                        css: 'idrinth-float-half',
-                        type: 'button',
-                        content: 'import favs manually',
-                        attributes: [ {
-                                name: 'type',
-                                value: 'button'
-                            }, {
-                                name: 'onclick',
-                                value: 'idrinth.raids.importManually(false);'
-                            } ]
-                    }, {
-                        css: 'idrinth-float-half',
-                        type: 'button',
-                        content: 'Reload Game',
-                        attributes: [ {
-                                name: 'type',
-                                value: 'button'
-                            }, {
-                                name: 'onclick',
-                                value: 'idrinth.ui.reloadGame();'
-                            } ]
-                    }, {
-                        css: 'idrinth-float-half',
-                        type: 'button',
-                        content: 'Clear Raids',
-                        attributes: [ {
-                                name: 'type',
-                                value: 'button'
-                            }, {
-                                name: 'onclick',
-                                value: 'idrinth.raids.clearAll();'
-                            } ]
-                    }, {
-                        css: 'idrinth-float-half',
-                        type: 'button',
-                        content: 'Reload Idrinth\'s Script',
-                        attributes: [ {
-                                name: 'type',
-                                value: 'button'
-                            }, {
-                                name: 'onclick',
-                                value: 'idrinth.reload();'
-                            } ]
-                    }, {
-                        css: 'idrinth-float-half',
-                        type: 'button',
-                        content: 'Restart RaidJoin',
-                        attributes: [ {
-                                name: 'type',
-                                value: 'button'
-                            }, {
-                                name: 'onclick',
-                                value: 'idrinth.raids.restartInterval();'
-                            } ]
-                    }, {
-                        css: 'idrinth-float-half',
-                        type: 'button',
-                        content: 'Refresh FB Game Login',
-                        attributes: [ {
-                                name: 'type',
-                                value: 'button'
-                            }, {
-                                name: 'style',
-                                value: idrinth.platform === 'facebook' ? '' : 'display:none'
-                            }, {
-                                name: 'onclick',
-                                value: 'idrinth.facebook.rejoin();'
-                            } ]
-                    }, {
-                        css: 'idrinth-float-half',
-                        type: 'button',
-                        content: 'NG Raid Join(slow!)',
-                        attributes: [ {
-                                name: 'type',
-                                value: 'button'
-                            }, {
-                                name: 'style',
-                                value: idrinth.platform === 'newgrounds' ? '' : 'display:none'
-                            }, {
-                                name: 'onclick',
-                                value: 'idrinth.newgrounds.joinRaids();'
-                            } ]
-                    }, {
-                        css: 'idrinth-float-half',
-                        type: 'button',
-                        content: idrinth.settings.alarmActive ? 'disable timed Autojoin' : 'enable timed Autojoin',
-                        attributes: [ {
-                                name: 'type',
-                                value: 'button'
-                            }, {
-                                name: 'style',
-                                value: idrinth.platform === 'newgrounds' ? '' : 'display:none'
-                            }, {
-                                name: 'onclick',
-                                value: 'idrinth.settings.change(\'alarmActive\',!idrinth.settings.alarmActive);this.innerHTML=idrinth.settings.alarmActive?\'disable timed Autojoin\':\'enable timed Autojoin\''
-                            } ]
-                    }
-                ]
-            }, {
-                css: 'idrinth-line',
-                id: 'idrinth-joined-raids',
-                content: 'Last raids joined:',
-                children: [
-                    {
-                        type: 'ul'
-                    }
-                ]
-            } ];
-    },
-    buildTiers: function () {
-        return [ {
-                css: 'idrinth-line',
-                children: [ {
-                        type: 'label',
-                        content: 'Enter Boss\' Name',
-                        css: 'idrinth-float-half',
-                        attributes: [
-                            {
-                                name: 'for',
-                                value: 'idrinth-tierlist-bosssearch'
-                            }
-                        ]
-                    }, {
-                        type: 'input',
-                        css: 'idrinth-float-half',
-                        id: 'idrinth-tierlist-bosssearch',
-                        attributes: [
-                            {
-                                name: 'onkeyup',
-                                value: 'idrinth.tier.getTierForName(this.value);'
-                            },
-                            {
-                                name: 'onchange',
-                                value: 'idrinth.tier.getTierForName(this.value);'
-                            },
-                            {
-                                name: 'onblur',
-                                value: 'idrinth.tier.getTierForName(this.value);'
-                            }
-                        ]
-                    } ]
-            }, {
-                id: 'idrinth-tierlist'
-            } ];
-    },
-    buildControls: function () {
-        'use strict';
-        return [ {
-                name: 'names',
-                rType: '#input',
-                type: 'checkbox',
-                platforms: [ 'kongregate' ],
-                label: 'Enable extended Characterinformation?'
-            }, {
-                name: 'minimalist',
-                rType: '#input',
-                type: 'checkbox',
-                label: 'Minimalist Layout'
-            }, {
-                name: 'moveLeft',
-                rType: '#input',
-                type: 'checkbox',
-                label: 'Move settings left'
-            }, {
-                name: 'warBottom',
-                rType: '#input',
-                type: 'checkbox',
-                label: 'Show war at the bottom of the page'
-            }, {
-                name: 'landMax',
-                rType: '#input',
-                type: 'checkbox',
-                label: 'Check to try and use up the gold as efficient as possible - uncheck to only use the most efficient buy in the land buy calculator'
-            }, {
-                name: 'factor',
-                rType: '#input',
-                type: 'checkbox',
-                label: 'Buy 10 Buildings at once?(Rec)'
-            }, {
-                name: 'timeout',
-                rType: '#input',
-                type: 'number',
-                platforms: [ 'kongregate' ],
-                label: 'Milliseconds until the extended Characterinformation disappears'
-            }, {
-                name: 'newgroundLoad',
-                rType: '#input',
-                type: 'number',
-                platforms: [ 'newgrounds' ],
-                label: 'Seconds needed to load the game for joining'
-            }, {
-                name: 'chatting',
-                rType: '#input',
-                type: 'checkbox',
-                label: 'Enable chat(needs script reload)'
-            }, {
-                css: 'idrinth-line',
-                type: 'span',
-                content: 'This script will always import the raids you manually set to be imported on the website and if it\'s enabled it will also import all raids matched by one of the faved searches provided.'
-            }, {
-                name: 'raids',
-                rType: '#input',
-                type: 'checkbox',
-                label: 'Enable Auto-Raid-Request for Favorites?'
-            }, {
-                name: 'favs',
-                rType: '#input',
-                type: 'text',
-                label: 'FavoriteIds to join (separate multiple by comma)'
-            }, {
-                name: 'isWorldServer',
-                rType: '#input',
-                type: 'checkbox',
-                label: 'Worldserver?'
-            }, {
-                name: 'windows',
-                rType: '#input',
-                type: 'number',
-                platforms: [ 'dawnofthedragons' ],
-                label: 'Maximum Popups/Frames for joining raids'
-            }, {
-                name: 'alarmTime',
-                rType: '#input',
-                type: 'text',
-                platforms: [ 'newgrounds' ],
-                label: 'Time to automatically join raids slowly(reloads game multiple times). Format is [Hours]:[Minutes] without leading zeros, so 7:1 is fine, 07:01 is not'
-            }, {
-                css: 'idrinth-line',
-                type: 'p',
-                children: [ {
-                        type: '#text',
-                        content: 'Get your search-favorites from '
-                    }, {
-                        type: 'a',
-                        attributes: [ {
-                                name: 'href',
-                                value: 'https://dotd.idrinth.de/' + idrinth.platform + '/'
-                            }, {
-                                name: 'target',
-                                value: '_blank'
-                            } ],
-                        content: 'Idrinth\'s Raidsearch'
-                    } ]
-            } ];
     },
     buildTooltip: function ( ) {
         'use strict';
