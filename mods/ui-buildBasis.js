@@ -398,6 +398,51 @@ idrinth.ui.buildBasis = {
         document.getElementById ( 'idrinth-favs' ).setAttribute ( 'onkeyup', 'this.value=this.value.replace(/[^a-f0-9,]/g,\'\')' );
     },
     buildChat: function () {
+        var makeInput = function ( label ) {
+            return {
+                type: 'li',
+                children: [
+                    {
+                        type: 'label',
+                        content: label
+                    },
+                    {
+                        type: 'input',
+                        attributes: [
+                            {
+                                name: 'type',
+                                value: 'text'
+                            },
+                            {
+                                name: 'onchange',
+                                value: 'this.setAttribute(\'value\',this.value);'
+                            }
+                        ]
+                    }
+                ]
+            };
+        };
+        makeButton = function ( label, onclick ) {
+            return {
+                type: 'li',
+                children: [
+                    {
+                        type: 'button',
+                        attributes: [
+                            {
+                                name: 'type',
+                                value: 'button'
+                            },
+                            {
+                                name: 'onclick',
+                                value: onclick
+                            }
+                        ],
+                        content: label
+                    }
+                ]
+            };
+        };
         return idrinth.ui.buildElement ( {
             id: 'idrinth-chat',
             css: 'idrinth-hovering-box' + ( !idrinth.settings.chatHiddenOnStart ? ' active' : '' ) + ( idrinth.settings.moveLeft ? ' left-sided' : '' ),
@@ -462,74 +507,13 @@ idrinth.ui.buildBasis = {
                                             type: 'ul',
                                             css: 'settings',
                                             children: [
-                                                {
-                                                    type: 'li',
-                                                    children: [
-                                                        {
-                                                            type: 'label',
-                                                            content: 'Username'
-                                                        },
-                                                        {
-                                                            type: 'input',
-                                                            attributes: [
-                                                                {
-                                                                    name: 'type',
-                                                                    value: 'text'
-                                                                },
-                                                                {
-                                                                    name: 'onchange',
-                                                                    value: 'this.setAttribute(\'value\',this.value);'
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'li',
-                                                    children: [
-                                                        {
-                                                            type: 'label',
-                                                            content: 'Password'
-                                                        },
-                                                        {
-                                                            type: 'input',
-                                                            attributes: [
-                                                                {
-                                                                    name: 'type',
-                                                                    value: 'text'
-                                                                },
-                                                                {
-                                                                    name: 'onchange',
-                                                                    value: 'this.setAttribute(\'value\',this.value);'
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'li',
-                                                    children: [
-                                                        {
-                                                            type: 'button',
-                                                            attributes: [
-                                                                {
-                                                                    name: 'type',
-                                                                    value: 'button'
-                                                                },
-                                                                {
-                                                                    name: 'onclick',
-                                                                    value: 'idrinth.chat.login()'
-                                                                }
-                                                            ],
-                                                            content: 'Not logged in, click to login/register'
-                                                        }
-                                                    ]
-                                                }
+                                                makeInput ( 'Username' ),
+                                                makeInput ( 'Password' ),
+                                                makeButton ( "Not logged in, click to login/register", "idrinth.chat.login()" ),
                                             ]
                                         }
                                     ]
-                                },
-                                {
+                                }, {
                                     id: 'idrinth-add-chat',
                                     children: [
                                         {
@@ -540,180 +524,120 @@ idrinth.ui.buildBasis = {
                                             type: 'ul',
                                             css: 'settings',
                                             children: [
+                                                makeInput ( 'Chat-ID' ),
+                                                makeInput ( 'Chat-Password' ),
+                                                makeButton ( "Click to join additional chat", "idrinth.chat.add()" ),
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            id: 'idrinth-make-chat',
+                            children: [
+                                {
+                                    type: 'h2',
+                                    content: 'Create Chat'
+                                },
+                                {
+                                    type: 'ul',
+                                    css: 'settings',
+                                    children: [
+                                        {
+                                            type: 'li',
+                                            children: [
                                                 {
-                                                    type: 'li',
-                                                    children: [
-                                                        {
-                                                            type: 'label',
-                                                            content: 'Chat-ID'
-                                                        },
-                                                        {
-                                                            type: 'input',
-                                                            attributes: [
-                                                                {
-                                                                    name: 'type',
-                                                                    value: 'text'
-                                                                },
-                                                                {
-                                                                    name: 'onchange',
-                                                                    value: 'this.setAttribute(\'value\',this.value);'
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
+                                                    type: 'label',
+                                                    content: 'Name'
                                                 },
                                                 {
-                                                    type: 'li',
-                                                    children: [
+                                                    type: 'input',
+                                                    attributes: [
                                                         {
-                                                            type: 'label',
-                                                            content: 'Chat-Password'
+                                                            name: 'type',
+                                                            value: 'text'
                                                         },
                                                         {
-                                                            type: 'input',
-                                                            attributes: [
-                                                                {
-                                                                    name: 'type',
-                                                                    value: 'text'
-                                                                },
-                                                                {
-                                                                    name: 'onchange',
-                                                                    value: 'this.setAttribute(\'value\',this.value);'
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'li',
-                                                    children: [
-                                                        {
-                                                            type: 'button',
-                                                            attributes: [
-                                                                {
-                                                                    name: 'type',
-                                                                    value: 'button'
-                                                                },
-                                                                {
-                                                                    name: 'onclick',
-                                                                    value: 'idrinth.chat.add()'
-                                                                }
-                                                            ],
-                                                            content: 'Click to Join additional chat'
+                                                            name: 'onchange',
+                                                            value: 'this.setAttribute(\'value\',this.value);'
                                                         }
                                                     ]
                                                 }
                                             ]
+                                        },
+                                        {
+                                            type: 'li',
+                                            children: [
+                                                {
+                                                    type: 'button',
+                                                    attributes: [
+                                                        {
+                                                            name: 'type',
+                                                            value: 'button'
+                                                        },
+                                                        {
+                                                            name: 'onclick',
+                                                            value: 'idrinth.chat.create()'
+                                                        }
+                                                    ],
+                                                    content: 'Click to Create additional chat'
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }, {
+                            type: 'li',
+                            children: [
+                                {
+                                    type: '#text',
+                                    content: 'More settings at '
+                                },
+                                {
+                                    type: 'a',
+                                    content: 'dotd.idrinth.de/' + idrinth.platform + '/chat/',
+                                    attributes: [
+                                        {
+                                            name: 'target',
+                                            value: '_blank'
+                                        },
+                                        {
+                                            name: 'href',
+                                            value: 'https://dotd.idrinth.de/' + idrinth.platform + '/chat/'
                                         }
                                     ]
                                 },
                                 {
-                                    id: 'idrinth-make-chat',
-                                    children: [
+                                    type: '#text',
+                                    content: '.'
+                                }
+                            ]
+                        }, {
+                            type: 'li',
+                            children: [
+                                {
+                                    type: '#text',
+                                    content: 'Emoticons provided by '
+                                },
+                                {
+                                    type: 'a',
+                                    content: 'emoticonshd.com',
+                                    attributes: [
                                         {
-                                            type: 'h2',
-                                            content: 'Create Chat'
+                                            name: 'target',
+                                            value: '_blank'
                                         },
                                         {
-                                            type: 'ul',
-                                            css: 'settings',
-                                            children: [
-                                                {
-                                                    type: 'li',
-                                                    children: [
-                                                        {
-                                                            type: 'label',
-                                                            content: 'Name'
-                                                        },
-                                                        {
-                                                            type: 'input',
-                                                            attributes: [
-                                                                {
-                                                                    name: 'type',
-                                                                    value: 'text'
-                                                                },
-                                                                {
-                                                                    name: 'onchange',
-                                                                    value: 'this.setAttribute(\'value\',this.value);'
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    type: 'li',
-                                                    children: [
-                                                        {
-                                                            type: 'button',
-                                                            attributes: [
-                                                                {
-                                                                    name: 'type',
-                                                                    value: 'button'
-                                                                },
-                                                                {
-                                                                    name: 'onclick',
-                                                                    value: 'idrinth.chat.create()'
-                                                                }
-                                                            ],
-                                                            content: 'Click to Create additional chat'
-                                                        }
-                                                    ]
-                                                }
-                                            ]
+                                            name: 'href',
+                                            value: 'http://emoticonshd.com/'
                                         }
                                     ]
-                                }, {
-                                    type: 'li',
-                                    children: [
-                                        {
-                                            type: '#text',
-                                            content: 'More settings at '
-                                        },
-                                        {
-                                            type: 'a',
-                                            content: 'dotd.idrinth.de/' + idrinth.platform + '/chat/',
-                                            attributes: [
-                                                {
-                                                    name: 'target',
-                                                    value: '_blank'
-                                                },
-                                                {
-                                                    name: 'href',
-                                                    value: 'https://dotd.idrinth.de/' + idrinth.platform + '/chat/'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            type: '#text',
-                                            content: '.'
-                                        }
-                                    ]
-                                }, {
-                                    type: 'li',
-                                    children: [
-                                        {
-                                            type: '#text',
-                                            content: 'Emoticons provided by '
-                                        },
-                                        {
-                                            type: 'a',
-                                            content: 'emoticonshd.com',
-                                            attributes: [
-                                                {
-                                                    name: 'target',
-                                                    value: '_blank'
-                                                },
-                                                {
-                                                    name: 'href',
-                                                    value: 'http://emoticonshd.com/'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            type: '#text',
-                                            content: '.'
-                                        }
-                                    ]
+                                },
+                                {
+                                    type: '#text',
+                                    content: '.'
                                 }
                             ]
                         }
@@ -722,7 +646,7 @@ idrinth.ui.buildBasis = {
             ]
         } );
     },
-    war: function () {
+    war: function ( ) {
         return idrinth.ui.buildElement (
                 {
                     id: 'idrinth-war',
