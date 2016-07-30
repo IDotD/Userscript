@@ -4,6 +4,7 @@ idrinth.settings = {
     factor: true,
     moveLeft: false,
     minimalist: false,
+    chatHiddenOnStart: true,
     names: true,
     timeout: 5000,
     loadtime: 5000,
