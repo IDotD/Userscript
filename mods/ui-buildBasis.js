@@ -530,75 +530,75 @@ idrinth.ui.buildBasis = {
                                             ]
                                         }
                                     ]
-                                }
-                            ]
-                        },
-                        {
-                            id: 'idrinth-make-chat',
-                            children: [
-                                {
-                                    type: 'h2',
-                                    content: 'Create Chat'
                                 },
                                 {
-                                    type: 'ul',
-                                    css: 'settings',
+                                    id: 'idrinth-make-chat',
                                     children: [
-                                        makeInput ( "Name" ),
-                                        makeButton ( "Click to create additional chat", "idrinth.chat.create()" )
-                                    ]
-                                }
-                            ]
-                        }, {
-                            type: 'li',
-                            children: [
-                                {
-                                    type: '#text',
-                                    content: 'More settings at '
-                                },
-                                {
-                                    type: 'a',
-                                    content: 'dotd.idrinth.de/' + idrinth.platform + '/chat/',
-                                    attributes: [
                                         {
-                                            name: 'target',
-                                            value: '_blank'
+                                            type: 'h2',
+                                            content: 'Create Chat'
                                         },
                                         {
-                                            name: 'href',
-                                            value: 'https://dotd.idrinth.de/' + idrinth.platform + '/chat/'
+                                            type: 'ul',
+                                            css: 'settings',
+                                            children: [
+                                                makeInput ( "Name" ),
+                                                makeButton ( "Click to create additional chat", "idrinth.chat.create()" )
+                                            ]
                                         }
                                     ]
-                                },
-                                {
-                                    type: '#text',
-                                    content: '.'
-                                }
-                            ]
-                        }, {
-                            type: 'li',
-                            children: [
-                                {
-                                    type: '#text',
-                                    content: 'Emoticons provided by '
-                                },
-                                {
-                                    type: 'a',
-                                    content: 'emoticonshd.com',
-                                    attributes: [
+                                }, {
+                                    type: 'li',
+                                    children: [
                                         {
-                                            name: 'target',
-                                            value: '_blank'
+                                            type: '#text',
+                                            content: 'More settings at '
                                         },
                                         {
-                                            name: 'href',
-                                            value: 'http://emoticonshd.com/'
+                                            type: 'a',
+                                            content: 'dotd.idrinth.de/' + idrinth.platform + '/chat/',
+                                            attributes: [
+                                                {
+                                                    name: 'target',
+                                                    value: '_blank'
+                                                },
+                                                {
+                                                    name: 'href',
+                                                    value: 'https://dotd.idrinth.de/' + idrinth.platform + '/chat/'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            type: '#text',
+                                            content: '.'
                                         }
                                     ]
-                                },
-                                {
-                                    type: '#text',
-                                    content: '.'
+                                }, {
+                                    type: 'li',
+                                    children: [
+                                        {
+                                            type: '#text',
+                                            content: 'Emoticons provided by '
+                                        },
+                                        {
+                                            type: 'a',
+                                            content: 'emoticonshd.com',
+                                            attributes: [
+                                                {
+                                                    name: 'target',
+                                                    value: '_blank'
+                                                },
+                                                {
+                                                    name: 'href',
+                                                    value: 'http://emoticonshd.com/'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            type: '#text',
+                                            content: '.'
+                                        }
+                                    ]
                                 }
                             ]
                         }
