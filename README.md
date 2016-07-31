@@ -13,3 +13,7 @@ We prefer the usage of the [tracker](https://github.com/Idrinth/IDotD/issues) he
 # More Information
 
 Most information is avaible at [this project's wiki](https://github.com/Idrinth/IDotD/wiki).
+
+# How To Help
+
+We can use helpers for the following: update and improve the wiki, help coding the userscript and testing any of the branches. For any of the later two have a look athe related documentation in the wiki.
