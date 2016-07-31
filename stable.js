@@ -111,23 +111,50 @@ var idrinth = {
         idrinth.ui.removeElement ( 'idrinth-controls' );
         idrinth.ui.removeElement ( 'idrinth-chat' );
         idrinth.ui.removeElement ( 'idrinth-war' );
-        var sc = document.createElement ( 'script' );
-        sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/' + Math.random () + '/' );
-        document.getElementsByTagName ( 'body' )[0].appendChild ( sc );
-        window.setTimeout ( function () {
-            idrinth = { };
-        }, 1 );
+
+        var mainScript,
+                baseSrc,
+                sc,
+                version = '',
+                splittedUrl,
+                idotdScript = document.getElementById('idotd-script');
+
+        if( !idotdScript ){
+            mainScript = document.getElementsByTagName ( 'script' );
+
+            for (var i = 0, l = mainScript.length; i < l; i++) {
+                if ( /https:\/\/dotd.idrinth.de\/static\/userscript\//.test ( mainScript[ i ].src ) ) {
+                    baseSrc = mainScript[ i ].src;
+                    mainScript[ i ].parentNode.removeChild ( mainScript[ i ] );
+                    break;
+                }
+            }
+        } else {
+
+            baseSrc = idotdScript.src;
+            idotdScript.parentNode.removeChild ( idotdScript );
+        }
+
+        splittedUrl = baseSrc.split('/');
+        if(splittedUrl[4] === 'userscript'){
+            version = splittedUrl[5] + '/';
+        }
+
+        sc = document.createElement ( 'script' );
+        sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/' + version + Math.random () + '/');
+        sc.setAttribute('id', 'idotd-script');
+        document.getElementsByTagName ( 'body' )[ 0 ].appendChild ( sc );
+        window.setTimeout ( function () { idrinth = {}; }, 1 );
     },
     inArray: function ( value, list ) {
         'use strict';
         if ( !Array.isArray ( list ) ) {
             return false;
         }
-        var c = 0;
         if ( typeof list.includes === 'function' ) {
             return list.includes ( value );
         }
-        for (c = 0; c < list.length; c++) {
+        for (var c = 0; c < list.length; c++) {
             if ( list[c] === value ) {
                 return true;
             }
