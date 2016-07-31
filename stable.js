@@ -117,9 +117,9 @@ var idrinth = {
                 sc,
                 version = '',
                 splittedUrl,
-                idotdScript = document.getElementById('idotd-script');
+                idotdScript = document.getElementById ( 'idotd-script' );
 
-        if( !idotdScript ){
+        if ( !idotdScript ) {
             mainScript = document.getElementsByTagName ( 'script' );
 
             for (var i = 0, l = mainScript.length; i < l; i++) {
@@ -130,19 +130,18 @@ var idrinth = {
                 }
             }
         } else {
-
             baseSrc = idotdScript.src;
             idotdScript.parentNode.removeChild ( idotdScript );
         }
 
-        splittedUrl = baseSrc.split('/');
-        if(splittedUrl[4] === 'userscript'){
-            version = splittedUrl[5] + '/';
+        splittedUrl = baseSrc.split ( '/' );
+        if ( splittedUrl[ 4 ] === 'userscript' ) {
+            version = splittedUrl[ 5 ] + '/';
         }
 
         sc = document.createElement ( 'script' );
-        sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/' + version + Math.random () + '/');
-        sc.setAttribute('id', 'idotd-script');
+        sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/' + version + Math.random () + '/' );
+        sc.setAttribute ( 'id', 'idotd-script' );
         document.getElementsByTagName ( 'body' )[ 0 ].appendChild ( sc );
         window.setTimeout ( function () { idrinth = {}; }, 1 );
     },
