@@ -149,13 +149,20 @@ idrinth.raids = {
                 }
                 return prefix;
             },
-            kongregate: function ( key ) {
-                'use strict';
-                idrinth.raids.join.byAjax.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
-            },
-            armorgames: function ( key ) {
-                'use strict';
-                idrinth.raids.join.byAjax.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
+            joinServer: function ( name, key ) {
+                var serverLink = idrinth.raids.join.servers.getServerLink ( key ),
+                        serverNames = {
+                            "kongregae": idrinth.raids.join.byAjax.do,
+                            "armorgames": idrinth.raids.join.byAjax.do,
+                            "facebook": idrinth.raids.join.byFrame.do,
+                            "dawnofthedragons": idrinth.raids.join.byFrame.do
+                        };
+
+                if ( serverNames.hasOwnProperty ( name ) ){
+                    serverNames[ name ](key, serverLink);
+                } else {
+                    idrinth.alert ( "Could not find configuration for the server with name : " + name );
+                }
             },
             postLink: function ( key ) {
                 'use strict';
@@ -166,15 +173,23 @@ idrinth.raids = {
                     span.appendChild ( document.createTextNode ( idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid ) );
                     document.getElementById ( 'idrinth-raid-link-list' ).appendChild ( span );
                 }
-            },
-            facebook: function ( key ) {
-                'use strict';
-                idrinth.raids.join.byFrame.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
-            },
-            dawnofthedragons: function ( key ) {
-                'use strict';
-                idrinth.raids.join.byFrame.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
             }
+            // kongregate: function ( key ) {
+            //     'use strict';
+            //     idrinth.raids.join.byAjax.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
+            // },
+            // armorgames: function ( key ) {
+            //     'use strict';
+            //     idrinth.raids.join.byAjax.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
+            // },
+            // facebook: function ( key ) {
+            //     'use strict';
+            //     idrinth.raids.join.byFrame.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
+            // },
+            // dawnofthedragons: function ( key ) {
+            //     'use strict';
+            //     idrinth.raids.join.byFrame.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
+            // }
         },
         byAjax: {
             'do': function ( key, link ) {
@@ -309,9 +324,7 @@ idrinth.raids = {
                     added++;
                     idrinth.raids.join.servers.postLink ( key );
                     idrinth.raids.list[key].joined = true;
-                    if ( typeof idrinth.raids.join.servers[idrinth.platform] === 'function' ) {
-                        idrinth.raids.join.servers[idrinth.platform] ( key );
-                    }
+                    idrinth.raids.join.servers.joinServer(idrinth.platform, key);
                 }
                 if ( added > 99 || ( idrinth.platform === 'facebook' && added >= idrinth.settings.windows ) ) {
                     return true;
