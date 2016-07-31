@@ -152,7 +152,7 @@ idrinth.raids = {
             joinServer: function ( name, key ) {
                 var serverLink = idrinth.raids.join.servers.getServerLink ( key ),
                         serverNames = {
-                            "kongregae": idrinth.raids.join.byAjax.do,
+                            "kongregate": idrinth.raids.join.byAjax.do,
                             "armorgames": idrinth.raids.join.byAjax.do,
                             "facebook": idrinth.raids.join.byFrame.do,
                             "dawnofthedragons": idrinth.raids.join.byFrame.do
