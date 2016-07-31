@@ -161,7 +161,7 @@ idrinth.raids = {
                 if ( serverNames.hasOwnProperty ( name ) ){
                     serverNames[ name ](key, serverLink);
                 } else {
-                    idrinth.alert ( "Could not find configuration for the server with name : " + name );
+                    idrinth.alert ( idrinth.getMsg( 'join.serverfail' ) + name );
                 }
             },
             postLink: function ( key ) {
@@ -216,15 +216,16 @@ idrinth.raids = {
                     idrinth.raids.joined[ key ] = idrinth.raids.list[ key ];
                     delete idrinth.raids.list[ key ];
                 }
-            }, success: function ( key ) {
+            },
+            success: function ( key ) {
                 'use strict';
-                idrinth.raids.join.messages.log ( 'Joined ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
+                idrinth.raids.join.messages.log ( idrinth.getMsg( 'msg.joined' ) + idrinth.raids.list[key].name + "'s " + idrinth.raids.list[key].raid );
                 idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
                 this.addToJoined ( key );
             },
             failed: function ( key ) {
                 'use strict';
-                idrinth.raids.join.messages.log ( 'Could not join ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
+                idrinth.raids.join.messages.log ( idrinth.getMsg( 'msg.notjoined' ) + idrinth.raids.list[key].name + "'s " + idrinth.raids.list[key].raid );
             },
             trying: function ( key ) {
                 'use strict';
@@ -237,7 +238,7 @@ idrinth.raids = {
                     },300)
                 })(key));
                 if ( idrinth.raids.list[key] ) {
-                    idrinth.raids.join.messages.log ( 'Trying to join ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
+                    idrinth.raids.join.messages.log ( idrinth.getMsg( 'msg.tryingjoin' ) + idrinth.raids.list[key].name + "'s " + idrinth.raids.list[key].raid );
                 }
                this.addToJoined( key );
             }
