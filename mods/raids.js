@@ -174,22 +174,6 @@ idrinth.raids = {
                     document.getElementById ( 'idrinth-raid-link-list' ).appendChild ( span );
                 }
             }
-            // kongregate: function ( key ) {
-            //     'use strict';
-            //     idrinth.raids.join.byAjax.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
-            // },
-            // armorgames: function ( key ) {
-            //     'use strict';
-            //     idrinth.raids.join.byAjax.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
-            // },
-            // facebook: function ( key ) {
-            //     'use strict';
-            //     idrinth.raids.join.byFrame.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
-            // },
-            // dawnofthedragons: function ( key ) {
-            //     'use strict';
-            //     idrinth.raids.join.byFrame.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
-            // }
         },
         byAjax: {
             'do': function ( key, link ) {
