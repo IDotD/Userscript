@@ -374,10 +374,7 @@ idrinth.chat = {
                 }
             }
         };
-        if ( !data ) {
-            return idrinth.chat.returnMessages ( data );
-        }
-        data = JSON.parse ( data );
+        data = this.parseJSON ( data );
         if ( !data ) {
             return idrinth.chat.returnMessages ( data );
         }
@@ -389,6 +386,13 @@ idrinth.chat = {
         }
         idrinth.chat.oldMessages = [ ];
         idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 999 );
+    },
+    parseJSON: function( data ){
+        try {
+            JSON.parse(data);
+        } catch (e) {
+            return false;
+        }
     },
     ranks: [ '', 'banned', 'user', 'mod', 'owner' ],
     applyMembers: function ( data ) {
