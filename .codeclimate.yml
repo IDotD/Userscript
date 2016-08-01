@@ -7,7 +7,7 @@ engines:
     config:
       languages:
         javascript:
-          mass_threshold: 5
+          mass_threshold: 0
         ruby:
         python:
         php:
