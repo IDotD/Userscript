@@ -398,7 +398,6 @@ idrinth.chat = {
             return false;
         }
     },
-    ranks: [ '', 'banned', 'user', 'mod', 'owner' ],
     applyMembers: function ( data ) {
         var applyMemberData = function () {
             var addMemberElement = function ( chat, chatId, userId ) {
