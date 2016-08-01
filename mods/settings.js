@@ -78,7 +78,7 @@ idrinth.settings = {
 
         for ( var key in settings ) {
             if ( settings.hasOwnProperty ( key ) && typeof settings[ key ] !== 'function' ) {
-                if ( settings[ key ] === 'object' ) {
+                if ( typeof settings[ key ] === 'object' ) {
                     innerObj = settings[ key ];
                     processInner( action, settings, prefix + key, innerObj );
                 } else {
