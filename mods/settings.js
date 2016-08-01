@@ -37,6 +37,7 @@ idrinth.settings = {
                 handleItem,
                 saveItem,
                 settings = idrinth.settings,
+                processInner,
                 prefix = 'idrinth-dotd-',
                 actions = {
                     'save': 'save',
@@ -47,7 +48,7 @@ idrinth.settings = {
             return;
         }
 
-       handleItem = function handleItemF ( action, name, item ) {
+        handleItem = function handleItemF ( action, name, item ) {
             var tmp;
             if ( action === 'save' ) {
                 window.localStorage.setItem ( name, JSON.stringify ( item ) );
@@ -66,16 +67,20 @@ idrinth.settings = {
             }
         };
 
+        processInner = function ( action, prefix, key, innerObj ){
+            for ( var key2 in innerObj ) {
+                if ( innerObj.hasOwnProperty ( key2 ) ) {
+                    innerVal = handleItem ( action, prefix + key + "-" + key2, innerObj[ key2 ] );
+                    saveItem ( key, key2, settings, innerVal );
+                }
+            }
+        };
+
         for ( var key in settings ) {
             if ( settings.hasOwnProperty ( key ) && typeof settings[ key ] !== 'function' ) {
                 if ( settings[ key ] === 'object' ) {
                     innerObj = settings[ key ];
-                    for ( var key2 in innerObj ) {
-                        if ( innerObj.hasOwnProperty ( key2 ) ) {
-                            innerVal = handleItem ( action, prefix + key + "-" + key2, innerObj[ key2 ] );
-                            saveItem ( key, key2, settings, innerVal );
-                        }
-                    }
+                    processInner( action, prefix, key, innerObj );
                 } else {
                     outerVal = handleItem ( action, prefix + key, settings[ key ] );
                     saveItem ( key, null, settings, outerVal );
