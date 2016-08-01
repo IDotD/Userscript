@@ -537,11 +537,9 @@ var idrinth = {
             }
         },
         getClassesList: function ( classString, add, remove ) {
-            var original = classString.split ( ' ' );
+            var original = classString.split ( ' ' ).concat ( add && typeof add === 'object' && Array.isArray ( add ) ? add : [ ] );
             var list = [ ];
-            if ( !( remove && typeof remove === 'object' && Array.isArray ( remove ) ) ) {
-                remove = [ ];
-            }
+            remove = remove && typeof remove === 'object' && Array.isArray ( remove ) ? remove : [ ];
             var addUnique = function ( list, element, forbidden ) {
                 if ( list.indexOf ( element ) === -1 && forbidden.indexOf ( element ) === -1 ) {
                     list.push ( element );
@@ -550,11 +548,6 @@ var idrinth = {
             };
             for (var counter = 0; counter < original.length; counter++) {
                 list = addUnique ( list, original[counter], remove );
-            }
-            if ( add && typeof add === 'object' && Array.isArray ( add ) ) {
-                for (var counter = 0; counter < add.length; counter++) {
-                    list = addUnique ( list, add[counter], remove );
-                }
             }
             return list.join ( ' ' );
         },
