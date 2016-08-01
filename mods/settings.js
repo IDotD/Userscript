@@ -51,7 +51,7 @@ idrinth.settings = {
         handleItem = function handleItemF ( action, name, item ) {
             var tmp;
             if ( action === 'save' ) {
-                window.localStorage.setItem ( name, JSON.stringify ( item ) );
+                window.localStorage.setItem ( name, item );
             } else {
                 tmp = window.localStorage.getItem ( name );
                 tmp = tmp !== 'false' || tmp !== 'true' ? tmp : !!tmp;
