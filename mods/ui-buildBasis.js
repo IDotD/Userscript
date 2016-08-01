@@ -5,15 +5,12 @@ idrinth.ui.buildBasis = {
             var buildActions = function () {
                 var buttonMaker = function ( label, onclick, platform ) {
                     return {
-                        css: 'idrinth-float-half',
+                        css: 'idrinth-float-half' + ( platform && platform !== idrinth.platform ? " idrinth-hide" : "" ),
                         type: 'button',
                         content: label,
                         attributes: [ {
                                 name: 'type',
                                 value: 'button'
-                            }, {
-                                name: 'style',
-                                value: platform && platform !== idrinth.platform ? "display:none" : ""
                             }, {
                                 name: 'onclick',
                                 value: onclick
@@ -305,14 +302,8 @@ idrinth.ui.buildBasis = {
                 var buildBody = function ( name, children, first ) {
                     return {
                         type: 'li',
-                        css: 'tab-element',
+                        css: 'tab-element' + ( first ? ' idrinth-hide' : '' ),
                         id: 'tab-element-' + name.toLowerCase (),
-                        attributes: [
-                            {
-                                name: 'style',
-                                value: first ? 'display:block;' : 'display:none;'
-                            }
-                        ],
                         children: children
                     };
                 };

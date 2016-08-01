@@ -31,16 +31,21 @@ idrinth.war = {
         var process = function ( data ) {
             var toggleGUI = function ( onOff ) {
                 var toggle = onOff || false;
+                var addClasses = [ ];
+                var removeClasses = [ ];
                 if ( toggle === true ) {
-                    idrinth.war.element.setAttribute ( 'style', '' );
-                    var classes = idrinth.war.element.getAttribute ( 'class' );
-                    idrinth.war.element.setAttribute ( 'class', idrinth.settings.warBottom ? classes + ' bottom' : classes.replace ( / bottom/g, '' ) );
+                    removeClasses.push ( 'idrinth-hide' );
+                    addClasses.push ( "bottom" );
+                    if ( !idrinth.settings.warBottom ) {
+                        removeClasses.push ( "bottom" );
+                    }
                 } else {
-                    idrinth.war.element.setAttribute ( 'style', 'display:none' );
+                    addClasses.push ( "hide" );
                     while ( idrinth.war.element.childNodes[1].childNodes[1].firstChild ) {
                         idrinth.war.element.childNodes[1].childNodes[1].removeChild ( idrinth.war.element.childNodes[1].firstChild.firstChild );
                     }
                 }
+                idrinth.war.element.setAttribute ( 'class', idrinth.ui.getClassesList ( idrinth.war.element.getAttribute ( 'class' ), addClasses, removeClasses ) );
             };
             var processJson = function ( data ) {
                 var magicIgmSrv = 'https://dotd.idrinth.de/static/magic-image-service/';
