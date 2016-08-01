@@ -40,7 +40,7 @@ idrinth.war = {
                         removeClasses.push ( "bottom" );
                     }
                 } else {
-                    addClasses.push ( "hide" );
+                    addClasses.push ( "idrinth-hide" );
                     while ( idrinth.war.element.childNodes[1].childNodes[1].firstChild ) {
                         idrinth.war.element.childNodes[1].childNodes[1].removeChild ( idrinth.war.element.childNodes[1].firstChild.firstChild );
                     }
