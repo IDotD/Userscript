@@ -537,9 +537,12 @@ var idrinth = {
             }
         },
         getClassesList: function ( classString, add, remove ) {
-            var original = classString.split ( ' ' ).concat ( add && typeof add === 'object' && Array.isArray ( add ) ? add : [ ] );
+            var forceToArray = function ( value ) {
+                return value && typeof value === 'object' && Array.isArray ( value ) ? value : [ ];
+            };
+            var original = classString.split ( ' ' ).concat ( forceToArray ( add ) );
             var list = [ ];
-            remove = remove && typeof remove === 'object' && Array.isArray ( remove ) ? remove : [ ];
+            remove = forceToArray ( remove );
             var addUnique = function ( list, element, forbidden ) {
                 if ( list.indexOf ( element ) === -1 && forbidden.indexOf ( element ) === -1 ) {
                     list.push ( element );
