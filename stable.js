@@ -447,10 +447,10 @@ var idrinth = {
             'use strict';
             function tooltip ( set, element, pos, guilds, platform ) {
                 if ( !set ) {
-                    element.setAttributeClass ( idrinth.ui.getClassesList ( element.getAttribute ( 'class' ), [ 'idrinth-hide' ], [ ] ) );
+                    idrinth.ui.tooltip.setAttribute ( "class", idrinth.ui.getClassesList ( idrinth.ui.tooltip.getAttribute ( 'class' ), [ 'idrinth-hide' ], [ ] ) );
                     return;
                 }
-                element.setAttributeClass ( idrinth.ui.getClassesList ( element.getAttribute ( 'class' ), [ ], [ 'idrinth-hide' ] ) );
+                idrinth.ui.tooltip.setAttribute ( "class", idrinth.ui.getClassesList ( idrinth.ui.tooltip.getAttribute ( 'class' ), [ ], [ 'idrinth-hide' ] ) );
                 element.childNodes[0].setAttribute ( 'href', 'https://dotd.idrinth.de/' + platform + '/summoner/' + set.id + '/' );
                 element.childNodes[0].innerHTML = set.name;
                 element.childNodes[1].childNodes[1].innerHTML = set.level + ' (' + set['7day'] + '/week, ' + set['30day'] + '/month)';
@@ -459,7 +459,6 @@ var idrinth = {
                 element.childNodes[2].childNodes[1].innerHTML = guilds[set.guildId];
                 element.childNodes[3].childNodes[1].innerHTML = set.updated;
                 element.childNodes[3].setAttribute ( 'style', ( new Date () ) - ( new Date ( set.updated ) ) > 86400000 ? 'color:#aa0000;' : '' );
-                element.setAttribute ( 'style', '' );
                 idrinth.ui.tooltip.setAttribute ( 'style', 'left:' + Math.round ( pos.left - 200 ) + 'px;top:' + Math.round ( pos.top - 100 ) + 'px;' );
             }
             var pos = null;

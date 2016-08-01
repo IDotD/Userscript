@@ -724,7 +724,7 @@ idrinth.ui.buildBasis = {
                 } ];
         }
         idrinth.ui.tooltip = idrinth.ui.buildElement ( {
-            css: 'idrinth-hovering-box idrinth-tooltip-overwrite',
+            css: 'idrinth-hovering-box idrinth-tooltip-overwrite idrinth-hide',
             id: 'idrinth-tooltip',
             children: [
                 {
