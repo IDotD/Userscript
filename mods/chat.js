@@ -9,6 +9,10 @@ idrinth.chat = {
     },
     chatRank: { },
     refreshCount: 0,
+    ranks: [ '', 'banned', 'user', 'mod', 'owner' ],
+    emotes: { },
+    users: { },
+    updateTimeout: null,
     refreshChats: function () {
         idrinth.chat.oldMessages = JSON.parse ( JSON.stringify ( idrinth.chat.messages ) );
         idrinth.chat.messages = [ ];
@@ -447,7 +451,6 @@ idrinth.chat = {
         idrinth.chat.chatRank = data.members;
         applyMemberData ();
     },
-    emotes: { },
     start: function () {
         if ( !idrinth.settings.chatting ) {
             return;
@@ -520,8 +523,6 @@ idrinth.chat = {
         document.getElementById ( 'idrinth-add-chat' ).getElementsByTagName ( 'input' )[1].value = '';
         document.getElementById ( 'idrinth-make-chat' ).getElementsByTagName ( 'input' )[0].value = '';
     },
-    users: { },
-    updateTimeout: null,
     add: function () {
         idrinth.runAjax (
                 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/join/',
@@ -589,7 +590,7 @@ idrinth.chat = {
         if ( data.success ) {
             idrinth.settings.chatuser = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[0].value;
             idrinth.settings.chatpass = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[1].value;
-            idrinth.saveSettings ();
+            idrinth.settings.save ();
             idrinth.ui.removeElement ( 'idrinth-chat-login' );
             idrinth.chat.join ( data.data );
             return;

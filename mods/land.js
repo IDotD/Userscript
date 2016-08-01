@@ -50,7 +50,7 @@ idrinth.land = {
                 document.getElementById ( 'idrinth-land-' + key ).parentNode.nextSibling.innerHTML = '+' + results[key];
             }
             document.getElementById ( 'idrinth-land-gold' ).value = idrinth.settings.land.gold;
-            idrinth.saveSettings ();
+            idrinth.settings.save ();
         };
         for (var key in idrinth.settings.land) {
             idrinth.settings.land[key] = parseInt ( document.getElementById ( 'idrinth-land-' + key ).value, 10 );

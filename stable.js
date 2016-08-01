@@ -600,7 +600,7 @@ var idrinth = {
     },
     startInternal: function () {
         var startModules = function () {
-            idrinth.getSettings ( );
+            idrinth.settings.start() ( );
             idrinth.ui.start ( );
             idrinth.user.start ( );
             idrinth.names.start ( );
@@ -656,19 +656,6 @@ var idrinth = {
     },
     confirm: function ( text, callback ) {
         idrinth.ui.buildModal ( 'Do you?', text, callback );
-    },
-    saveSettings: function () {
-        'use strict';
-        if ( window.localStorage ) {
-            window.localStorage.setItem( 'idrinth-dotd-settings', JSON.stringify ( idrinth.settings ) );
-        }
-    },
-    getSettings: function () {
-        'use strict';
-        if ( window.localStorage ) {
-            //add type save
-            idrinth.settings = JSON.parse ( window.localStorage.getItem ( 'idrinth-dotd-settings' ) );
-        }
     },
     getMsg: function ( key ) {
         var textKey = key || '';
