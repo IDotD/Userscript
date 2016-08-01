@@ -298,16 +298,12 @@ idrinth.chat = {
                                     },
                                     {
                                         type: 'span',
-                                        css: 'user ' + idrinth.chat.ranks[parseInt ( idrinth.chat.chatRank[chatId][message.user], 10 )],
+                                        css: 'user ' + idrinth.chat.ranks[parseInt ( idrinth.chat.chatRank[chatId][message.user], 10 )] + ( message.user === 0 ? ' system-message' : '' ),
                                         content: idrinth.chat.users[message.user].name,
                                         attributes: [
                                             {
                                                 name: 'data-id',
                                                 value: message.user
-                                            },
-                                            {
-                                                name: 'style',
-                                                value: ( message.user === 0 ? 'font-weight:bold' : '' )
                                             },
                                             {
                                                 name: 'onclick',

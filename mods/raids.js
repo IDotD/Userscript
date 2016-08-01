@@ -97,13 +97,13 @@ idrinth.raids = {
                         dawnofthedragons: 'https://web1.dawnofthedragons.com/live_iframe/raidjoin.php?',
                         facebook: 'https://web1.dawnofthedragons.com/live_iframe/raidjoin.php?'
                     };
-                    idrinth.raids.join.data.prefix=(((sites[idrinth.platform].replace (
-                        '###id###',idrinth.user.id
-                        )).replace (
-                        '###token###',idrinth.user.token
-                        )).replace (
-                        '###name###',idrinth.user.name
-                        ));
+                    idrinth.raids.join.data.prefix = ( ( ( sites[idrinth.platform].replace (
+                            '###id###', idrinth.user.id
+                            ) ).replace (
+                            '###token###', idrinth.user.token
+                            ) ).replace (
+                            '###name###', idrinth.user.name
+                            ) );
                 }
                 return idrinth.raids.join.data.prefix;
             },
@@ -217,7 +217,8 @@ idrinth.raids = {
                     idrinth.raids.joined[ key ] = idrinth.raids.list[ key ];
                     delete idrinth.raids.list[ key ];
                 }
-            }, success: function ( key ) {
+            },
+            success: function ( key ) {
                 'use strict';
                 idrinth.raids.join.messages.log ( 'Joined ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
                 idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
@@ -229,18 +230,18 @@ idrinth.raids = {
             },
             trying: function ( key ) {
                 'use strict';
-                ((function(key){
-                    window.setTimeout(function(){
+                ( ( function ( key ) {
+                    window.setTimeout ( function () {
                         var id = 'idrinth-raid-link-' + key;
                         if ( document.getElementById ( id ) ) {
                             idrinth.ui.removeElement ( id );
                         }
-                    },300)
-                })(key));
+                    }, 300 )
+                } ) ( key ) );
                 if ( idrinth.raids.list[key] ) {
                     idrinth.raids.join.messages.log ( 'Trying to join ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
                 }
-               this.addToJoined( key );
+                this.addToJoined ( key );
             }
         },
         byFrame: {
@@ -253,6 +254,7 @@ idrinth.raids = {
                         idrinth.raids.join.byFrame.windows[count] =
                                 idrinth.ui.buildElement ( {
                                     type: 'iframe',
+                                    css: 'idrinth-join-frame',
                                     id: 'join-' + key,
                                     attributes: [
                                         {
@@ -265,7 +267,7 @@ idrinth.raids = {
                                         },
                                         {
                                             name: 'style',
-                                            value: 'position:absolute;top:' + count + 'px;left:0;width:1px;height:1px;z-index:-100;'
+                                            value: 'top:' + count + 'px;'
                                         },
                                         {
                                             name: 'onload',
@@ -277,11 +279,11 @@ idrinth.raids = {
                                         }
                                     ]
                                 } );
-                        idrinth.raids.join.byFrame.timeouts[count] = ((function(count, key){
-                            return window.setTimeout(function(){
-                                idrinth.raids.join.byFrame.remove( count, key );
+                        idrinth.raids.join.byFrame.timeouts[count] = ( ( function ( count, key ) {
+                            return window.setTimeout ( function () {
+                                idrinth.raids.join.byFrame.remove ( count, key );
                             }, 30000 )
-                        })(count, key));
+                        } ) ( count, key ) );
                         idrinth.ui.body.appendChild ( idrinth.raids.join.byFrame.windows[count] );
                         idrinth.raids.join.messages.trying ( key );
                         return;
@@ -293,9 +295,9 @@ idrinth.raids = {
                 try {
                     window.clearTimeout ( idrinth.raids.join.byFrame.timeouts[count] );
                 } catch ( e0 ) {
-                    idrinth.log(e0.toString())
+                    idrinth.log ( e0.toString () )
                 }
-                if( idrinth.raids.join.byFrame.windows.indexOf(count) ){
+                if ( idrinth.raids.join.byFrame.windows.indexOf ( count ) ) {
                     idrinth.raids.join.byFrame.windows[count] = null;
                 }
                 idrinth.ui.removeElement ( 'join-' + key );
