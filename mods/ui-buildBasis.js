@@ -328,17 +328,15 @@ idrinth.ui.buildBasis = {
                     {
                         type: 'ul',
                         children: head,
-                        attributes: [ {
-                                name: 'style',
-                                value: 'margin:0;padding:0;overflow:hidden;width:100%;'
-                            } ]
+                        css: 'idrinth-ui-menu'
                     },
                     {
                         type: 'ul',
                         children: body,
+                        css: 'idrinth-ui-menu',
                         attributes: [ {
                                 name: 'style',
-                                value: 'margin:0;padding:0;overflow-x:hidden;width:100%;max-height: 500px;overflow-y: scroll;'
+                                value: 'max-height: 500px;overflow-y: scroll;'
                             } ]
                     }
                 ];
@@ -621,16 +619,7 @@ idrinth.ui.buildBasis = {
                                 },
                                 {
                                     type: 'span',
-                                    attributes: [
-                                        {
-                                            name: 'style',
-                                            value: 'padding:0.2em;width:1em;height:1em;float:right;cursor:pointer;background:#000;color:#fff;border-radius:50%;'
-                                        },
-                                        {
-                                            name: 'onclick',
-                                            value: 'idrinth.war.oc();'
-                                        }
-                                    ],
+                                    css: 'idrinth-circle',
                                     content: '\u2195'
                                 }
                             ]

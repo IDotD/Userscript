@@ -295,6 +295,9 @@
 #idrinth-chat .user.owner {
     color: #a33;
 }
+#idrinth-chat .user.system-message {
+    font-weight: bold;
+}
 
 #idrinth-chat > button {
     right: 5px;
@@ -320,9 +323,15 @@
     box-sizing: border-box;
 }
 
-#idrinth-chat .settings li {
+#idrinth-chat .settings li{
     overflow: hidden;
     height: auto;
+}
+.idrinth-ui-menu {
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    width:100%;
 }
 
 #idrinth-chat .styled-scrollbar::-webkit-scrollbar,
@@ -611,4 +620,21 @@ td.is-os {
 }
 .idrinth-hovering-box.idrinth-popup.idrinth-confirm > .buttons > button{
     float:left;
+}
+.idrinth-join-frame {
+    position:absolute;
+    left:0;
+    width:1px;
+    height:1px;
+    z-index:-100;
+}
+.idrinth-circle {
+    padding:0.2em;
+    width:1em;
+    height:1em;
+    float:right;
+    cursor:pointer;
+    background:#000;
+    color:#fff;
+    border-radius:50%;
 }
