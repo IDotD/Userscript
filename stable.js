@@ -600,7 +600,7 @@ var idrinth = {
     },
     startInternal: function () {
         var startModules = function () {
-            idrinth.settings.start() ( );
+            idrinth.settings.start ( );
             idrinth.ui.start ( );
             idrinth.user.start ( );
             idrinth.names.start ( );
