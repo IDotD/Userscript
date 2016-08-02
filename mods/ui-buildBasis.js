@@ -302,7 +302,7 @@ idrinth.ui.buildBasis = {
                 var buildBody = function ( name, children, first ) {
                     return {
                         type: 'li',
-                        css: 'tab-element' + ( first ? ' idrinth-hide' : '' ),
+                        css: 'tab-element' + ( first ? '' : ' idrinth-hide' ),
                         id: 'tab-element-' + name.toLowerCase (),
                         children: children
                     };
