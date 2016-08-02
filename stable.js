@@ -579,7 +579,7 @@ var idrinth = {
                         value: 'stylesheet'
                     }, {
                         name: 'href',
-                        value: 'https://dotd.idrinth.de###PATH###/script-styles.css'
+                        value: 'https://dotd.idrinth.de###PATH###/script-styles.css?###VERSION###'
                     } ]
             } ) );
             if ( idrinth.platform === 'kongregate' ) {
