@@ -5,15 +5,12 @@ idrinth.ui.buildBasis = {
             var buildActions = function () {
                 var buttonMaker = function ( label, onclick, platform ) {
                     return {
-                        css: 'idrinth-float-half',
+                        css: 'idrinth-float-half' + ( platform && platform !== idrinth.platform ? " idrinth-hide" : "" ),
                         type: 'button',
                         content: label,
                         attributes: [ {
                                 name: 'type',
                                 value: 'button'
-                            }, {
-                                name: 'style',
-                                value: platform && platform !== idrinth.platform ? "display:none" : ""
                             }, {
                                 name: 'onclick',
                                 value: onclick
@@ -305,14 +302,8 @@ idrinth.ui.buildBasis = {
                 var buildBody = function ( name, children, first ) {
                     return {
                         type: 'li',
-                        css: 'tab-element',
+                        css: 'tab-element' + ( first ? ' idrinth-hide' : '' ),
                         id: 'tab-element-' + name.toLowerCase (),
-                        attributes: [
-                            {
-                                name: 'style',
-                                value: first ? 'display:block;' : 'display:none;'
-                            }
-                        ],
                         children: children
                     };
                 };
@@ -328,17 +319,15 @@ idrinth.ui.buildBasis = {
                     {
                         type: 'ul',
                         children: head,
-                        attributes: [ {
-                                name: 'style',
-                                value: 'margin:0;padding:0;overflow:hidden;width:100%;'
-                            } ]
+                        css: 'idrinth-ui-menu'
                     },
                     {
                         type: 'ul',
                         children: body,
+                        css: 'idrinth-ui-menu',
                         attributes: [ {
                                 name: 'style',
-                                value: 'margin:0;padding:0;overflow-x:hidden;width:100%;max-height: 500px;overflow-y: scroll;'
+                                value: 'max-height: 500px;overflow-y: scroll;'
                             } ]
                     }
                 ];
@@ -621,16 +610,7 @@ idrinth.ui.buildBasis = {
                                 },
                                 {
                                     type: 'span',
-                                    attributes: [
-                                        {
-                                            name: 'style',
-                                            value: 'padding:0.2em;width:1em;height:1em;float:right;cursor:pointer;background:#000;color:#fff;border-radius:50%;'
-                                        },
-                                        {
-                                            name: 'onclick',
-                                            value: 'idrinth.war.oc();'
-                                        }
-                                    ],
+                                    css: 'idrinth-circle',
                                     content: '\u2195'
                                 }
                             ]
@@ -744,7 +724,7 @@ idrinth.ui.buildBasis = {
                 } ];
         }
         idrinth.ui.tooltip = idrinth.ui.buildElement ( {
-            css: 'idrinth-hovering-box idrinth-tooltip-overwrite',
+            css: 'idrinth-hovering-box idrinth-tooltip-overwrite idrinth-hide',
             id: 'idrinth-tooltip',
             children: [
                 {

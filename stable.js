@@ -374,11 +374,7 @@ var idrinth = {
                     } );
                 }
                 return idrinth.ui.buildElement ( {
-                    css: 'idrinth-line',
-                    attributes: [ {
-                            name: 'style',
-                            value: config.platforms && !idrinth.inArray ( idrinth.platform, config.platforms ) ? 'display:none;' : ''
-                        } ],
+                    css: 'idrinth-line' + ( config.platforms && !idrinth.inArray ( idrinth.platform, config.platforms ) ? ' idrinth-hide' : '' ),
                     children: [ {
                             type: 'label',
                             css: 'idrinth-float-half',
@@ -476,19 +472,20 @@ var idrinth = {
         showTooltip: function ( element ) {
             'use strict';
             function tooltip ( set, element, pos, guilds, platform ) {
-                element.setAttribute ( 'style', 'display:none' );
-                if ( set ) {
-                    element.childNodes[0].setAttribute ( 'href', 'https://dotd.idrinth.de/' + platform + '/summoner/' + set.id + '/' );
-                    element.childNodes[0].innerHTML = set.name;
-                    element.childNodes[1].childNodes[1].innerHTML = set.level + ' (' + set['7day'] + '/week, ' + set['30day'] + '/month)';
-                    element.childNodes[1].childNodes[3].innerHTML = idrinth.names.classes[set.class];
-                    element.childNodes[2].childNodes[1].setAttribute ( 'href', 'https://dotd.idrinth.de/' + platform + '/guild/' + set.guildId + '/' );
-                    element.childNodes[2].childNodes[1].innerHTML = guilds[set.guildId];
-                    element.childNodes[3].childNodes[1].innerHTML = set.updated;
-                    element.childNodes[3].setAttribute ( 'style', ( new Date () ) - ( new Date ( set.updated ) ) > 86400000 ? 'color:#aa0000;' : '' );
-                    element.setAttribute ( 'style', '' );
-                    idrinth.ui.tooltip.setAttribute ( 'style', 'left:' + Math.round ( pos.left - 200 ) + 'px;top:' + Math.round ( pos.top - 100 ) + 'px;' );
+                if ( !set ) {
+                    idrinth.ui.tooltip.setAttribute ( "class", idrinth.ui.getClassesList ( idrinth.ui.tooltip.getAttribute ( 'class' ), [ 'idrinth-hide' ], [ ] ) );
+                    return;
                 }
+                idrinth.ui.tooltip.setAttribute ( "class", idrinth.ui.getClassesList ( idrinth.ui.tooltip.getAttribute ( 'class' ), [ ], [ 'idrinth-hide' ] ) );
+                element.childNodes[0].setAttribute ( 'href', 'https://dotd.idrinth.de/' + platform + '/summoner/' + set.id + '/' );
+                element.childNodes[0].innerHTML = set.name;
+                element.childNodes[1].childNodes[1].innerHTML = set.level + ' (' + set['7day'] + '/week, ' + set['30day'] + '/month)';
+                element.childNodes[1].childNodes[3].innerHTML = idrinth.names.classes[set.class];
+                element.childNodes[2].childNodes[1].setAttribute ( 'href', 'https://dotd.idrinth.de/' + platform + '/guild/' + set.guildId + '/' );
+                element.childNodes[2].childNodes[1].innerHTML = guilds[set.guildId];
+                element.childNodes[3].childNodes[1].innerHTML = set.updated;
+                element.childNodes[3].setAttribute ( 'style', ( new Date () ) - ( new Date ( set.updated ) ) > 86400000 ? 'color:#aa0000;' : '' );
+                idrinth.ui.tooltip.setAttribute ( 'style', 'left:' + Math.round ( pos.left - 200 ) + 'px;top:' + Math.round ( pos.top - 100 ) + 'px;' );
             }
             var pos = null;
             var name = idrinth.names.parse ( element ).toLowerCase ( );
@@ -505,9 +502,9 @@ var idrinth = {
             if ( idrinth.names.isHovering ) {
                 var delay = idrinth.settings.timeout ? idrinth.settings.timeout : 5000;
                 idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, delay );
-            } else {
-                idrinth.ui.tooltip.setAttribute ( 'style', 'display:none' );
+                return;
             }
+            idrinth.ui.tooltip.setAttribute ( 'class', idrinth.ui.tooltip.getAttribute ( 'class' ), [ 'idrinth-hide' ], [ ] );
         },
         openCloseSettings: function ( ) {
             'use strict';
@@ -564,17 +561,38 @@ var idrinth = {
                 idrinth.alert ( idrinth.getMsg ( 'reload.fail' ) );
             }
         },
+        getClassesList: function ( classString, add, remove ) {
+            var forceToArray = function ( value ) {
+                return value && typeof value === 'object' && Array.isArray ( value ) ? value : [ ];
+            };
+            var original = classString.split ( ' ' ).concat ( forceToArray ( add ) );
+            var list = [ ];
+            remove = forceToArray ( remove );
+            var addUnique = function ( list, element, forbidden ) {
+                if ( list.indexOf ( element ) === -1 && forbidden.indexOf ( element ) === -1 ) {
+                    list.push ( element );
+                }
+                return list;
+            };
+            for (var counter = 0; counter < original.length; counter++) {
+                list = addUnique ( list, original[counter], remove );
+            }
+            return list.join ( ' ' );
+        },
         activateTab: function ( name ) {
             var head = document.getElementById ( 'tab-activator-' + name ).parentNode.childNodes;
             var body = document.getElementById ( 'tab-element-' + name ).parentNode.childNodes;
-            for (var count = 0; count < head.length; count++) {
+            var setClasses = function ( head, body, name ) {
                 if ( head[count] === document.getElementById ( 'tab-activator-' + name ) ) {
-                    head[count].setAttribute ( 'class', head[count].getAttribute ( 'class' ) + ' active' );
-                    body[count].setAttribute ( 'style', 'display:block' );
-                } else {
-                    head[count].setAttribute ( 'class', ( head[count].getAttribute ( 'class' ) ).replace ( /(^|\s)active($|\s)/, ' ' ) );
-                    body[count].setAttribute ( 'style', 'display:none' );
+                    head.setAttribute ( 'class', idrinth.ui.getClassesList ( head.getAttribute ( 'class' ), [ 'active' ], [ ] ) );
+                    body.setAttribute ( 'class', idrinth.ui.getClassesList ( body.getAttribute ( 'class' ), [ ], [ 'idrinth-hide' ] ) );
+                    return;
                 }
+                head.setAttribute ( 'class', idrinth.ui.getClassesList ( head.getAttribute ( 'class' ), [ ], [ 'active' ] ) );
+                body.setAttribute ( 'class', idrinth.ui.getClassesList ( body.getAttribute ( 'class' ), [ 'idrinth-hide' ], [ ] ) );
+            };
+            for (var count = 0; count < head.length; count++) {
+                setClasses ( head[count], body[count], name );
             }
         },
         start: function ( ) {
