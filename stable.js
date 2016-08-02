@@ -557,7 +557,7 @@ var idrinth = {
             var head = document.getElementById ( 'tab-activator-' + name ).parentNode.childNodes;
             var body = document.getElementById ( 'tab-element-' + name ).parentNode.childNodes;
             var setClasses = function ( head, body, name ) {
-                if ( head[count] === document.getElementById ( 'tab-activator-' + name ) ) {
+                if ( head === document.getElementById ( 'tab-activator-' + name ) ) {
                     head.setAttribute ( 'class', idrinth.ui.getClassesList ( head.getAttribute ( 'class' ), [ 'active' ], [ ] ) );
                     body.setAttribute ( 'class', idrinth.ui.getClassesList ( body.getAttribute ( 'class' ), [ ], [ 'idrinth-hide' ] ) );
                     return;
