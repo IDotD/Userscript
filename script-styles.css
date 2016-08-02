@@ -640,5 +640,5 @@ td.is-os {
     border-radius:50%;
 }
 .idrinth-hide {
-    display:none;
+    display:none !important;
 }
