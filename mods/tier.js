@@ -1,7 +1,13 @@
 idrinth.tier = {
     list: { },
     addTagged: function ( name ) {
-        if ( !name || !this.list.hasOwnProperty ( name ) || typeof this.list[name] === 'function' || document.getElementById ( 'idrinth-tier-box-' + name ) ) {
+        var isValidParameter = function ( name ) {
+            return name && idrinth.tier.list.hasOwnProperty ( name ) && typeof idrinth.tier.list[name] !== 'function' && !document.getElementById ( 'idrinth-tier-box-' + name );
+        };
+        var isFreeSlot = function ( key ) {
+            return idrinth.tier.taggedSlots.hasOwnProperty ( key ) && typeof key !== 'function' && idrinth.tier.taggedSlots[key] === null;
+        };
+        if ( !isValidParameter ( name ) ) {
             return;
         }
         var boss = this.list[name];
@@ -55,7 +61,7 @@ idrinth.tier = {
             idrinth.ui.body.appendChild ( idrinth.tier.taggedSlots[x] );
         };
         for (var key in this.taggedSlots) {
-            if ( this.taggedSlots.hasOwnProperty ( key ) && typeof key !== 'function' && this.taggedSlots[key] === null ) {
+            if ( isFreeSlot ( key ) ) {
                 return make ( key, name );
             }
         }
