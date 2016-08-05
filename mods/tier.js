@@ -153,6 +153,20 @@ idrinth.tier = {
                             content: idrinth.tier.list[list[count]].name
                         },
                         {
+                            type: 'button',
+                            content: 'Tag to screen-top',
+                            attributes: [
+                                {
+                                    name: 'onclick',
+                                    value: 'idrinth.tier.addTagged(\'' + list[count] + '\');'
+                                },
+                                {
+                                    name: 'type',
+                                    value: 'action'
+                                }
+                            ]
+                        },
+                        {
                             type: 'span',
                             content: 'AP: ' + idrinth.ui.formatNumber ( idrinth.tier.list[list[count]].ap )
                         },
