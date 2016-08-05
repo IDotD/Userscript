@@ -91,7 +91,7 @@ idrinth.tier = {
         }
     },
     getTierForName: function ( name ) {
-        var clearInnerHtml = function clearInnerHtmlF ( elem ) {
+        var clearInnerHtml = function ( elem ) {
             elem.innerHTML = '';
         };
 
@@ -168,7 +168,7 @@ idrinth.tier = {
                             attributes: [
                                 {
                                     name: 'onclick',
-                                    value: 'idrinth.tier.addTagged(\'' + list[count].replace ( /'/, '\\\'' ) + '\');'
+                                    value: 'idrinth.tier.addTagged(\'' + list[count].replace ( /'/g, '\\\'' ) + '\');'
                                 },
                                 {
                                     name: 'type',
