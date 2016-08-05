@@ -4,57 +4,62 @@ idrinth.tier = {
         if ( !name || !this.list.hasOwnProperty ( name ) || typeof this.list[name] === 'function' || document.getElementById ( 'idrinth-tier-box-' + name ) ) {
             return;
         }
-        var space = window.innerWidth - 150 * ( document.getElementsByClassName ( 'idrinth-tier-box' ).length + 2 );
-        if ( space < 150 ) {
-            return idrinth.alert ( 'There is no space for another tier-box at the moment, please close one first.' );
-        }
-        var info = [
-            {
-                content: 'FS ' + idrinth.ui.formatNumber ( this.list[name].fs.nm )
-            },
-            {
-                content: 'AP ' + idrinth.ui.formatNumber ( this.list[name].ap )
-            } ];
-        if ( this.list[name].os && this.list[name].os.nm ) {
-            info.push ( {
-                content: 'OS ' + idrinth.ui.formatNumber ( this.list[name].os.nm )
-            } );
-            info.unshift ( {
-                content: 'MaT ' + idrinth.ui.formatNumber ( this.list[name].nm[this.list[name].nm.length - 1] )
-            } );
-            info.unshift ( {
-                content: 'MiT ' + idrinth.ui.formatNumber ( this.list[name].nm[0] )
-            } );
-        }
-        info.unshift (
-                {
-                    type: 'strong',
-                    content: this.list[name].name.replace ( /\(.*$/, '' )
-                } );
-        idrinth.ui.body.appendChild ( idrinth.ui.buildElement (
-                {
-                    id: 'idrinth-tier-box-' + name,
-                    css: 'idrinth-hovering-box idrinth-tier-box',
-                    children: [ {
-                            children: info
-                        } ],
-                    attributes: [
-                        {
+        var make = function ( x, name ) {
+            var makeElement = function ( label, number, description ) {
+                return {
+                    content: label + ' ' + idrinth.ui.formatNumber ( number ),
+                    attributes: [ {
                             name: 'title',
-                            value: 'click to close'
-                        },
-                        {
-                            name: 'onclick',
-                            value: 'idrinth.ui.removeElement(this.id);'
-                        },
-                        {
-                            name: 'style',
-                            value: 'left:' + space + 'px;background-image: url(https://dotd.idrinth.de/static/raid-image-service/' + this.list[name].url + '/);'
-                        }
-                    ]
-                }
-        ) );
+                            value: description
+                        } ]
+                };
+            };
+            var info = [
+                makeElement ( 'FS', this.list[name].fs.nm, 'Fair share' ),
+                makeElement ( 'AP', this.list[name].ap, 'Achievement point damage' )
+            ];
+            if ( this.list[name].os && this.list[name].os.nm ) {
+                info.push ( makeElement ( 'OS', this.list[name].os.nm, 'Optimal share' ) );
+                info.unshift ( makeElement ( 'MA', this.list[name].nm[this.list[name].nm.length - 1], 'Maximum/highest tier' ) );
+                info.unshift ( makeElement ( 'MI', this.list[name].nm[0], 'Minimum/lowest tier' ) );
+            }
+            info.unshift (
+                    {
+                        type: 'strong',
+                        content: this.list[name].name.replace ( /\(.*$/, '' )
+                    } );
+            idrinth.ui.body.appendChild ( idrinth.ui.buildElement (
+                    {
+                        id: 'idrinth-tier-box-' + name,
+                        css: 'idrinth-hovering-box idrinth-tier-box',
+                        children: [ {
+                                children: info
+                            } ],
+                        attributes: [
+                            {
+                                name: 'title',
+                                value: 'click to close'
+                            },
+                            {
+                                name: 'onclick',
+                                value: 'idrinth.ui.removeElement(this.id);idrinth.tier.taggedSlots[\'' + x + '\']=null;'
+                            },
+                            {
+                                name: 'style',
+                                value: 'left:' + x + 'px;background-image: url(https://dotd.idrinth.de/static/raid-image-service/' + this.list[name].url + '/);'
+                            }
+                        ]
+                    }
+            ) );
+        };
+        for (var key in this.taggedSlots) {
+            if ( this.taggedSots.hasOwnProperty ( key ) && typeof key !== 'function' && this.taggedSlots[key] === null ) {
+                return make ( key, name );
+            }
+        }
+        idrinth.alert ( 'There is no space for another tier-box at the moment, please close one first.' );
     },
+    taggedSlots: { },
     start: function () {
         'use strict';
         idrinth.runAjax (
@@ -69,6 +74,11 @@ idrinth.tier = {
                     window.setTimeout ( idrinth.tier.start, 10000 );
                 }
         );
+        var pos = 140;
+        while ( pos < window.innerWidth - 140 * ( Object.keys ().length + 2 ) ) {
+            this.taggedSlots[pos] = null;
+            pos++;
+        }
     },
     import: function ( data ) {
         'use strict';

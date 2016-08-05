@@ -644,8 +644,8 @@ td.is-os {
 }
 .idrinth-tier-box,
 .idrinth-tier-box > div {
-    height:100px;
-    width: 150px;
+    height:95px;
+    width: 140px;
     box-sizing: border-box;
     overflow:hidden;
 }
