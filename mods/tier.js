@@ -74,9 +74,9 @@ idrinth.tier = {
                     window.setTimeout ( idrinth.tier.start, 10000 );
                 }
         );
-        var pos = 140;
+        var pos = 1;
         while ( pos < window.innerWidth - 140 * ( Object.keys ().length + 2 ) ) {
-            this.taggedSlots[pos] = null;
+            this.taggedSlots[( pos * 140 ).toString ()] = null;
             pos++;
         }
     },
