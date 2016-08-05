@@ -157,7 +157,7 @@ idrinth.tier = {
                             attributes: [
                                 {
                                     name: 'onclick',
-                                    value: 'idrinth.tier.addTagged(\'' + list[count] + '\');'
+                                    value: 'idrinth.tier.addTagged(\'' + list[count].replace ( /'/, '\\\'' ) + '\');'
                                 },
                                 {
                                     name: 'type',
