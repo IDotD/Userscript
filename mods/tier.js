@@ -28,7 +28,7 @@ idrinth.tier = {
                         type: 'strong',
                         content: this.list[name].name.replace ( /\(.*$/, '' )
                     } );
-            idrinth.ui.body.appendChild ( idrinth.ui.buildElement (
+            this.taggedSlots[x] = idrinth.ui.buildElement (
                     {
                         id: 'idrinth-tier-box-' + name,
                         css: 'idrinth-hovering-box idrinth-tier-box',
@@ -50,10 +50,11 @@ idrinth.tier = {
                             }
                         ]
                     }
-            ) );
+            );
+            idrinth.ui.body.appendChild ( this.taggedSlots[x] );
         };
         for (var key in this.taggedSlots) {
-            if ( this.taggedSots.hasOwnProperty ( key ) && typeof key !== 'function' && this.taggedSlots[key] === null ) {
+            if ( this.taggedSlots.hasOwnProperty ( key ) && typeof key !== 'function' && this.taggedSlots[key] === null ) {
                 return make ( key, name );
             }
         }
