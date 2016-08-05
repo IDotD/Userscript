@@ -4,8 +4,8 @@ idrinth.tier = {
         if ( !name || !this.list.hasOwnProperty ( name ) || typeof this.list[name] === 'function' || document.getElementById ( 'idrinth-tier-box-' + name ) ) {
             return;
         }
-        var space = window.innerWidth - 200 - 100 * document.getElementsByClassName ( 'idrinth-tier-box' ).length;
-        if ( space < 100 ) {
+        var space = window.innerWidth - 100 - ( 150 * document.getElementsByClassName ( 'idrinth-tier-box' ).length + 3 );
+        if ( space < 150 ) {
             return idrinth.alert ( 'There is no space for another tier-box at the moment, please close one first.' );
         }
         var info = [

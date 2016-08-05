@@ -642,14 +642,18 @@ td.is-os {
 .idrinth-hide {
     display:none !important;
 }
-.idrinth-tier-box {
-    width: 100px;
-    background-size: 100% 100%;
-    color: #000;
-    border: 1px solid;
+.idrinth-tier-box,
+.idrinth-tier-box > div {
+    height:100px;
+    width: 150px;
     box-sizing: border-box;
     overflow:hidden;
     height:75px;
+}
+.idrinth-tier-box {
+    background-size: 100% 100%;
+    color: #000;
+    border: 1px solid;
     font-size:10px;
     position:fixed;
     top:0;
@@ -657,8 +661,6 @@ td.is-os {
 
 .idrinth-tier-box > div {
     background:rgba(255,255,255,0.3);
-    height:75px;
-    width: 100px;
 }
 .idrinth-tier-box > div > div {
     width: 50%;
