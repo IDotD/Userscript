@@ -10,9 +10,6 @@ idrinth.tier = {
         }
         var info = [
             {
-                content: this.list[name].name
-            },
-            {
                 content: 'FS ' + idrinth.ui.formatNumber ( this.list[name].fs.nm )
             },
             {
@@ -21,19 +18,27 @@ idrinth.tier = {
         if ( this.list[name].os && this.list[name].os.nm ) {
             info.push ( {
                 content: 'OS ' + idrinth.ui.formatNumber ( this.list[name].os.nm )
-            },
-            {
-                content: 'MaT ' + idrinth.ui.formatNumber ( this.list[name].nm[this.list[name].nm.length - 1] )
-            },
+            } );
+            info.unshift (
+                    {
+                        content: 'MaT ' + idrinth.ui.formatNumber ( this.list[name].nm[this.list[name].nm.length - 1] )
+                    },
             {
                 content: 'MiT ' + idrinth.ui.formatNumber ( this.list[name].nm[0] )
             } );
         }
+        info.unshift (
+                {
+                    type: 'strong',
+                    content: this.list[name].name
+                } );
         idrinth.ui.body.appendChild ( idrinth.ui.buildElement (
                 {
                     id: 'idrinth-tier-box-' + name,
                     css: 'idrinth-hovering-box idrinth-tier-box',
-                    children: info,
+                    children: {
+                        children: info
+                    },
                     attributes: [
                         {
                             name: 'title',
@@ -41,11 +46,11 @@ idrinth.tier = {
                         },
                         {
                             name: 'onclick',
-                            value: 'idrinth.ui.removeElement(this.id);top:0;left:' + ( space + 100 ) + 'px'
+                            value: 'idrinth.ui.removeElement(this.id);'
                         },
                         {
                             name: 'style',
-                            value: 'background-image: url(https://dotd.idrinth.de/static/raid-image-service/' + this.list[name].url + '/);'
+                            value: 'left:' + ( space + 100 ) + 'px;background-image: url(https://dotd.idrinth.de/static/raid-image-service/' + this.list[name].url + '/);'
                         }
                     ]
                 }
