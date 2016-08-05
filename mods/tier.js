@@ -62,6 +62,11 @@ idrinth.tier = {
     taggedSlots: { },
     start: function () {
         'use strict';
+        var pos = 1;
+        while ( pos < window.innerWidth - 140 * ( Object.keys ().length + 2 ) ) {
+            this.taggedSlots[( pos * 140 ).toString ()] = null;
+            pos++;
+        }
         idrinth.runAjax (
                 'https://dotd.idrinth.de/' + idrinth.platform + '/tier-service/',
                 function ( text ) {
@@ -74,11 +79,6 @@ idrinth.tier = {
                     window.setTimeout ( idrinth.tier.start, 10000 );
                 }
         );
-        var pos = 1;
-        while ( pos < window.innerWidth - 140 * ( Object.keys ().length + 2 ) ) {
-            this.taggedSlots[( pos * 140 ).toString ()] = null;
-            pos++;
-        }
     },
     import: function ( data ) {
         'use strict';

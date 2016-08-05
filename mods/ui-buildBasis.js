@@ -600,7 +600,7 @@ idrinth.ui.buildBasis = {
         return idrinth.ui.buildElement (
                 {
                     id: 'idrinth-war',
-                    css: 'idrinth-central-box idrinth-hovering-box',
+                    css: 'idrinth-central-box idrinth-hovering-box idrinth-hide',
                     children: [
                         {
                             children: [
