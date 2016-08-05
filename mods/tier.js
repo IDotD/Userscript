@@ -4,7 +4,7 @@ idrinth.tier = {
         if ( !name || !this.list.hasOwnProperty ( name ) || typeof this.list[name] === 'function' || document.getElementById ( 'idrinth-tier-box-' + name ) ) {
             return;
         }
-        var space = window.innerWidth - 100 - 150 * ( document.getElementsByClassName ( 'idrinth-tier-box' ).length + 3 );
+        var space = window.innerWidth - 150 * ( document.getElementsByClassName ( 'idrinth-tier-box' ).length + 2 );
         if ( space < 150 ) {
             return idrinth.alert ( 'There is no space for another tier-box at the moment, please close one first.' );
         }
@@ -19,19 +19,17 @@ idrinth.tier = {
             info.push ( {
                 content: 'OS ' + idrinth.ui.formatNumber ( this.list[name].os.nm )
             } );
-            info.unshift (
-                    {
-                        content: 'MaT ' + idrinth.ui.formatNumber ( this.list[name].nm[this.list[name].nm.length - 1] )
-                    },
-            {
+            info.unshift ( {
+                content: 'MaT ' + idrinth.ui.formatNumber ( this.list[name].nm[this.list[name].nm.length - 1] )
+            } );
+            info.unshift ( {
                 content: 'MiT ' + idrinth.ui.formatNumber ( this.list[name].nm[0] )
-            }
-            );
+            } );
         }
         info.unshift (
                 {
                     type: 'strong',
-                    content: this.list[name].name
+                    content: this.list[name].name.replace ( /\(.*$/, '' )
                 } );
         idrinth.ui.body.appendChild ( idrinth.ui.buildElement (
                 {
