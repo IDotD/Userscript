@@ -25,7 +25,8 @@ idrinth.tier = {
                     },
             {
                 content: 'MiT ' + idrinth.ui.formatNumber ( this.list[name].nm[0] )
-            } );
+            }
+            );
         }
         info.unshift (
                 {
@@ -36,9 +37,9 @@ idrinth.tier = {
                 {
                     id: 'idrinth-tier-box-' + name,
                     css: 'idrinth-hovering-box idrinth-tier-box',
-                    children: {
-                        children: info
-                    },
+                    children: [ {
+                            children: info
+                        } ],
                     attributes: [
                         {
                             name: 'title',
