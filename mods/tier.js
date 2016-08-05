@@ -47,7 +47,7 @@ idrinth.tier = {
                             },
                             {
                                 name: 'style',
-                                value: 'left:' + x + 'px;background-image: url(https://dotd.idrinth.de/static/raid-image-service/' + this.list[name].url + '/);'
+                                value: 'left:' + x + 'px;background-image: url(https://dotd.idrinth.de/static/raid-image-service/' + boss.url + '/);'
                             }
                         ]
                     }
