@@ -4,6 +4,7 @@ idrinth.tier = {
         if ( !name || !this.list.hasOwnProperty ( name ) || typeof this.list[name] === 'function' || document.getElementById ( 'idrinth-tier-box-' + name ) ) {
             return;
         }
+        var boss = this.list[name];
         var make = function ( x, name ) {
             var makeElement = function ( label, number, description ) {
                 return {
@@ -15,18 +16,18 @@ idrinth.tier = {
                 };
             };
             var info = [
-                makeElement ( 'FS', this.list[name].fs.nm, 'Fair share' ),
-                makeElement ( 'AP', this.list[name].ap, 'Achievement point damage' )
+                makeElement ( 'FS', boss.fs.nm, 'Fair share' ),
+                makeElement ( 'AP', boss.ap, 'Achievement point damage' )
             ];
-            if ( this.list[name].os && this.list[name].os.nm ) {
-                info.push ( makeElement ( 'OS', this.list[name].os.nm, 'Optimal share' ) );
-                info.unshift ( makeElement ( 'MA', this.list[name].nm[this.list[name].nm.length - 1], 'Maximum/highest tier' ) );
-                info.unshift ( makeElement ( 'MI', this.list[name].nm[0], 'Minimum/lowest tier' ) );
+            if ( boss.os && boss.os.nm ) {
+                info.push ( makeElement ( 'OS', boss.os.nm, 'Optimal share' ) );
+                info.unshift ( makeElement ( 'MA', boss.nm[boss.nm.length - 1], 'Maximum/highest tier' ) );
+                info.unshift ( makeElement ( 'MI', boss.nm[0], 'Minimum/lowest tier' ) );
             }
             info.unshift (
                     {
                         type: 'strong',
-                        content: this.list[name].name.replace ( /\(.*$/, '' )
+                        content: boss.name.replace ( /\(.*$/, '' )
                     } );
             this.taggedSlots[x] = idrinth.ui.buildElement (
                     {
