@@ -1,5 +1,55 @@
 idrinth.tier = {
     list: { },
+    addTagged: function ( name ) {
+        if ( name && !this.list.hasOwnProperty ( name ) && typeof this.list[name] !== 'function' && !document.getElementById ( 'idrinth-tier-box-' + name ) ) {
+            var space = window.innerWidth - 200 - 100 * document.getElementsByClassName ( 'idrinth-tier-box' ).length;
+            if ( space < 100 ) {
+                return idrinth.alert ( 'There is no space for another tier-box at the moment, please close one first.' );
+            }
+            var info = [
+                {
+                    content: this.list[name].name
+                },
+                {
+                    content: 'FS ' + idrinth.ui.formatNumber ( this.list[name].fs.nm )
+                },
+                {
+                    content: 'AP ' + idrinth.ui.formatNumber ( this.list[name].ap )
+                } ];
+            if ( this.list[name].os && this.list[name].os.nm ) {
+                info.push ( {
+                    content: 'OS ' + idrinth.ui.formatNumber ( this.list[name].os.nm )
+                },
+                {
+                    content: 'MaT ' + idrinth.ui.formatNumber ( this.list[name].nm[this.list[name].nm.length - 1] )
+                },
+                {
+                    content: 'MiT ' + idrinth.ui.formatNumber ( this.list[name].nm[0] )
+                } );
+            }
+            idrinth.ui.body.appendChild ( idrinth.ui.buildElement (
+                    {
+                        id: 'idrinth-tier-box-' + name,
+                        css: 'idrinth-hovering-box idrinth-tier-box',
+                        children: info,
+                        attributes: [
+                            {
+                                name: 'title',
+                                value: 'click to close'
+                            },
+                            {
+                                name: 'onclick',
+                                value: 'idrinth.ui.removeElement(this.id);top:0;left:' + ( space + 100 ) + 'px'
+                            },
+                            {
+                                name: 'style',
+                                value: 'background-image: url(https://dotd.idrinth.de/static/raid-image-service/' + this.list[name].url + '/);'
+                            }
+                        ]
+                    }
+            ) );
+        }
+    },
     start: function () {
         'use strict';
         idrinth.runAjax (
@@ -25,7 +75,7 @@ idrinth.tier = {
         }
     },
     getTierForName: function ( name ) {
-        var clearInnerHtml =  function clearInnerHtmlF ( elem ) {
+        var clearInnerHtml = function clearInnerHtmlF ( elem ) {
             elem.innerHTML = '';
         };
 
@@ -170,7 +220,7 @@ idrinth.tier = {
             }
         };
         if ( !name || name.length === 0 ) {
-            clearInnerHtml( document.getElementById ( 'idrinth-tierlist' ) );
+            clearInnerHtml ( document.getElementById ( 'idrinth-tierlist' ) );
             return;
         }
         var result = [ ];
