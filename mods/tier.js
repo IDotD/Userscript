@@ -29,7 +29,7 @@ idrinth.tier = {
                         type: 'strong',
                         content: boss.name.replace ( /\(.*$/, '' )
                     } );
-            this.taggedSlots[x] = idrinth.ui.buildElement (
+            idrinth.tier.taggedSlots[x] = idrinth.ui.buildElement (
                     {
                         id: 'idrinth-tier-box-' + name,
                         css: 'idrinth-hovering-box idrinth-tier-box',
@@ -52,7 +52,7 @@ idrinth.tier = {
                         ]
                     }
             );
-            idrinth.ui.body.appendChild ( this.taggedSlots[x] );
+            idrinth.ui.body.appendChild ( idrinth.tier.taggedSlots[x] );
         };
         for (var key in this.taggedSlots) {
             if ( this.taggedSlots.hasOwnProperty ( key ) && typeof key !== 'function' && this.taggedSlots[key] === null ) {
