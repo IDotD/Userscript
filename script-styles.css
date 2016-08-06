@@ -659,7 +659,7 @@ td.is-os {
 }
 
 .idrinth-tier-box > div {
-    background:rgba(255,255,255,0.3);
+    background:rgba(255,255,255,0.45);
 }
 .idrinth-tier-box > div > div {
     width: 50%;
@@ -672,5 +672,5 @@ td.is-os {
     display:block;
     padding-bottom:2px;
     text-align:center;
-    background:rgba(255,255,255,0.3);
+    background:rgba(255,255,255,0.25);
 }
