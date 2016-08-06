@@ -71,7 +71,7 @@ idrinth.tier = {
     start: function () {
         'use strict';
         var pos = 1;
-        while ( 0 < window.innerWidth - 140 * ( pos + 2 ) ) {
+        while ( 0 < window.innerWidth - 140 * ( pos + 1 ) ) {
             this.taggedSlots[( pos * 140 ).toString ()] = null;
             pos++;
         }
