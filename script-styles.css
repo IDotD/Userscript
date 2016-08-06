@@ -642,3 +642,35 @@ td.is-os {
 .idrinth-hide {
     display:none !important;
 }
+.idrinth-tier-box,
+.idrinth-tier-box > div {
+    height:95px;
+    width: 140px;
+    box-sizing: border-box;
+    overflow:hidden;
+}
+.idrinth-tier-box {
+    background-size: 100% 100%;
+    color: #000;
+    border: 1px solid;
+    font-size:10px;
+    position:fixed;
+    top:0;
+}
+
+.idrinth-tier-box > div {
+    background:rgba(255,255,255,0.3);
+}
+.idrinth-tier-box > div > div {
+    width: 50%;
+    float: left;
+    padding:2px;
+    box-sizing: border-box;
+}
+.idrinth-tier-box > div > strong {
+    width: 100%;
+    display:block;
+    padding-bottom:2px;
+    text-align:center;
+    background:rgba(255,255,255,0.3);
+}

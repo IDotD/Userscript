@@ -1,7 +1,80 @@
 idrinth.tier = {
     list: { },
+    addTagged: function ( name ) {
+        var isValidParameter = function ( name ) {
+            return name && idrinth.tier.list.hasOwnProperty ( name ) && typeof idrinth.tier.list[name] !== 'function' && !document.getElementById ( 'idrinth-tier-box-' + name );
+        };
+        var isFreeSlot = function ( key ) {
+            return idrinth.tier.taggedSlots.hasOwnProperty ( key ) && typeof key !== 'function' && idrinth.tier.taggedSlots[key] === null;
+        };
+        if ( !isValidParameter ( name ) ) {
+            return;
+        }
+        var boss = this.list[name];
+        var make = function ( x, name ) {
+            var makeElement = function ( label, number, description ) {
+                return {
+                    content: label + ' ' + idrinth.ui.formatNumber ( number ),
+                    attributes: [ {
+                            name: 'title',
+                            value: description
+                        } ]
+                };
+            };
+            var info = [
+                makeElement ( 'FS', boss.fs.nm, 'Fair share' ),
+                makeElement ( 'AP', boss.ap, 'Achievement point damage' )
+            ];
+            if ( boss.os && boss.os.nm ) {
+                info.push ( makeElement ( 'OS', boss.os.nm, 'Optimal share' ) );
+                info.unshift ( makeElement ( 'MA', boss.nm[boss.nm.length - 1], 'Maximum/highest tier' ) );
+                info.unshift ( makeElement ( 'MI', boss.nm[0], 'Minimum/lowest tier' ) );
+            }
+            info.unshift (
+                    {
+                        type: 'strong',
+                        content: boss.name.replace ( /\(.*$/, '' )
+                    } );
+            idrinth.tier.taggedSlots[x] = idrinth.ui.buildElement (
+                    {
+                        id: 'idrinth-tier-box-' + name,
+                        css: 'idrinth-hovering-box idrinth-tier-box',
+                        children: [ {
+                                children: info
+                            } ],
+                        attributes: [
+                            {
+                                name: 'title',
+                                value: 'click to close'
+                            },
+                            {
+                                name: 'onclick',
+                                value: 'idrinth.ui.removeElement(this.id);idrinth.tier.taggedSlots[\'' + x + '\']=null;'
+                            },
+                            {
+                                name: 'style',
+                                value: 'left:' + x + 'px;background-image: url(https://dotd.idrinth.de/static/raid-image-service/' + boss.url + '/);'
+                            }
+                        ]
+                    }
+            );
+            idrinth.ui.body.appendChild ( idrinth.tier.taggedSlots[x] );
+        };
+        for (var key in this.taggedSlots) {
+            if ( isFreeSlot ( key ) ) {
+                return make ( key, name );
+            }
+        }
+        idrinth.alert ( 'There is no space for another tier-box at the moment, please close one first.' );
+    },
+    taggedSlots: { },
     start: function () {
         'use strict';
+        var pos = 1;
+        while ( 0 < window.innerWidth - 140 * ( pos + 2 ) ) {
+            this.taggedSlots[( pos * 140 ).toString ()] = null;
+            pos++;
+        }
         idrinth.runAjax (
                 'https://dotd.idrinth.de/' + idrinth.platform + '/tier-service/',
                 function ( text ) {
@@ -25,7 +98,7 @@ idrinth.tier = {
         }
     },
     getTierForName: function ( name ) {
-        var clearInnerHtml =  function clearInnerHtmlF ( elem ) {
+        var clearInnerHtml = function ( elem ) {
             elem.innerHTML = '';
         };
 
@@ -95,6 +168,20 @@ idrinth.tier = {
                         {
                             type: 'strong',
                             content: idrinth.tier.list[list[count]].name
+                        },
+                        {
+                            type: 'button',
+                            content: 'Tag to screen-top',
+                            attributes: [
+                                {
+                                    name: 'onclick',
+                                    value: 'idrinth.tier.addTagged(\'' + list[count].replace ( /'/g, '\\\'' ) + '\');'
+                                },
+                                {
+                                    name: 'type',
+                                    value: 'action'
+                                }
+                            ]
                         },
                         {
                             type: 'span',
@@ -170,7 +257,7 @@ idrinth.tier = {
             }
         };
         if ( !name || name.length === 0 ) {
-            clearInnerHtml( document.getElementById ( 'idrinth-tierlist' ) );
+            clearInnerHtml ( document.getElementById ( 'idrinth-tierlist' ) );
             return;
         }
         var result = [ ];
