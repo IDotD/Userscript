@@ -66,17 +66,20 @@ var idrinth = {
         return success;
     },
     sendNotification: function ( title, content ) {
-        var notification = window.webkitNotifications ? window.webkitNotifications : window.notifications;
+        var notification = window.webkitNotifications ? window.webkitNotifications : window.Notifications;
         if ( !notification ) {
             return false;
         }
-        if ( notification.getPermission () === notification.PERMISSION_NOT_ALLOWED ) {
+        if ( notification.permission === "default" ) {
             notification.requestPermission ();
         }
-        if ( notification.getPermission () === notification.PERMISSION_DENIED ) {
+        if ( notification.permission === "denied" ) {
             return false;
         }
-        return notification.createNotification ( "https://dotd.idrinth.de/Resources/Images/logo.png", title, content );
+        return new Notification ( title, {
+            icon: "https://dotd.idrinth.de/Resources/Images/logo.png",
+            body: content
+        } );
     },
     newgrounds: {
         originalUrl: '',
