@@ -47,6 +47,37 @@ var idrinth = {
             idrinth.facebook.timeout = window.setTimeout ( idrinth.facebook.restart, 11111 );
         }
     },
+    copyToClipboard: function ( text ) {
+        var success;
+        try {
+            var textAreaElement = idrinth.ui.buildElement ( {
+                type: 'textarea',
+                id: "idrinth-copy-helper"
+            } );
+            textAreaElement.value = text;
+            idrinth.ui.body.appendChild ( textAreaElement );
+            textAreaElement.select ();
+            success = document.execCommand ( 'copy' );
+        } catch ( exception ) {
+            idrinth.log ( exception.getMessage () );
+            success = false;
+        }
+        idrinth.ui.removeElement ( "idrinth-copy-helper" );
+        return success;
+    },
+    sendNotification: function ( title, content ) {
+        var notification = window.webkitNotifications ? window.webkitNotifications : window.notifications;
+        if ( !notification ) {
+            return false;
+        }
+        if ( notification.getPermission () === notification.PERMISSION_NOT_ALLOWED ) {
+            notification.requestPermission ();
+        }
+        if ( notification.getPermission () === notification.PERMISSION_DENIED ) {
+            return false;
+        }
+        return notification.createNotification ( "https://dotd.idrinth.de/Resources/Images/logo.png", title, content );
+    },
     newgrounds: {
         originalUrl: '',
         raids: [ ],
