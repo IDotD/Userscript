@@ -66,7 +66,7 @@ var idrinth = {
         return success;
     },
     sendNotification: function ( title, content ) {
-        var notification = window.webkitNotifications ? window.webkitNotifications : window.Notifications;
+        var notification = window.Notification;
         if ( !notification ) {
             return false;
         }
