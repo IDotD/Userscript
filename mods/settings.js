@@ -48,42 +48,49 @@ idrinth.settings = {
             return;
         }
 
-        handleItem = function handleItemF ( action, name, item ) {
+        handleItem = function ( action, name, item ) {
             var tmp;
             if ( action === 'save' ) {
                 window.localStorage.setItem ( name, item );
-            } else {
+            } else if ( action === 'start' ) {
                 tmp = window.localStorage.getItem ( name );
-                tmp = tmp !== 'false' || tmp !== 'true' ? tmp : !!tmp;
+                if ( tmp && tmp !== undefined && tmp !== null && tmp.indexOf(":") === -1 ) {
+                    tmp = JSON.parse ( tmp );
+                }
             }
             return tmp;
         };
 
-        saveItem = function saveItemF ( key, key2, obj, val ) {
+        saveItem = function ( key, key2, val ) {
+            if ( !val ) {
+                return;
+            }
             if ( key && key2 ) {
-                obj[ key ][ key2 ] = val;
+                idrinth.settings[ key ][ key2 ] = val;
             } else {
-                obj[ key ] = val;
+                idrinth.settings[ key ] = val;
             }
         };
 
-        processInner = function ( action, settings, name, innerObj ){
+        processInner = function ( action, name, innerObj ){
             for ( var key2 in innerObj ) {
                 if ( innerObj.hasOwnProperty ( key2 ) ) {
                     innerVal = handleItem ( action, name + "-" + key2, innerObj[ key2 ] );
-                    saveItem ( key, key2, settings, innerVal );
+                    saveItem ( key, key2, innerVal );
                 }
             }
         };
 
         for ( var key in settings ) {
             if ( settings.hasOwnProperty ( key ) && typeof settings[ key ] !== 'function' ) {
-                if ( typeof settings[ key ] === 'object' ) {
-                    innerObj = settings[ key ];
-                    processInner( action, settings, prefix + key, innerObj );
+                var setting = settings[ key ],
+                        prefixAndName = prefix + key;
+                if ( typeof setting === 'object' ) {
+                    innerObj = setting;
+                    processInner( action, prefixAndName, innerObj );
                 } else {
-                    outerVal = handleItem ( action, prefix + key, settings[ key ] );
-                    saveItem ( key, null, settings, outerVal );
+                    outerVal = handleItem ( action, prefixAndName, setting );
+                    saveItem ( key, null, outerVal );
                 }
             }
         }
