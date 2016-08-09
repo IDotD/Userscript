@@ -583,7 +583,7 @@ var idrinth = {
             var head = document.getElementById ( 'tab-activator-' + name ).parentNode.childNodes;
             var body = document.getElementById ( 'tab-element-' + name ).parentNode.childNodes;
             var setClasses = function ( head, body, name ) {
-                if ( head[count] === document.getElementById ( 'tab-activator-' + name ) ) {
+                if ( head === document.getElementById ( 'tab-activator-' + name ) ) {
                     head.setAttribute ( 'class', idrinth.ui.getClassesList ( head.getAttribute ( 'class' ), [ 'active' ], [ ] ) );
                     body.setAttribute ( 'class', idrinth.ui.getClassesList ( body.getAttribute ( 'class' ), [ ], [ 'idrinth-hide' ] ) );
                     return;
@@ -605,7 +605,7 @@ var idrinth = {
                         value: 'stylesheet'
                     }, {
                         name: 'href',
-                        value: 'https://dotd.idrinth.de###PATH###/script-styles.css'
+                        value: 'https://dotd.idrinth.de###PATH###/script-styles.css?###VERSION###'
                     } ]
             } ) );
             if ( idrinth.platform === 'kongregate' ) {
