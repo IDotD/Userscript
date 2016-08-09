@@ -66,17 +66,16 @@ var idrinth = {
         return success;
     },
     sendNotification: function ( title, content ) {
-        var notification = window.Notification;
-        if ( !notification ) {
+        if ( !( "Notification" in window ) ) {
             return false;
         }
-        if ( notification.permission === "default" ) {
-            notification.requestPermission ();
+        if ( window.Notification.permission === "default" ) {
+            window.Notification.requestPermission ();
         }
-        if ( notification.permission === "denied" ) {
+        if ( window.Notification.permission === "denied" ) {
             return false;
         }
-        return new Notification ( title, {
+        return new window.Notification ( title, {
             icon: "https://dotd.idrinth.de/Resources/Images/logo.png",
             body: content
         } );
