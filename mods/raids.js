@@ -150,19 +150,19 @@ idrinth.raids = {
                 return prefix;
             },
             joinServer: function ( name, key ) {
-                var serverLink = idrinth.raids.join.servers.getServerLink ( key ),
+                var serverLink,
                         serverNames = {
                             "kongregate": idrinth.raids.join.byAjax.do,
                             "armorgames": idrinth.raids.join.byAjax.do,
                             "facebook": idrinth.raids.join.byFrame.do,
                             "dawnofthedragons": idrinth.raids.join.byFrame.do
                         };
-
-                if ( serverNames.hasOwnProperty ( name ) ){
-                    serverNames[ name ](key, serverLink);
-                } else {
-                    idrinth.alert ( idrinth.getMsg( 'join.serverfail' ) + name );
+                if ( !serverNames.hasOwnProperty ( name ) || !key ) {
+                    return;
                 }
+
+                serverLink = idrinth.raids.join.servers.getServerLink ( key );
+                serverNames[ name ] ( key, serverLink );
             },
             postLink: function ( key ) {
                 'use strict';
