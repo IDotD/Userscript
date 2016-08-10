@@ -190,8 +190,14 @@
     position: fixed;
     top: 10%;
     right: 5px;
+    left: auto;
     max-height: 80%;
     max-width: 360px;
+}
+
+#idrinth-chat.left-sided{
+    right: auto;
+    left: 5px;
 }
 
 #idrinth-chat.active {

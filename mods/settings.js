@@ -62,10 +62,10 @@ idrinth.settings = {
         };
 
         saveItem = function ( key, key2, val ) {
-            if ( !val ) {
+            if ( !val && key ) {
                 return;
             }
-            if ( key && key2 ) {
+            if ( key2 ) {
                 idrinth.settings[ key ][ key2 ] = val;
             } else {
                 idrinth.settings[ key ] = val;
