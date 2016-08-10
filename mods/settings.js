@@ -54,7 +54,7 @@ idrinth.settings = {
                 window.localStorage.setItem ( name, item );
             } else if ( action === 'start' ) {
                 tmp = window.localStorage.getItem ( name );
-                if ( tmp && tmp !== undefined && tmp !== null && tmp.indexOf(":") === -1 ) {
+                if ( tmp && tmp !== undefined && tmp !== null && tmp.indexOf ( ":" ) === -1 ) {
                     tmp = JSON.parse ( tmp );
                 }
             }
@@ -72,7 +72,7 @@ idrinth.settings = {
             }
         };
 
-        processInner = function ( action, name, innerObj ){
+        processInner = function ( action, name, innerObj ) {
             for ( var key2 in innerObj ) {
                 if ( innerObj.hasOwnProperty ( key2 ) ) {
                     innerVal = handleItem ( action, name + "-" + key2, innerObj[ key2 ] );
@@ -87,7 +87,7 @@ idrinth.settings = {
                         prefixAndName = prefix + key;
                 if ( typeof setting === 'object' ) {
                     innerObj = setting;
-                    processInner( action, prefixAndName, innerObj );
+                    processInner ( action, prefixAndName, innerObj );
                 } else {
                     outerVal = handleItem ( action, prefixAndName, setting );
                     saveItem ( key, null, outerVal );
@@ -95,17 +95,17 @@ idrinth.settings = {
             }
         }
     },
-    save: function ( ) {
+    save: function () {
         'use strict';
         this.settingsAction ( 'save' );
     },
     change: function ( field, value ) {
         'use strict';
-        idrinth.settings[field] = value;
+        idrinth.settings[ field ] = value;
         idrinth.settings.save ( );
     },
-    start: function ( ) {
+    start: function () {
         'use strict';
-        this.settingsAction( 'start' );
+        this.settingsAction ( 'start' );
     }
 };
