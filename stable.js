@@ -479,6 +479,7 @@ var idrinth = {
         showTooltip: function ( element ) {
             'use strict';
             function tooltip ( set, element, pos, guilds, platform ) {
+                idrinth.names.isHovering = false;
                 if ( !set ) {
                     idrinth.ui.tooltip.setAttribute ( "class", idrinth.ui.getClassesList ( idrinth.ui.tooltip.getAttribute ( 'class' ), [ 'idrinth-hide' ], [ ] ) );
                     return;
