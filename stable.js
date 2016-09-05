@@ -105,7 +105,7 @@ var idrinth = {
             }
             var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
             var key = idrinth.newgrounds.raids.pop ();
-            var link = idrinth.newgrounds.originalUrl + '&' + ( idrinth.raids.join.servers.getServerLink ( key ) ).replace ( /^.*?\?/, '' );
+            var link = idrinth.newgrounds.originalUrl + '&' + ( idrinth.raids.join.getServerLink ( key ) ).replace ( /^.*?\?/, '' );
             frame.setAttribute ( 'onload', 'idrinth.newgrounds.remove(\'' + key + '\')' );
             frame.setAttribute ( 'src', link );
         },
@@ -308,18 +308,11 @@ var idrinth = {
                     )
                     );
         },
-        getElementPositioning: function ( element ) {
-            var getCoordinates = function ( element ) {
-                var xPosition = 0;
-                var yPosition = 0;
-                xPosition = element.getBoundingClientRect ().left;
-                yPosition = element.getBoundingClientRect ().top;
-                return {
-                    x: xPosition,
-                    y: yPosition
-                };
-            };
-            var pos = getCoordinates ( element );
+        getElementPositioning: function ( element, offsetX, offsetY ) {
+            var pos = getCoordinates ( element, {
+                x: element.getBoundingClientRect ().left + offsetX ? offsetX : 0,
+                y: element.getBoundingClientRect ().top + offsetY ? offsetY : 0
+            } );
             return 'position:fixed;left:' + pos.x + 'px;top:' + pos.y + 'px';
         },
         buildElement: function ( config ) {
@@ -478,7 +471,7 @@ var idrinth = {
         },
         showTooltip: function ( element ) {
             'use strict';
-            function tooltip ( set, element, pos, guilds, platform ) {
+            function tooltip ( set, element, guilds, platform ) {
                 if ( !set ) {
                     idrinth.ui.updateClassesList ( element, [ 'idrinth-hide' ], [ ] );
                     return;
@@ -493,15 +486,14 @@ var idrinth = {
                 element.childNodes[2].childNodes[1].innerHTML = guilds[set.guildId];
                 element.childNodes[3].childNodes[1].innerHTML = set.updated;
                 element.childNodes[3].setAttribute ( 'style', ( new Date () ) - ( new Date ( set.updated ) ) > 86400000 ? 'color:#aa0000;' : '' );
-                idrinth.ui.tooltip.setAttribute ( 'style', 'left:' + Math.round ( pos.left - 200 ) + 'px;top:' + Math.round ( pos.top - 100 ) + 'px;' );
             }
             idrinth.names.isHovering = false;
             var name = idrinth.names.parse ( element ).toLowerCase ( );
             if ( idrinth.settings.names && idrinth.ui.tooltip && idrinth.names.users[name] ) {
                 window.clearTimeout ( idrinth.ui.tooltipTO );
-                var pos = element.getBoundingClientRect ( );
-                tooltip ( idrinth.names.users[name].kongregate, idrinth.ui.tooltip.firstChild, pos, idrinth.names.guilds.kongregate, 'kongregate' );
-                tooltip ( idrinth.names.users[name].world, idrinth.ui.tooltip.lastChild, pos, idrinth.names.guilds.world, 'world-kongregate' );
+                idrinth.ui.tooltip.setAttribute ( 'style', idrinth.ui.getElementPositioning ( element, -200, -100 ) );
+                tooltip ( idrinth.names.users[name].kongregate, idrinth.ui.tooltip.firstChild, idrinth.names.guilds.kongregate, 'kongregate' );
+                tooltip ( idrinth.names.users[name].world, idrinth.ui.tooltip.lastChild, idrinth.names.guilds.world, 'world-kongregate' );
                 idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
             }
         },
