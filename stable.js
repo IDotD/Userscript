@@ -479,12 +479,12 @@ var idrinth = {
         showTooltip: function ( element ) {
             'use strict';
             function tooltip ( set, element, pos, guilds, platform ) {
-                idrinth.names.isHovering = false;
                 if ( !set ) {
-                    idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ 'idrinth-hide' ], [ ] );
+                    idrinth.ui.updateClassesList ( element, [ 'idrinth-hide' ], [ ] );
                     return;
                 }
                 idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ ], [ 'idrinth-hide' ] );
+                idrinth.ui.updateClassesList ( element, [ ], [ 'idrinth-hide' ] );
                 element.childNodes[0].setAttribute ( 'href', 'https://dotd.idrinth.de/' + platform + '/summoner/' + set.id + '/' );
                 element.childNodes[0].innerHTML = set.name;
                 element.childNodes[1].childNodes[1].innerHTML = set.level + ' (' + set['7day'] + '/week, ' + set['30day'] + '/month)';
@@ -495,21 +495,19 @@ var idrinth = {
                 element.childNodes[3].setAttribute ( 'style', ( new Date () ) - ( new Date ( set.updated ) ) > 86400000 ? 'color:#aa0000;' : '' );
                 idrinth.ui.tooltip.setAttribute ( 'style', 'left:' + Math.round ( pos.left - 200 ) + 'px;top:' + Math.round ( pos.top - 100 ) + 'px;' );
             }
-            var pos = null;
+            idrinth.names.isHovering = false;
             var name = idrinth.names.parse ( element ).toLowerCase ( );
             if ( idrinth.settings.names && idrinth.ui.tooltip && idrinth.names.users[name] ) {
                 window.clearTimeout ( idrinth.ui.tooltipTO );
-                pos = element.getBoundingClientRect ( );
+                var pos = element.getBoundingClientRect ( );
                 tooltip ( idrinth.names.users[name].kongregate, idrinth.ui.tooltip.firstChild, pos, idrinth.names.guilds.kongregate, 'kongregate' );
                 tooltip ( idrinth.names.users[name].world, idrinth.ui.tooltip.lastChild, pos, idrinth.names.guilds.world, 'world-kongregate' );
-                var delay = idrinth.settings.timeout ? idrinth.settings.timeout : 5000;
-                idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, delay );
+                idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
             }
         },
         hideTooltip: function () {
             if ( idrinth.names.isHovering ) {
-                var delay = idrinth.settings.timeout ? idrinth.settings.timeout : 5000;
-                idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, delay );
+                idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
                 return;
             }
             idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ 'idrinth-hide' ], [ ] );
@@ -574,7 +572,7 @@ var idrinth = {
                 var forceToArray = function ( value ) {
                     return value && typeof value === 'object' && Array.isArray ( value ) ? value : [ ];
                 };
-                var original = classString.split ( ' ' ).concat ( forceToArray ( add ) );
+                var original = classString === null ? [ ] : classString.split ( ' ' ).concat ( forceToArray ( add ) );
                 var list = [ ];
                 remove = forceToArray ( remove );
                 var addUnique = function ( list, element, forbidden ) {
