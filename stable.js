@@ -481,10 +481,10 @@ var idrinth = {
             function tooltip ( set, element, pos, guilds, platform ) {
                 idrinth.names.isHovering = false;
                 if ( !set ) {
-                    idrinth.ui.tooltip.setAttribute ( "class", idrinth.ui.getClassesList ( idrinth.ui.tooltip.getAttribute ( 'class' ), [ 'idrinth-hide' ], [ ] ) );
+                    idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ 'idrinth-hide' ], [ ] );
                     return;
                 }
-                idrinth.ui.tooltip.setAttribute ( "class", idrinth.ui.getClassesList ( idrinth.ui.tooltip.getAttribute ( 'class' ), [ ], [ 'idrinth-hide' ] ) );
+                idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ ], [ 'idrinth-hide' ] );
                 element.childNodes[0].setAttribute ( 'href', 'https://dotd.idrinth.de/' + platform + '/summoner/' + set.id + '/' );
                 element.childNodes[0].innerHTML = set.name;
                 element.childNodes[1].childNodes[1].innerHTML = set.level + ' (' + set['7day'] + '/week, ' + set['30day'] + '/month)';
@@ -512,7 +512,7 @@ var idrinth = {
                 idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, delay );
                 return;
             }
-            idrinth.ui.tooltip.setAttribute ( 'class', idrinth.ui.getClassesList ( idrinth.ui.tooltip.getAttribute ( 'class' ), [ 'idrinth-hide' ], [ ] ) );
+            idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ 'idrinth-hide' ], [ ] );
         },
         openCloseSettings: function ( ) {
             'use strict';
@@ -569,35 +569,38 @@ var idrinth = {
                 idrinth.alert ( 'The game couldn\'t be reloaded' );
             }
         },
-        getClassesList: function ( classString, add, remove ) {
-            var forceToArray = function ( value ) {
-                return value && typeof value === 'object' && Array.isArray ( value ) ? value : [ ];
-            };
-            var original = classString.split ( ' ' ).concat ( forceToArray ( add ) );
-            var list = [ ];
-            remove = forceToArray ( remove );
-            var addUnique = function ( list, element, forbidden ) {
-                if ( list.indexOf ( element ) === -1 && forbidden.indexOf ( element ) === -1 ) {
-                    list.push ( element );
+        updateClassesList: function ( element, add, remove ) {
+            var getClassesList = function ( classString, add, remove ) {
+                var forceToArray = function ( value ) {
+                    return value && typeof value === 'object' && Array.isArray ( value ) ? value : [ ];
+                };
+                var original = classString.split ( ' ' ).concat ( forceToArray ( add ) );
+                var list = [ ];
+                remove = forceToArray ( remove );
+                var addUnique = function ( list, element, forbidden ) {
+                    if ( list.indexOf ( element ) === -1 && forbidden.indexOf ( element ) === -1 ) {
+                        list.push ( element );
+                    }
+                    return list;
+                };
+                for (var counter = 0; counter < original.length; counter++) {
+                    list = addUnique ( list, original[counter], remove );
                 }
-                return list;
+                return list.join ( ' ' );
             };
-            for (var counter = 0; counter < original.length; counter++) {
-                list = addUnique ( list, original[counter], remove );
-            }
-            return list.join ( ' ' );
+            element.setAttribute ( 'class', getClassesList ( element.getAttribute ( 'class' ), add, remove ) );
         },
         activateTab: function ( name ) {
             var head = document.getElementById ( 'tab-activator-' + name ).parentNode.childNodes;
             var body = document.getElementById ( 'tab-element-' + name ).parentNode.childNodes;
             var setClasses = function ( head, body, name ) {
                 if ( head === document.getElementById ( 'tab-activator-' + name ) ) {
-                    head.setAttribute ( 'class', idrinth.ui.getClassesList ( head.getAttribute ( 'class' ), [ 'active' ], [ ] ) );
-                    body.setAttribute ( 'class', idrinth.ui.getClassesList ( body.getAttribute ( 'class' ), [ ], [ 'idrinth-hide' ] ) );
+                    idrinth.ui.updateClassesList ( head, [ 'active' ], [ ] );
+                    idrinth.ui.updateClassesList ( body, [ ], [ 'idrinth-hide' ] );
                     return;
                 }
-                head.setAttribute ( 'class', idrinth.ui.getClassesList ( head.getAttribute ( 'class' ), [ ], [ 'active' ] ) );
-                body.setAttribute ( 'class', idrinth.ui.getClassesList ( body.getAttribute ( 'class' ), [ 'idrinth-hide' ], [ ] ) );
+                idrinth.ui.updateClassesList ( head, [ ], [ 'active' ] );
+                idrinth.ui.updateClassesList ( body, [ 'idrinth-hide' ], [ ] );
             };
             for (var count = 0; count < head.length; count++) {
                 setClasses ( head[count], body[count], name );
