@@ -512,7 +512,7 @@ var idrinth = {
                 idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, delay );
                 return;
             }
-            idrinth.ui.tooltip.setAttribute ( 'class', idrinth.ui.tooltip.getAttribute ( 'class' ), [ 'idrinth-hide' ], [ ] );
+            idrinth.ui.tooltip.setAttribute ( 'class', idrinth.ui.getClassesList ( idrinth.ui.tooltip.getAttribute ( 'class' ), [ 'idrinth-hide' ], [ ] ) );
         },
         openCloseSettings: function ( ) {
             'use strict';
