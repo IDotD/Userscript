@@ -60,14 +60,7 @@ idrinth.raids = {
                 );
     },
     knowRaids: function () {
-        var data = '';
-        if ( Object.keys ( idrinth.raids.joined ).length > 0 ) {
-            data = data + ',' + ( Object.keys ( idrinth.raids.joined ) ).join ();
-        }
-        if ( Object.keys ( idrinth.raids.list ).length > 0 ) {
-            data = data + ',' + ( Object.keys ( idrinth.raids.list ) ).join ();
-        }
-        return data.replace ( /^,|,$/, '' );
+        return ( ( Object.keys ( idrinth.raids.joined ) ).concat ( Object.keys ( idrinth.raids.list ) ) ).join ();
     },
     importManually: function ( all ) {
         'use strict';
