@@ -184,103 +184,106 @@ idrinth.raids = {
                 this.addToJoined ( key );
             }
         },
-        'do': function ( ) {
-            'use strict';
-            var getServerMethods = function () {
-                var byAjax = function ( key ) {
-                    'use strict';
-                    idrinth.runAjax (
-                            idrinth.raids.join.servers.getServerLink ( key ),
-                            function ( ) {
-                                idrinth.raids.join.messages.success ( key );
-                            },
-                            function ( ) {
-                                idrinth.raids.join.messages.failed ( key );
-                            },
-                            function ( ) {
-                                idrinth.raids[key].joined = false;
-                                idrinth.raids.join.messages.failed ( key );
-                            }
-                    );
-                };
-                var byFrame = function ( key ) {
-                    'use strict';
-                    var exist = document.getElementsByClassName ( 'idrinth-join-frame' ).length;
-                    if ( exist >= idrinth.settings.windows ) {
-                        idrinth.raids.list[key].joined = false;
-                        return;
-                    }
-                    var frame = idrinth.ui.buildElement ( {
-                        type: 'iframe',
-                        css: 'idrinth-join-frame',
-                        id: 'join-' + key,
-                        attributes: [
-                            {
-                                name: 'src',
-                                value: idrinth.raids.join.servers.getServerLink ( key )
-                            },
-                            {
-                                name: 'sandbox',
-                                value: 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
-                            },
-                            {
-                                name: 'style',
-                                value: 'top:' + exist + 'px;'
-                            },
-                            {
-                                name: 'onload',
-                                value: 'try{event.stopPropagation();}catch(e){}window.setTimeout(){function(){idrinth.ui.removeElement(\'' + key + '\');},1234);'
-                            },
-                            {
-                                name: 'onunload',
-                                value: 'try{event.stopPropagation();}catch(e){}'
-                            }
-                        ]
-                    } );
-                    ( ( function ( key ) {
-                        return window.setTimeout ( function () {
-                            idrinth.ui.removeElement ( 'join-' + key );
-                        }, 30000 );
-                    } ) ( key ) );
-                    idrinth.ui.body.appendChild ( frame );
-                    idrinth.raids.join.messages.trying ( key );
-                };
-                var postLink = function ( key ) {
-                    'use strict';
-                    if ( !document.getElementById ( 'idrinth-raid-link-' + key ) ) {
-                        var span = document.createElement ( 'span' );
-                        span.id = 'idrinth-raid-link-' + key;
-                        span.setAttribute ( 'data-clipboard-text', idrinth.raids.join.servers.getServerLink ( key ) );
-                        span.appendChild ( document.createTextNode ( idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid ) );
-                        document.getElementById ( 'idrinth-raid-link-list' ).appendChild ( span );
-                    }
-                };
-                var options = [ postLink ];
-                if ( idrinth.platform === 'armorgames' || idrinth.platform === 'kongregates' ) {
-                    options.push ( byAjax );
-                } else if ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) {
-                    options.push ( byFrame );
-                }
-                return options;
-            };
-            var added = 0;
-            var options = getServerMethods ();
-            for (var key in idrinth.raids.list) {
-                if ( !idrinth.raids.list[key].joined ) {
-                    added++;
-                    for (var count = 0; count < options.length; count++) {
-                        options[count] ( key );
-                    }
-                }
-                if ( added > 99 || ( ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) && added >= idrinth.settings.windows ) ) {
-                    return true;
-                }
-            }
-            return false;
-        },
         process: function ( ) {
             'use strict';
-            if ( !idrinth.raids.join.do ( ) && Date.now ( ) - 60000 > idrinth.raids.requested ) {
+            var join = function ( ) {
+                'use strict';
+                var getServerMethods = function () {
+                    var byAjax = function ( key ) {
+                        'use strict';
+                        idrinth.runAjax (
+                                idrinth.raids.join.servers.getServerLink ( key ),
+                                function ( ) {
+                                    idrinth.raids.join.messages.success ( key );
+                                },
+                                function ( ) {
+                                    idrinth.raids.join.messages.failed ( key );
+                                },
+                                function ( ) {
+                                    idrinth.raids[key].joined = false;
+                                    idrinth.raids.join.messages.failed ( key );
+                                }
+                        );
+                    };
+                    var byFrame = function ( key ) {
+                        'use strict';
+                        var exist = document.getElementsByClassName ( 'idrinth-join-frame' ).length;
+                        if ( exist >= idrinth.settings.windows ) {
+                            idrinth.raids.list[key].joined = false;
+                            return;
+                        }
+                        var frame = idrinth.ui.buildElement ( {
+                            type: 'iframe',
+                            css: 'idrinth-join-frame',
+                            id: 'join-' + key,
+                            attributes: [
+                                {
+                                    name: 'src',
+                                    value: idrinth.raids.join.servers.getServerLink ( key )
+                                },
+                                {
+                                    name: 'sandbox',
+                                    value: 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
+                                },
+                                {
+                                    name: 'style',
+                                    value: 'top:' + exist + 'px;'
+                                },
+                                {
+                                    name: 'onload',
+                                    value: 'try{event.stopPropagation();}catch(e){}window.setTimeout(){function(){idrinth.ui.removeElement(\'' + key + '\');},1234);'
+                                },
+                                {
+                                    name: 'onunload',
+                                    value: 'try{event.stopPropagation();}catch(e){}'
+                                }
+                            ]
+                        } );
+                        ( ( function ( key ) {
+                            return window.setTimeout ( function () {
+                                idrinth.ui.removeElement ( 'join-' + key );
+                            }, 30000 );
+                        } ) ( key ) );
+                        idrinth.ui.body.appendChild ( frame );
+                        idrinth.raids.join.messages.trying ( key );
+                    };
+                    var postLink = function ( key ) {
+                        'use strict';
+                        if ( !document.getElementById ( 'idrinth-raid-link-' + key ) ) {
+                            var span = document.createElement ( 'span' );
+                            span.id = 'idrinth-raid-link-' + key;
+                            span.setAttribute ( 'data-clipboard-text', idrinth.raids.join.servers.getServerLink ( key ) );
+                            span.appendChild ( document.createTextNode ( idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid ) );
+                            document.getElementById ( 'idrinth-raid-link-list' ).appendChild ( span );
+                        }
+                    };
+                    var options = [ postLink ];
+                    if ( idrinth.platform === 'armorgames' || idrinth.platform === 'kongregates' ) {
+                        options.push ( byAjax );
+                    } else if ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) {
+                        options.push ( byFrame );
+                    }
+                    return options;
+                };
+                var reachedMax = function ( amount ) {
+                    return amount > 99 || ( ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) && amount >= idrinth.settings.windows );
+                };
+                var added = 0;
+                var options = getServerMethods ();
+                for (var key in idrinth.raids.list) {
+                    if ( !idrinth.raids.list[key].joined ) {
+                        added++;
+                        for (var count = 0; count < options.length; count++) {
+                            options[count] ( key );
+                        }
+                    }
+                    if ( reachedMax ( added ) ) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            if ( !join ( ) && Date.now ( ) - 60000 > idrinth.raids.requested ) {
                 idrinth.raids.requested = Date.now ( );
                 idrinth.raids.import ( idrinth.settings.raids ? idrinth.settings.favs : '-1' );
             }
