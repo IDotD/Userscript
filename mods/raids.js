@@ -146,7 +146,8 @@ idrinth.raids = {
             return prefix;
         },
         messages: {
-            writeToGui: function ( string ) {
+            log: function ( string ) {
+                idrinth.log ( string );
                 var li = document.createElement ( 'li' );
                 var ul = document.getElementById ( 'idrinth-joined-raids' ).getElementsByTagName ( 'ul' )[0];
                 li.appendChild ( document.createTextNode ( ( new Date () ).toLocaleTimeString () + ' ' + string ) );
@@ -158,10 +159,6 @@ idrinth.raids = {
                     }
                     ul.insertBefore ( li, ul.firstChild );
                 }
-            },
-            log: function ( string ) {
-                idrinth.log ( string );
-                idrinth.raids.join.messages.writeToGui ( string );
             },
             addToJoined: function ( key ) {
                 if ( key && idrinth.raids.list.hasOwnProperty ( key ) ) {
