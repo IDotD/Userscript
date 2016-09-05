@@ -45,7 +45,7 @@ idrinth.war = {
                         idrinth.war.element.childNodes[1].childNodes[1].removeChild ( idrinth.war.element.childNodes[1].firstChild.firstChild );
                     }
                 }
-                idrinth.war.element.setAttribute ( 'class', idrinth.ui.getClassesList ( idrinth.war.element.getAttribute ( 'class' ), addClasses, removeClasses ) );
+                idrinth.ui.updateClassesList ( idrinth.war.element, addClasses, removeClasses );
             };
             var processJson = function ( data ) {
                 var magicIgmSrv = 'https://dotd.idrinth.de/static/magic-image-service/';
