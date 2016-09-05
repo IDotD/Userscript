@@ -192,7 +192,7 @@ idrinth.raids = {
                     var byAjax = function ( key ) {
                         'use strict';
                         idrinth.runAjax (
-                                idrinth.raids.join.servers.getServerLink ( key ),
+                                idrinth.raids.join.getServerLink ( key ),
                                 function ( ) {
                                     idrinth.raids.join.messages.success ( key );
                                 },
@@ -219,7 +219,7 @@ idrinth.raids = {
                             attributes: [
                                 {
                                     name: 'src',
-                                    value: idrinth.raids.join.servers.getServerLink ( key )
+                                    value: idrinth.raids.join.getServerLink ( key )
                                 },
                                 {
                                     name: 'sandbox',
@@ -252,7 +252,7 @@ idrinth.raids = {
                         if ( !document.getElementById ( 'idrinth-raid-link-' + key ) ) {
                             var span = document.createElement ( 'span' );
                             span.id = 'idrinth-raid-link-' + key;
-                            span.setAttribute ( 'data-clipboard-text', idrinth.raids.join.servers.getServerLink ( key ) );
+                            span.setAttribute ( 'data-clipboard-text', idrinth.raids.join.getServerLink ( key ) );
                             span.appendChild ( document.createTextNode ( idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid ) );
                             document.getElementById ( 'idrinth-raid-link-list' ).appendChild ( span );
                         }
