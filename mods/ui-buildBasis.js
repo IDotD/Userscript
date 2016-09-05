@@ -19,8 +19,8 @@ idrinth.ui.buildBasis = {
                 };
                 return [ {
                         children: [
-                            buttonMaker ( 'Import all manually', 'idrinth.raids.importManually(true);' ),
-                            buttonMaker ( 'Import favs manually', 'idrinth.raids.importManually(false);' ),
+                            buttonMaker ( 'Import all manually', 'idrinth.raids.import(\'\');' ),
+                            buttonMaker ( 'Import favs manually', 'idrinth.raids.import(idrinth.settings.favs);' ),
                             buttonMaker ( 'Reload game', 'idrinth.ui.reloadGame();' ),
                             buttonMaker ( 'Clear Raids', 'idrinth.raids.clearAll();' ),
                             buttonMaker ( 'Reload Script', 'idrinth.reload();' ),

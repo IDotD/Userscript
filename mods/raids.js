@@ -15,11 +15,7 @@ idrinth.raids = {
         this.clearInterval ();
         idrinth.raids.interval = window.setInterval ( idrinth.raids.join.process, 1500 );
     },
-    import: function ( ) {
-        'use strict';
-        idrinth.raids.importId ( idrinth.settings.raids ? idrinth.settings.favs : '-1' );
-    },
-    importId: function ( id ) {
+    import: function ( id ) {
         'use strict';
         if ( !idrinth.platform ) {
             return;
@@ -61,10 +57,6 @@ idrinth.raids = {
     },
     knowRaids: function () {
         return ( ( Object.keys ( idrinth.raids.joined ) ).concat ( Object.keys ( idrinth.raids.list ) ) ).join ();
-    },
-    importManually: function ( all ) {
-        'use strict';
-        idrinth.raids.importId ( all ? '_' : idrinth.settings.favs );
     },
     clearAll: function () {
         this.clearInterval ( );
@@ -290,7 +282,7 @@ idrinth.raids = {
             'use strict';
             if ( !idrinth.raids.join.do ( ) && Date.now ( ) - 60000 > idrinth.raids.requested ) {
                 idrinth.raids.requested = Date.now ( );
-                idrinth.raids.import ( );
+                idrinth.raids.import ( idrinth.settings.raids ? idrinth.settings.favs : '-1' );
             }
         }
     },
