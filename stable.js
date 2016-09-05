@@ -572,7 +572,7 @@ var idrinth = {
                 var forceToArray = function ( value ) {
                     return value && typeof value === 'object' && Array.isArray ( value ) ? value : [ ];
                 };
-                var original = classString.split ( ' ' ).concat ( forceToArray ( add ) );
+                var original = classString === null ? [ ] : classString.split ( ' ' ).concat ( forceToArray ( add ) );
                 var list = [ ];
                 remove = forceToArray ( remove );
                 var addUnique = function ( list, element, forbidden ) {
