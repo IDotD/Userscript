@@ -309,10 +309,10 @@ var idrinth = {
                     );
         },
         getElementPositioning: function ( element, offsetX, offsetY ) {
-            var pos = getCoordinates ( element, {
+            var pos = {
                 x: element.getBoundingClientRect ().left + offsetX ? offsetX : 0,
                 y: element.getBoundingClientRect ().top + offsetY ? offsetY : 0
-            } );
+            };
             return 'position:fixed;left:' + pos.x + 'px;top:' + pos.y + 'px';
         },
         buildElement: function ( config ) {
