@@ -804,12 +804,12 @@ idrinth.chat = {
     },
     loginCallback: function ( data ) {
         if ( !data ) {
-            idrinth.core.alert ( this.getMsg ( 'login.fail' ) );
+            idrinth.core.alert ( idrinth.getMsg ( 'login.fail' ) );
             return;
         }
         data = JSON.parse ( data );
         if ( !data ) {
-            idrinth.core.alert ( this.getMsg ( 'login.fail' ) );
+            idrinth.core.alert ( idrinth.getMsg ( 'login.fail' ) );
             return;
         }
         if ( !data.success && data.message && data['allow-reg'] ) {
@@ -828,7 +828,7 @@ idrinth.chat = {
             idrinth.chat.join ( data.data );
             return;
         }
-        idrinth.core.alert ( this.getMsg ( 'login.fail' ) );
+        idrinth.core.alert ( idrinth.getMsg ( 'login.fail' ) );
     },
     register: function () {
         this.loginActions ( 'register' );
