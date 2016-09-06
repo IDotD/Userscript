@@ -300,15 +300,12 @@ idrinth.chat = {
                                 addZero ( d.getSeconds (), 2 ) +
                                 addZero ( d.getMilliseconds (), 3 );
                     };
-                    var text = idrinth.chat.buildMessageText ( message.text );
                     var own = parseInt ( message.user, 10 ) === parseInt ( idrinth.chat.self, 10 );
                     if ( !own ) {
                         try {
                             idrinth.core.sendNotification (
-                                    message.time.split ( ' ' )[1] + idrinth.chat.users[message.user].name + ':',
-                                    idrinth.ui.buildElement ( {
-                                        children: text
-                                    } )
+                                    message.time.split ( ' ' )[1] + ' ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML + ':',
+                                    idrinth.chat.users[message.user].name + ': ' + message.text
                                     );
                         } catch ( exception ) {
                             idrinth.core.log ( exception.getMessage () );
@@ -350,7 +347,7 @@ idrinth.chat = {
                                     },
                                     {
                                         type: 'span',
-                                        children: text
+                                        children: idrinth.chat.buildMessageText ( message.text )
                                     }
                                 ]
                             }
