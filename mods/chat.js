@@ -460,11 +460,223 @@ idrinth.chat = {
     },
     emotes: { },
     start: function () {
+        var build = function () {
+            var makeInput = function ( label ) {
+                return {
+                    type: 'li',
+                    children: [
+                        {
+                            type: 'label',
+                            content: label
+                        },
+                        {
+                            type: 'input',
+                            attributes: [
+                                {
+                                    name: 'type',
+                                    value: 'text'
+                                },
+                                {
+                                    name: 'onchange',
+                                    value: 'this.setAttribute(\'value\',this.value);'
+                                }
+                            ]
+                        }
+                    ]
+                };
+            };
+            var makeButton = function ( label, onclick ) {
+                return {
+                    type: 'li',
+                    children: [
+                        {
+                            type: 'button',
+                            attributes: [
+                                {
+                                    name: 'type',
+                                    value: 'button'
+                                },
+                                {
+                                    name: 'onclick',
+                                    value: onclick
+                                }
+                            ],
+                            content: label
+                        }
+                    ]
+                };
+            };
+            return idrinth.ui.buildElement ( {
+                id: 'idrinth-chat',
+                css: 'idrinth-hovering-box' + ( !idrinth.settings.chatHiddenOnStart ? ' active' : '' ) + ( idrinth.settings.moveLeft ? ' left-sided' : '' ),
+                children: [
+                    {
+                        type: 'button',
+                        content: ( idrinth.settings.chatHiddenOnStart ? '<<' : '>>' ),
+                        attributes: [ {
+                                name: 'onclick',
+                                value: 'idrinth.chat.openCloseChat(this);'
+                            } ]
+                    }, {
+                        type: 'ul',
+                        css: 'styles-scrollbar chat-labels',
+                        children: [ {
+                                type: 'li',
+                                css: 'active',
+                                content: "\u2699",
+                                attributes: [
+                                    {
+                                        name: 'onclick',
+                                        value: 'idrinth.chat.enableChat(this);'
+                                    },
+                                    {
+                                        name: 'data-id',
+                                        value: '0'
+                                    }
+                                ]
+                            } ]
+                    }, {
+                        type: 'ul',
+                        css: 'chat-tabs',
+                        children: [ {
+                                type: 'li',
+                                css: 'styles-scrollbar active',
+                                attributes: [
+                                    {
+                                        name: 'data-id',
+                                        value: '0'
+                                    }
+                                ],
+                                children: [
+                                    {
+                                        type: 'h1',
+                                        content: 'Chat'
+                                    },
+                                    {
+                                        type: 'p',
+                                        content: 'This part of the script is optional, so logging in is unneeded for raid catching etc.'
+                                    }, {
+                                        id: 'idrinth-chat-login',
+                                        children: [
+                                            {
+                                                type: 'h2',
+                                                content: 'Account'
+                                            },
+                                            {
+                                                type: 'p',
+                                                content: 'This should not be the data for logging in on the related gaming site and the login does not need to match your ingame name - you can set a display name after the registration.'
+                                            },
+                                            {
+                                                type: 'ul',
+                                                css: 'settings',
+                                                children: [
+                                                    makeInput ( 'Username' ),
+                                                    makeInput ( 'Password' ),
+                                                    makeButton ( "Not logged in, click to login/register", "idrinth.chat.login()" )
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        id: 'idrinth-add-chat',
+                                        children: [
+                                            {
+                                                type: 'h2',
+                                                content: 'Join Chat'
+                                            },
+                                            {
+                                                type: 'ul',
+                                                css: 'settings',
+                                                children: [
+                                                    makeInput ( 'Chat-ID' ),
+                                                    makeInput ( 'Chat-Password' ),
+                                                    makeButton ( "Click to join additional chat", "idrinth.chat.add()" )
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: 'idrinth-make-chat',
+                                        children: [
+                                            {
+                                                type: 'h2',
+                                                content: 'Create Chat'
+                                            },
+                                            {
+                                                type: 'ul',
+                                                css: 'settings',
+                                                children: [
+                                                    makeInput ( "Name" ),
+                                                    makeButton ( "Click to create additional chat", "idrinth.chat.create()" )
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        type: 'li',
+                                        children: [
+                                            {
+                                                type: '#text',
+                                                content: 'More settings at '
+                                            },
+                                            {
+                                                type: 'a',
+                                                content: 'dotd.idrinth.de/' + idrinth.platform + '/chat/',
+                                                attributes: [
+                                                    {
+                                                        name: 'target',
+                                                        value: '_blank'
+                                                    },
+                                                    {
+                                                        name: 'href',
+                                                        value: 'https://dotd.idrinth.de/' + idrinth.platform + '/chat/'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                type: '#text',
+                                                content: '.'
+                                            }
+                                        ]
+                                    }, {
+                                        type: 'li',
+                                        children: [
+                                            {
+                                                type: '#text',
+                                                content: 'Emoticons provided by '
+                                            },
+                                            {
+                                                type: 'a',
+                                                content: 'emoticonshd.com',
+                                                attributes: [
+                                                    {
+                                                        name: 'target',
+                                                        value: '_blank'
+                                                    },
+                                                    {
+                                                        name: 'href',
+                                                        value: 'http://emoticonshd.com/'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                type: '#text',
+                                                content: '.'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            } );
+        };
         if ( !idrinth.settings.chatting ) {
             return;
         }
         if ( !document.getElementById ( 'idrinth-chat' ) ) {
-            window.setTimeout ( idrinth.chat.start, 1000 );
+            idrinth.ui.body.appendChild ( build () );
+            idrinth.chat.elements.chats = document.getElementById ( 'idrinth-chat' ).getElementsByTagName ( 'ul' )[1];
+            idrinth.chat.elements.menu = document.getElementById ( 'idrinth-chat' ).getElementsByTagName ( 'ul' )[0];
         }
         window.setTimeout ( function () {
             idrinth.core.ajax.run (
