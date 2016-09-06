@@ -258,7 +258,7 @@ idrinth.raids = {
                         }
                     };
                     var options = [ postLink ];
-                    if ( idrinth.platform === 'armorgames' || idrinth.platform === 'kongregates' ) {
+                    if ( idrinth.platform === 'armorgames' || idrinth.platform === 'kongregate' ) {
                         options.push ( byAjax );
                     } else if ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) {
                         options.push ( byFrame );
