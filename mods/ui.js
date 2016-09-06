@@ -117,6 +117,10 @@ idrinth.ui = {
             for (var count = 0, l = config.attributes.length; count < l; count++) {
                 if ( config.attributes[count].name && config.attributes[count].value !== undefined ) {
                     el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
+                } else if ( config.attributes[count].names && Array.isArray ( config.attributes[count].names ) && config.attributes[count].names.length > 0 && config.attributes[count].value !== undefined ) {
+                    for (var pos = 0; pos < config.attributes[count].names.length; pos++) {
+                        el.setAttribute ( config.attributes[count].names[pos], config.attributes[count].value );
+                    }
                 }
             }
         };
@@ -440,15 +444,7 @@ idrinth.ui = {
                                     id: 'idrinth-tierlist-bosssearch',
                                     attributes: [
                                         {
-                                            name: 'onkeyup',
-                                            value: 'idrinth.tier.getTierForName(this.value);'
-                                        },
-                                        {
-                                            name: 'onchange',
-                                            value: 'idrinth.tier.getTierForName(this.value);'
-                                        },
-                                        {
-                                            name: 'onblur',
+                                            names: [ 'onblur', 'onchange', 'onkeyup' ],
                                             value: 'idrinth.tier.getTierForName(this.value);'
                                         }
                                     ]
