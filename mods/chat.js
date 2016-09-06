@@ -813,7 +813,7 @@ idrinth.chat = {
             return;
         }
         if ( !data.success && data.message && data['allow-reg'] ) {
-            idrinth.core.confirm ( idrinth.getMsg ( 'user.unknown' ), idrinth.chat.register );
+            idrinth.core.confirm ( idrinth.getMsg ( 'user.unknown' ), 'idrinth.chat.register();' );
             return;
         }
         if ( !data.success && data.message ) {
