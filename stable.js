@@ -423,15 +423,19 @@ var idrinth = {
         },
         reloadGame: function ( ) {
             'use strict';
+            var handleFrame = function ( parent ) {
+                var frame = parent.getElementsByTagName ( 'iframe' )[0];
+                frame.setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
+            };
             try {
                 if ( idrinth.platform === 'kongregate' ) {
                     window.activateGame ( );
                 } else if ( idrinth.platform === 'dawnofthedragons' ) {
-                    document.getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', 'https://web1.dawnofthedragons.com/live_standalone/?idrinth_nc' + ( new Date ( ) ).getTime ( ) );
+                    handleFrame ( document );
                 } else if ( idrinth.platform === 'newgrounds' ) {
-                    document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
+                    handleFrame ( document.getElementById ( 'iframe_embed' ) );
                 } else if ( idrinth.platform === 'armorgames' ) {
-                    document.getElementById ( 'gamefilearea' ).getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
+                    handleFrame ( document.getElementById ( 'gamefilearea' ) );
                 }
             } catch ( e ) {
                 idrinth.core.alert ( 'The game couldn\'t be reloaded' );
