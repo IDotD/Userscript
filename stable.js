@@ -100,7 +100,7 @@ var idrinth = {
         },
         join: function () {
             if ( idrinth.newgrounds.raids.length === 0 ) {
-                idrinth.alert ( 'We\'re done! Have fun playing.' );
+                idrinth.alert ( idrinth.getMsg( 'join.success' ) );
                 return;
             }
             var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
@@ -118,7 +118,7 @@ var idrinth = {
                             try {
                                 idrinth.raids.joined[key].joined = true;
                             } catch ( f ) {
-                                idrinth.log ( "We seem to have joined a dead raid" );
+                                idrinth.log ( idrinth.getMsg( 'join.likely' ) );
                             }
                         }
                         if ( document.getElementById ( 'idrinth-raid-link-' + key ) ) {
@@ -144,23 +144,49 @@ var idrinth = {
         idrinth.ui.removeElement ( 'idrinth-controls' );
         idrinth.ui.removeElement ( 'idrinth-chat' );
         idrinth.ui.removeElement ( 'idrinth-war' );
-        var sc = document.createElement ( 'script' );
-        sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/' + Math.random () + '/' );
-        document.getElementsByTagName ( 'body' )[0].appendChild ( sc );
-        window.setTimeout ( function () {
-            idrinth = { };
-        }, 1 );
+
+        var mainScript,
+                baseSrc,
+                sc,
+                version = '',
+                splittedUrl,
+                idotdScript = document.getElementById ( 'idotd-script' );
+
+        if ( !idotdScript ) {
+            mainScript = document.getElementsByTagName ( 'script' );
+
+            for (var i = 0, l = mainScript.length; i < l; i++) {
+                if ( /https:\/\/dotd.idrinth.de\/static\/userscript\//.test ( mainScript[ i ].src ) ) {
+                    baseSrc = mainScript[ i ].src;
+                    mainScript[ i ].parentNode.removeChild ( mainScript[ i ] );
+                    break;
+                }
+            }
+        } else {
+            baseSrc = idotdScript.src;
+            idotdScript.parentNode.removeChild ( idotdScript );
+        }
+
+        splittedUrl = baseSrc.split ( '/' );
+        if ( splittedUrl[ 4 ] === 'userscript' ) {
+            version = splittedUrl[ 5 ] + '/';
+        }
+
+        sc = document.createElement ( 'script' );
+        sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/' + version + Math.random () + '/' );
+        sc.setAttribute ( 'id', 'idotd-script' );
+        document.getElementsByTagName ( 'body' )[ 0 ].appendChild ( sc );
+        window.setTimeout ( function () { idrinth = {}; }, 1 );
     },
     inArray: function ( value, list ) {
         'use strict';
         if ( !Array.isArray ( list ) ) {
             return false;
         }
-        var c = 0;
         if ( typeof list.includes === 'function' ) {
             return list.includes ( value );
         }
-        for (c = 0; c < list.length; c++) {
+        for (var c = 0; c < list.length; c++) {
             if ( list[c] === value ) {
                 return true;
             }
@@ -222,7 +248,7 @@ var idrinth = {
     platform: '',
     log: function ( string ) {
         'use strict';
-        console.log ( '[IDotDS] ' + string );
+        console.log ( idrinth.getMsg( 'idrinth.scriptabr' ) + string );
     },
     ui: {
         tooltip: null,
@@ -564,7 +590,7 @@ var idrinth = {
                     document.getElementById ( 'gamefilearea' ).getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
                 }
             } catch ( e ) {
-                idrinth.alert ( 'The game couldn\'t be reloaded' );
+                idrinth.alert ( idrinth.getMsg ( 'reload.fail' ) );
             }
         },
         updateClassesList: function ( element, add, remove ) {
@@ -667,7 +693,7 @@ var idrinth = {
     },
     start: function ( ) {
         'use strict';
-        idrinth.log ( 'Starting Idrinth\'s DotD Script' );
+        idrinth.log ( idrinth.getMsg( 'idrinth.info.start' ) );
         idrinth.platform = location.hostname.split ( '.' )[location.hostname.split ( '.' ).length - 2];
         if ( idrinth.platform === 'dawnofthedragons' ) {
             idrinth.platform = 'facebook';
@@ -683,6 +709,30 @@ var idrinth = {
     },
     confirm: function ( text, callback ) {
         idrinth.ui.buildModal ( 'Do you?', text, callback );
+    },
+    getMsg: function ( key ) {
+        var textKey = key || '';
+        var text = {
+            'msg.joined': 'Joined ',
+            'msg.notjoined': 'Could not join ',
+            'msg.tryingjoin': 'Trying to join ',
+            'idrinth.info.start' : 'Starting Idrinth\'s DotD Script',
+            'idrinth.scriptabr' : '[IDotDS] ',
+            'land.warn' : 'You lack gold to buy any more buildings at the moment.',
+            'join.fail': 'Can\'t join at the moment',
+            'join.notwork': 'Joining didn\'t work',
+            'join.serverfail' : "Could not find configuration for the server with name : ",
+            'join.likely' : "We seem to have joined a dead raid",
+            'join.success' : 'We\'re done! Have fun playing.',
+            'user.unknown': 'The given username for dotd.idrinth.de is unknown, do you want to register it there?',
+            'login.fail': 'Login failed in an unexpected way',
+            'reload.fail' : 'The game couldn\'t be reloaded',
+            'modify.fail': 'Can\'t modify that user at the moment',
+            'create.fail': 'Can\'t create at the moment',
+            'default.error': 'Unexpected error occurred. Please contact script developers'
+            + ' (https://github.com/Idrinth/IDotD).'
+        };
+        return text.hasOwnProperty ( textKey ) ? text[textKey] : text['default.error'];
     }
 };
 window.setTimeout ( idrinth.start, 6666 );

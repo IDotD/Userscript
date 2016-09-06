@@ -149,13 +149,20 @@ idrinth.raids = {
                 }
                 return prefix;
             },
-            kongregate: function ( key ) {
-                'use strict';
-                idrinth.raids.join.byAjax.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
-            },
-            armorgames: function ( key ) {
-                'use strict';
-                idrinth.raids.join.byAjax.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
+            joinServer: function ( name, key ) {
+                var serverLink,
+                        serverNames = {
+                            "kongregate": idrinth.raids.join.byAjax.do,
+                            "armorgames": idrinth.raids.join.byAjax.do,
+                            "facebook": idrinth.raids.join.byFrame.do,
+                            "dawnofthedragons": idrinth.raids.join.byFrame.do
+                        };
+                if ( !serverNames.hasOwnProperty ( name ) || !key ) {
+                    return;
+                }
+
+                serverLink = idrinth.raids.join.servers.getServerLink ( key );
+                serverNames[ name ] ( key, serverLink );
             },
             postLink: function ( key ) {
                 'use strict';
@@ -166,14 +173,6 @@ idrinth.raids = {
                     span.appendChild ( document.createTextNode ( idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid ) );
                     document.getElementById ( 'idrinth-raid-link-list' ).appendChild ( span );
                 }
-            },
-            facebook: function ( key ) {
-                'use strict';
-                idrinth.raids.join.byFrame.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
-            },
-            dawnofthedragons: function ( key ) {
-                'use strict';
-                idrinth.raids.join.byFrame.do ( key, idrinth.raids.join.servers.getServerLink ( key ) );
             }
         },
         byAjax: {
@@ -220,13 +219,13 @@ idrinth.raids = {
             },
             success: function ( key ) {
                 'use strict';
-                idrinth.raids.join.messages.log ( 'Joined ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
+                idrinth.raids.join.messages.log ( idrinth.getMsg( 'msg.joined' ) + idrinth.raids.list[key].name + "'s " + idrinth.raids.list[key].raid );
                 idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
                 this.addToJoined ( key );
             },
             failed: function ( key ) {
                 'use strict';
-                idrinth.raids.join.messages.log ( 'Could not join ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
+                idrinth.raids.join.messages.log ( idrinth.getMsg( 'msg.notjoined' ) + idrinth.raids.list[key].name + "'s " + idrinth.raids.list[key].raid );
             },
             trying: function ( key ) {
                 'use strict';
@@ -239,7 +238,7 @@ idrinth.raids = {
                     }, 300 )
                 } ) ( key ) );
                 if ( idrinth.raids.list[key] ) {
-                    idrinth.raids.join.messages.log ( 'Trying to join ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
+                    idrinth.raids.join.messages.log ( idrinth.getMsg( 'msg.tryingjoin' ) + idrinth.raids.list[key].name + "'s " + idrinth.raids.list[key].raid );
                 }
                 this.addToJoined ( key );
             }
@@ -311,9 +310,7 @@ idrinth.raids = {
                     added++;
                     idrinth.raids.join.servers.postLink ( key );
                     idrinth.raids.list[key].joined = true;
-                    if ( typeof idrinth.raids.join.servers[idrinth.platform] === 'function' ) {
-                        idrinth.raids.join.servers[idrinth.platform] ( key );
-                    }
+                    idrinth.raids.join.servers.joinServer(idrinth.platform, key);
                 }
                 if ( added > 99 || ( idrinth.platform === 'facebook' && added >= idrinth.settings.windows ) ) {
                     return true;

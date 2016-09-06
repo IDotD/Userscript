@@ -30,51 +30,82 @@ idrinth.settings = {
         castle: 0,
         gold: 0
     },
-    save: function ( ) {
-        'use strict';
-        if ( window.localStorage ) {
-            for (var key in idrinth.settings) {
-                if ( key !== 'land' && typeof idrinth.settings[key] !== 'function' ) {
-                    window.localStorage.setItem ( 'idrinth-dotd-' + key, idrinth.settings[key] );
+    settingsAction: function ( action ) {
+        var innerObj,
+                innerVal,
+                outerVal,
+                handleItem,
+                saveItem,
+                processInner,
+                settings = idrinth.settings,
+                prefix = 'idrinth-dotd-',
+                actions = {
+                    'save': 'save',
+                    'start': 'start'
+                };
+
+        if ( !window.localStorage && !actions.hasOwnProperty ( action ) ) {
+            return;
+        }
+
+        handleItem = function ( action, name, item ) {
+            var tmp;
+            if ( action === 'save' ) {
+                window.localStorage.setItem ( name, item );
+            } else if ( action === 'start' ) {
+                tmp = window.localStorage.getItem ( name );
+                if ( tmp && tmp !== undefined && tmp !== null && tmp.indexOf ( ":" ) === -1 ) {
+                    tmp = JSON.parse ( tmp );
                 }
             }
-            for (var building in idrinth.settings.land) {
-                if ( typeof idrinth.settings[key] !== 'function' ) {
-                    window.localStorage.setItem ( 'idrinth-dotd-land-' + building, idrinth.settings.land[building] );
+            return tmp;
+        };
+
+        saveItem = function ( key, key2, val ) {
+            if ( !val && key ) {
+                return;
+            }
+            if ( key2 ) {
+                idrinth.settings[ key ][ key2 ] = val;
+            } else {
+                idrinth.settings[ key ] = val;
+            }
+        };
+
+        processInner = function ( action, name, innerObj ) {
+            for ( var key2 in innerObj ) {
+                if ( innerObj.hasOwnProperty ( key2 ) ) {
+                    innerVal = handleItem ( action, name + "-" + key2, innerObj[ key2 ] );
+                    saveItem ( key, key2, innerVal );
+                }
+            }
+        };
+
+        for ( var key in settings ) {
+            if ( settings.hasOwnProperty ( key ) && typeof settings[ key ] !== 'function' ) {
+                var setting = settings[ key ],
+                        prefixAndName = prefix + key;
+                if ( typeof setting === 'object' ) {
+                    innerObj = setting;
+                    processInner ( action, prefixAndName, innerObj );
+                } else {
+                    outerVal = handleItem ( action, prefixAndName, setting );
+                    saveItem ( key, null, outerVal );
                 }
             }
         }
+    },
+    save: function () {
+        'use strict';
+        this.settingsAction ( 'save' );
     },
     change: function ( field, value ) {
         'use strict';
-        idrinth.settings[field] = value;
+        idrinth.settings[ field ] = value;
         idrinth.settings.save ( );
     },
-    start: function ( ) {
+    start: function () {
         'use strict';
-        if ( window.localStorage ) {
-            var itemHandler = function ( prefix, key, item ) {
-                if ( typeof item !== 'function' ) {
-                    var tmp = window.localStorage.getItem ( 'idrinth-dotd-' + prefix + key );
-                    if ( tmp ) {
-                        if ( tmp === 'false' ) {
-                            tmp = false;
-                        } else if ( tmp === 'true' ) {
-                            tmp = true;
-                        }
-                        item = tmp;
-                    }
-                }
-                return item;
-            };
-            for (var key in idrinth.settings) {
-                if ( key !== 'land' ) {
-                    idrinth.settings[key] = itemHandler ( '', key, idrinth.settings[key] );
-                }
-            }
-            for (var building in idrinth.settings.land) {
-                idrinth.settings.land[building] = itemHandler ( 'land-', building, idrinth.settings.land[building] );
-            }
-        }
+        this.settingsAction ( 'start' );
     }
 };
