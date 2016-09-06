@@ -24,7 +24,7 @@ idrinth.raids = {
             return 'https://dotd.idrinth.de/' + ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform +
                     '/raid-service/' + ( toImport === '' ? '_' : toImport ) + '/';
         };
-        idrinth.runAjax (
+        idrinth.core.ajax.run (
                 getImportLink ( id ),
                 function ( responseText ) {
                     'use strict';
@@ -139,7 +139,7 @@ idrinth.raids = {
         },
         messages: {
             log: function ( string ) {
-                idrinth.log ( string );
+                idrinth.core.log ( string );
                 var li = document.createElement ( 'li' );
                 var ul = document.getElementById ( 'idrinth-joined-raids' ).getElementsByTagName ( 'ul' )[0];
                 li.appendChild ( document.createTextNode ( ( new Date () ).toLocaleTimeString () + ' ' + string ) );
@@ -191,7 +191,7 @@ idrinth.raids = {
                 var getServerMethods = function () {
                     var byAjax = function ( key ) {
                         'use strict';
-                        idrinth.runAjax (
+                        idrinth.core.ajax.run (
                                 idrinth.raids.join.getServerLink ( key ),
                                 function ( ) {
                                     idrinth.raids.join.messages.success ( key );

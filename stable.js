@@ -1,25 +1,5 @@
 var idrinth = {
-    ajax: [ ],
     version: '###VERSION###',
-    getfullDateInt: function () {
-        function addZero ( x, n ) {
-            while ( x.toString ().length < n ) {
-                x = "0" + x;
-            }
-            return x;
-        }
-        var d = new Date ();
-        return addZero ( d.getFullYear (), 2 ) +
-                addZero ( d.getMonth (), 2 ) +
-                addZero ( d.getDate (), 2 ) +
-                addZero ( d.getHours (), 2 ) +
-                addZero ( d.getMinutes (), 2 ) +
-                addZero ( d.getSeconds (), 2 ) +
-                addZero ( d.getMilliseconds (), 3 );
-    },
-    escapeRegExp: function ( str ) {
-        return str.replace ( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&" );
-    },
     facebook: {
         popup: null,
         timeout: null,
@@ -30,14 +10,14 @@ var idrinth = {
                 idrinth.ui.reloadGame ();
                 idrinth.raids.clearAll ();
             } catch ( e ) {
-                idrinth.log ( e );
+                idrinth.core.log ( e );
             }
         },
         rejoin: function () {
             try {
                 window.clearInterval ( idrinth.raids.interval );
             } catch ( e ) {
-                idrinth.log ( e );
+                idrinth.core.log ( e );
             }
             idrinth.facebook.popup = window.open ( "https://apps.facebook.com/dawnofthedragons/" );
             idrinth.facebook.popup.onload = function () {
@@ -46,39 +26,6 @@ var idrinth = {
             };
             idrinth.facebook.timeout = window.setTimeout ( idrinth.facebook.restart, 11111 );
         }
-    },
-    copyToClipboard: function ( text ) {
-        var success;
-        try {
-            var textAreaElement = idrinth.ui.buildElement ( {
-                type: 'textarea',
-                id: "idrinth-copy-helper"
-            } );
-            textAreaElement.value = text;
-            idrinth.ui.body.appendChild ( textAreaElement );
-            textAreaElement.select ();
-            success = document.execCommand ( 'copy' );
-        } catch ( exception ) {
-            idrinth.log ( exception.getMessage () );
-            success = false;
-        }
-        idrinth.ui.removeElement ( "idrinth-copy-helper" );
-        return success;
-    },
-    sendNotification: function ( title, content ) {
-        if ( !( "Notification" in window ) ) {
-            return false;
-        }
-        if ( window.Notification.permission === "default" ) {
-            window.Notification.requestPermission ();
-        }
-        if ( window.Notification.permission === "denied" ) {
-            return false;
-        }
-        return new window.Notification ( title, {
-            icon: "https://dotd.idrinth.de/Resources/Images/logo.png",
-            body: content
-        } );
     },
     newgrounds: {
         originalUrl: '',
@@ -100,7 +47,7 @@ var idrinth = {
         },
         join: function () {
             if ( idrinth.newgrounds.raids.length === 0 ) {
-                idrinth.alert ( 'We\'re done! Have fun playing.' );
+                idrinth.core.alert ( 'We\'re done! Have fun playing.' );
                 return;
             }
             var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
@@ -118,7 +65,7 @@ var idrinth = {
                             try {
                                 idrinth.raids.joined[key].joined = true;
                             } catch ( f ) {
-                                idrinth.log ( "We seem to have joined a dead raid" );
+                                idrinth.core.log ( "We seem to have joined a dead raid" );
                             }
                         }
                         if ( document.getElementById ( 'idrinth-raid-link-' + key ) ) {
@@ -151,79 +98,7 @@ var idrinth = {
             idrinth = { };
         }, 1 );
     },
-    inArray: function ( value, list ) {
-        'use strict';
-        if ( !Array.isArray ( list ) ) {
-            return false;
-        }
-        var c = 0;
-        if ( typeof list.includes === 'function' ) {
-            return list.includes ( value );
-        }
-        for (c = 0; c < list.length; c++) {
-            if ( list[c] === value ) {
-                return true;
-            }
-        }
-        return false;
-    },
-    runAjax: function ( url, success, failure, timeout, additionalHeader ) {
-        'use strict';
-        var pos = idrinth.ajax.length;
-        idrinth.ajax[pos] = new XMLHttpRequest ( );
-        idrinth.ajax[pos]._remove = function ( request ) {
-            var position = idrinth.ajax.indexOf ( request );
-            if ( position > -1 ) {
-                idrinth.ajax.splice ( position, 1 );
-            }
-        };
-        idrinth.ajax[pos].onreadystatechange = function ( event ) {
-            var request = ( event || window.event ).target;
-            var call = function ( func, value ) {
-                if ( typeof func !== 'function' ) {
-                    return;
-                }
-                try {
-                    return func ( value );
-                } catch ( e ) {
-                    return null;
-                }
-            };
-            if ( request.readyState === 4 ) {
-                var status = ( request.status > 199 && request.status < 300 ) || request.status === 0;
-                call ( status ? success : failure, status ? request.responseText : request );
-                request._remove ( request );
-            }
-        };
-        idrinth.ajax[pos].timeout = 30000;
-        idrinth.ajax[pos].ontimeout = function ( event ) {
-            var request = ( event || window.event ).target;
-            timeout.bind ( request );
-            request._remove ( request );
-        };
-        idrinth.ajax[pos].onerror = function ( event ) {
-            var request = ( event || window.event ).target;
-            request._remove ( request );
-        };
-        idrinth.ajax[pos].onabort = function ( event ) {
-            var request = ( event || window.event ).target;
-            request._remove ( request );
-        };
-        idrinth.ajax[pos]._url = url;
-        idrinth.ajax[pos].open ( "GET", url, true );
-        if ( url.match ( '/dotd\.idrinth\.de/' ) ) {
-            if ( additionalHeader ) {
-                idrinth.ajax[pos].setRequestHeader ( "Idrinth-Addition", additionalHeader );
-            }
-            idrinth.ajax[pos].withCredentials = true;
-        }
-        idrinth.ajax[pos].send ( );
-    },
     platform: '',
-    log: function ( string ) {
-        'use strict';
-        console.log ( '[IDotDS] ' + string );
-    },
     ui: {
         tooltip: null,
         formatNumber: function ( number ) {
@@ -348,6 +223,16 @@ var idrinth = {
             };
             var makeInputLabel = function ( config ) {
                 'use strict';
+                var inArray = function ( value, list ) {
+                    'use strict';
+                    if ( !Array.isArray ( list ) ) {
+                        return false;
+                    }
+                    if ( typeof list.includes === 'function' ) {
+                        return list.includes ( value );
+                    }
+                    return list.indexOf ( value ) > -1;
+                };
                 var input = [ {
                         name: 'type',
                         value: config.type
@@ -374,7 +259,7 @@ var idrinth = {
                     } );
                 }
                 return idrinth.ui.buildElement ( {
-                    css: 'idrinth-line' + ( config.platforms && !idrinth.inArray ( idrinth.platform, config.platforms ) ? ' idrinth-hide' : '' ),
+                    css: 'idrinth-line' + ( config.platforms && !inArray ( idrinth.platform, config.platforms ) ? ' idrinth-hide' : '' ),
                     children: [ {
                             type: 'label',
                             css: 'idrinth-float-half',
@@ -549,7 +434,7 @@ var idrinth = {
                     document.getElementById ( 'gamefilearea' ).getElementsByTagName ( 'iframe' )[0].setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
                 }
             } catch ( e ) {
-                idrinth.alert ( 'The game couldn\'t be reloaded' );
+                idrinth.core.alert ( 'The game couldn\'t be reloaded' );
             }
         },
         updateClassesList: function ( element, add, remove ) {
@@ -649,10 +534,12 @@ var idrinth = {
                 e.trigger.parentNode.parentNode.removeChild ( e.trigger.parentNode );
             } );
         }, 1000 );
+        delete idrinth['start'];
+        delete idrinth['startInternal'];
     },
     start: function ( ) {
         'use strict';
-        idrinth.log ( 'Starting Idrinth\'s DotD Script' );
+        idrinth.core.log ( 'Starting Idrinth\'s DotD Script' );
         idrinth.platform = location.hostname.split ( '.' )[location.hostname.split ( '.' ).length - 2];
         if ( idrinth.platform === 'dawnofthedragons' ) {
             idrinth.platform = 'facebook';
@@ -663,11 +550,5 @@ var idrinth = {
         }
         idrinth.startInternal ();
     },
-    alert: function ( text ) {
-        idrinth.ui.buildModal ( 'Info', text );
-    },
-    confirm: function ( text, callback ) {
-        idrinth.ui.buildModal ( 'Do you?', text, callback );
-    }
 };
 window.setTimeout ( idrinth.start, 6666 );

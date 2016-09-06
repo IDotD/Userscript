@@ -12,7 +12,7 @@ idrinth.chat = {
     refreshChats: function () {
         idrinth.chat.oldMessages = JSON.parse ( JSON.stringify ( idrinth.chat.messages ) );
         idrinth.chat.messages = [ ];
-        idrinth.runAjax (
+        idrinth.core.ajax.run (
                 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/update/',
                 idrinth.chat.applyMessages,
                 idrinth.chat.returnMessages,
@@ -28,7 +28,7 @@ idrinth.chat = {
         idrinth.chat.refreshCount++;
     },
     refreshMembers: function () {
-        idrinth.runAjax (
+        idrinth.core.ajax.run (
                 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/accounts/',
                 idrinth.chat.applyMembers,
                 function () {
@@ -144,21 +144,21 @@ idrinth.chat = {
         } ) );
     },
     useroptions: function ( chat, user, rank ) {
-        idrinth.runAjax (
+        idrinth.core.ajax.run (
                 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/rank/',
                 function ( reply ) {
                     try {
                         reply = JSON.parse ( reply );
-                        idrinth.alert ( reply.message );
+                        idrinth.core.alert ( reply.message );
                     } catch ( e ) {
-                        idrinth.log ( e );
+                        idrinth.core.log ( e );
                     }
                 },
                 function ( reply ) {
-                    idrinth.alert ( this.getMsg ( 'modify.fail' ) );
+                    idrinth.core.alert ( this.getMsg ( 'modify.fail' ) );
                 },
                 function ( reply ) {
-                    idrinth.alert ( this.getMsg ( 'modify.fail' ) );
+                    idrinth.core.alert ( this.getMsg ( 'modify.fail' ) );
                 },
                 JSON.stringify ( {
                     chat: chat,
@@ -224,7 +224,10 @@ idrinth.chat = {
         if ( !idrinth.chat.emotes.lookup ) {
             return message;
         }
-        var part = idrinth.escapeRegExp ( Object.keys ( idrinth.chat.emotes.lookup ).join ( 'TTTT' ) );
+        var escapeRegExp = function ( str ) {
+            return str.replace ( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&" );
+        };
+        var part = escapeRegExp ( Object.keys ( idrinth.chat.emotes.lookup ).join ( 'TTTT' ) );
         var reg = new RegExp ( '(^| )(' + part.replace ( /TTTT/g, '|' ) + ')($| )', 'g' );
         return idrinth.chat.replaceInText ( message, reg, [ function ( match ) {
                 var el = idrinth.chat.emotes.positions[idrinth.chat.emotes.lookup[match.replace ( / /g, '' )]];
@@ -281,10 +284,26 @@ idrinth.chat = {
         var processMessages = function ( messages ) {
             var addMessages = function ( chatMessages, chatId, chatElement ) {
                 var buildMessage = function ( message, chat, chatId, messageId ) {
+                    var getfullDateInt = function () {
+                        function addZero ( x, n ) {
+                            while ( x.toString ().length < n ) {
+                                x = "0" + x;
+                            }
+                            return x;
+                        }
+                        var d = new Date ();
+                        return addZero ( d.getFullYear (), 2 ) +
+                                addZero ( d.getMonth (), 2 ) +
+                                addZero ( d.getDate (), 2 ) +
+                                addZero ( d.getHours (), 2 ) +
+                                addZero ( d.getMinutes (), 2 ) +
+                                addZero ( d.getSeconds (), 2 ) +
+                                addZero ( d.getMilliseconds (), 3 );
+                    };
                     chat.appendChild ( idrinth.ui.buildElement (
                             {
                                 type: 'li',
-                                id: 'idrinth-single-chat-message-' + messageId + ( parseInt ( messageId, 10 ) < 1 ? '-' + idrinth.getfullDateInt () : '' ),
+                                id: 'idrinth-single-chat-message-' + messageId + ( parseInt ( messageId, 10 ) < 1 ? '-' + getfullDateInt () : '' ),
                                 css: ( parseInt ( message.user, 10 ) === parseInt ( idrinth.chat.self, 10 ) ? 'self-written ' : '' ),
                                 children: [
                                     {
@@ -352,7 +371,7 @@ idrinth.chat = {
                     try {
                         chat.lastChild.scrollIntoView ( false );
                     } catch ( e ) {
-                        idrinth.log ( e );
+                        idrinth.core.log ( e );
                     }
                     chat.lastChild.scrollTop = chat.lastChild.scrollHeight;
                 }
@@ -448,7 +467,7 @@ idrinth.chat = {
             window.setTimeout ( idrinth.chat.start, 1000 );
         }
         window.setTimeout ( function () {
-            idrinth.runAjax (
+            idrinth.core.ajax.run (
                     'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/login/',
                     idrinth.chat.startLoginCallback,
                     function ( reply ) {
@@ -463,7 +482,7 @@ idrinth.chat = {
                     );
         }, 2500 );
         window.setTimeout ( function () {
-            idrinth.runAjax (
+            idrinth.core.ajax.run (
                     'https://dotd.idrinth.de/static/emoticons/data/',
                     function ( reply ) {
                         idrinth.chat.emotes = JSON.parse ( reply );
@@ -477,33 +496,33 @@ idrinth.chat = {
         }, 1 );
     },
     create: function () {
-        idrinth.runAjax (
+        idrinth.core.ajax.run (
                 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/create/',
                 idrinth.chat.joinCallback,
                 function ( reply ) {
-                    idrinth.alert ( this.getMsg ( 'create.fail' ) );
+                    idrinth.core.alert ( this.getMsg ( 'create.fail' ) );
                 },
                 function ( reply ) {
-                    idrinth.alert ( this.getMsg ( 'create.fail' ) );
+                    idrinth.core.alert ( this.getMsg ( 'create.fail' ) );
                 },
                 document.getElementById ( 'idrinth-make-chat' ).getElementsByTagName ( 'input' )[0].value
                 );
     },
     joinCallback: function ( reply ) {
         if ( !reply ) {
-            idrinth.alert ( this.getMsg ( 'join.fail' ) );
+            idrinth.core.alert ( this.getMsg ( 'join.fail' ) );
             return;
         }
         reply = JSON.parse ( reply );
         if ( !reply ) {
-            idrinth.alert ( this.getMsg ( 'join.fail' ) );
+            idrinth.core.alert ( this.getMsg ( 'join.fail' ) );
             return;
         }
         if ( !reply.success ) {
             if ( reply.message ) {
-                idrinth.alert ( reply.message );
+                idrinth.core.alert ( reply.message );
             } else {
-                idrinth.alert ( this.getMsg ( 'join.notwork' ) );
+                idrinth.core.alert ( this.getMsg ( 'join.notwork' ) );
             }
             return;
         }
@@ -515,14 +534,14 @@ idrinth.chat = {
     users: { },
     updateTimeout: null,
     add: function () {
-        idrinth.runAjax (
+        idrinth.core.ajax.run (
                 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/join/',
                 idrinth.chat.joinCallback,
                 function ( reply ) {
-                    idrinth.alert ( this.getMsg ( 'join.fail' ) );
+                    idrinth.core.alert ( this.getMsg ( 'join.fail' ) );
                 },
                 function ( reply ) {
-                    idrinth.alert ( this.getMsg ( 'join.fail' ) );
+                    idrinth.core.alert ( this.getMsg ( 'join.fail' ) );
                 },
                 JSON.stringify ( {
                     id: document.getElementById ( 'idrinth-add-chat' ).getElementsByTagName ( 'input' )[0].value,
@@ -562,20 +581,20 @@ idrinth.chat = {
     },
     loginCallback: function ( data ) {
         if ( !data ) {
-            idrinth.alert ( this.getMsg ( 'login.fail' ) );
+            idrinth.core.alert ( this.getMsg ( 'login.fail' ) );
             return;
         }
         data = JSON.parse ( data );
         if ( !data ) {
-            idrinth.alert ( this.getMsg ( 'login.fail' ) );
+            idrinth.core.alert ( this.getMsg ( 'login.fail' ) );
             return;
         }
         if ( !data.success && data.message && data['allow-reg'] ) {
-            idrinth.confirm ( this.getMsg ( 'user.unknown' ), 'idrinth.chat.register();' );
+            idrinth.core.confirm ( this.getMsg ( 'user.unknown' ), 'idrinth.chat.register();' );
             return;
         }
         if ( !data.success && data.message ) {
-            idrinth.alert ( data.message );
+            idrinth.core.alert ( data.message );
             return;
         }
         if ( data.success ) {
@@ -586,7 +605,7 @@ idrinth.chat = {
             idrinth.chat.join ( data.data );
             return;
         }
-        idrinth.alert ( this.getMsg ( 'login.fail' ) );
+        idrinth.core.alert ( this.getMsg ( 'login.fail' ) );
     },
     register: function () {
         this.loginActions ( 'register' );
@@ -622,7 +641,7 @@ idrinth.chat = {
                     type: 'li',
                     attributes: [ {
                             name: 'onclick',
-                            value: 'idrinth.runAjax(\'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/delete/' + element.getAttribute ( 'data-id' ) + '/\',idrinth.alert,idrinth.alert,idrinth.alert);this.parentNode.parentNode.removeChild(this.parentNode);'
+                            value: 'idrinth.core.ajax.run(\'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/delete/' + element.getAttribute ( 'data-id' ) + '/\',idrinth.core.alert,idrinth.core.alert,idrinth.core.alert);this.parentNode.parentNode.removeChild(this.parentNode);'
                         } ]
                 }, {
                     type: 'li',
@@ -690,7 +709,7 @@ idrinth.chat = {
                     'relogin': 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/login/'
                 },
         fail = function () {
-            idrinth.alert ( this.getMsg ( 'login.fail' ) );
+            idrinth.core.alert ( this.getMsg ( 'login.fail' ) );
         },
                 timeout = function () {
                     window.setTimeout ( idrinth.chat.login, 1 );
@@ -716,6 +735,6 @@ idrinth.chat = {
             headers.pass = chatLogin[1].value;
             success = idrinth.chat.loginCallback;
         }
-        idrinth.runAjax ( urls[key], success, fail, timeout, JSON.stringify ( headers ) );
+        idrinth.core.ajax.run ( urls[key], success, fail, timeout, JSON.stringify ( headers ) );
     }
 };

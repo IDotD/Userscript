@@ -1,7 +1,7 @@
 idrinth.names = {
     load: function ( added ) {
         'use strict';
-        idrinth.runAjax (
+        idrinth.core.ajax.run (
                 'https://dotd.idrinth.de/' + idrinth.platform + '/users-service/' + added,
                 function ( text ) {
                     idrinth.names.import ( text );
@@ -33,7 +33,7 @@ idrinth.names = {
                 idrinth.names.add ( );
             }
         } catch ( e ) {
-            idrinth.log ( e );
+            idrinth.core.log ( e );
         }
         idrinth.names.counter = idrinth.names.counter + 1;
         idrinth.names.ownTimeout = window.setTimeout ( idrinth.names.run, 6666 );
@@ -58,7 +58,7 @@ idrinth.names = {
             }
             if ( !idrinth.names.users[name.toLowerCase ( )] && name.length > 0 ) {
                 idrinth.names.users[name.toLowerCase ()] = { };
-                idrinth.runAjax (
+                idrinth.core.ajax.run (
                         'https://dotd.idrinth.de/' + idrinth.platform + '/users-service/add/' + encodeURIComponent ( name ) + '/'
                         );
             }

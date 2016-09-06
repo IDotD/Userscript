@@ -65,7 +65,7 @@ idrinth.tier = {
                 return make ( key, name );
             }
         }
-        idrinth.alert ( 'There is no space for another tier-box at the moment, please close one first.' );
+        idrinth.core.alert ( 'There is no space for another tier-box at the moment, please close one first.' );
     },
     taggedSlots: { },
     start: function () {
@@ -75,7 +75,7 @@ idrinth.tier = {
             this.taggedSlots[( pos * 140 ).toString ()] = null;
             pos++;
         }
-        idrinth.runAjax (
+        idrinth.core.ajax.run (
                 'https://dotd.idrinth.de/' + idrinth.platform + '/tier-service/',
                 function ( text ) {
                     idrinth.tier.import ( text );
@@ -110,17 +110,17 @@ idrinth.tier = {
                 try {
                     ln.styles = idrinth.tier.list[listKey].os[difficulty] === idrinth.tier[listKey][difficulty][ic] ? 'is-os' : '';
                 } catch ( E ) {
-                    idrinth.log ( E.toString ( ) );
+                    idrinth.core.log ( E.toString ( ) );
                 }
                 try {
                     ln.content = idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic] ) + ' ' +
                             idrinth.tier.list[listKey].epics[difficulty][ic] + 'E';
                 } catch ( E2 ) {
-                    idrinth.log ( E2.toString ( ) );
+                    idrinth.core.log ( E2.toString ( ) );
                     try {
                         ln.content = idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic] );
                     } catch ( E3 ) {
-                        idrinth.log ( E3.toString ( ) );
+                        idrinth.core.log ( E3.toString ( ) );
                     }
                 }
                 return ln;
