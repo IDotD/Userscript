@@ -242,7 +242,7 @@ idrinth.ui = {
                     content: 'Ok',
                     attributes: [ {
                             name: 'onclick',
-                            value: altFunc
+                            value: closeFunc + altFunc
                         } ]
                 }, {
                     type: 'button',
