@@ -310,8 +310,8 @@ var idrinth = {
         },
         getElementPositioning: function ( element, offsetX, offsetY ) {
             var pos = {
-                x: element.getBoundingClientRect ().left + offsetX ? offsetX : 0,
-                y: element.getBoundingClientRect ().top + offsetY ? offsetY : 0
+                x: element.getBoundingClientRect ().left + ( offsetX ? offsetX : 0 ),
+                y: element.getBoundingClientRect ().top + ( offsetY ? offsetY : 0 )
             };
             return 'position:fixed;left:' + pos.x + 'px;top:' + pos.y + 'px';
         },
