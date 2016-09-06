@@ -549,6 +549,6 @@ var idrinth = {
             return;
         }
         idrinth.startInternal ();
-    },
+    }
 };
 window.setTimeout ( idrinth.start, 6666 );
