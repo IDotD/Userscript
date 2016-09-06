@@ -111,17 +111,24 @@ idrinth.ui = {
             }
         };
         var addAttributes = function ( el, config ) {
+            var applyValue = function ( el, set ) {
+                if ( !set || set.value === undefined ) {
+                    return;
+                }
+                if ( set.name ) {
+                    set.names = [ set.name ];
+                }
+                if ( set.names && Array.isArray ( set.names ) ) {
+                    for (var pos = 0; pos < set.names.length; pos++) {
+                        el.setAttribute ( set.names[pos], set.value );
+                    }
+                }
+            };
             if ( !config.attributes || !config.attributes.length ) {
                 return;
             }
             for (var count = 0, l = config.attributes.length; count < l; count++) {
-                if ( config.attributes[count].name && config.attributes[count].value !== undefined ) {
-                    el.setAttribute ( config.attributes[count].name, config.attributes[count].value );
-                } else if ( config.attributes[count].names && Array.isArray ( config.attributes[count].names ) && config.attributes[count].names.length > 0 && config.attributes[count].value !== undefined ) {
-                    for (var pos = 0; pos < config.attributes[count].names.length; pos++) {
-                        el.setAttribute ( config.attributes[count].names[pos], config.attributes[count].value );
-                    }
-                }
+                applyValue ( el, config.attributes[count] );
             }
         };
         var makeInputLabel = function ( config ) {
