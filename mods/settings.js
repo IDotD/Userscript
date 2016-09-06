@@ -18,6 +18,7 @@ idrinth.settings = {
     isWorldServer: false,
     alarmTime: '8:0',
     alarmActive: false,
+    notificationActive: true,
     land: {
         cornfield: 0,
         stable: 0,

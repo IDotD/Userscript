@@ -300,11 +300,21 @@ idrinth.chat = {
                                 addZero ( d.getSeconds (), 2 ) +
                                 addZero ( d.getMilliseconds (), 3 );
                     };
+                    var text = idrinth.chat.buildMessageText ( message.text );
+                    var own = parseInt ( message.user, 10 ) === parseInt ( idrinth.chat.self, 10 );
+                    if ( !own ) {
+                        idrinth.core.sendNotification (
+                                message.time.split ( ' ' )[1] + idrinth.chat.users[message.user].name + ':',
+                                idrinth.ui.buildElement ( {
+                                    children: text
+                                } )
+                                );
+                    }
                     chat.appendChild ( idrinth.ui.buildElement (
                             {
                                 type: 'li',
                                 id: 'idrinth-single-chat-message-' + messageId + ( parseInt ( messageId, 10 ) < 1 ? '-' + getfullDateInt () : '' ),
-                                css: ( parseInt ( message.user, 10 ) === parseInt ( idrinth.chat.self, 10 ) ? 'self-written ' : '' ),
+                                css: own ? 'self-written ' : '',
                                 children: [
                                     {
                                         type: 'span',
@@ -336,7 +346,7 @@ idrinth.chat = {
                                     },
                                     {
                                         type: 'span',
-                                        children: idrinth.chat.buildMessageText ( message.text )
+                                        children: text
                                     }
                                 ]
                             }

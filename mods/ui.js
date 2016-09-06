@@ -530,6 +530,11 @@ idrinth.ui = {
                             type: 'checkbox',
                             label: 'Worldserver?'
                         }, {
+                            name: 'notificationActive',
+                            rType: '#input',
+                            type: 'checkbox',
+                            label: 'enable chat notifications?'
+                        }, {
                             name: 'windows',
                             rType: '#input',
                             type: 'number',
