@@ -303,12 +303,16 @@ idrinth.chat = {
                     var text = idrinth.chat.buildMessageText ( message.text );
                     var own = parseInt ( message.user, 10 ) === parseInt ( idrinth.chat.self, 10 );
                     if ( !own ) {
-                        idrinth.core.sendNotification (
-                                message.time.split ( ' ' )[1] + idrinth.chat.users[message.user].name + ':',
-                                idrinth.ui.buildElement ( {
-                                    children: text
-                                } )
-                                );
+                        try {
+                            idrinth.core.sendNotification (
+                                    message.time.split ( ' ' )[1] + idrinth.chat.users[message.user].name + ':',
+                                    idrinth.ui.buildElement ( {
+                                        children: text
+                                    } )
+                                    );
+                        } catch ( exception ) {
+                            idrinth.core.log ( exception.getMessage () );
+                        }
                     }
                     chat.appendChild ( idrinth.ui.buildElement (
                             {
