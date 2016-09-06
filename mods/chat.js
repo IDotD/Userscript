@@ -804,16 +804,16 @@ idrinth.chat = {
     },
     loginCallback: function ( data ) {
         if ( !data ) {
-            idrinth.core.alert ( idrinth.getMsg ( 'login.fail' ) );
+            idrinth.core.alert ( idrinth.chat.getMsg ( 'login.fail' ) );
             return;
         }
         data = JSON.parse ( data );
         if ( !data ) {
-            idrinth.core.alert ( idrinth.getMsg ( 'login.fail' ) );
+            idrinth.core.alert ( idrinth.chat.getMsg ( 'login.fail' ) );
             return;
         }
         if ( !data.success && data.message && data['allow-reg'] ) {
-            idrinth.core.confirm ( idrinth.getMsg ( 'user.unknown' ), 'idrinth.chat.register();' );
+            idrinth.core.confirm ( idrinth.chat.getMsg ( 'user.unknown' ), 'idrinth.chat.register();' );
             return;
         }
         if ( !data.success && data.message ) {
@@ -828,7 +828,7 @@ idrinth.chat = {
             idrinth.chat.join ( data.data );
             return;
         }
-        idrinth.core.alert ( idrinth.getMsg ( 'login.fail' ) );
+        idrinth.core.alert ( idrinth.chat.getMsg ( 'login.fail' ) );
     },
     register: function () {
         this.loginActions ( 'register' );
