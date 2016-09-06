@@ -26,7 +26,8 @@ idrinth.core = {
             requestHandler.ontimeout = function ( event ) {
                 var request = ( event || window.event ).target;
                 timeout.bind ( request );
-                request._remove ( request );
+                delete idrinth.core.ajax.active[request._url];
+                idrinth.core.log ( 'Request to ' + request._url + ' failed.' );
             };
             var error = function ( event ) {
                 delete idrinth.core.ajax.active[( event || window.event ).target._url];
