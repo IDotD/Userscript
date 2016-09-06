@@ -507,22 +507,14 @@ var idrinth = {
         },
         openCloseSettings: function ( ) {
             'use strict';
-            var classToAdd = 'inactive';
-            var classes = idrinth.ui.controls.getAttribute ( 'class' );
-            if ( classes.match ( /(^|\s)inactive($|\s)/ ) ) {
-                classToAdd = 'active';
+            var toRemove = [ ( idrinth.ui.controls.getAttribute ( 'class' ) ).match ( /(^|\s)inactive($|\s)/ ) ? 'inactive' : 'active' ];
+            if ( !idrinth.settings.moveLeft ) {
+                toRemove.push ( 'left-sided' );
             }
-            if ( idrinth.settings.moveLeft ) {
-                classToAdd = classToAdd + ' left-sided';
+            if ( !idrinth.settings.minimalist ) {
+                toRemove.push ( 'small' );
             }
-            if ( idrinth.settings.minimalist ) {
-                classToAdd = classToAdd + ' small';
-            }
-            classes = classes.replace ( /(^|\s)(in)?small($|\s)/, ' ' );
-            classes = classes.replace ( /(^|\s)(in)?active($|\s)/, ' ' );
-            classes = classes.replace ( /(^|\s)(in)?left-sided($|\s)/, ' ' ) + ' ' + classToAdd;
-            classes = classes.replace ( /\s{2,}/, ' ' );
-            idrinth.ui.controls.setAttribute ( 'class', classes );
+            idrinth.ui.updateClassesList ( idrinth.ui.controls, [ 'active', 'inactive', 'left-sided', 'small' ], toRemove );
         },
         childOf: function ( element, cssClass ) {
             'use strict';
