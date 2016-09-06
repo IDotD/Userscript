@@ -80,8 +80,103 @@ idrinth.names = {
     },
     start: function ( ) {
         'use strict';
+        var build = function ( ) {
+            'use strict';
+            function getServerPart ( name ) {
+                return [ {
+                        css: 'idrinth-line idrinth-tooltip-header',
+                        type: 'a',
+                        attributes: [ {
+                                name: 'href',
+                                value: '#'
+                            }, {
+                                name: 'target',
+                                value: '_blank'
+                            }, {
+                                name: 'title',
+                                value: 'go to summoner details'
+                            } ]
+                    }, {
+                        css: 'idrinth-line idrinth-tooltip-level',
+                        type: 'span',
+                        children: [ {
+                                type: '#text',
+                                content: 'Level '
+                            }, {
+                                css: 'idrinth-format-number idrinth-format-level',
+                                type: 'span',
+                                content: '0'
+                            }, {
+                                type: '#text',
+                                content: ' '
+                            }, {
+                                css: 'idrinth-format-class',
+                                type: 'span',
+                                content: 'Unknown'
+                            } ]
+                    }, {
+                        css: 'idrinth-line idrinth-tooltip-guild',
+                        type: 'span',
+                        children: [ {
+                                type: '#text',
+                                content: 'of '
+                            }, {
+                                css: 'idrinth-format-guild',
+                                type: 'a',
+                                attributes: [ {
+                                        name: 'href',
+                                        'value': '#'
+                                    }, {
+                                        name: 'title',
+                                        value: 'go to guild details'
+                                    }, {
+                                        name: 'target',
+                                        value: '_blank'
+                                    } ]
+                            } ]
+                    }, {
+                        css: 'idrinth-line idrinth-tooltip-update',
+                        type: 'span',
+                        children: [ {
+                                type: '#text',
+                                content: 'Updated '
+                            }, {
+                                css: 'idrinth-format-date',
+                                type: 'span',
+                                content: 'Unknown'
+                            } ]
+                    }, {
+                        type: 'span',
+                        content: 'Server: ' + name
+                    } ];
+            }
+            idrinth.ui.tooltip = idrinth.ui.buildElement ( {
+                css: 'idrinth-hovering-box idrinth-tooltip-overwrite idrinth-hide',
+                id: 'idrinth-tooltip',
+                children: [
+                    {
+                        children: getServerPart ( 'Kongregate' )
+                    },
+                    {
+                        children: getServerPart ( 'World' )
+                    }
+                ],
+                attributes: [
+                    {
+                        name: 'onmouseenter',
+                        value: 'idrinth.names.isHovering=true;'
+                    },
+                    {
+                        name: 'onmouseleave',
+                        value: 'idrinth.names.isHovering=false;'
+                    }
+                ]
+            } );
+            idrinth.ui.body.appendChild ( idrinth.ui.tooltip );
+        };
         if ( idrinth.platform === 'kongregate' ) {
             idrinth.names.ownTimeout = window.setTimeout ( idrinth.names.run, 10000 );
+            build ();
         }
     },
     counter: 0

@@ -181,6 +181,65 @@ idrinth.war = {
         window.setTimeout ( idrinth.war.getData, 50000 + Math.random () % 20000 );
     },
     start: function () {
+        var build = function ( ) {
+            idrinth.war.element = idrinth.ui.buildElement (
+                    {
+                        id: 'idrinth-war',
+                        css: 'idrinth-central-box idrinth-hovering-box idrinth-hide',
+                        children: [
+                            {
+                                children: [
+                                    {
+                                        type: 'span',
+                                        content: 'current WAR'
+                                    },
+                                    {
+                                        type: 'span',
+                                        css: 'idrinth-circle',
+                                        content: '\u2195'
+                                    }
+                                ]
+                            },
+                            {
+                                type: 'table',
+                                children: [
+                                    {
+                                        type: 'thead',
+                                        children: [
+                                            {
+                                                type: 'tr',
+                                                children: [
+                                                    {
+                                                        type: 'th',
+                                                        content: 'summon?'
+                                                    },
+                                                    {
+                                                        type: 'th',
+                                                        content: 'raid'
+                                                    },
+                                                    {
+                                                        type: 'th',
+                                                        content: 'join'
+                                                    },
+                                                    {
+                                                        type: 'th',
+                                                        content: 'magic2use'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        type: 'tbody'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+            );
+            idrinth.ui.body.appendChild ( idrinth.war.element );
+        };
         window.setTimeout ( idrinth.war.getData, 5000 );
+        build ();
     }
 };

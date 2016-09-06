@@ -138,11 +138,12 @@ idrinth.raids = {
             return prefix;
         },
         messages: {
-            log: function ( string ) {
-                idrinth.core.log ( string );
+            log: function ( string, key ) {
+                var message = ( string.replace ( '#name#', idrinth.raids.list[key].name ) ).replace ( '#raid#', idrinth.raids.list[key].raid );
+                idrinth.core.log ( message );
                 var li = document.createElement ( 'li' );
                 var ul = document.getElementById ( 'idrinth-joined-raids' ).getElementsByTagName ( 'ul' )[0];
-                li.appendChild ( document.createTextNode ( ( new Date () ).toLocaleTimeString () + ' ' + string ) );
+                li.appendChild ( document.createTextNode ( ( new Date () ).toLocaleTimeString () + ' ' + message ) );
                 if ( !ul.firstChild ) {
                     ul.appendChild ( li );
                 } else {
@@ -160,13 +161,13 @@ idrinth.raids = {
             },
             success: function ( key ) {
                 'use strict';
-                idrinth.raids.join.messages.log ( 'Joined ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
+                idrinth.raids.join.messages.log ( 'Joined #name#\'s #raid#.', key );
                 idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
                 this.addToJoined ( key );
             },
             failed: function ( key ) {
                 'use strict';
-                idrinth.raids.join.messages.log ( 'Could not join ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
+                idrinth.raids.join.messages.log ( 'Could not join #name#\'s #raid#', key );
             },
             trying: function ( key ) {
                 'use strict';
@@ -179,7 +180,7 @@ idrinth.raids = {
                     }, 300 );
                 } ) ( key ) );
                 if ( idrinth.raids.list[key] ) {
-                    idrinth.raids.join.messages.log ( 'Trying to join ' + idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid );
+                    idrinth.raids.join.messages.log ( 'Trying to join #name#\'s #raid#', key );
                 }
                 this.addToJoined ( key );
             }
