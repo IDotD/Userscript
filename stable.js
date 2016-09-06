@@ -361,7 +361,7 @@ var idrinth = {
                     idrinth.ui.updateClassesList ( element, [ 'idrinth-hide' ], [ ] );
                     return;
                 }
-                var baseUrl = 'https://dotd.idrinth.de/' + world ? 'world-kongregate' : 'kongregate';
+                var baseUrl = 'https://dotd.idrinth.de/' + ( world ? 'world-kongregate' : 'kongregate' );
                 idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ ], [ 'idrinth-hide' ] );
                 idrinth.ui.updateClassesList ( element, [ ], [ 'idrinth-hide' ] );
                 element.childNodes[0].setAttribute ( 'href', baseUrl + '/summoner/' + set.id + '/' );
