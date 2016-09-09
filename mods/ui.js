@@ -146,10 +146,7 @@ idrinth.ui = {
             var get = function ( field ) {
                 'use strict';
                 var getValue = function ( parent, field ) {
-                    var fieldIsSetting = function ( parent, field ) {
-                        return parent && typeof parent === 'object' && field && parent.hasOwnProperty ( field ) && typeof parent[field] !== 'object' && typeof parent[field] !== 'function';
-                    };
-                    if ( fieldIsSetting ( parent, field ) ) {
+                    if ( idrinth.core.isField ( parent, field ) ) {
                         return parent[field];
                     }
                     return null;

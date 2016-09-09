@@ -297,19 +297,18 @@ idrinth.chat = {
                                 addZero ( d.getSeconds (), 2 ) +
                                 addZero ( d.getMilliseconds (), 3 );
                     };
-                    var notify = function ( message, own ) {
-                        if ( !own
-                                && (
-                                        !idrinth.windowactive ||
-                                        !( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ ) ||
-                                        !( document.getElementById ( 'idrinth-chat' ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ )
-                                        )
-                                && (
-                                        ( idrinth.settings.notification.message && message.text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
-                                        ( idrinth.settings.notification.mention && message.text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[message.user].name ) + '(\s|$)', 'i' ) ) !== null ) ||
-                                        ( idrinth.settings.notification.raid && message.text.match ( /\{[A-Z]{2}-Raid / ) !== null )
-                                        )
-                                ) {
+                    var notify = function ( message, own, chatId ) {
+                        var notActive = function ( chatId ) {
+                            return !idrinth.windowactive ||
+                                    !( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ ) ||
+                                    !( document.getElementById ( 'idrinth-chat' ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ )
+                        };
+                        var messageAllowed = function ( text ) {
+                            return ( idrinth.settings.notification.message && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
+                                    ( idrinth.settings.notification.mention && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
+                                    ( idrinth.settings.notification.raid && text.match ( /\{[A-Z]{2}-Raid / ) !== null )
+                        };
+                        if ( !own && notActive ( chatId ) && messageAllowed ( message.text ) ) {
                             try {
                                 idrinth.core.sendNotification (
                                         message.time.split ( ' ' )[1] + ' ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML + ':',
@@ -321,7 +320,7 @@ idrinth.chat = {
                         }
                     };
                     var own = parseInt ( message.user, 10 ) === parseInt ( idrinth.chat.self, 10 );
-                    notify ( message, own );
+                    notify ( message, own, chatId );
                     chat.appendChild ( idrinth.ui.buildElement (
                             {
                                 type: 'li',
