@@ -18,7 +18,11 @@ idrinth.settings = {
     isWorldServer: false,
     alarmTime: '8:0',
     alarmActive: false,
-    notificationActive: true,
+    notification: {
+        mention: true,
+        message: true,
+        raid: true
+    },
     land: {
         cornfield: 0,
         stable: 0,
@@ -33,23 +37,40 @@ idrinth.settings = {
     },
     save: function ( ) {
         'use strict';
-        if ( window.localStorage ) {
-            for (var key in idrinth.settings) {
-                if ( key !== 'land' && typeof idrinth.settings[key] !== 'function' ) {
-                    window.localStorage.setItem ( 'idrinth-dotd-' + key, idrinth.settings[key] );
+        var store = function ( prefix, list, store ) {
+            for (var key in list) {
+                if ( list.hasOwnProperty ( key ) && typeof list[key] !== 'object' && typeof list[key] !== 'function' ) {
+                    window.localStorage.setItem ( prefix + key, idrinth.settings[key] );
+                } else if ( list.hasOwnProperty ( key ) && typeof list[key] === 'object' ) {
+                    save ( prefix + key + '-', list[key], store );
                 }
             }
-            for (var building in idrinth.settings.land) {
-                if ( typeof idrinth.settings[key] !== 'function' ) {
-                    window.localStorage.setItem ( 'idrinth-dotd-land-' + building, idrinth.settings.land[building] );
-                }
-            }
-        }
+        };
+        store ( 'idrinth-dotd-', idrinth.settings, store );
     },
     change: function ( field, value ) {
         'use strict';
-        idrinth.settings[field] = value;
-        idrinth.settings.save ( );
+        var setValue = function ( parent, field, value ) {
+            if ( idrinth.core.isField ( parent, field ) ) {
+                parent[field] = value;
+                idrinth.settings.save ( );
+                return true;
+            }
+            return false;
+        };
+        if ( !field ) {
+            return;
+        }
+        if ( setValue ( idrinth.settings, field, value ) ) {
+            return;
+        }
+        field = field.split ( '-' );
+        if ( !idrinth.settings[field[0]] || !field[1] ) {
+            return;
+        }
+        if ( setValue ( idrinth.settings[field[0]], field[1], value ) ) {
+            return;
+        }
     },
     start: function ( ) {
         'use strict';

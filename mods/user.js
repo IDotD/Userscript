@@ -53,8 +53,6 @@ idrinth.user = {
         if ( !window.localStorage ) {
             return;
         }
-        idrinth.core.ajax.run ( 'https://dotd.idrinth.de/' +
-                ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform +
-                '/i-am-alive/' + getIdentifier () + '/' );
+        idrinth.core.ajax.runHome ( 'i-am-alive/' + getIdentifier () + '/' );
     }
 };

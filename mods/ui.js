@@ -143,11 +143,29 @@ idrinth.ui = {
                 }
                 return list.indexOf ( value ) > -1;
             };
+            var get = function ( field ) {
+                'use strict';
+                var getValue = function ( parent, field ) {
+                    if ( idrinth.core.isField ( parent, field ) ) {
+                        return parent[field];
+                    }
+                    return null;
+                };
+                if ( !field ) {
+                    return;
+                }
+                var value = getValue ( idrinth.settings, field );
+                if ( value !== null ) {
+                    return value;
+                }
+                field = field.split ( '-' );
+                return getValue ( idrinth.settings[field[0]], field[1] );
+            };
             var input = [ {
                     name: 'type',
                     value: config.type
                 } ];
-            if ( idrinth.settings[config.name] && config.type === 'checkbox' ) {
+            if ( get ( config.name ) && config.type === 'checkbox' ) {
                 input.push ( {
                     name: 'checked',
                     value: 'checked'
@@ -156,7 +174,7 @@ idrinth.ui = {
             if ( config.type !== 'checkbox' ) {
                 input.push ( {
                     name: 'value',
-                    value: idrinth.settings[config.name]
+                    value: get ( config.name )
                 } );
                 input.push ( {
                     name: 'onchange',
@@ -290,13 +308,15 @@ idrinth.ui = {
             idrinth.ui.tooltip.setAttribute ( 'style', idrinth.ui.getElementPositioning ( element, -200, -100 ) );
             tooltip ( idrinth.names.users[name].kongregate, idrinth.ui.tooltip.firstChild, false );
             tooltip ( idrinth.names.users[name].world, idrinth.ui.tooltip.lastChild, true );
-            idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
+            idrinth.ui.setTooltipTimeout ();
         }
+    },
+    setTooltipTimeout: function () {
+        idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
     },
     hideTooltip: function () {
         if ( idrinth.names.isHovering ) {
-            idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
-            return;
+            return idrinth.ui.setTooltipTimeout ();
         }
         idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ 'idrinth-hide' ], [ ] );
     },
@@ -354,7 +374,7 @@ idrinth.ui = {
     updateClassesList: function ( element, add, remove ) {
         var getClassesList = function ( classString, add, remove ) {
             var forceToArray = function ( value ) {
-                return value && typeof value === 'object' && Array.isArray ( value ) ? value : [ ];
+                return value && typeof value === 'object' && Array.isArray ( value ) && value !== null ? value : [ ];
             };
             var original = classString === null ? [ ] : classString.split ( ' ' ).concat ( forceToArray ( add ) );
             var list = [ ];
@@ -530,10 +550,20 @@ idrinth.ui = {
                             type: 'checkbox',
                             label: 'Worldserver?'
                         }, {
-                            name: 'notificationActive',
+                            name: 'notification-mention',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'enable chat notifications?'
+                            label: 'chat-mention notifications?'
+                        }, {
+                            name: 'notification-raid',
+                            rType: '#input',
+                            type: 'checkbox',
+                            label: 'chat-raid notifications?'
+                        }, {
+                            name: 'notification-message',
+                            rType: '#input',
+                            type: 'checkbox',
+                            label: 'chat-message notifications?'
                         }, {
                             name: 'windows',
                             rType: '#input',

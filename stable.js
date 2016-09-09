@@ -1,5 +1,6 @@
 var idrinth = {
     version: '###VERSION###',
+    windowactive: true,
     facebook: {
         popup: null,
         timeout: null,
@@ -143,6 +144,12 @@ var idrinth = {
     },
     start: function ( ) {
         'use strict';
+        window.onblur = function () {
+            idrinth.windowactive = false;
+        };
+        window.onblur = function () {
+            idrinth.windowactive = true;
+        };
         idrinth.core.log ( 'Starting Idrinth\'s DotD Script' );
         idrinth.platform = location.hostname.split ( '.' )[location.hostname.split ( '.' ).length - 2];
         if ( idrinth.platform === 'dawnofthedragons' ) {

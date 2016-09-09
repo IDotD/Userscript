@@ -15,8 +15,8 @@ idrinth.war = {
             }
             return '_';
         };
-        idrinth.core.ajax.run (
-                "https://dotd.idrinth.de/" + ( idrinth.settings.isWorldServer ? "world-" : "" ) + idrinth.platform + "/war-service/" + raids2Join () + "/" + Date.now () + "/",
+        idrinth.core.ajax.runHome (
+                "war-service/" + raids2Join () + "/" + Date.now () + "/",
                 idrinth.war.updateData,
                 function () {
                     window.setTimeout ( idrinth.war.getData, 1000 );

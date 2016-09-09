@@ -1,5 +1,15 @@
 idrinth.core = {
+    escapeRegExp: function ( str ) {
+        return str.replace ( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&" );
+    },
+    fieldIsSetting: function ( parent, field ) {
+        return parent && typeof parent === 'object' && field && parent.hasOwnProperty ( field ) && typeof parent[field] !== 'object' && typeof parent[field] !== 'function';
+    },
     ajax: {
+        runHome: function ( url, success, failure, timeout, additionalHeader ) {
+            var homeUrl = 'https://dotd.idrinth.de/' + ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform + ( '/' + url ).replace ( /\/\// );
+            idrinth.core.ajax.run ( homeUrl, success, failure, timeout, additionalHeader )
+        },
         active: { },
         run: function ( url, success, failure, timeout, additionalHeader ) {
             'use strict';
@@ -56,10 +66,10 @@ idrinth.core = {
             } );
             textAreaElement.value = text;
             idrinth.ui.body.appendChild ( textAreaElement );
-            textAreaElement.select ();
+            textAreaElement.select ( );
             success = document.execCommand ( 'copy' );
         } catch ( exception ) {
-            idrinth.core.log ( exception.getMessage () );
+            idrinth.core.log ( exception.getMessage ( ) );
             success = false;
         }
         idrinth.ui.removeElement ( "idrinth-copy-helper" );
@@ -70,7 +80,7 @@ idrinth.core = {
             return false;
         }
         if ( window.Notification.permission === "default" ) {
-            window.Notification.requestPermission ();
+            window.Notification.requestPermission ( );
         }
         if ( window.Notification.permission === "denied" ) {
             return false;
