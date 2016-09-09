@@ -308,13 +308,15 @@ idrinth.ui = {
             idrinth.ui.tooltip.setAttribute ( 'style', idrinth.ui.getElementPositioning ( element, -200, -100 ) );
             tooltip ( idrinth.names.users[name].kongregate, idrinth.ui.tooltip.firstChild, false );
             tooltip ( idrinth.names.users[name].world, idrinth.ui.tooltip.lastChild, true );
-            idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
+            idrinth.ui.setTooltipTimeout ();
         }
+    },
+    setTooltipTimeout: function () {
+        idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
     },
     hideTooltip: function () {
         if ( idrinth.names.isHovering ) {
-            idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
-            return;
+            return idrinth.ui.setTooltipTimeout ();
         }
         idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ 'idrinth-hide' ], [ ] );
     },
