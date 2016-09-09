@@ -1,19 +1,19 @@
 idrinth.land = {
-    nextPrice: function ( building ) {
-        return ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base;
-    },
     calculate: function () {
         var baseCalculator = function ( checkElementFunc ) {
             var factor = idrinth.settings.factor ? 10 : 1;
+            var nextPrice = function ( building ) {
+                return ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base;
+            };
             var results = { };
-            var check = function ( checkElementFunc, building, factor, res ) {
+            var check = function ( checkElementFunc, building, factor, res, nextPrice ) {
                 for (var count = 0; count < checkElementFunc.length; count++) {
-                    if ( !checkElementFunc[count] ( building, factor, res ) ) {
+                    if ( !checkElementFunc[count] ( building, factor, res, nextPrice ) ) {
                         return res;
                     }
                 }
                 return  {
-                    min: ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base / idrinth.land.data[building].perHour,
+                    min: nextPrice ( building ) / idrinth.land.data[building].perHour,
                     key: building
                 };
             };
@@ -23,7 +23,7 @@ idrinth.land = {
                     min: null
                 };
                 for (var building in idrinth.land.data) {
-                    res = check ( checkElementFunc, building, factor, res );
+                    res = check ( checkElementFunc, building, factor, res, nextPrice );
                 }
                 if ( res.key === null ) {
                     return results;
@@ -35,13 +35,17 @@ idrinth.land = {
             return results;
         };
         var getRequirements = function () {
-            var bestPrice = function ( building, factor, res ) {
-                return res.min === null || idrinth.land.nextPrice () / idrinth.land.data[building].perHour < res.min;
+            var bestPrice = function ( building, factor, res, nextPrice ) {
+                return res.min === null || nextPrice () / idrinth.land.data[building].perHour < res.min;
             };
-            var useUp = function ( building, factor, res ) {
-                return idrinth.land.nextPrice ( building ) * factor / 10 <= idrinth.settings.land.gold;
+            var useUp = function ( building, factor, res, nextPrice ) {
+                return nextPrice ( building ) * factor / 10 <= idrinth.settings.land.gold;
             };
-            return idrinth.settings.landMax ? bestPrice : useUp;
+            var funcs = [ useUp ];
+            if ( idrinth.settings.landMax ) {
+                funcs.push ( bestPrice );
+            }
+            return funcs;
         };
         var putResults = function ( results ) {
             for (var key in results) {
