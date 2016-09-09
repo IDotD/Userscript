@@ -301,7 +301,9 @@ idrinth.chat = {
                         if ( !own
                                 && (
                                         !idrinth.windowactive ||
-                                        !( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ ) )
+                                        !( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ ) ||
+                                        !( document.getElementById ( 'idrinth-chat' ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ )
+                                        )
                                 && (
                                         ( idrinth.settings.notification.message && message.text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
                                         ( idrinth.settings.notification.mention && message.text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[message.user].name ) + '(\s|$)', 'i' ) ) !== null ) ||
