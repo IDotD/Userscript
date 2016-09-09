@@ -50,7 +50,7 @@ idrinth.settings = {
     },
     change: function ( field, value ) {
         'use strict';
-        var setValue = function ( parent, field ) {
+        var setValue = function ( parent, field, value ) {
             var fieldIsSetting = function ( parent, field ) {
                 return parent && typeof parent === 'object' && field && parent.hasOwnProperty ( field ) && typeof parent[field] !== 'object' && typeof parent[field] !== 'function';
             };
@@ -64,14 +64,14 @@ idrinth.settings = {
         if ( !field ) {
             return;
         }
-        if ( setValue ( idrinth.settings, field ) ) {
+        if ( setValue ( idrinth.settings, field, value ) ) {
             return;
         }
         field = field.split ( '-' );
         if ( !idrinth.settings[field[0]] || !field[1] ) {
             return;
         }
-        if ( setValue ( idrinth.settings[field[0]], field[1] ) ) {
+        if ( setValue ( idrinth.settings[field[0]], field[1], value ) ) {
             return;
         }
     },
