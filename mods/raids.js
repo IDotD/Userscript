@@ -21,10 +21,9 @@ idrinth.raids = {
             return;
         }
         var getImportLink = function ( toImport ) {
-            return 'https://dotd.idrinth.de/' + ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform +
-                    '/raid-service/' + ( toImport === '' ? '_' : toImport ) + '/';
+            return 'raid-service/' + ( toImport === '' ? '_' : toImport ) + '/';
         };
-        idrinth.core.ajax.run (
+        idrinth.core.ajax.runHome (
                 getImportLink ( id ),
                 function ( responseText ) {
                     'use strict';

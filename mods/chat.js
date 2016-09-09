@@ -12,8 +12,8 @@ idrinth.chat = {
     refreshChats: function () {
         idrinth.chat.oldMessages = JSON.parse ( JSON.stringify ( idrinth.chat.messages ) );
         idrinth.chat.messages = [ ];
-        idrinth.core.ajax.run (
-                'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/update/',
+        idrinth.core.ajax.runHome (
+                'chat-service/update/',
                 idrinth.chat.applyMessages,
                 idrinth.chat.returnMessages,
                 idrinth.chat.returnMessages,
@@ -28,8 +28,8 @@ idrinth.chat = {
         idrinth.chat.refreshCount++;
     },
     refreshMembers: function () {
-        idrinth.core.ajax.run (
-                'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/accounts/',
+        idrinth.core.ajax.runHome (
+                'chat-service/accounts/',
                 idrinth.chat.applyMembers,
                 function () {
                     window.setTimeout ( idrinth.chat.refreshMembers, 1000 );
@@ -144,8 +144,8 @@ idrinth.chat = {
         } ) );
     },
     useroptions: function ( chat, user, rank ) {
-        idrinth.core.ajax.run (
-                'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/rank/',
+        idrinth.core.ajax.runHome (
+                'chat-service/rank/',
                 function ( reply ) {
                     try {
                         reply = JSON.parse ( reply );
@@ -695,8 +695,8 @@ idrinth.chat = {
             idrinth.chat.elements.menu = document.getElementById ( 'idrinth-chat' ).getElementsByTagName ( 'ul' )[0];
         }
         window.setTimeout ( function () {
-            idrinth.core.ajax.run (
-                    'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/login/',
+            idrinth.core.ajax.runHome (
+                    'chat-service/login/',
                     idrinth.chat.startLoginCallback,
                     function ( reply ) {
                     },
@@ -724,8 +724,8 @@ idrinth.chat = {
         }, 1 );
     },
     create: function () {
-        idrinth.core.ajax.run (
-                'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/create/',
+        idrinth.core.ajax.runHome (
+                'chat-service/create/',
                 idrinth.chat.joinCallback,
                 function ( reply ) {
                     idrinth.core.alert ( this.getMsg ( 'create.fail' ) );
@@ -762,8 +762,8 @@ idrinth.chat = {
     users: { },
     updateTimeout: null,
     add: function () {
-        idrinth.core.ajax.run (
-                'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/join/',
+        idrinth.core.ajax.runHome (
+                'chat-service/join/',
                 idrinth.chat.joinCallback,
                 function ( reply ) {
                     idrinth.core.alert ( this.getMsg ( 'join.fail' ) );
@@ -869,7 +869,7 @@ idrinth.chat = {
                     type: 'li',
                     attributes: [ {
                             name: 'onclick',
-                            value: 'idrinth.core.ajax.run(\'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/delete/' + element.getAttribute ( 'data-id' ) + '/\',idrinth.core.alert,idrinth.core.alert,idrinth.core.alert);this.parentNode.parentNode.removeChild(this.parentNode);'
+                            value: 'idrinth.core.ajax.runHome(\'chat-service/delete/' + element.getAttribute ( 'data-id' ) + '/\',idrinth.core.alert,idrinth.core.alert,idrinth.core.alert);this.parentNode.parentNode.removeChild(this.parentNode);'
                         } ]
                 }, {
                     type: 'li',
@@ -932,9 +932,9 @@ idrinth.chat = {
         var chatLogin,
                 success,
                 urls = {
-                    'register': 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/register/',
-                    'login': 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/login/',
-                    'relogin': 'https://dotd.idrinth.de/' + idrinth.platform + '/chat-service/login/'
+                    'register': 'chat-service/register/',
+                    'login': 'chat-service/login/',
+                    'relogin': 'chat-service/login/'
                 },
         fail = function () {
             idrinth.core.alert ( this.getMsg ( 'login.fail' ) );
@@ -963,6 +963,6 @@ idrinth.chat = {
             headers.pass = chatLogin[1].value;
             success = idrinth.chat.loginCallback;
         }
-        idrinth.core.ajax.run ( urls[key], success, fail, timeout, JSON.stringify ( headers ) );
+        idrinth.core.ajax.runHome ( urls[key], success, fail, timeout, JSON.stringify ( headers ) );
     }
 };

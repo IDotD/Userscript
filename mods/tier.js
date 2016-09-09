@@ -75,8 +75,8 @@ idrinth.tier = {
             this.taggedSlots[( pos * 140 ).toString ()] = null;
             pos++;
         }
-        idrinth.core.ajax.run (
-                'https://dotd.idrinth.de/' + idrinth.platform + '/tier-service/',
+        idrinth.core.ajax.runHome (
+                'tier-service/',
                 function ( text ) {
                     idrinth.tier.import ( text );
                 },
