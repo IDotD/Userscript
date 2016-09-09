@@ -5,7 +5,7 @@ idrinth.core = {
     ajax: {
         runHome: function ( url, success, failure, timeout, additionalHeader ) {
             var homeUrl = 'https://dotd.idrinth.de/' + ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform + ( '/' + url ).replace ( /\/\// );
-            idrinth.ajax.run ( homeUrl, success, failure, timeout, additionalHeader )
+            idrinth.core.ajax.run ( homeUrl, success, failure, timeout, additionalHeader )
         },
         active: { },
         run: function ( url, success, failure, timeout, additionalHeader ) {
