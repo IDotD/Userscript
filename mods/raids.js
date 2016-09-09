@@ -122,7 +122,7 @@ idrinth.raids = {
                     };
                     idrinth.raids.join.data.tag = sites[idrinth.platform];
                 }
-                return idrinth.raids.join.data.prefix;
+                return idrinth.raids.join.data.tag;
             };
             var prefix = makePrefix ();
             var tag = makeTag ();
