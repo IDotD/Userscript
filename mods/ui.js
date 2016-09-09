@@ -354,7 +354,7 @@ idrinth.ui = {
     updateClassesList: function ( element, add, remove ) {
         var getClassesList = function ( classString, add, remove ) {
             var forceToArray = function ( value ) {
-                return value && typeof value === 'object' && Array.isArray ( value ) ? value : [ ];
+                return value && typeof value === 'object' && Array.isArray ( value ) && value !== null ? value : [ ];
             };
             var original = classString === null ? [ ] : classString.split ( ' ' ).concat ( forceToArray ( add ) );
             var list = [ ];
