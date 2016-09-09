@@ -297,22 +297,25 @@ idrinth.chat = {
                                 addZero ( d.getSeconds (), 2 ) +
                                 addZero ( d.getMilliseconds (), 3 );
                     };
-                    var own = parseInt ( message.user, 10 ) === parseInt ( idrinth.chat.self, 10 );
-                    if ( !own && (
-                            ( idrinth.settings.notification.message && !message.text.match ( /\{[A-Z]{2}-Raid / ) ) ||
-                            ( idrinth.settings.notification.mention && message.text.match ( new RegExp ( idrinth.core.escapeRegExp ( idrinth.chat.users[message.user].name ) ) ) ) ||
-                            ( idrinth.settings.notification.raid && message.text.match ( /\{[A-Z]{2}-Raid / ) )
-                            )
-                            ) {
-                        try {
-                            idrinth.core.sendNotification (
-                                    message.time.split ( ' ' )[1] + ' ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML + ':',
-                                    idrinth.chat.users[message.user].name + ': ' + message.text
-                                    );
-                        } catch ( exception ) {
-                            idrinth.core.log ( exception.getMessage () );
+                    var notify = function ( message, own ) {
+                        if ( !own && (
+                                ( idrinth.settings.notification.message && !message.text.match ( /\{[A-Z]{2}-Raid / ) ) ||
+                                ( idrinth.settings.notification.mention && message.text.match ( new RegExp ( idrinth.core.escapeRegExp ( idrinth.chat.users[message.user].name ) ) ) ) ||
+                                ( idrinth.settings.notification.raid && message.text.match ( /\{[A-Z]{2}-Raid / ) )
+                                )
+                                ) {
+                            try {
+                                idrinth.core.sendNotification (
+                                        message.time.split ( ' ' )[1] + ' ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML + ':',
+                                        idrinth.chat.users[message.user].name + ': ' + message.text
+                                        );
+                            } catch ( exception ) {
+                                idrinth.core.log ( exception.getMessage () );
+                            }
                         }
-                    }
+                    };
+                    var own = parseInt ( message.user, 10 ) === parseInt ( idrinth.chat.self, 10 );
+                    notify ( message, own );
                     chat.appendChild ( idrinth.ui.buildElement (
                             {
                                 type: 'li',

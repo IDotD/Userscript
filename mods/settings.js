@@ -37,19 +37,16 @@ idrinth.settings = {
     },
     save: function ( ) {
         'use strict';
-        if ( window.localStorage ) {
-            for (var key in idrinth.settings) {
-                if ( idrinth.settings.hasOwnProperty ( key ) && typeof idrinth.settings[key] !== 'object' && typeof idrinth.settings[key] !== 'function' ) {
-                    window.localStorage.setItem ( 'idrinth-dotd-' + key, idrinth.settings[key] );
-                } else if ( idrinth.settings.hasOwnProperty ( key ) && typeof idrinth.settings[key] === 'object' ) {
-                    for (var element in idrinth.settings[key]) {
-                        if ( idrinth.settings[key].hasOwnProperty ( element ) && typeof idrinth.settings[key][element] !== 'function' ) {
-                            window.localStorage.setItem ( 'idrinth-dotd-' + key + '-' + element, idrinth.settings[key][element] );
-                        }
-                    }
+        var store = function ( prefix, list, store ) {
+            for (var key in list) {
+                if ( list.hasOwnProperty ( key ) && typeof list[key] !== 'object' && typeof list[key] !== 'function' ) {
+                    window.localStorage.setItem ( prefix + key, idrinth.settings[key] );
+                } else if ( list.hasOwnProperty ( key ) && typeof list[key] === 'object' ) {
+                    save ( prefix + key + '-', list[key], store );
                 }
             }
-        }
+        };
+        store ( 'idrinth-dotd-', idrinth.settings, store );
     },
     change: function ( field, value ) {
         'use strict';
