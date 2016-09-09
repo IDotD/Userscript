@@ -1,4 +1,7 @@
 idrinth.core = {
+    escapeRegExp: function ( str ) {
+        return str.replace ( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&" );
+    },
     ajax: {
         active: { },
         run: function ( url, success, failure, timeout, additionalHeader ) {

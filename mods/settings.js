@@ -18,7 +18,11 @@ idrinth.settings = {
     isWorldServer: false,
     alarmTime: '8:0',
     alarmActive: false,
-    notificationActive: true,
+    notification: {
+        mention: true,
+        message: true,
+        raid: true
+    },
     land: {
         cornfield: 0,
         stable: 0,
@@ -35,21 +39,44 @@ idrinth.settings = {
         'use strict';
         if ( window.localStorage ) {
             for (var key in idrinth.settings) {
-                if ( key !== 'land' && typeof idrinth.settings[key] !== 'function' ) {
+                if ( idrinth.settings.hasOwnProperty ( key ) && typeof idrinth.settings[key] !== 'object' && typeof idrinth.settings[key] !== 'function' ) {
                     window.localStorage.setItem ( 'idrinth-dotd-' + key, idrinth.settings[key] );
-                }
-            }
-            for (var building in idrinth.settings.land) {
-                if ( typeof idrinth.settings[key] !== 'function' ) {
-                    window.localStorage.setItem ( 'idrinth-dotd-land-' + building, idrinth.settings.land[building] );
+                } else if ( idrinth.settings.hasOwnProperty ( key ) && typeof idrinth.settings[key] === 'object' ) {
+                    for (var element in idrinth.settings[key]) {
+                        if ( idrinth.settings[key].hasOwnProperty ( element ) && typeof idrinth.settings[key][element] !== 'function' ) {
+                            window.localStorage.setItem ( 'idrinth-dotd-' + key + '-' + element, idrinth.settings[key][element] );
+                        }
+                    }
                 }
             }
         }
     },
     change: function ( field, value ) {
         'use strict';
-        idrinth.settings[field] = value;
-        idrinth.settings.save ( );
+        var setValue = function ( parent, field ) {
+            var fieldIsSetting = function ( parent, field ) {
+                return parent && typeof parent === 'object' && field && parent.hasOwnProperty ( field ) && typeof parent[field] !== 'object' && typeof parent[field] !== 'function';
+            };
+            if ( fieldIsSetting ( parent, field ) ) {
+                parent[field] = value;
+                idrinth.settings.save ( );
+                return true;
+            }
+            return false;
+        };
+        if ( !field ) {
+            return;
+        }
+        if ( setValue ( idrinth.settings, field ) ) {
+            return;
+        }
+        field = field.split ( '-' );
+        if ( !idrinth.settings[field[0]] || !field[1] ) {
+            return;
+        }
+        if ( setValue ( idrinth.settings[field[0]], field[1] ) ) {
+            return;
+        }
     },
     start: function ( ) {
         'use strict';

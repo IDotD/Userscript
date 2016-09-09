@@ -224,10 +224,7 @@ idrinth.chat = {
         if ( !idrinth.chat.emotes.lookup ) {
             return message;
         }
-        var escapeRegExp = function ( str ) {
-            return str.replace ( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&" );
-        };
-        var part = escapeRegExp ( Object.keys ( idrinth.chat.emotes.lookup ).join ( 'TTTT' ) );
+        var part = idrinth.core.escapeRegExp ( Object.keys ( idrinth.chat.emotes.lookup ).join ( 'TTTT' ) );
         var reg = new RegExp ( '(^| )(' + part.replace ( /TTTT/g, '|' ) + ')($| )', 'g' );
         return idrinth.chat.replaceInText ( message, reg, [ function ( match ) {
                 var el = idrinth.chat.emotes.positions[idrinth.chat.emotes.lookup[match.replace ( / /g, '' )]];
@@ -301,7 +298,12 @@ idrinth.chat = {
                                 addZero ( d.getMilliseconds (), 3 );
                     };
                     var own = parseInt ( message.user, 10 ) === parseInt ( idrinth.chat.self, 10 );
-                    if ( !own ) {
+                    if ( !own && (
+                            ( idrinth.settings.notification.message && !message.text.match ( /\{[A-Z]{2}-Raid / ) ) ||
+                            ( idrinth.settings.notification.mention && message.text.match ( new RegExp ( idrinth.core.escapeRegExp ( idrinth.chat.users[message.user].name ) ) ) ) ||
+                            ( idrinth.settings.notification.raid && message.text.match ( /\{[A-Z]{2}-Raid / ) )
+                            )
+                            ) {
                         try {
                             idrinth.core.sendNotification (
                                     message.time.split ( ' ' )[1] + ' ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML + ':',
