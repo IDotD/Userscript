@@ -99,5 +99,29 @@ idrinth.core = {
     },
     confirm: function ( text, callback ) {
         idrinth.ui.buildModal ( 'Do you?', text, callback );
+    },
+    multibind: {
+        events: { },
+        add: function ( event, selector, method ) {
+            idrinth.core.multibind.events[event] = idrinth.core.multibind.events[event] ? idrinth.core.multibind.events[event] : { };
+            idrinth.core.multibind.events[event][selector] = idrinth.core.multibind.events[event][selector] ? idrinth.core.multibind.events[event][selector] : [ ];
+            idrinth.core.multibind.events[event][selector].push ( method );
+        },
+        triggered: function ( element, event ) {
+            if ( idrinth.core.multibind.events[event] ) {
+                for (var selector in idrinth.core.multibind.events[event]) {
+                    var el = idrinth.ui.matchesCss ( element, selector );
+                    if ( el ) {
+                        for (var pos = 0; pos < idrinth.core.multibind.events[event][selector].length; pos++) {
+                            try {
+                                idrinth.core.multibind.events[event][selector][pos] ( element, el, event );
+                            } catch ( exception ) {
+                                idrinth.core.log ( exception.getMessage () );
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 };

@@ -311,6 +311,14 @@ idrinth.ui = {
             idrinth.ui.setTooltipTimeout ();
         }
     },
+    matchesCss: function ( element, selector ) {
+        while ( element && element !== document ) {
+            if ( typeof element.matches === 'function' && element.matches ( selector ) ) {
+                return element;
+            }
+            element = element.parentNode
+        }
+    },
     setTooltipTimeout: function () {
         idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
     },
