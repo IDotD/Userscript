@@ -8,7 +8,7 @@ A script for dawn of the dragons, that works based on data provided to https://d
 # Bugs, desired Features etc.
 
 We prefer the usage of the [tracker](https://github.com/Idrinth/IDotD/issues) here, otherwise we do import requests from [GoogleDocs](https://docs.google.com/document/d/1ozOWQuAEKCNnt2cwQ4SZtkpYM_pvrl8Bnj0e_O1KKWs/edit) from time to time.
-[Previous GooglDocs Tickets](https://github.com/Idrinth/IDotD/issues?utf8=%E2%9C%93&q=is%3Aissue%20label%3A%22Source%20GoogleDocs%22%20)
+[Previous GoogleDoc Tickets](https://github.com/Idrinth/IDotD/issues?utf8=%E2%9C%93&q=is%3Aissue%20label%3A%22Source%20GoogleDocs%22%20)
 
 # More Information
 
