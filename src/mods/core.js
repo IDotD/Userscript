@@ -117,21 +117,27 @@ idrinth.core = {
                 if ( idrinth.ui.body['on' + event] && typeof idrinth.ui.body['on' + event] === 'function' ) {
                     bind ( event, 'body', idrinth.ui.body['on' + event] );
                 }
+                idrinth.ui.body.setAttribute ( 'on' + event, 'idrinth.core.triggered(this,\'' + event + '\');' );
             }
             bind ( event, selector, method );
         },
         triggered: function ( element, event ) {
+            var handleElement = function ( el, event, selector ) {
+                if ( !el ) {
+                    return;
+                }
+                for (var pos = 0; pos < idrinth.core.multibind.events[event][selector].length; pos++) {
+                    try {
+                        idrinth.core.multibind.events[event][selector][pos].bind ( el, event );
+                    } catch ( exception ) {
+                        idrinth.core.log ( exception.getMessage () );
+                    }
+                }
+            };
             if ( idrinth.core.multibind.events[event] ) {
                 for (var selector in idrinth.core.multibind.events[event]) {
-                    var el = idrinth.ui.matchesCss ( element, selector );
-                    if ( el ) {
-                        for (var pos = 0; pos < idrinth.core.multibind.events[event][selector].length; pos++) {
-                            try {
-                                idrinth.core.multibind.events[event][selector][pos].bind ( el, event );
-                            } catch ( exception ) {
-                                idrinth.core.log ( exception.getMessage () );
-                            }
-                        }
+                    if ( idrinth.core.multibind.events[event].hasOwnProperty ( selector ) ) {
+                        handleElement ( idrinth.ui.matchesCss ( element, selector ), event, selector );
                     }
                 }
             }
