@@ -103,9 +103,22 @@ idrinth.core = {
     multibind: {
         events: { },
         add: function ( event, selector, method ) {
-            idrinth.core.multibind.events[event] = idrinth.core.multibind.events[event] ? idrinth.core.multibind.events[event] : { };
-            idrinth.core.multibind.events[event][selector] = idrinth.core.multibind.events[event][selector] ? idrinth.core.multibind.events[event][selector] : [ ];
-            idrinth.core.multibind.events[event][selector].push ( method );
+            var bind = function ( event, selector, method ) {
+                idrinth.core.multibind.events[event] = idrinth.core.multibind.events[event] ? idrinth.core.multibind.events[event] : { };
+                idrinth.core.multibind.events[event][selector] = idrinth.core.multibind.events[event][selector] ? idrinth.core.multibind.events[event][selector] : [ ];
+                idrinth.core.multibind.events[event][selector].push ( method );
+            };
+            if ( idrinth.core.multibind.events[event] ) {
+                //trying not to break all old code there
+                if ( idrinth.ui.body.getAttribute ( 'on' + event ) ) {
+                    var tmp = new Function ( idrinth.ui.body.getAttribute ( 'on' + event ) );
+                    bind ( event, 'body', tmp );
+                }
+                if ( idrinth.ui.body['on' + event] && typeof idrinth.ui.body['on' + event] === 'function' ) {
+                    bind ( event, 'body', idrinth.ui.body['on' + event] );
+                }
+            }
+            bind ( event, selector, method );
         },
         triggered: function ( element, event ) {
             if ( idrinth.core.multibind.events[event] ) {
@@ -114,7 +127,7 @@ idrinth.core = {
                     if ( el ) {
                         for (var pos = 0; pos < idrinth.core.multibind.events[event][selector].length; pos++) {
                             try {
-                                idrinth.core.multibind.events[event][selector][pos] ( element, el, event );
+                                idrinth.core.multibind.events[event][selector][pos].bind ( el, event );
                             } catch ( exception ) {
                                 idrinth.core.log ( exception.getMessage () );
                             }
