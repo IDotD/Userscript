@@ -13,7 +13,7 @@ Element.prototype.matches =
             var i = matches.length;
             while ( --i >= 0 ) {
                 if ( matches.item ( i ) === this ) {
-                    true;
+                    return true;
                 }
             }
             return false;
