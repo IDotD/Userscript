@@ -109,15 +109,15 @@ idrinth.core = {
                 idrinth.core.multibind.events[event][selector].push ( method );
             };
             if ( idrinth.core.multibind.events[event] ) {
+                var attribute = 'idrinth.core.triggered(this,\'' + event + '\');';
                 //trying not to break all old code there
                 if ( idrinth.ui.body.getAttribute ( 'on' + event ) ) {
-                    var tmp = new Function ( idrinth.ui.body.getAttribute ( 'on' + event ) );
-                    bind ( event, 'body', tmp );
+                    attribute += idrinth.ui.body.getAttribute ( 'on' + event );
                 }
                 if ( idrinth.ui.body['on' + event] && typeof idrinth.ui.body['on' + event] === 'function' ) {
                     bind ( event, 'body', idrinth.ui.body['on' + event] );
                 }
-                idrinth.ui.body.setAttribute ( 'on' + event, 'idrinth.core.triggered(this,\'' + event + '\');' );
+                idrinth.ui.body.setAttribute ( 'on' + event, attribute );
             }
             bind ( event, selector, method );
         },
