@@ -51,7 +51,7 @@ idrinth.settings = {
     change: function ( field, value ) {
         'use strict';
         var setValue = function ( parent, field, value ) {
-            if ( idrinth.core.isField ( parent, field ) ) {
+            if ( idrinth.core.fieldIsSetting ( parent, field ) ) {
                 parent[field] = value;
                 idrinth.settings.save ( );
                 return true;

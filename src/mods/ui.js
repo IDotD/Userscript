@@ -146,7 +146,7 @@ idrinth.ui = {
             var get = function ( field ) {
                 'use strict';
                 var getValue = function ( parent, field ) {
-                    if ( idrinth.core.isField ( parent, field ) ) {
+                    if ( idrinth.core.fieldIsSetting ( parent, field ) ) {
                         return parent[field];
                     }
                     return null;
