@@ -577,7 +577,7 @@ idrinth.ui = {
                             name: 'windows',
                             rType: '#input',
                             type: 'number',
-                            platforms: [ 'dawnofthedragons' ],
+                            platforms: [ 'dawnofthedragons', 'facebook' ],
                             label: 'Maximum Popups/Frames for joining raids'
                         }, {
                             name: 'alarmTime',
