@@ -11,7 +11,7 @@ idrinth.land = {
                 results[res.key] = ( results[res.key] === undefined ? 0 : results[res.key] ) + factor;
                 idrinth.settings.land[res.key] = idrinth.settings.land[res.key] + factor;
             };
-            var processBuildings = function ( checkElementFunc, factor, res, nextPrice ) {
+            var processBuildings = function ( checkElementFunc, factor, nextPrice ) {
                 var check = function ( checkElementFunc, building, factor, res, nextPrice ) {
                     for (var count = 0; count < checkElementFunc.length; count++) {
                         if ( !checkElementFunc[count] ( building, factor, res, nextPrice ) ) {
