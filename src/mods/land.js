@@ -6,18 +6,23 @@ idrinth.land = {
                 return ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base;
             };
             var results = { };
-            var check = function ( checkElementFunc, building, factor, res, nextPrice ) {
-                for (var count = 0; count < checkElementFunc.length; count++) {
-                    if ( !checkElementFunc[count] ( building, factor, res, nextPrice ) ) {
-                        return res;
-                    }
-                }
-                return  {
-                    min: nextPrice ( building ) / idrinth.land.data[building].perHour,
-                    key: building
-                };
+            var applyResult = function ( res, factor, nextPrice ) {
+                idrinth.settings.land.gold = idrinth.settings.land.gold - nextPrice () * factor / 10;
+                results[res.key] = ( results[res.key] === undefined ? 0 : results[res.key] ) + factor;
+                idrinth.settings.land[res.key] = idrinth.settings.land[res.key] + factor;
             };
-            while ( idrinth.settings.land.gold >= 0 ) {
+            var processBuildings = function ( checkElementFunc, factor, res, nextPrice ) {
+                var check = function ( checkElementFunc, building, factor, res, nextPrice ) {
+                    for (var count = 0; count < checkElementFunc.length; count++) {
+                        if ( !checkElementFunc[count] ( building, factor, res, nextPrice ) ) {
+                            return res;
+                        }
+                    }
+                    return  {
+                        min: nextPrice ( building ) / idrinth.land.data[building].perHour,
+                        key: building
+                    };
+                };
                 var res = {
                     key: null,
                     min: null
@@ -27,13 +32,16 @@ idrinth.land = {
                         res = check ( checkElementFunc, building, factor, res, nextPrice );
                     }
                 }
+                return res;
+            };
+            while ( idrinth.settings.land.gold >= 0 ) {
+                var res = processBuildings ( checkElementFunc, factor, nextPrice );
                 if ( res.key === null ) {
                     return results;
                 }
-                idrinth.settings.land.gold = idrinth.settings.land.gold - ( 10 + idrinth.settings.land[res.key] ) * factor * idrinth.land.data[res.key].base / 10;
-                results[res.key] = ( results[res.key] === undefined ? 0 : results[res.key] ) + factor;
-                idrinth.settings.land[res.key] = idrinth.settings.land[res.key] + factor;
+                applyResult ( res, factor, nextPrice );
             }
+            idrinth.settings.save ();
             return results;
         };
         var getRequirements = function () {
