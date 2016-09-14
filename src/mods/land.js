@@ -23,7 +23,9 @@ idrinth.land = {
                     min: null
                 };
                 for (var building in idrinth.land.data) {
-                    res = check ( checkElementFunc, building, factor, res, nextPrice );
+                    if ( building && idrinth.land.data[building] && idrinth.land.data.hasOwnProperty ( building ) ) {
+                        res = check ( checkElementFunc, building, factor, res, nextPrice );
+                    }
                 }
                 if ( res.key === null ) {
                     return results;
