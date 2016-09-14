@@ -38,7 +38,7 @@ idrinth.land = {
         };
         var getRequirements = function () {
             var bestPrice = function ( building, factor, res, nextPrice ) {
-                return res.min === null || nextPrice () / idrinth.land.data[building].perHour < res.min;
+                return res.min === null || nextPrice ( building ) / idrinth.land.data[building].perHour < res.min;
             };
             var useUp = function ( building, factor, res, nextPrice ) {
                 return nextPrice ( building ) * factor / 10 <= idrinth.settings.land.gold;
