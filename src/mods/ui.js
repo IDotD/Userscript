@@ -368,7 +368,7 @@ idrinth.ui = {
         try {
             if ( idrinth.platform === 'kongregate' ) {
                 window.activateGame ( );
-            } else if ( idrinth.platform === 'dawnofthedragons' ) {
+            } else if ( idrinth.platform === 'facebook'/*'dawnofthedragons'*/ ) {
                 handleFrame ( document );
             } else if ( idrinth.platform === 'newgrounds' ) {
                 handleFrame ( document.getElementById ( 'iframe_embed' ) );
