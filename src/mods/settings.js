@@ -42,7 +42,7 @@ idrinth.settings = {
                 if ( list.hasOwnProperty ( key ) && typeof list[key] !== 'object' && typeof list[key] !== 'function' ) {
                     window.localStorage.setItem ( prefix + key, idrinth.settings[key] );
                 } else if ( list.hasOwnProperty ( key ) && typeof list[key] === 'object' ) {
-                    save ( prefix + key + '-', list[key], store );
+                    store ( prefix + key + '-', list[key], store );
                 }
             }
         };
