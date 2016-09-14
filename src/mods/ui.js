@@ -363,7 +363,8 @@ idrinth.ui = {
         'use strict';
         var handleFrame = function ( parent ) {
             var frame = parent.getElementsByTagName ( 'iframe' )[0];
-            frame.setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
+            var src = ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' );
+            frame.setAttribute ( 'src', src + ( src.indexOf ( '?' ) > -1 ? '&' : '?' ) + 'ir=' + Math.random () );
         };
         try {
             if ( idrinth.platform === 'kongregate' ) {
