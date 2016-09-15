@@ -6,37 +6,47 @@ idrinth.land = {
                 return ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base;
             };
             var results = { };
-            var check = function ( checkElementFunc, building, factor, res, nextPrice ) {
-                for (var count = 0; count < checkElementFunc.length; count++) {
-                    if ( !checkElementFunc[count] ( building, factor, res, nextPrice ) ) {
-                        return res;
-                    }
-                }
-                return  {
-                    min: nextPrice ( building ) / idrinth.land.data[building].perHour,
-                    key: building
-                };
+            var applyResult = function ( res, factor, nextPrice ) {
+                idrinth.settings.land.gold = idrinth.settings.land.gold - nextPrice () * factor / 10;
+                results[res.key] = ( results[res.key] === undefined ? 0 : results[res.key] ) + factor;
+                idrinth.settings.land[res.key] = idrinth.settings.land[res.key] + factor;
             };
-            while ( idrinth.settings.land.gold >= 0 ) {
+            var processBuildings = function ( checkElementFunc, factor, nextPrice ) {
+                var check = function ( checkElementFunc, building, factor, res, nextPrice ) {
+                    for (var count = 0; count < checkElementFunc.length; count++) {
+                        if ( !checkElementFunc[count] ( building, factor, res, nextPrice ) ) {
+                            return res;
+                        }
+                    }
+                    return  {
+                        min: nextPrice ( building ) / idrinth.land.data[building].perHour,
+                        key: building
+                    };
+                };
                 var res = {
                     key: null,
                     min: null
                 };
                 for (var building in idrinth.land.data) {
-                    res = check ( checkElementFunc, building, factor, res, nextPrice );
+                    if ( building && idrinth.land.data[building] && idrinth.land.data.hasOwnProperty ( building ) ) {
+                        res = check ( checkElementFunc, building, factor, res, nextPrice );
+                    }
                 }
+                return res;
+            };
+            while ( idrinth.settings.land.gold >= 0 ) {
+                var res = processBuildings ( checkElementFunc, factor, nextPrice );
                 if ( res.key === null ) {
                     return results;
                 }
-                idrinth.settings.land.gold = idrinth.settings.land.gold - ( 10 + idrinth.settings.land[res.key] ) * factor * idrinth.land.data[res.key].base / 10;
-                results[res.key] = ( results[res.key] === undefined ? 0 : results[res.key] ) + factor;
-                idrinth.settings.land[res.key] = idrinth.settings.land[res.key] + factor;
+                applyResult ( res, factor, nextPrice );
             }
+            idrinth.settings.save ();
             return results;
         };
         var getRequirements = function () {
             var bestPrice = function ( building, factor, res, nextPrice ) {
-                return res.min === null || nextPrice () / idrinth.land.data[building].perHour < res.min;
+                return res.min === null || nextPrice ( building ) / idrinth.land.data[building].perHour < res.min;
             };
             var useUp = function ( building, factor, res, nextPrice ) {
                 return nextPrice ( building ) * factor / 10 <= idrinth.settings.land.gold;
@@ -56,7 +66,7 @@ idrinth.land = {
             idrinth.settings.save ();
         };
         for (var key in idrinth.settings.land) {
-            idrinth.settings.land[key] = parseInt ( document.getElementById ( 'idrinth-land-' + key ).value, 10 );
+            idrinth.settings.change ( 'land-' + key, parseInt ( document.getElementById ( 'idrinth-land-' + key ).value, 10 ) );
         }
         var results = baseCalculator ( getRequirements () );
         if ( Object.keys ( results ).length === 0 ) {

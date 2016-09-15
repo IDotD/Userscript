@@ -40,9 +40,9 @@ idrinth.settings = {
         var store = function ( prefix, list, store ) {
             for (var key in list) {
                 if ( list.hasOwnProperty ( key ) && typeof list[key] !== 'object' && typeof list[key] !== 'function' ) {
-                    window.localStorage.setItem ( prefix + key, idrinth.settings[key] );
+                    window.localStorage.setItem ( prefix + key, list[key] );
                 } else if ( list.hasOwnProperty ( key ) && typeof list[key] === 'object' ) {
-                    save ( prefix + key + '-', list[key], store );
+                    store ( prefix + key + '-', list[key], store );
                 }
             }
         };

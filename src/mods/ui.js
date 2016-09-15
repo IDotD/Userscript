@@ -311,6 +311,14 @@ idrinth.ui = {
             idrinth.ui.setTooltipTimeout ();
         }
     },
+    matchesCss: function ( element, selector ) {
+        while ( element && element !== document ) {
+            if ( typeof element.matches === 'function' && element.matches ( selector ) ) {
+                return element;
+            }
+            element = element.parentNode
+        }
+    },
     setTooltipTimeout: function () {
         idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
     },
@@ -355,12 +363,13 @@ idrinth.ui = {
         'use strict';
         var handleFrame = function ( parent ) {
             var frame = parent.getElementsByTagName ( 'iframe' )[0];
-            frame.setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&ir=' + Math.random () );
+            var src = ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' );
+            frame.setAttribute ( 'src', src + ( src.indexOf ( '?' ) > -1 ? '&' : '?' ) + 'ir=' + Math.random () );
         };
         try {
             if ( idrinth.platform === 'kongregate' ) {
                 window.activateGame ( );
-            } else if ( idrinth.platform === 'dawnofthedragons' ) {
+            } else if ( idrinth.platform === 'facebook'/*'dawnofthedragons'*/ ) {
                 handleFrame ( document );
             } else if ( idrinth.platform === 'newgrounds' ) {
                 handleFrame ( document.getElementById ( 'iframe_embed' ) );
@@ -568,7 +577,7 @@ idrinth.ui = {
                             name: 'windows',
                             rType: '#input',
                             type: 'number',
-                            platforms: [ 'dawnofthedragons' ],
+                            platforms: [ 'dawnofthedragons', 'facebook' ],
                             label: 'Maximum Popups/Frames for joining raids'
                         }, {
                             name: 'alarmTime',
