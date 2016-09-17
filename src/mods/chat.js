@@ -194,7 +194,7 @@ idrinth.chat = {
             var matches = message.match ( regex );
             var text = ( message.replace ( regex, '$1########$' + lastField ) ).split ( '########' );
             var textcontent = [ ];
-            var length = matches.length + text.length;
+            var length = ( matches && Array.isArray ( matches ) ? matches.length : 0 ) + ( text && Array.isArray ( text ) ? text.length : 0 );
             for (var count = 0; count < length; count++) {
                 textcontent = partHandler ( count, callbacks, text, textcontent );
             }
