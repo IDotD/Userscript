@@ -23,6 +23,7 @@ idrinth.core = {
                     try {
                         return func ( value );
                     } catch ( e ) {
+                        idrinth.core.log ( e.getMessage () );
                         return null;
                     }
                 };

@@ -299,9 +299,14 @@ idrinth.chat = {
                     };
                     var notify = function ( message, own, chatId ) {
                         var notActive = function ( chatId ) {
-                            return !idrinth.windowactive ||
-                                    !( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ ) ||
-                                    !( document.getElementById ( 'idrinth-chat' ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ )
+                            try {
+                                return !idrinth.windowactive ||
+                                        !( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ ) ||
+                                        !( document.getElementById ( 'idrinth-chat' ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ );
+                            } catch ( e ) {
+                                idrinth.core.log ( e.getMessage );
+                                return true;
+                            }
                         };
                         var messageAllowed = function ( text ) {
                             return ( idrinth.settings.notification.message && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
