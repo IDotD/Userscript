@@ -194,7 +194,7 @@ idrinth.chat = {
             var matches = message.match ( regex );
             var text = ( message.replace ( regex, '$1########$' + lastField ) ).split ( '########' );
             var textcontent = [ ];
-            var length = matches.length + text.length;
+            var length = ( matches && Array.isArray ( matches ) ? matches.length : 0 ) + ( text && Array.isArray ( text ) ? text.length : 0 );
             for (var count = 0; count < length; count++) {
                 textcontent = partHandler ( count, callbacks, text, textcontent );
             }
@@ -299,14 +299,24 @@ idrinth.chat = {
                     };
                     var notify = function ( message, own, chatId ) {
                         var notActive = function ( chatId ) {
-                            return !idrinth.windowactive ||
-                                    !( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ ) ||
-                                    !( document.getElementById ( 'idrinth-chat' ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ )
+                            try {
+                                return !idrinth.windowactive ||
+                                        !( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ ) ||
+                                        !( document.getElementById ( 'idrinth-chat' ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ );
+                            } catch ( e ) {
+                                idrinth.core.log ( e.getMessage );
+                                return true;
+                            }
                         };
                         var messageAllowed = function ( text ) {
-                            return ( idrinth.settings.notification.message && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
-                                    ( idrinth.settings.notification.mention && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
-                                    ( idrinth.settings.notification.raid && text.match ( /\{[A-Z]{2}-Raid / ) !== null )
+                            try {
+                                return ( idrinth.settings.notification.message && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
+                                        ( idrinth.settings.notification.mention && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
+                                        ( idrinth.settings.notification.raid && text.match ( /\{[A-Z]{2}-Raid / ) !== null );
+                            } catch ( e ) {
+                                idrinth.core.log ( e.getMessage ( ) );
+                                return false;
+                            }
                         };
                         if ( !own && notActive ( chatId ) && messageAllowed ( message.text ) ) {
                             try {
