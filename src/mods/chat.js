@@ -309,9 +309,14 @@ idrinth.chat = {
                             }
                         };
                         var messageAllowed = function ( text ) {
-                            return ( idrinth.settings.notification.message && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
-                                    ( idrinth.settings.notification.mention && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
-                                    ( idrinth.settings.notification.raid && text.match ( /\{[A-Z]{2}-Raid / ) !== null )
+                            try {
+                                return ( idrinth.settings.notification.message && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
+                                        ( idrinth.settings.notification.mention && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
+                                        ( idrinth.settings.notification.raid && text.match ( /\{[A-Z]{2}-Raid / ) !== null );
+                            } catch ( e ) {
+                                idrinth.core.log ( e.getMessage ( ) );
+                                return false;
+                            }
                         };
                         if ( !own && notActive ( chatId ) && messageAllowed ( message.text ) ) {
                             try {
