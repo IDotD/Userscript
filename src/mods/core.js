@@ -6,9 +6,9 @@ idrinth.core = {
         return parent && typeof parent === 'object' && field && parent.hasOwnProperty ( field ) && typeof parent[field] !== 'object' && typeof parent[field] !== 'function';
     },
     ajax: {
-        runHome: function ( url, success, failure, timeout, additionalHeader ) {
-            var homeUrl = 'https://dotd.idrinth.de/' + ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform + ( '/' + url ).replace ( /\/\// );
-            idrinth.core.ajax.run ( homeUrl, success, failure, timeout, additionalHeader )
+        runHome: function ( url, success, failure, timeout, additionalHeader, isStatic ) {
+            var homeUrl = 'https://dotd.idrinth.de/' + isStatic ? 'static/' : ( ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform ) + ( '/' + url ).replace ( /\/\//, '/' );
+            idrinth.core.ajax.run ( homeUrl, success, failure, timeout, additionalHeader );
         },
         active: { },
         run: function ( url, success, failure, timeout, additionalHeader ) {
@@ -23,7 +23,7 @@ idrinth.core = {
                     try {
                         return func ( value );
                     } catch ( e ) {
-                        idrinth.core.log ( e.getMessage () );
+                        idrinth.core.log ( typeof e.getMessage === 'function' ? e.getMessage () : e );
                         return null;
                     }
                 };
