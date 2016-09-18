@@ -1,3 +1,3 @@
-pattern = "(?i)^(:shipit:|:\\+1:|LGTM|Approved|Looks\\sGood\\sTo\\sMe)"
+pattern = "(?i)^(:shipit:|:\\+1:|LGTM|Approved|Looks\\s+Good\\s+To\\s+Me|Seems\\s+good|Looks\\s+good)"
 approvals = 1
 self_approval_off = true

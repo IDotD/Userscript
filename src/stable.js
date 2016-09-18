@@ -88,7 +88,19 @@ var idrinth = {
                     idrinth.settings.newgroundLoad * 1000 );
         }
     },
-    reload: function () {
+    clearTimeout: function ( timeout ) {
+        if ( timeout ) {
+            try {
+                window.clearTimeout ( timeout );
+            } catch ( e ) {
+                idrinth.core.log ( typeof e.getMessage === 'function' ? e.getMessage : e )
+            }
+        }
+    },
+    reload: function ( ) {
+        idrinth.clearTimeout ( idrinth.chat.updateTimeout );
+        idrinth.clearTimeout ( idrinth.war.warTO );
+        idrinth.raids.clearInterval ();
         idrinth.ui.removeElement ( 'idrinth-controls' );
         idrinth.ui.removeElement ( 'idrinth-chat' );
         idrinth.ui.removeElement ( 'idrinth-war' );
@@ -100,7 +112,7 @@ var idrinth = {
         }, 1 );
     },
     platform: '',
-    startInternal: function () {
+    startInternal: function ( ) {
         var startModules = function () {
             idrinth.settings.start ( );
             idrinth.ui.start ( );

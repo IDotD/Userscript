@@ -725,8 +725,8 @@ idrinth.chat = {
                     );
         }, 2500 );
         window.setTimeout ( function () {
-            idrinth.core.ajax.run (
-                    'https://dotd.idrinth.de/static/emoticons/data/',
+            idrinth.core.ajax.runHome (
+                    'emoticons/data/',
                     function ( reply ) {
                         idrinth.chat.emotes = JSON.parse ( reply );
                     },
@@ -734,7 +734,8 @@ idrinth.chat = {
                     },
                     function ( reply ) {
                     },
-                    ''
+                    '',
+                    true
                     );
         }, 1 );
     },
