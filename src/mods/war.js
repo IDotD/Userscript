@@ -3,6 +3,11 @@ idrinth.war = {
     to: null,
     element: null,
     warTO: null,
+    setTO: function ( ) {
+        if ( !idrinth.war.warTO ) {
+            idrinth.war.warTO = window.setTimeout ( idrinth.war.getData, 1000 );
+        }
+    },
     getData: function () {
         var raids2Join = function () {
             var list = [ ];
@@ -16,16 +21,11 @@ idrinth.war = {
             }
             return '_';
         };
-        var setTO = function ( temp ) {
-            if ( !idrinth.war.warTO ) {
-                idrinth.war.warTO = window.setTimeout ( idrinth.war.getData, 1000 );
-            }
-        };
         idrinth.core.ajax.runHome (
                 "war-service/" + raids2Join () + "/" + Date.now () + "/",
                 idrinth.war.updateData,
-                setTO,
-                setTO,
+                idrinth.war.setTO,
+                idrinth.war.setTO,
                 idrinth.raids.knowRaids ()
                 );
     },
@@ -180,9 +180,7 @@ idrinth.war = {
             }
         };
         process ( data );
-        if ( !idrinth.war.warTO ) {
-            idrinth.war.warTO = window.setTimeout ( idrinth.war.getData, 50000 + Math.random () % 20000 );
-        }
+        idrinth.war.setTO ();
     },
     start: function () {
         var build = function ( ) {
