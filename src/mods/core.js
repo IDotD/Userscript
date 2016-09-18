@@ -7,7 +7,7 @@ idrinth.core = {
     },
     ajax: {
         runHome: function ( url, success, failure, timeout, additionalHeader, isStatic ) {
-            var homeUrl = 'https://dotd.idrinth.de/' + isStatic ? 'static/' : ( ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform ) + ( '/' + url ).replace ( /\/\//, '/' );
+            var homeUrl = 'https://dotd.idrinth.de/' + ( isStatic ? 'static/' : ( idrinth.settings.isWorldServer ? 'world-' : '' ) + idrinth.platform ) + ( '/' + url ).replace ( /\/\//, '/' );
             idrinth.core.ajax.run ( homeUrl, success, failure, timeout, additionalHeader );
         },
         active: { },
