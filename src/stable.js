@@ -89,6 +89,19 @@ var idrinth = {
         }
     },
     reload: function () {
+        if ( idrinth.chat.updateTimeout ) {
+            try {
+                window.clearTimeout ( idrinth.chat.updateTimeout );
+            } catch ( e ) {
+            }
+        }
+        if ( idrinth.war.warTO ) {
+            try {
+                window.clearTimeout ( idrinth.war.warTO );
+            } catch ( e ) {
+            }
+        }
+        idrinth.raids.clearInterval ();
         idrinth.ui.removeElement ( 'idrinth-controls' );
         idrinth.ui.removeElement ( 'idrinth-chat' );
         idrinth.ui.removeElement ( 'idrinth-war' );
