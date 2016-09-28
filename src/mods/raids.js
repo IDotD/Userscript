@@ -271,18 +271,20 @@ idrinth.raids = {
                 var added = 0;
                 var options = getServerMethods ();
                 for (var key in idrinth.raids.list) {
-                    var raid = idrinth.raids.list[key];
-                    if ( !raid.joined ) {
-                        added++;
-                        options[0] ( key );//post link
-                        if ( !idrinth.settings.bannedRaids[raid.raid] ) {
-                            for (var count = 1; count < options.length; count++) {
-                                options[count] ( key );
+                    if ( typeof idrinth.raids.list[key] === 'object' ) {
+                        var raid = idrinth.raids.list[key];
+                        if ( !raid.joined ) {
+                            added++;
+                            options[0] ( key );//post link
+                            if ( !idrinth.settings.bannedRaids[raid.raid] ) {
+                                for (var count = 1; count < options.length; count++) {
+                                    options[count] ( key );
+                                }
                             }
                         }
-                    }
-                    if ( reachedMax ( added ) ) {
-                        return true;
+                        if ( reachedMax ( added ) ) {
+                            return true;
+                        }
                     }
                 }
                 return false;
