@@ -101,7 +101,7 @@ idrinth.tier = {
                         rType: '#input',
                         type: 'checkbox',
                         id: 'idrinth-raid-may-join-list-' + data[key].name,
-                        label: 'Enable joining for' + data[key].name
+                        label: 'Disable joining for ' + data[key].name
                     } ) );
                 }
             }
