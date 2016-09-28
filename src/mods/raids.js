@@ -273,10 +273,9 @@ idrinth.raids = {
                 for (var key in idrinth.raids.list) {
                     if ( !idrinth.raids.list[key].joined ) {
                         added++;
+                        options[0] ( key );//post link
                         if ( !idrinth.settings.bannedRaids[idrinth.raids.list[key].boss] ) {
-                            options[0] ( key );//post link
-                        } else {
-                            for (var count = 0; count < options.length; count++) {
+                            for (var count = 1; count < options.length; count++) {
                                 options[count] ( key );
                             }
                         }
