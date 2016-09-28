@@ -97,7 +97,7 @@ idrinth.tier = {
                 if ( data[key].name && idrinth.settings.bannedRaids[data[key].name] === undefined ) {
                     idrinth.settings.bannedRaids[data[key].name] = false;
                     document.getElementById ( 'idrinth-raid-may-join-list' ).appendChild ( idrinth.ui.buildElement ( {
-                        name: 'bannedRaids.' + data[key].name,
+                        name: 'bannedRaids#' + data[key].name,
                         rType: '#input',
                         type: 'checkbox',
                         id: 'idrinth-raid-may-join-list-' + data[key].name,
