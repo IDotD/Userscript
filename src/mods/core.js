@@ -24,7 +24,7 @@ idrinth.core = {
                     try {
                         return func ( value );
                     } catch ( e ) {
-                        idrinth.core.log ( typeof e.getMessage === 'function' ? e.getMessage () : e );
+                        idrinth.core.log ( typeof e.getMessage === 'function' ? e.getMessage () : ( e.message ? e.message : e ) );
                         return null;
                     }
                 };
