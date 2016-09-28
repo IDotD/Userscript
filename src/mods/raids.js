@@ -271,13 +271,10 @@ idrinth.raids = {
                 var added = 0;
                 var options = getServerMethods ();
                 for (var key in idrinth.raids.list) {
-                    if ( !idrinth.raids.list[key].joined ) {
+                    if ( !idrinth.raids.list[key].joined && !idrinth.settings.bannedRaids[idrinth.raids.list[key].boss] ) {
                         added++;
-                        options[0] ( key );//post link
-                        if ( !idrinth.settings.bannedRaids[idrinth.raids.list[key].boss] ) {
-                            for (var count = 1; count < options.length; count++) {
-                                options[count] ( key );
-                            }
+                        for (var count = 0; count < options.length; count++) {
+                            options[count] ( key );
                         }
                     }
                     if ( reachedMax ( added ) ) {
