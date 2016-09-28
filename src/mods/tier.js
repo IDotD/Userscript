@@ -103,6 +103,8 @@ idrinth.tier = {
                         id: 'idrinth-raid-may-join-list-' + data[key].name,
                         label: 'Disable joining for ' + data[key].name
                     } ) );
+                    document.getElementById ( 'idrinth-raid-may-join-list' ).lastChild.setAttribute ( 'style',
+                            'background-image:url(https://dotd.idrinth.de/static/raid-image-service/' + data[key].url + '/);' );
                 }
             }
         } else {
