@@ -18,6 +18,7 @@ idrinth.settings = {
     isWorldServer: false,
     alarmTime: '8:0',
     alarmActive: false,
+    bannedRaids: { },
     notification: {
         mention: true,
         message: true,

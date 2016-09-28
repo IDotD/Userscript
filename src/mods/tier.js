@@ -93,6 +93,18 @@ idrinth.tier = {
         data = JSON.parse ( data );
         if ( data ) {
             idrinth.tier.list = data;
+            for (var key in data) {
+                if ( data[key].name && idrinth.settings.bannedRaids[data[key].name] === undefined ) {
+                    idrinth.settings.bannedRaids[data[key].name] = false;
+                    document.getElementById ( 'idrinth-raid-may-join-list' ).appendChild ( Idrinth.ui.buildElement ( {
+                        name: 'bannedRaids.' + data[key].name,
+                        rType: '#input',
+                        type: 'checkbox',
+                        id: 'idrinth-raid-may-join-list-' + data[key].name,
+                        label: 'Enable joining for' + data[key].name
+                    } ) );
+                }
+            }
         } else {
             window.setTimeout ( idrinth.tier.start, 1000 );
         }

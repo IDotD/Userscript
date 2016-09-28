@@ -760,7 +760,20 @@ idrinth.ui = {
                     ];
                 };
                 var buildRaidJoinList = function () {
+                    var list = [ ];
+                    for (var boss in idrinth.settings.bannedRaids) {
+                        list.push ( {
+                            name: 'bannedRaids.' + boss,
+                            rType: '#input',
+                            type: 'checkbox',
+                            id: 'idrinth-raid-may-join-list-' + boss,
+                            label: 'Enable joining for' + boss
+                        } );
+                    }
                     return [ {
+                            id: 'idrinth-raid-may-join-list',
+                            children: list
+                        }, {
                             content: 'click to copy raid link',
                             type: 'strong'
                         }, {
