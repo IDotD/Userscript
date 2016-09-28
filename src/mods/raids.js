@@ -268,23 +268,27 @@ idrinth.raids = {
                 var reachedMax = function ( amount ) {
                     return amount > 99 || ( ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) && amount >= idrinth.settings.windows );
                 };
+                var handleKey = function ( added, key, options ) {
+                    var raid = idrinth.raids.list[key];
+                    if ( !raid.joined ) {
+                        added++;
+                        options[0] ( key );//post link
+                        if ( !idrinth.settings.bannedRaids[raid.raid] ) {
+                            for (var count = 1; count < options.length; count++) {
+                                options[count] ( key );
+                            }
+                        }
+                    }
+                    return added;
+                };
                 var added = 0;
                 var options = getServerMethods ();
                 for (var key in idrinth.raids.list) {
                     if ( typeof idrinth.raids.list[key] === 'object' ) {
-                        var raid = idrinth.raids.list[key];
-                        if ( !raid.joined ) {
-                            added++;
-                            options[0] ( key );//post link
-                            if ( !idrinth.settings.bannedRaids[raid.raid] ) {
-                                for (var count = 1; count < options.length; count++) {
-                                    options[count] ( key );
-                                }
-                            }
-                        }
-                        if ( reachedMax ( added ) ) {
-                            return true;
-                        }
+                        added = handleKey ( added, key, options );
+                    }
+                    if ( reachedMax ( added ) ) {
+                        return true;
                     }
                 }
                 return false;
