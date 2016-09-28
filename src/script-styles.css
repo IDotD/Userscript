@@ -676,6 +676,7 @@ td.is-os {
 }
 #idrinth-raid-may-join-list > div {
     background-repeat: no-repeat;
-    background-position: left center;
+    background-position: right center;
     background-size: contain;
+    min-height:2em;
 }
