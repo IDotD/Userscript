@@ -679,4 +679,6 @@ td.is-os {
     background-position: right center;
     background-size: contain;
     min-height:2em;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
 }
