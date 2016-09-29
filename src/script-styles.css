@@ -674,3 +674,11 @@ td.is-os {
     text-align:center;
     background:rgba(255,255,255,0.25);
 }
+#idrinth-raid-may-join-list > div {
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: contain;
+    height:35px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}

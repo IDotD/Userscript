@@ -158,7 +158,7 @@ idrinth.ui = {
                 if ( value !== null ) {
                     return value;
                 }
-                field = field.split ( '-' );
+                field = field.split ( '#' );
                 return getValue ( idrinth.settings[field[0]], field[1] );
             };
             var input = [ {
@@ -559,17 +559,17 @@ idrinth.ui = {
                             type: 'checkbox',
                             label: 'Worldserver?'
                         }, {
-                            name: 'notification-mention',
+                            name: 'notification#mention',
                             rType: '#input',
                             type: 'checkbox',
                             label: 'chat-mention notifications?'
                         }, {
-                            name: 'notification-raid',
+                            name: 'notification#raid',
                             rType: '#input',
                             type: 'checkbox',
                             label: 'chat-raid notifications?'
                         }, {
-                            name: 'notification-message',
+                            name: 'notification#message',
                             rType: '#input',
                             type: 'checkbox',
                             label: 'chat-message notifications?'
@@ -765,6 +765,11 @@ idrinth.ui = {
                             type: 'strong'
                         }, {
                             id: 'idrinth-raid-link-list'
+                        }, {
+                            content: 'Disable Autojoining for specific raids',
+                            type: 'strong'
+                        }, {
+                            id: 'idrinth-raid-may-join-list'
                         } ];
                 };
                 return makeTabs ( {
