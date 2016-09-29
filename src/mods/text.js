@@ -1,0 +1,38 @@
+﻿idrinth.text = {
+    getText: function (key) {
+        var textKey = key || '';
+        var text = {
+
+            // currently under progress
+
+            // Texts from chat.js, function getMsg, line 933+, time 29.09.15
+            'modify.fail': 'Can\'t modify that user at the moment',
+            'create.fail': 'Can\'t create at the moment',
+            'join.fail': 'Can\'t join at the moment',
+            'join.notwork': 'Joining didn\'t work',
+            'user.unknown': 'The given username for dotd.idrinth.de is unknown, do you want to register it there?',
+            'login.fail': 'Login failed in an unexpected way',
+            'default.error': 'Unexpected error occurred. Please contact script developers'
+                    + ' (https://github.com/Idrinth/IDotD).',
+
+            // Texts from ui.js, function buttonMaker, line 442+ , time 29.09.15
+            'Import all manually': 'Import all manually',
+            'Import favs manually': 'Import favs manually',
+            'Reload game': 'Reload game',
+            'Clear Raids': 'Clear Raids',
+            'Reload Script': 'Reload Script',
+            'Restart Raidjoin': 'Restart Raidjoin',
+            'Refresh Facebook Game Login': 'Refresh Facebook Game Login',
+            'NG Raid Join(slow!)': 'NG Raid Join(slow!)',
+            'disable timed Autojoin': 'disable timed Autojoin',
+            'enable timed Autojoin': 'enable timed Autojoin',
+
+            'Last raids joined:': 'Last raids joined:',
+            'Enter Boss\' Name': 'Enter Boss\' Name'
+
+            // Texts from ui.js, function buildControls, line 492, time 29.09.15
+
+        }
+        return text.hasOwnProperty(textKey) ? text[textKey] : text['default.error'];
+    }
+}
