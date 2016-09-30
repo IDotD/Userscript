@@ -9,6 +9,7 @@ idrinth.text = {
                 owner: 'Owner',
                 makeUser: 'Make user',
                 user: 'User',
+                mod:'Mod',
             },
             button:{
                 close: 'Close',
@@ -25,7 +26,10 @@ idrinth.text = {
                 clear: 'Clear Raids',
                 joinRestart: 'Restart Raidjoin',
                 joinedLast: 'Last raids joined:',
-                bossName: 'Enter Boss\' Name'
+                bossName: 'Enter Boss\' Name',
+                chat: 'Chat',
+                createChat: 'Create Chat',
+                joinChat: 'Join Chat',
             },
             message:{
                 optional: 'This part of the script is optional, so logging in is unneeded for raid catching etc.',

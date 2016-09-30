@@ -57,26 +57,26 @@ idrinth.chat = {
                 var promotionModes = [
                     {
                         chat: chat,
-                        label: 'Ban User',
-                        rank: 'Banned',
+                        label: idrinth.text.get("user.ban"),
+                        rank: idrinth.text.get("user.banned"),
                         requiredRank: 3
                     },
                     {
                         chat: chat,
-                        label: 'Make Moderator',
-                        rank: 'Mod',
+                        label: idrinth.text.get("user.makeMod"),
+                        rank: idrinth.text.get("user.mod"),
                         requiredRank: 3
                     },
                     {
                         chat: chat,
-                        label: 'Make Admin',
-                        rank: 'Owner',
+                        label: idrinth.text.get("user.makeAdmin"),
+                        rank: idrinth.text.get("user.owner"),
                         requiredRank: 4
                     },
                     {
                         chat: chat,
-                        label: 'Make User',
-                        rank: 'User',
+                        label: idrinth.text.get("user.makeUser"),
+                        rank: idrinth.text.get("user.user"),
                         requiredRank: 3
                     }
                 ];
@@ -85,8 +85,8 @@ idrinth.chat = {
                     if ( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ) && intChatId !== chat && intChatId > 1 && !( user in idrinth.chat.chatRank[chatId] ) ) {
                         promotionModes.push ( {
                             chat: chatId,
-                            label: 'Invite to Chat ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML,
-                            rank: 'User',
+                            label: idrinth.text.get("button.invite") + document.getElementById('idrinth-chat-tab-click-' + chatId).innerHTML,
+                            rank: idrinth.text.get("user.user"),
                             requiredRank: 1
                         } );
                     }
@@ -436,7 +436,7 @@ idrinth.chat = {
         idrinth.chat.oldMessages = [ ];
         idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 999 );
     },
-    ranks: [ '', 'banned', 'user', 'mod', 'owner' ],
+    ranks: ['', idrinth.text.get("user.banned"), idrinth.text.get("user.user"), idrinth.text.get("user.mod"), idrinth.text.get("user.owner")],
     applyMembers: function ( data ) {
         var applyMemberData = function () {
             var addMemberElement = function ( chat, chatId, userId ) {
@@ -581,21 +581,21 @@ idrinth.chat = {
                                 children: [
                                     {
                                         type: 'h1',
-                                        content: 'Chat'
+                                        content: idrinth.text.get("button.chat")
                                     },
                                     {
                                         type: 'p',
-                                        content: 'This part of the script is optional, so logging in is unneeded for raid catching etc.'
+                                        content: idrinth.text.get("message.optional")
                                     }, {
                                         id: 'idrinth-chat-login',
                                         children: [
                                             {
                                                 type: 'h2',
-                                                content: 'Account'
+                                                content: idrinth.text.get("button.account")
                                             },
                                             {
                                                 type: 'p',
-                                                content: 'This should not be the data for logging in on the related gaming site and the login does not need to match your ingame name - you can set a display name after the registration.'
+                                                content: idrinth.text.get("message.invalid")
                                             },
                                             {
                                                 type: 'ul',
@@ -612,7 +612,7 @@ idrinth.chat = {
                                         children: [
                                             {
                                                 type: 'h2',
-                                                content: 'Join Chat'
+                                                content: idrinth.text.get("button.joinChat")
                                             },
                                             {
                                                 type: 'ul',
@@ -630,7 +630,7 @@ idrinth.chat = {
                                         children: [
                                             {
                                                 type: 'h2',
-                                                content: 'Create Chat'
+                                                content: idrinth.text.get("button.createChat")
                                             },
                                             {
                                                 type: 'ul',
