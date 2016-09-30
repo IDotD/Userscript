@@ -40,12 +40,21 @@ idrinth.text = {
             error:{
                 errorDefault: 'Unexpected error occurred. Please contact script developers'
                                 + ' (https://github.com/Idrinth/IDotD).',
-           }
+            }
         }
     },
-    get: function (key) {
-        var textKey = key || '';
-        var text=idrinth.text.data;
-        return text.hasOwnProperty(textKey) ? data[key] : text['default.error'];
+
+    var Get = function (key) {
+        var getSub(obj,keys,func) {
+            var key=keys.shift()
+            if(obj.hasOwnProperty(key)) {
+                if(keys.length>0) {
+                    return func(obj[key],keys,func);
+                }
+                return obj[key];
+            }
+            return idrinth.text.data.chat.error.errorDefault;
+        }
+        return getSub(idrinth.text.data,key.split('.'),getSub);
     }
 }
