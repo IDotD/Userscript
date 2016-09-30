@@ -35,9 +35,6 @@ idrinth.text = {
             lackGold: 'You lack gold to buy any more buildings at the moment.',
         },
     },
-
-    // idrinth.text.get("ui.importFav")
-
     get: function (key) {
         var getSub = function (obj, keys, func) {
             var key = keys.shift();
