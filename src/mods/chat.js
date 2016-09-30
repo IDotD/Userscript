@@ -57,25 +57,25 @@ idrinth.chat = {
                 var promotionModes = [
                     {
                         chat: chat,
-                        label: idrinth.text.get("chat.user.ban"),
+                        label: 'Ban User',
                         rank: 'Banned',
                         requiredRank: 3
                     },
                     {
                         chat: chat,
-                        label: idrinth.text.get("chat.user.makeMod"),
+                        label: 'Make Moderator',
                         rank: 'Mod',
                         requiredRank: 3
                     },
                     {
                         chat: chat,
-                        label: idrinth.text.get("chat.user.makeAdmin"),
+                        label: 'Make Admin',
                         rank: 'Owner',
                         requiredRank: 4
                     },
                     {
                         chat: chat,
-                        label: idrinth.text.get("chat.user.makeUser"),
+                        label: 'Make User',
                         rank: 'User',
                         requiredRank: 3
                     }
@@ -85,7 +85,7 @@ idrinth.chat = {
                     if ( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ) && intChatId !== chat && intChatId > 1 && !( user in idrinth.chat.chatRank[chatId] ) ) {
                         promotionModes.push ( {
                             chat: chatId,
-                            label: idrinth.text.get("chat.ui.invite") + document.getElementById('idrinth-chat-tab-click-' + chatId).innerHTML,
+                            label: 'Invite to Chat ' + document.getElementById('idrinth-chat-tab-click-' + chatId).innerHTML,
                             rank: 'User',
                             requiredRank: 1
                         } );
@@ -874,7 +874,7 @@ idrinth.chat = {
                             value: element.getAttribute ( 'title' )
                         } ]
                 }, {
-                    content: idrinth.text.get("chat.ui.LeaveRoom"),
+                    content: idrinth.text.get("chat.ui.leaveRoom"),
                     type: 'li',
                     attributes: [ {
                             name: 'onclick',
@@ -929,20 +929,6 @@ idrinth.chat = {
             chat.setAttribute ( 'class', 'idrinth-hovering-box active' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ) );
             element.innerHTML = '&gt;&gt;';
         }
-    },
-    getMsg: function ( key ) {
-        var textKey = key || '';
-        var text = {
-            'modify.fail': 'Can\'t modify that user at the moment',
-            'create.fail': 'Can\'t create at the moment',
-            'join.fail': 'Can\'t join at the moment',
-            'join.notwork': 'Joining didn\'t work',
-            'user.unknown': 'The given username for dotd.idrinth.de is unknown, do you want to register it there?',
-            'login.fail': 'Login failed in an unexpected way',
-            'default.error': 'Unexpected error occurred. Please contact script developers'
-                    + ' (https://github.com/Idrinth/IDotD).'
-        };
-        return text.hasOwnProperty ( textKey ) ? text[textKey] : text['default.error'];
     },
     loginActions: function ( key ) {
         var chatLogin,

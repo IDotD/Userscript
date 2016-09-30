@@ -1,28 +1,10 @@
 idrinth.text = {     
     data: {
         chat: {
-            user:{
-                ban: 'Ban User',
-                makeMod: 'Make Moderator',
-                makeAdmin: 'Make Admin',
-                makeUser: 'Make user',
-            },
             ui:{
                 close: 'Close',
                 invite:'Invite to Chat ',
                 account: 'Account',
-                gameReload: 'Reload game',
-                scriptReload: 'Reload Script',
-                facebookLoginRefresh: 'Refresh Facebook Game Login',
-                ngRaidJoin: 'NG Raid Join(slow!)',
-                manually: 'Import all manually',
-                fav: 'Import favs manually',
-                disableAutojoin: 'disable timed Autojoin',
-                enableAutojoin: 'enable timed Autojoin',
-                clear: 'Clear Raids',
-                joinRestart: 'Restart Raidjoin',
-                joinedLast: 'Last raids joined:',
-                bossName: 'Enter Boss\' Name',
                 chat: 'Chat',
                 createChat: 'Create Chat',
                 joinChat: 'Join Chat',
