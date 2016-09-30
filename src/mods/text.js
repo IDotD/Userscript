@@ -37,9 +37,7 @@ idrinth.text = {
                 'Enter Boss\' Name': 'Enter Boss\' Name'
 
                 }
-           
-        }
-        }
+        },
     get: function (key) {
         var textKey = key || '';
         var text=idrinth.text.data;
