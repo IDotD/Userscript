@@ -3,13 +3,9 @@ idrinth.text = {
         chat: {
             user:{
                 ban: 'Ban User',
-                banned: 'Banned',
                 makeMod: 'Make Moderator',
                 makeAdmin: 'Make Admin',
-                owner: 'Owner',
                 makeUser: 'Make user',
-                user: 'User',
-                mod:'Mod',
             },
             button:{
                 close: 'Close',
