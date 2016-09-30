@@ -1,7 +1,5 @@
-﻿idrinth.text = {
-    getText: function (key) {
-        var textKey = key || '';
-        var data = {
+idrinth.text = {     
+        data: {
             "chat.user.action.ban": "Ban user",
             'chat.user.status.banned': 'Banned',
             'chat.user.action.makeMod': 'Make Moderator',
@@ -40,9 +38,10 @@
 
             'Last raids joined:': 'Last raids joined:',
             'Enter Boss\' Name': 'Enter Boss\' Name'
-        }
-
-
+        },
+    get: function (key) {
+        var textKey = key || '';
+        var text=idrinth.text.data;
         return text.hasOwnProperty(textKey) ? data[textKey] : text['default.error'];
     }
 }
