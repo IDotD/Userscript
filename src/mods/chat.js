@@ -591,7 +591,7 @@ idrinth.chat = {
                                         children: [
                                             {
                                                 type: 'h2',
-                                                content: 'Account'
+                                                content: idrinth.text.get("button.account"),
                                             },
                                             {
                                                 type: 'p',
