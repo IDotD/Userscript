@@ -30,8 +30,13 @@ idrinth.text = {
                 errorDefault: 'Unexpected error occurred. Please contact script developers'
                                 + ' (https://github.com/Idrinth/IDotD).',
             }
-        }
+        },
+        land: {
+            lackGold: 'You lack gold to buy any more buildings at the moment.',
+        },
     },
+
+    // idrinth.text.get("ui.importFav")
 
     get: function (key) {
         var getSub = function (obj, keys, func) {
