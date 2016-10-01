@@ -65,7 +65,7 @@ idrinth.tier = {
                 return make ( key, name );
             }
         }
-        idrinth.core.alert ( 'There is no space for another tier-box at the moment, please close one first.' );
+        idrinth.core.alert ( idrinth.text.get("tier.alertNoSpaceTierbox") );
     },
     taggedSlots: { },
     start: function () {
@@ -185,7 +185,7 @@ idrinth.tier = {
                         },
                         {
                             type: 'button',
-                            content: 'Tag to screen-top',
+                            content: idrinth.text.get("tier.tagTop"),
                             attributes: [
                                 {
                                     name: 'onclick',
@@ -216,19 +216,19 @@ idrinth.tier = {
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: 'Normal'
+                                                    content: idrinth.text.get("tier.diffNormal"),
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: 'Hard'
+                                                    content: idrinth.text.get("tier.diffHard"),
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: 'Legend'
+                                                    content: idrinth.text.get("tier.diffLegend"),
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: 'Nightmare'
+                                                    content: idrinth.text.get("tier.diffNight"),
                                                 }
                                             ]
                                         }

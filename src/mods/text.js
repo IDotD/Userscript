@@ -34,7 +34,18 @@ idrinth.text = {
         land: {
             lackGold: 'You lack gold to buy any more buildings at the moment.',
         },
+        tier: {
+            diffNormal: 'Normal',
+            diffHard: 'Hard',
+            diffLegend: 'Legend',
+            diffNight: 'Nightmare',
+            tagTop: 'Tag to screen-top',
+            alertNoSpaceTierbox: 'There is no space for another tier-box at the moment, please close one first.',
+        }
     },
+
+    // idrinth.text.get("tier.alertNoSpaceTierbox"),
+
     get: function (key) {
         var getSub = function (obj, keys, func) {
             var key = keys.shift();
