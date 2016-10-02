@@ -439,14 +439,14 @@ idrinth.ui = {
                     };
                     return [ {
                             children: [
-                                buttonMaker ( idrinth.text.get("ui.importMan"), 'idrinth.raids.import(\'\');' ),
-                                buttonMaker ( idrinth.text.get("ui.importFav"), 'idrinth.raids.import(idrinth.settings.favs);'),
-                                buttonMaker ( idrinth.text.get("ui.reloadGame"), 'idrinth.ui.reloadGame();' ),
-                                buttonMaker ( idrinth.text.get("ui.clearRaids"), 'idrinth.raids.clearAll();' ),
-                                buttonMaker ( idrinth.text.get("ui.reloadScript"), 'idrinth.reload();' ),
-                                buttonMaker ( idrinth.text.get("ui.restartJoin"), 'idrinth.raids.restartInterval();' ),
-                                buttonMaker ( idrinth.text.get("ui.refreshFacebookLogin"), 'idrinth.facebook.rejoin()', 'facebook' ),
-                                buttonMaker ( idrinth.text.get("ui.ngJoin"), 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
+                                buttonMaker ( 'Import all manually', 'idrinth.raids.import(\'\');' ),
+                                buttonMaker ( 'Import favs manually', 'idrinth.raids.import(idrinth.settings.favs);' ),
+                                buttonMaker ( 'Reload game', 'idrinth.ui.reloadGame();' ),
+                                buttonMaker ( 'Clear Raids', 'idrinth.raids.clearAll();' ),
+                                buttonMaker ( 'Reload Script', 'idrinth.reload();' ),
+                                buttonMaker ( 'Restart Raidjoin', 'idrinth.raids.restartInterval();' ),
+                                buttonMaker ( 'Refresh Facebook Game Login', 'idrinth.facebook.rejoin()', 'facebook' ),
+                                buttonMaker ( 'NG Raid Join(slow!)', 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
                                 buttonMaker ( idrinth.settings.alarmActive ? 'disable timed Autojoin' : 'enable timed Autojoin', 'idrinth.settings.change(\'alarmActive\',!idrinth.settings.alarmActive);this.innerHTML=idrinth.settings.alarmActive?\'disable timed Autojoin\':\'enable timed Autojoin\'', 'newgrounds' )
                             ]
                         }, {
@@ -466,7 +466,7 @@ idrinth.ui = {
                             css: 'idrinth-line',
                             children: [ {
                                     type: 'label',
-                                    content: idrinth.text.get("ui.enterBossName"),
+                                    content: 'Enter Boss\' Name',
                                     css: 'idrinth-float-half',
                                     attributes: [
                                         {
@@ -496,63 +496,63 @@ idrinth.ui = {
                             rType: '#input',
                             type: 'checkbox',
                             platforms: [ 'kongregate' ],
-                            label: idrinth.text.get("ui.enableExtCharInfo")
+                            label: 'Enable extended Characterinformation?'
                         }, {
                             name: 'minimalist',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get("ui.miniLayout")
+                            label: 'Minimalist Layout'
                         }, {
                             name: 'moveLeft',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get("ui.moveSetLeft")
+                            label: 'Move settings left'
                         }, {
                             name: 'warBottom',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get("ui.warBottomPage")
+                            label: 'Show war at the bottom of the page'
                         }, {
                             name: 'landMax',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get("ui.useGoldUp")
+                            label: 'Check to try and use up the gold as efficient as possible - uncheck to only use the most efficient buy in the land buy calculator'
                         }, {
                             name: 'factor',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get("ui.buyTenOnce")
+                            label: 'Buy 10 Buildings at once?(Rec)'
                         }, {
                             name: 'timeout',
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'kongregate' ],
-                            label: idrinth.text.get("ui.millisecondsCharInfoAppears")
+                            label: 'Milliseconds until the extended Characterinformation disappears'
                         }, {
                             name: 'newgroundLoad',
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'newgrounds' ],
-                            label: idrinth.text.get("ui.secondsToLoadGame")
+                            label: 'Seconds needed to load the game for joining'
                         }, {
                             name: 'chatting',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get("ui.enableChat")
+                            label: 'Enable chat(needs script reload)'
                         }, {
                             css: 'idrinth-line',
                             type: 'span',
-                            content: idrinth.text.get("ui.importInfo")
+                            content: 'This script will always import the raids you manually set to be imported on the website and if it\'s enabled it will also import all raids matched by one of the faved searches provided.'
                         }, {
                             name: 'raids',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get("ui.enableAutoRaidRequest")
+                            label: 'Enable Auto-Raid-Request for Favorites?'
                         }, {
                             name: 'favs',
                             rType: '#input',
                             type: 'text',
-                            label: idrinth.text.get("ui.idsToJoin")
+                            label: 'FavoriteIds to join (separate multiple by comma)'
                         }, {
                             name: 'isWorldServer',
                             rType: '#input',
@@ -578,19 +578,19 @@ idrinth.ui = {
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'dawnofthedragons', 'facebook' ],
-                            label: idrinth.text.get("ui.maxPopupsFrame")
+                            label: 'Maximum Popups/Frames for joining raids'
                         }, {
                             name: 'alarmTime',
                             rType: '#input',
                             type: 'text',
                             platforms: [ 'newgrounds' ],
-                            label: idrinth.text.get("ui.timeAutoJoinRaids")
+                            label: 'Time to automatically join raids slowly(reloads game multiple times). Format is [Hours]:[Minutes] without leading zeros, so 7:1 is fine, 07:01 is not'
                         }, {
                             css: 'idrinth-line',
                             type: 'p',
                             children: [ {
                                     type: '#text',
-                                    content: idrinth.text.get("ui.getSearchFavs")
+                                    content: 'Get your search-favorites from '
                                 }, {
                                     type: 'a',
                                     attributes: [ {

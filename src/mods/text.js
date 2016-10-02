@@ -41,37 +41,10 @@ idrinth.text = {
             diffNight: 'Nightmare',
             tagTop: 'Tag to screen-top',
             alertNoSpaceTierbox: 'There is no space for another tier-box at the moment, please close one first.',
-        },
-        ui: {
-            importMan: 'Import all manually',
-            importFav: 'Import favs manually',
-            reloadGame: 'Reload game',
-            clearRaids: 'Clear Raids',
-            reloadScript: 'Reload Script',
-            restartJoin: 'Restart Raidjoin',
-            refreshFacebookLogin: 'Refresh Facebook Game Login',
-            ngJoin: 'NG Raid Join(slow!)',
-
-            enterBossName: 'Enter Boss\' Name',
-            enableExtCharInfo: 'Enable extended Characterinformation?',
-            miniLayout: 'Minimalist Layout',
-            moveSetLeft: 'Move settings left',
-            warBottomPage: 'Show war at the bottom of the page',
-            useGoldUp: 'Check to try and use up the gold as efficient as possible - uncheck to only use the most efficient buy in the land buy calculator',
-            buyTenOnce: 'Buy 10 Buildings at once?(Rec)',
-            millisecondsCharInfoAppears: 'Milliseconds until the extended Characterinformation disappears',
-            secondsToLoadGame: 'Seconds needed to load the game for joining',
-            enableChat: 'Enable chat(needs script reload)',
-            importInfo:'This script will always import the raids you manually set to be imported on the website and if it\'s enabled it will also import all raids matched by one of the faved searches provided.',
-            enableAutoRaidRequest: 'Enable Auto-Raid-Request for Favorites?',
-            idsToJoin: 'FavoriteIds to join (separate multiple by comma)',
-            maxPopupsFrame: 'Maximum Popups/Frames for joining raids',
-            timeAutoJoinRaids:'Time to automatically join raids slowly(reloads game multiple times). Format is [Hours]:[Minutes] without leading zeros, so 7:1 is fine, 07:01 is not',
-            getSearchFavs:'Get your search-favorites from ',
         }
     },
 
-    // idrinth.text.get("ui.getSearchFavs")
+    // idrinth.text.get("tier.alertNoSpaceTierbox"),
 
     get: function (key) {
         var getSub = function (obj, keys, func) {
