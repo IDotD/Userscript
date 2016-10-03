@@ -1,0 +1,32 @@
+{
+  "name": "idotd",
+  "version": "10.0.0",
+  "description": "A script for dawn of the dragons, that works based on data provided to https://dotd.idrinth.de via UgUp",
+  "main": "src/stable.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Idrinth/IDotD.git"
+  },
+  "keywords": [
+    "dotd",
+    "idrinth",
+    "script",
+    "userscript",
+    "dotd"
+  ],
+  "author": "Björn Büttner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Idrinth/IDotD/issues"
+  },
+  "homepage": "https://github.com/Idrinth/IDotD#idotd",
+  "devDependencies": {
+    "jasmine": "^2.4.1"
+  }
+}
