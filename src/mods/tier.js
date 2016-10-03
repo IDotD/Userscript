@@ -185,7 +185,7 @@ idrinth.tier = {
                         },
                         {
                             type: 'button',
-                            content: idrinth.text.get("tier.tagTop"),
+                            content: 'Tag to screen-top',
                             attributes: [
                                 {
                                     name: 'onclick',
