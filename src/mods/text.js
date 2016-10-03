@@ -28,7 +28,7 @@ idrinth.text = {
             },
             error:{
                 default: 'Unexpected error occurred. Please contact script developers'
-                                + ' (https://github.com/Idrinth/IDotD).',
+                                + ' (https://github.com/Idrinth/IDotD).'
             }
         },
         land: {
@@ -57,7 +57,7 @@ idrinth.text = {
                 restartRaidJoin: 'Restart Raidjoin',
                 refreshFBGameLogin: 'Refresh Facebook Game Login',
                 ngRaidJoin: 'NG Raid Join(slow!)',
-                calc:'Calculate',
+                calc:'Calculate'
             },
             misc:{
                 lastRaidsJoined: 'Last raids joined:',
@@ -69,7 +69,7 @@ idrinth.text = {
                 raidsearch: 'Idrinth\'s Raidsearch',
                 goldHour: ' gold per hour each',
                 availGold: 'Avaible Gold',
-                clickCopy: 'click to copy raid link',
+                clickCopy: 'click to copy raid link'
             },
             message: {
                 reloadGameFail: 'The game couldn\'t be reloaded'
@@ -87,10 +87,10 @@ idrinth.text = {
                 enableAutoRequestFav: 'Enable Auto-Raid-Request for Favorites?',
                 favIdToJoin: 'FavoriteIds to join (separate multiple by comma)',
                 worldserver: 'Worldserver?',
-                disableAutoJoinSpecific: 'Disable Autojoining for specific raids',
-                
+                disableAutoJoinSpecific: 'Disable Autojoining for specific raids'
             }
         }
+
     },
 
     // idrinth.text.get("ui.setting.clickCopy")
