@@ -101,7 +101,7 @@ idrinth.tier = {
                         rType: '#input',
                         type: 'checkbox',
                         id: 'idrinth-raid-may-join-list-' + data[key].name,
-                        label: 'Disable joining for ' + data[key].name
+                        label: idrinth.text.get("tier.disableJoining") + data[key].name
                     } ) );
                     document.getElementById ( 'idrinth-raid-may-join-list' ).lastChild.setAttribute ( 'style',
                             'background-image:url(https://dotd.idrinth.de/static/raid-image-service/' + data[key].url + '/);' );
@@ -185,7 +185,7 @@ idrinth.tier = {
                         },
                         {
                             type: 'button',
-                            content: 'Tag to screen-top',
+                            content: idrinth.text.get("tier.tagTop"),
                             attributes: [
                                 {
                                     name: 'onclick',
@@ -216,19 +216,19 @@ idrinth.tier = {
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diff.normal"),
+                                                    content: idrinth.text.get("tier.diff.normal")
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diff.hard"),
+                                                    content: idrinth.text.get("tier.diff.normal")
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diff.legend"),
+                                                    content: idrinth.text.get("tier.diff.normal")
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diff.night"),
+                                                    content: idrinth.text.get("tier.diff.normal")
                                                 }
                                             ]
                                         }

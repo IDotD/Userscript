@@ -257,14 +257,14 @@ idrinth.ui = {
         if ( typeof altFunc === 'string' ) {
             mod.children[mod.children.length - 1].children = [ {
                     type: 'button',
-                    content: 'Ok',
+                    content: idrinth.text.get("ui.button.ok"),
                     attributes: [ {
                             name: 'onclick',
                             value: closeFunc + altFunc
                         } ]
                 }, {
                     type: 'button',
-                    content: 'Cancel',
+                    content: idrinth.text.get("ui.button.cancel"),
                     attributes: [ {
                             name: 'onclick',
                             value: closeFunc
@@ -273,7 +273,7 @@ idrinth.ui = {
         } else {
             mod.children[mod.children.length - 1].children = [ {
                     type: 'button',
-                    content: 'Ok',
+                    content: idrinth.text.get("ui.button.ok"),
                     attributes: [ {
                             name: 'onclick',
                             value: closeFunc
@@ -377,7 +377,7 @@ idrinth.ui = {
                 handleFrame ( document.getElementById ( 'gamefilearea' ) );
             }
         } catch ( e ) {
-            idrinth.core.alert ( 'The game couldn\'t be reloaded' );
+            idrinth.core.alert ( idrinth.text.get("ui.message.reloadGameFail") );
         }
     },
     updateClassesList: function ( element, add, remove ) {
@@ -439,20 +439,20 @@ idrinth.ui = {
                     };
                     return [ {
                             children: [
-                                buttonMaker ( 'Import all manually', 'idrinth.raids.import(\'\');' ),
-                                buttonMaker ( 'Import favs manually', 'idrinth.raids.import(idrinth.settings.favs);' ),
-                                buttonMaker ( 'Reload game', 'idrinth.ui.reloadGame();' ),
-                                buttonMaker ( 'Clear Raids', 'idrinth.raids.clearAll();' ),
-                                buttonMaker ( 'Reload Script', 'idrinth.reload();' ),
-                                buttonMaker ( 'Restart Raidjoin', 'idrinth.raids.restartInterval();' ),
-                                buttonMaker ( 'Refresh Facebook Game Login', 'idrinth.facebook.rejoin()', 'facebook' ),
-                                buttonMaker ( 'NG Raid Join(slow!)', 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
+                                buttonMaker ( idrinth.text.get("ui.button.importManually"), 'idrinth.raids.import(\'\');' ),
+                                buttonMaker ( idrinth.text.get("ui.button.importFav"), 'idrinth.raids.import(idrinth.settings.favs);' ),
+                                buttonMaker ( idrinth.text.get("ui.button.reloadGame"), 'idrinth.ui.reloadGame();' ),
+                                buttonMaker ( idrinth.text.get("ui.button.clearRaids"), 'idrinth.raids.clearAll();' ),
+                                buttonMaker ( idrinth.text.get("ui.button.reloadScript"), 'idrinth.reload();' ),
+                                buttonMaker ( idrinth.text.get("ui.button.restartRaidJoin"), 'idrinth.raids.restartInterval();' ),
+                                buttonMaker ( idrinth.text.get("ui.button.refreshFBGameLogin"), 'idrinth.facebook.rejoin()', 'facebook' ),
+                                buttonMaker ( idrinth.text.get("ui.button.ngRaidJoin"), 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
                                 buttonMaker ( idrinth.settings.alarmActive ? 'disable timed Autojoin' : 'enable timed Autojoin', 'idrinth.settings.change(\'alarmActive\',!idrinth.settings.alarmActive);this.innerHTML=idrinth.settings.alarmActive?\'disable timed Autojoin\':\'enable timed Autojoin\'', 'newgrounds' )
                             ]
                         }, {
                             css: 'idrinth-line',
                             id: 'idrinth-joined-raids',
-                            content: 'Last raids joined:',
+                            content: idrinth.text.get("ui.misc.lastRaidsJoined"),
                             children: [
                                 {
                                     type: 'ul'
@@ -466,7 +466,7 @@ idrinth.ui = {
                             css: 'idrinth-line',
                             children: [ {
                                     type: 'label',
-                                    content: 'Enter Boss\' Name',
+                                    content: idrinth.text.get("ui.misc.enterBossName"),
                                     css: 'idrinth-float-half',
                                     attributes: [
                                         {
@@ -496,68 +496,68 @@ idrinth.ui = {
                             rType: '#input',
                             type: 'checkbox',
                             platforms: [ 'kongregate' ],
-                            label: 'Enable extended Characterinformation?'
+                            label: idrinth.text.get("ui.setting.enableExtendedCharInfo")
                         }, {
                             name: 'minimalist',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'Minimalist Layout'
+                            label: idrinth.text.get("ui.setting.minimLayout")
                         }, {
                             name: 'moveLeft',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'Move settings left'
+                            label: idrinth.text.get("ui.setting.moveSettingLeft")
                         }, {
                             name: 'warBottom',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'Show war at the bottom of the page'
+                            label: idrinth.text.get("ui.setting.warBottomPage")
                         }, {
                             name: 'landMax',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'Check to try and use up the gold as efficient as possible - uncheck to only use the most efficient buy in the land buy calculator'
+                            label: idrinth.text.get("ui.setting.useGoldEfficiently")
                         }, {
                             name: 'factor',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'Buy 10 Buildings at once?(Rec)'
+                            label: idrinth.text.get("ui.setting.tenBuildOnce")
                         }, {
                             name: 'timeout',
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'kongregate' ],
-                            label: 'Milliseconds until the extended Characterinformation disappears'
+                            label: idrinth.text.get("ui.setting.milliSecondsExtCharInfoDis")
                         }, {
                             name: 'newgroundLoad',
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'newgrounds' ],
-                            label: 'Seconds needed to load the game for joining'
+                            label: idrinth.text.get("ui.setting.secondsGameNeedsEnableJoining")
                         }, {
                             name: 'chatting',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'Enable chat(needs script reload)'
+                            label: idrinth.text.get("ui.setting.enableChat")
                         }, {
                             css: 'idrinth-line',
                             type: 'span',
-                            content: 'This script will always import the raids you manually set to be imported on the website and if it\'s enabled it will also import all raids matched by one of the faved searches provided.'
+                            content: idrinth.text.get("ui.misc.settingInfo")
                         }, {
                             name: 'raids',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'Enable Auto-Raid-Request for Favorites?'
+                            label: idrinth.text.get("ui.setting.enableAutoRequestFav")
                         }, {
                             name: 'favs',
                             rType: '#input',
                             type: 'text',
-                            label: 'FavoriteIds to join (separate multiple by comma)'
+                            label: idrinth.text.get("ui.setting.favIdToJoin")
                         }, {
                             name: 'isWorldServer',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'Worldserver?'
+                            label: idrinth.text.get("ui.setting.worldserver")
                         }, {
                             name: 'notification#mention',
                             rType: '#input',
@@ -578,19 +578,19 @@ idrinth.ui = {
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'dawnofthedragons', 'facebook' ],
-                            label: 'Maximum Popups/Frames for joining raids'
+                            label: idrinth.text.get("ui.misc.maxPopupsFrame")
                         }, {
                             name: 'alarmTime',
                             rType: '#input',
                             type: 'text',
                             platforms: [ 'newgrounds' ],
-                            label: 'Time to automatically join raids slowly(reloads game multiple times). Format is [Hours]:[Minutes] without leading zeros, so 7:1 is fine, 07:01 is not'
+                            label: idrinth.text.get("ui.misc.timeAutoJoin")
                         }, {
                             css: 'idrinth-line',
                             type: 'p',
                             children: [ {
                                     type: '#text',
-                                    content: 'Get your search-favorites from '
+                                    content: idrinth.text.get("ui.misc.getFavFrom")
                                 }, {
                                     type: 'a',
                                     attributes: [ {
@@ -600,7 +600,7 @@ idrinth.ui = {
                                             name: 'target',
                                             value: '_blank'
                                         } ],
-                                    content: 'Idrinth\'s Raidsearch'
+                                    content: idrinth.text.get("ui.misc.raidsearch")
                                 } ]
                         } ];
                 };
@@ -634,7 +634,7 @@ idrinth.ui = {
                             attributes: [
                                 {
                                     name: 'title',
-                                    value: idrinth.land.data[label.toLowerCase ()].perHour + ' gold per hour each'
+                                    value: idrinth.land.data[label.toLowerCase()].perHour + idrinth.text.get("ui.misc.goldHour")
                                 }
                             ]
                         };
@@ -666,7 +666,7 @@ idrinth.ui = {
                                     type: 'tr',
                                     children: [ {
                                             type: 'th',
-                                            content: 'Avaible Gold'
+                                            content: idrinth.text.get("ui.misc.availGold")
                                         }, {
                                             type: 'td',
                                             children: [ {
@@ -687,7 +687,7 @@ idrinth.ui = {
                                             type: 'td',
                                             children: [ {
                                                     type: 'button',
-                                                    content: 'Calculate',
+                                                    content: idrinth.text.get("ui.button.calc"),
                                                     attributes: [
                                                         {
                                                             name: 'onclick',
@@ -761,12 +761,12 @@ idrinth.ui = {
                 };
                 var buildRaidJoinList = function () {
                     return [ {
-                            content: 'click to copy raid link',
+                            content: idrinth.text.get("ui.setting.clickCopy"),
                             type: 'strong'
                         }, {
                             id: 'idrinth-raid-link-list'
                         }, {
-                            content: 'Disable Autojoining for specific raids',
+                            content: idrinth.text.get("ui.setting.disableAutoJoinSpecific"),
                             type: 'strong'
                         }, {
                             id: 'idrinth-raid-may-join-list'
