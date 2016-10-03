@@ -4,7 +4,7 @@ module.exports = function ( config ) {
     config.set ( {
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: './',
+        basePath: '',
 
 
         // frameworks to use
@@ -18,7 +18,7 @@ module.exports = function ( config ) {
             'src/stable.js',
 
             'src/**/*.js',
-            'tests/**/*.js'
+            'tests/**/*Spec.js'
         ],
 
 
