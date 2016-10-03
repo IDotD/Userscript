@@ -1,9 +1,9 @@
-idrinth.text = {     
+idrinth.text = {
     data: {
         chat: {
-            ui:{
+            ui: {
                 close: 'Close',
-                invite:'Invite to Chat ',
+                invite: 'Invite to Chat ',
                 account: 'Account',
                 chat: 'Chat',
                 createChat: 'Create Chat',
@@ -15,18 +15,18 @@ idrinth.text = {
                 deleteRoom: 'Delete Room',
                 leaveRoom: 'Leave Room'
             },
-            message:{
+            message: {
                 optional: 'This part of the script is optional, so logging in is unneeded for raid catching etc.',
                 invalid: 'This should not be the data for logging in on the related gaming site and the login does not need to match your ingame name - you can set a display name after the registration.',
                 offline: "Not logged in, click to login/register",
-                modifyFail:'Can\'t modify that user at the moment',
+                modifyFail: 'Can\'t modify that user at the moment',
                 createFail: 'Can\'t create at the moment',
                 joinFailMoment: 'Can\'t join at the moment',
-                joinFail:'Joining didn\'t work',
+                joinFail: 'Joining didn\'t work',
                 loginFail: 'Login failed in an unexpected way',
-                unknown:'The given username for dotd.idrinth.de is unknown, do you want to register it there?'
+                unknown: 'The given username for dotd.idrinth.de is unknown, do you want to register it there?'
             },
-            error:{
+            error: {
                 default: 'Unexpected error occurred. Please contact script developers'
                                 + ' (https://github.com/Idrinth/IDotD).'
             }
@@ -35,15 +35,15 @@ idrinth.text = {
             lackGold: 'You lack gold to buy any more buildings at the moment.'
         },
         tier: {
-            diff:{
-                normal:'Normal',
-                hard:'Hard',
-                legend:'Legend',
-                night:'Nightmare'
+            diff: {
+                normal: 'Normal',
+                hard: 'Hard',
+                legend: 'Legend',
+                night: 'Nightmare'
             },
             tagTop: 'Tag to screen-top',
             maxBoxes: 'There is no space for another tier-box at the moment, please close one first.',
-            disableJoining:'Disable joining for '
+            disableJoining: 'Disable joining for '
         },
         ui: {
             button: {
@@ -57,14 +57,14 @@ idrinth.text = {
                 restartRaidJoin: 'Restart Raidjoin',
                 refreshFBGameLogin: 'Refresh Facebook Game Login',
                 ngRaidJoin: 'NG Raid Join(slow!)',
-                calc:'Calculate'
+                calc: 'Calculate'
             },
-            misc:{
+            misc: {
                 lastRaidsJoined: 'Last raids joined:',
                 enterBossName: 'Enter Boss\' Name',
-                settingInfo:'This script will always import the raids you manually set to be imported on the website and if it\'s enabled it will also import all raids matched by one of the faved searches provided.',
+                settingInfo: 'This script will always import the raids you manually set to be imported on the website and if it\'s enabled it will also import all raids matched by one of the faved searches provided.',
                 maxPopupsFrame: 'Maximum Popups/Frames for joining raids',
-                timeAutoJoin:'Time to automatically join raids slowly(reloads game multiple times). Format is [Hours]:[Minutes] without leading zeros, so 7:1 is fine, 07:01 is not',
+                timeAutoJoin: 'Time to automatically join raids slowly(reloads game multiple times). Format is [Hours]:[Minutes] without leading zeros, so 7:1 is fine, 07:01 is not',
                 getFavFrom: 'Get your search-favorites from ',
                 raidsearch: 'Idrinth\'s Raidsearch',
                 goldHour: ' gold per hour each',
@@ -95,17 +95,17 @@ idrinth.text = {
 
     // idrinth.text.get("ui.setting.clickCopy")
 
-    get: function (key) {
-        var getSub = function (obj, keys, func) {
+    get: function ( key ) {
+        var getSub = function ( obj, keys, func ) {
             var key = keys.shift();
-            if (obj.hasOwnProperty(key)) {
-                if (keys.length > 0) {
-                    return func(obj[key], keys, func);
+            if ( obj.hasOwnProperty( key ) ) {
+                if ( keys.length > 0 ) {
+                    return func( obj[key], keys, func );
                 }
                 return obj[key];
             }
             return idrinth.text.data.chat.error.errorDefault;
         };
-        return getSub(idrinth.text.data,key.split('.'),getSub);
+        return getSub( idrinth.text.data, key.split( '.' ), getSub );
     }
 }
