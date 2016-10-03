@@ -65,7 +65,7 @@ idrinth.tier = {
                 return make ( key, name );
             }
         }
-        idrinth.core.alert ( idrinth.text.get("tier.alertNoSpaceTierbox") );
+        idrinth.core.alert(idrinth.text.get("tier.maxBoxes"));
     },
     taggedSlots: { },
     start: function () {
@@ -216,19 +216,19 @@ idrinth.tier = {
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diffNormal"),
+                                                    content: idrinth.text.get("tier.diff.normal"),
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diffHard"),
+                                                    content: idrinth.text.get("tier.diff.hard"),
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diffLegend"),
+                                                    content: idrinth.text.get("tier.diff.legend"),
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diffNight"),
+                                                    content: idrinth.text.get("tier.diff.night"),
                                                 }
                                             ]
                                         }

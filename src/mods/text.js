@@ -13,7 +13,7 @@ idrinth.text = {
                 copyIdPasswort: 'Copy Password&Id',
                 moreSettings: 'More settings at ',
                 deleteRoom: 'Delete Room',
-                leaveRoom: 'Leave Room',
+                leaveRoom: 'Leave Room'
             },
             message:{
                 optional: 'This part of the script is optional, so logging in is unneeded for raid catching etc.',
@@ -21,30 +21,32 @@ idrinth.text = {
                 offline: "Not logged in, click to login/register",
                 modifyFail:'Can\'t modify that user at the moment',
                 createFail: 'Can\'t create at the moment',
-                joinFail: 'Can\'t join at the moment',
-                joinNotwork:'Joining didn\'t work',
+                joinFailMoment: 'Can\'t join at the moment',
+                joinFail:'Joining didn\'t work',
                 loginFail: 'Login failed in an unexpected way',
-                unknown:'The given username for dotd.idrinth.de is unknown, do you want to register it there?',
+                unknown:'The given username for dotd.idrinth.de is unknown, do you want to register it there?'
             },
             error:{
-                errorDefault: 'Unexpected error occurred. Please contact script developers'
+                default: 'Unexpected error occurred. Please contact script developers'
                                 + ' (https://github.com/Idrinth/IDotD).',
             }
         },
         land: {
-            lackGold: 'You lack gold to buy any more buildings at the moment.',
+            lackGold: 'You lack gold to buy any more buildings at the moment.'
         },
         tier: {
-            diffNormal: 'Normal',
-            diffHard: 'Hard',
-            diffLegend: 'Legend',
-            diffNight: 'Nightmare',
+            diff:{
+                normal:'Normal',
+                hard:'Hard',
+                legend:'Legend',
+                night:'Nightmare'
+            },
             tagTop: 'Tag to screen-top',
-            alertNoSpaceTierbox: 'There is no space for another tier-box at the moment, please close one first.',
+            maxBoxes: 'There is no space for another tier-box at the moment, please close one first.'
         }
     },
 
-    // idrinth.text.get("tier.alertNoSpaceTierbox"),
+    // idrinth.text.get("tier.maxBoxes"),
 
     get: function (key) {
         var getSub = function (obj, keys, func) {

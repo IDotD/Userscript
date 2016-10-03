@@ -754,19 +754,19 @@ idrinth.chat = {
     },
     joinCallback: function ( reply ) {
         if ( !reply ) {
-            idrinth.core.alert( idrinth.text.get("chat.message.joinFail") );
+            idrinth.core.alert( idrinth.text.get("chat.message.joinFailMoment") );
             return;
         }
         reply = JSON.parse ( reply );
         if ( !reply ) {
-            idrinth.core.alert( idrinth.text.get("chat.message.joinFail") );
+            idrinth.core.alert( idrinth.text.get("chat.message.joinFailMoment") );
             return;
         }
         if ( !reply.success ) {
             if ( reply.message ) {
                 idrinth.core.alert ( reply.message );
             } else {
-                idrinth.core.alert( idrinth.text.get("chat.message.joinNotwork") );
+                idrinth.core.alert( idrinth.text.get("chat.message.joinFail") );
             }
             return;
         }
@@ -782,10 +782,10 @@ idrinth.chat = {
                 'chat-service/join/',
                 idrinth.chat.joinCallback,
                 function ( reply ) {
-                    idrinth.core.alert ( idrinth.text.get("chat.message.joinFail") );
+                    idrinth.core.alert ( idrinth.text.get("chat.message.joinFailMoment") );
                 },
                 function ( reply ) {
-                    idrinth.core.alert ( idrinth.text.get("chat.message.joinFail") );
+                    idrinth.core.alert ( idrinth.text.get("chat.message.joinFailMoment") );
                 },
                 JSON.stringify ( {
                     id: document.getElementById ( 'idrinth-add-chat' ).getElementsByTagName ( 'input' )[0].value,
@@ -825,12 +825,12 @@ idrinth.chat = {
     },
     loginCallback: function ( data ) {
         if ( !data ) {
-            idrinth.core.alert ( idrinth.text.get("chat.message.loginFail")) );
+            idrinth.core.alert ( idrinth.text.get("chat.message.loginFailMoment"));
             return;
         }
         data = JSON.parse ( data );
         if ( !data ) {
-            idrinth.core.alert ( idrinth.text.get("chat.message.loginFail") );
+            idrinth.core.alert ( idrinth.text.get("chat.message.loginFailMoment") );
             return;
         }
         if ( !data.success && data.message && data['allow-reg'] ) {
@@ -849,7 +849,7 @@ idrinth.chat = {
             idrinth.chat.join ( data.data );
             return;
         }
-        idrinth.core.alert( idrinth.text.get("chat.message.loginFail") );
+        idrinth.core.alert( idrinth.text.get("chat.message.loginFailMoment") );
     },
     register: function () {
         this.loginActions ( 'register' );
