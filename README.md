@@ -7,15 +7,19 @@ A script for dawn of the dragons, that works based on data provided to https://d
 
 We support Opera, Firefox and Chrome. Please make sure to update your installation of those on a regular basis, since we can't guarantee, that the script will work on outdated versions.
 
-# Bugs, desired Features etc.
+## What is it?
+
+IDotD combines a raid catcher, a way of automatically joining desired raids, with a few other tools like chatrooms with raid-sharing options within those specific rooms, looking up tiers and calculation what piece of land to buy next.
+
+Additionally there are a few platform specific features, for example quick information about players in the kongregate chat rooms or a timeable autojoin for newgrounds to replace the usual ones on other platforms.
+
+Most information is avaible at [this project's wiki](https://github.com/Idrinth/IDotD/wiki).
+
+## Bugs, desired Features etc.
 
 We prefer the usage of the [tracker](https://github.com/Idrinth/IDotD/issues) here, otherwise we do import requests from [GoogleDocs](https://docs.google.com/document/d/1ozOWQuAEKCNnt2cwQ4SZtkpYM_pvrl8Bnj0e_O1KKWs/edit) from time to time.
 [Previous GoogleDoc Tickets](https://github.com/Idrinth/IDotD/issues?utf8=%E2%9C%93&q=is%3Aissue%20label%3A%22Source%20GoogleDocs%22%20)
 
-# More Information
-
-Most information is avaible at [this project's wiki](https://github.com/Idrinth/IDotD/wiki).
-
-# How To Help
+## How To Help
 
 We can use helpers for the following: update and improve the wiki, help coding the userscript and testing any of the branches. For any of the later two have a look athe related documentation in the wiki.
