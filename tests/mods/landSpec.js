@@ -63,8 +63,6 @@ describe ( 'Land.js tests', function () {
             }
             mock[ 'idrinth-land-gold' ] = { value: '' };
 
-            console.log ( mock );
-
             spyOn ( document, "getElementById" ).and.callFake ( function ( id ) {
                 if ( mock.hasOwnProperty ( id ) ) {
                     return mock[ id ];
@@ -74,10 +72,14 @@ describe ( 'Land.js tests', function () {
             } );
 
             spyOn(idrinth.core, 'alert');
+            spyOn(idrinth.settings, 'save');
+            spyOn(idrinth.settings, 'change');
         } );
 
 
-        it ( "Should properly calculate land values", function () {
+        it ( "Should properly calculate without errors", function () {
+            //Prepare values
+
             idrinth.land.calculate ();
         } );
 
