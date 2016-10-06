@@ -57,7 +57,9 @@ idrinth.text = {
                 restartRaidJoin: 'Restart Raidjoin',
                 refreshFBGameLogin: 'Refresh Facebook Game Login',
                 ngRaidJoin: 'NG Raid Join(slow!)',
-                calc: 'Calculate'
+                calc: 'Calculate',
+                disableTimedAutoJoin: 'disable timed Autojoin',
+                enableTimedAutoJoin: 'enable timed Autojoin'
             },
             misc: {
                 lastRaidsJoined: 'Last raids joined:',
@@ -71,9 +73,7 @@ idrinth.text = {
                 availGold: 'Avaible Gold',
                 clickCopy: 'click to copy raid link'
             },
-            message: {
-                reloadGameFail: 'The game couldn\'t be reloaded'
-            },
+            reloadGameFail: 'The game couldn\'t be reloaded',
             setting: {
                 enableExtendedCharInfo: 'Enable extended Characterinformation?',
                 minimLayout: 'Minimalist Layout',
@@ -81,20 +81,16 @@ idrinth.text = {
                 warBottomPage: 'Show war at the bottom of the page',
                 useGoldEfficiently: 'Check to try and use up the gold as efficient as possible - uncheck to only use the most efficient buy in the land buy calculator',
                 tenBuildOnce: 'Buy 10 Buildings at once?(Rec)',
-                milliSecondsExtCharInfoDis: 'Milliseconds until the extended Characterinformation disappears',
-                secondsGameNeedsEnableJoining: 'Seconds needed to load the game for joining',
+                extCharInfoDuration: 'Milliseconds until the extended Characterinformation disappears',
+                joiningDuration: 'Seconds needed to load the game for joining',
                 enableChat: 'Enable chat(needs script reload)',
-                enableAutoRequestFav: 'Enable Auto-Raid-Request for Favorites?',
+                enableFavRequest: 'Enable Auto-Raid-Request for Favorites?',
                 favIdToJoin: 'FavoriteIds to join (separate multiple by comma)',
                 worldserver: 'Worldserver?',
                 disableAutoJoinSpecific: 'Disable Autojoining for specific raids'
             }
         }
-
     },
-
-    // idrinth.text.get("ui.setting.clickCopy")
-
     get: function ( key ) {
         var getSub = function ( obj, keys, func ) {
             var key = keys.shift();

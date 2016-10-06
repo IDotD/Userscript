@@ -377,7 +377,7 @@ idrinth.ui = {
                 handleFrame ( document.getElementById ( 'gamefilearea' ) );
             }
         } catch ( e ) {
-            idrinth.core.alert ( idrinth.text.get("ui.message.reloadGameFail") );
+            idrinth.core.alert ( idrinth.text.get("ui.reloadGameFail") );
         }
     },
     updateClassesList: function ( element, add, remove ) {
@@ -447,7 +447,7 @@ idrinth.ui = {
                                 buttonMaker ( idrinth.text.get("ui.button.restartRaidJoin"), 'idrinth.raids.restartInterval();' ),
                                 buttonMaker ( idrinth.text.get("ui.button.refreshFBGameLogin"), 'idrinth.facebook.rejoin()', 'facebook' ),
                                 buttonMaker ( idrinth.text.get("ui.button.ngRaidJoin"), 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
-                                buttonMaker ( idrinth.settings.alarmActive ? 'disable timed Autojoin' : 'enable timed Autojoin', 'idrinth.settings.change(\'alarmActive\',!idrinth.settings.alarmActive);this.innerHTML=idrinth.settings.alarmActive?\'disable timed Autojoin\':\'enable timed Autojoin\'', 'newgrounds' )
+                                buttonMaker( idrinth.settings.alarmActive ? idrinth.text.get( "ui.button.disableTimedAutoJoin" ) : idrinth.text.get( "ui.button.enableTimedAutoJoin" ),'idrinth.settings.change(\'alarmActive\',!idrinth.settings.alarmActive);this.innerHTML=idrinth.settings.alarmActive?\'disable timed Autojoin\':\'enable timed Autojoin\'', 'newgrounds' )
                             ]
                         }, {
                             css: 'idrinth-line',
@@ -527,13 +527,13 @@ idrinth.ui = {
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'kongregate' ],
-                            label: idrinth.text.get("ui.setting.milliSecondsExtCharInfoDis")
+                            label: idrinth.text.get( "ui.setting.extCharInfoDuration" )
                         }, {
                             name: 'newgroundLoad',
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'newgrounds' ],
-                            label: idrinth.text.get("ui.setting.secondsGameNeedsEnableJoining")
+                            label: idrinth.text.get( "ui.setting.joiningDuration" )
                         }, {
                             name: 'chatting',
                             rType: '#input',
@@ -547,7 +547,7 @@ idrinth.ui = {
                             name: 'raids',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get("ui.setting.enableAutoRequestFav")
+                            label: idrinth.text.get( "ui.setting.enableFavRequest" )
                         }, {
                             name: 'favs',
                             rType: '#input',
