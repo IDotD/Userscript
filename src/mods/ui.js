@@ -762,7 +762,7 @@ idrinth.ui = {
                 };
                 var buildRaidJoinList = function () {
                     return [ {
-                            content: idrinth.text.get ( "ui.setting.clickCopy" ),
+                            content: idrinth.text.get ( "ui.clickCopy" ),
                             type: 'strong'
                         }, {
                             id: 'idrinth-raid-link-list'
