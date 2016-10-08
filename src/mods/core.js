@@ -79,10 +79,13 @@ idrinth.core = {
             return success;
         },
         element: function ( element ) {
-            return idrinth.core.copyToClipboard (
-                    element.hasAttribute ( 'data-clipboard-text' )
-                    ? element.getAttribute ( 'data-clipboard-text' )
-                    : element.innerHTML );
+            if ( element.hasAttribute ( 'data-clipboard-text' ) ) {
+                idrinth.core.copyToClipboard.text ( element.getAttribute ( 'data-clipboard-text' ) );
+            }
+            if ( element.value ) {
+                idrinth.core.copyToClipboard.text ( element.value );
+            }
+            return idrinth.core.copyToClipboard.text ( element.innerHTML );
         }
     },
     sendNotification: function ( title, content ) {
@@ -140,7 +143,7 @@ idrinth.core = {
                     try {
                         idrinth.core.multibind.events[event][selector][pos] ( el, event );
                     } catch ( exception ) {
-                        idrinth.core.log ( exception.getMessage () );
+                        idrinth.core.log ( exception.message ? exception.message : exception.getMessage () );
                     }
                 }
             };
