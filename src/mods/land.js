@@ -70,7 +70,7 @@ idrinth.land = {
         }
         var results = baseCalculator ( getRequirements () );
         if ( Object.keys ( results ).length === 0 ) {
-            idrinth.core.alert ( 'You lack gold to buy any more buildings at the moment.' );
+            idrinth.core.alert ( idrinth.text.get ( "land.lackgold" ) );
         }
         putResults ( results );
     },

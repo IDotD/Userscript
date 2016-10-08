@@ -57,25 +57,25 @@ idrinth.chat = {
                 var promotionModes = [
                     {
                         chat: chat,
-                        label: 'Ban User',
+                        label: 'chat.actions.banUser',
                         rank: 'Banned',
                         requiredRank: 3
                     },
                     {
                         chat: chat,
-                        label: 'Make Moderator',
+                        label: 'chat.actions.makeMod',
                         rank: 'Mod',
                         requiredRank: 3
                     },
                     {
                         chat: chat,
-                        label: 'Make Admin',
+                        label: 'chat.actions.makeAdmin',
                         rank: 'Owner',
                         requiredRank: 4
                     },
                     {
                         chat: chat,
-                        label: 'Make User',
+                        label: 'chat.actions.makeUser',
                         rank: 'User',
                         requiredRank: 3
                     }
@@ -155,10 +155,10 @@ idrinth.chat = {
                     }
                 },
                 function ( reply ) {
-                    idrinth.core.alert ( this.getMsg ( 'modify.fail' ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.modify" ) );
                 },
                 function ( reply ) {
-                    idrinth.core.alert ( this.getMsg ( 'modify.fail' ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.modify" ) );
                 },
                 JSON.stringify ( {
                     chat: chat,
@@ -314,7 +314,7 @@ idrinth.chat = {
                                         ( idrinth.settings.notification.mention && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
                                         ( idrinth.settings.notification.raid && text.match ( /\{[A-Z]{2}-Raid / ) !== null );
                             } catch ( e ) {
-                                idrinth.core.log ( e.getMessage ( ) );
+                                idrinth.core.log ( e.getMessage () );
                                 return false;
                             }
                         };
@@ -493,12 +493,13 @@ idrinth.chat = {
     start: function () {
         var build = function () {
             var makeInput = function ( label ) {
+                var translation = idrinth.text.get( label );
                 return {
                     type: 'li',
                     children: [
                         {
                             type: 'label',
-                            content: label
+                            content: translation === idrinth.text.data.default ? label : translation
                         },
                         {
                             type: 'input',
@@ -517,6 +518,7 @@ idrinth.chat = {
                 };
             };
             var makeButton = function ( label, onclick ) {
+                var translation = idrinth.text.get( label );
                 return {
                     type: 'li',
                     children: [
@@ -532,7 +534,7 @@ idrinth.chat = {
                                     value: onclick
                                 }
                             ],
-                            content: label
+                            content: translation === idrinth.text.data.default ? label : translation
                         }
                     ]
                 };
@@ -581,21 +583,21 @@ idrinth.chat = {
                                 children: [
                                     {
                                         type: 'h1',
-                                        content: 'Chat'
+                                        content: idrinth.text.get ( "chat.ui.chat" )
                                     },
                                     {
                                         type: 'p',
-                                        content: 'This part of the script is optional, so logging in is unneeded for raid catching etc.'
+                                        content: idrinth.text.get ( "chat.message.optional" )
                                     }, {
                                         id: 'idrinth-chat-login',
                                         children: [
                                             {
                                                 type: 'h2',
-                                                content: 'Account'
+                                                content: idrinth.text.get ( "chat.ui.account" )
                                             },
                                             {
                                                 type: 'p',
-                                                content: 'This should not be the data for logging in on the related gaming site and the login does not need to match your ingame name - you can set a display name after the registration.'
+                                                content: idrinth.text.get ( "chat.message.invalid" )
                                             },
                                             {
                                                 type: 'ul',
@@ -603,7 +605,7 @@ idrinth.chat = {
                                                 children: [
                                                     makeInput ( 'Username' ),
                                                     makeInput ( 'Password' ),
-                                                    makeButton ( "Not logged in, click to login/register", "idrinth.chat.login()" )
+                                                    makeButton ( 'chat.message.offline', "idrinth.chat.login()" )
                                                 ]
                                             }
                                         ]
@@ -612,7 +614,7 @@ idrinth.chat = {
                                         children: [
                                             {
                                                 type: 'h2',
-                                                content: 'Join Chat'
+                                                content: idrinth.text.get ( "chat.ui.joinChat" )
                                             },
                                             {
                                                 type: 'ul',
@@ -620,7 +622,7 @@ idrinth.chat = {
                                                 children: [
                                                     makeInput ( 'Chat-ID' ),
                                                     makeInput ( 'Chat-Password' ),
-                                                    makeButton ( "Click to join additional chat", "idrinth.chat.add()" )
+                                                    makeButton ( 'chat.ui.createAddChat', "idrinth.chat.add()" )
                                                 ]
                                             }
                                         ]
@@ -630,14 +632,14 @@ idrinth.chat = {
                                         children: [
                                             {
                                                 type: 'h2',
-                                                content: 'Create Chat'
+                                                content: idrinth.text.get ( "chat.ui.createChat" )
                                             },
                                             {
                                                 type: 'ul',
                                                 css: 'settings',
                                                 children: [
                                                     makeInput ( "Name" ),
-                                                    makeButton ( "Click to create additional chat", "idrinth.chat.create()" )
+                                                    makeButton ( 'chat.ui.createAddChat', "idrinth.chat.create()" )
                                                 ]
                                             }
                                         ]
@@ -646,7 +648,7 @@ idrinth.chat = {
                                         children: [
                                             {
                                                 type: '#text',
-                                                content: 'More settings at '
+                                                content: idrinth.text.get ( "chat.ui.moreSettings" )
                                             },
                                             {
                                                 type: 'a',
@@ -672,7 +674,7 @@ idrinth.chat = {
                                         children: [
                                             {
                                                 type: '#text',
-                                                content: 'Emoticons provided by '
+                                                content: idrinth.text.get ( "chat.ui.creditEmoticon" )
                                             },
                                             {
                                                 type: 'a',
@@ -744,29 +746,29 @@ idrinth.chat = {
                 'chat-service/create/',
                 idrinth.chat.joinCallback,
                 function ( reply ) {
-                    idrinth.core.alert ( this.getMsg ( 'create.fail' ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.create" ) );
                 },
                 function ( reply ) {
-                    idrinth.core.alert ( this.getMsg ( 'create.fail' ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.create" ) );
                 },
                 document.getElementById ( 'idrinth-make-chat' ).getElementsByTagName ( 'input' )[0].value
                 );
     },
     joinCallback: function ( reply ) {
         if ( !reply ) {
-            idrinth.core.alert ( this.getMsg ( 'join.fail' ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.join" ) );
             return;
         }
         reply = JSON.parse ( reply );
         if ( !reply ) {
-            idrinth.core.alert ( this.getMsg ( 'join.fail' ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.join" ) );
             return;
         }
         if ( !reply.success ) {
             if ( reply.message ) {
                 idrinth.core.alert ( reply.message );
             } else {
-                idrinth.core.alert ( this.getMsg ( 'join.notwork' ) );
+                idrinth.core.alert ( idrinth.text.get ( "chat.error.join" ) );
             }
             return;
         }
@@ -782,10 +784,10 @@ idrinth.chat = {
                 'chat-service/join/',
                 idrinth.chat.joinCallback,
                 function ( reply ) {
-                    idrinth.core.alert ( this.getMsg ( 'join.fail' ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.join" ) );
                 },
                 function ( reply ) {
-                    idrinth.core.alert ( this.getMsg ( 'join.fail' ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.join" ) );
                 },
                 JSON.stringify ( {
                     id: document.getElementById ( 'idrinth-add-chat' ).getElementsByTagName ( 'input' )[0].value,
@@ -825,16 +827,16 @@ idrinth.chat = {
     },
     loginCallback: function ( data ) {
         if ( !data ) {
-            idrinth.core.alert ( idrinth.chat.getMsg ( 'login.fail' ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
             return;
         }
         data = JSON.parse ( data );
         if ( !data ) {
-            idrinth.core.alert ( idrinth.chat.getMsg ( 'login.fail' ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
             return;
         }
         if ( !data.success && data.message && data['allow-reg'] ) {
-            idrinth.core.confirm ( idrinth.chat.getMsg ( 'user.unknown' ), 'idrinth.chat.register();' );
+            idrinth.core.confirm ( idrinth.text.get ( "chat.message.unknown" ), 'idrinth.chat.register();' );
             return;
         }
         if ( !data.success && data.message ) {
@@ -849,7 +851,7 @@ idrinth.chat = {
             idrinth.chat.join ( data.data );
             return;
         }
-        idrinth.core.alert ( idrinth.chat.getMsg ( 'login.fail' ) );
+        idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
     },
     register: function () {
         this.loginActions ( 'register' );
@@ -867,21 +869,21 @@ idrinth.chat = {
             css: 'idrinth-hovering-box',
             children: [ {
                     css: 'clipboard-copy',
-                    content: 'Copy Password&Id',
+                    content: idrinth.text.get ( "chat.ui.copyIdPasswort" ),
                     type: 'li',
                     attributes: [ {
                             name: 'data-clipboard-text',
                             value: element.getAttribute ( 'title' )
                         } ]
                 }, {
-                    content: 'Leave Room',
+                    content: idrinth.text.get ( "chat.ui.leaveRoom" ),
                     type: 'li',
                     attributes: [ {
                             name: 'onclick',
                             value: 'idrinth.chat.useroptions(' + element.getAttribute ( 'data-id' ) + ',' + idrinth.chat.self + ',\'Leave\');this.parentNode.parentNode.removeChild(this.parentNode);'
                         } ]
                 }, {
-                    content: 'Delete Room',
+                    content: idrinth.text.get ( "chat.ui.deleteRoom" ),
                     type: 'li',
                     attributes: [ {
                             name: 'onclick',
@@ -889,7 +891,7 @@ idrinth.chat = {
                         } ]
                 }, {
                     type: 'li',
-                    content: 'Close',
+                    content: idrinth.text.get ( "chat.ui.close" ),
                     attributes: [ {
                             name: 'onclick',
                             value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
@@ -930,20 +932,6 @@ idrinth.chat = {
             element.innerHTML = '&gt;&gt;';
         }
     },
-    getMsg: function ( key ) {
-        var textKey = key || '';
-        var text = {
-            'modify.fail': 'Can\'t modify that user at the moment',
-            'create.fail': 'Can\'t create at the moment',
-            'join.fail': 'Can\'t join at the moment',
-            'join.notwork': 'Joining didn\'t work',
-            'user.unknown': 'The given username for dotd.idrinth.de is unknown, do you want to register it there?',
-            'login.fail': 'Login failed in an unexpected way',
-            'default.error': 'Unexpected error occurred. Please contact script developers'
-                    + ' (https://github.com/Idrinth/IDotD).'
-        };
-        return text.hasOwnProperty ( textKey ) ? text[textKey] : text['default.error'];
-    },
     loginActions: function ( key ) {
         var chatLogin,
                 success,
@@ -953,7 +941,7 @@ idrinth.chat = {
                     'relogin': 'chat-service/login/'
                 },
         fail = function () {
-            idrinth.core.alert ( this.getMsg ( 'login.fail' ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
         },
                 timeout = function () {
                     window.setTimeout ( idrinth.chat.login, 1 );
