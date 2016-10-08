@@ -138,10 +138,10 @@ var idrinth = {
         }
         startModules ();
         window.setTimeout ( function () {
-            idrinth.core.multibind.add ( 'click', '.clipboard-copy', function ( e ) {
-                e = e || window.event;
-                idrinth.core.copyToClipboard.element ( e.trigger );
-                e.trigger.parentNode.parentNode.removeChild ( e.trigger.parentNode );
+            idrinth.core.multibind.add ( 'click', '.clipboard-copy', function ( event ) {
+                idrinth.core.copyToClipboard.element ( this );
+                this.parentNode.parentNode.removeChild ( this.parentNode );
+                idrinth.core.log ( event + ' fired on ' + this );
             } );
         }, 1000 );
         delete idrinth['start'];
