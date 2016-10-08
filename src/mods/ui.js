@@ -192,7 +192,7 @@ idrinth.ui = {
                 children: [ {
                         type: 'label',
                         css: 'idrinth-float-half',
-                        content: translation === idrinth.text.data.error ? config.label : translation,
+                        content: translation === idrinth.text.data.default ? config.label : translation,
                         attributes: [ {
                                 name: 'for',
                                 value: 'idrinth-' + config.name
