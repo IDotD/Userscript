@@ -1,4 +1,4 @@
-﻿idrinth.lang = {
+idrinth.lang = {
     start: function () {
         var language = window.navigator.userLanguage || window.navigator.language;
         var file = ""; // JSON to use, dependent on language
@@ -7,4 +7,4 @@
             idrinth.lang[prop] = file[prop];
         }
     }
-}
+};
