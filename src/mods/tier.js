@@ -65,7 +65,7 @@ idrinth.tier = {
                 return make ( key, name );
             }
         }
-        idrinth.core.alert(idrinth.text.get("tier.maxBoxes"));
+        idrinth.core.alert ( idrinth.text.get ( "tier.maxBoxes" ) );
     },
     taggedSlots: { },
     start: function () {
@@ -101,7 +101,7 @@ idrinth.tier = {
                         rType: '#input',
                         type: 'checkbox',
                         id: 'idrinth-raid-may-join-list-' + data[key].name,
-                        label: idrinth.text.get("tier.disableJoining") + data[key].name
+                        label: idrinth.text.get ( "tier.disableJoining" ) + data[key].name
                     } ) );
                     document.getElementById ( 'idrinth-raid-may-join-list' ).lastChild.setAttribute ( 'style',
                             'background-image:url(https://dotd.idrinth.de/static/raid-image-service/' + data[key].url + '/);' );
@@ -185,7 +185,7 @@ idrinth.tier = {
                         },
                         {
                             type: 'button',
-                            content: idrinth.text.get("tier.tagTop"),
+                            content: idrinth.text.get ( "tier.tagTop" ),
                             attributes: [
                                 {
                                     name: 'onclick',
@@ -216,19 +216,19 @@ idrinth.tier = {
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diff.normal")
+                                                    content: idrinth.text.get ( "tier.diff.normal" )
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diff.normal")
+                                                    content: idrinth.text.get ( "tier.diff.normal" )
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diff.normal")
+                                                    content: idrinth.text.get ( "tier.diff.normal" )
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get("tier.diff.normal")
+                                                    content: idrinth.text.get ( "tier.diff.normal" )
                                                 }
                                             ]
                                         }
