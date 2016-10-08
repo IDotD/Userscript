@@ -6,7 +6,7 @@ idrinth.text = {
     initialized: false,
     /**
      * Loads language specific code and signals it's readyness by setting
-     * idrinth.lang.initialized to true
+     * idrinth.text.initialized to true
      * @method start
      * @returns {undefined}
      */
@@ -36,7 +36,7 @@ idrinth.text = {
                 }
             };
             applyRecursive ( idrinth.text.data, JSON.parse ( file ), applyRecursive );
-        }, idrinth.lang.start, idrinth.lang.start, null, true );
+        }, idrinth.text.start, idrinth.text.start, null, true );
     },
     data: {
         chat: {
