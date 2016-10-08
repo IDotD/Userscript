@@ -89,6 +89,12 @@ idrinth.text = {
             }
         }
     },
+    /**
+     * returns the translation of a provided key or an error-message if no
+     * matching translation is found
+     * @param string key
+     * @returns {string}
+     */
     get: function ( key ) {
         var getSub = function ( obj, keys, func ) {
             var key = keys.shift ();
@@ -102,4 +108,4 @@ idrinth.text = {
         };
         return getSub ( idrinth.text.data, key.split ( '.' ), getSub );
     }
-}
+};
