@@ -118,7 +118,7 @@ idrinth.core = {
                 idrinth.core.multibind.events[event][selector] = idrinth.core.multibind.events[event][selector] ? idrinth.core.multibind.events[event][selector] : [ ];
                 idrinth.core.multibind.events[event][selector].push ( method );
             };
-            if ( idrinth.core.multibind.events[event] ) {
+            if ( !idrinth.core.multibind.events[event] ) {
                 var attribute = 'idrinth.core.triggered(this,\'' + event + '\');';
                 //trying not to break all old code there
                 if ( idrinth.ui.body.getAttribute ( 'on' + event ) ) {
