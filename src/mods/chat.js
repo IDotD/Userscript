@@ -493,12 +493,13 @@ idrinth.chat = {
     start: function () {
         var build = function () {
             var makeInput = function ( label ) {
+                var translation = idrinth.text.get( label );
                 return {
                     type: 'li',
                     children: [
                         {
                             type: 'label',
-                            content: label
+                            content: translation === idrinth.text.data.default ? label : translation
                         },
                         {
                             type: 'input',
@@ -517,6 +518,7 @@ idrinth.chat = {
                 };
             };
             var makeButton = function ( label, onclick ) {
+                var translation = idrinth.text.get( label );
                 return {
                     type: 'li',
                     children: [
@@ -532,7 +534,7 @@ idrinth.chat = {
                                     value: onclick
                                 }
                             ],
-                            content: label
+                            content: translation === idrinth.text.data.default ? label : translation
                         }
                     ]
                 };
