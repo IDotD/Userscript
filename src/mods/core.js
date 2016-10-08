@@ -80,10 +80,10 @@ idrinth.core = {
         },
         element: function ( element ) {
             if ( element.hasAttribute ( 'data-clipboard-text' ) ) {
-                idrinth.core.copyToClipboard.text ( element.getAttribute ( 'data-clipboard-text' ) );
+                return idrinth.core.copyToClipboard.text ( element.getAttribute ( 'data-clipboard-text' ) );
             }
             if ( element.value ) {
-                idrinth.core.copyToClipboard.text ( element.value );
+                return idrinth.core.copyToClipboard.text ( element.value );
             }
             return idrinth.core.copyToClipboard.text ( element.innerHTML );
         }
