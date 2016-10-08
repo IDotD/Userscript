@@ -119,7 +119,7 @@ idrinth.core = {
                 idrinth.core.multibind.events[event][selector].push ( method );
             };
             if ( !idrinth.core.multibind.events[event] ) {
-                idrinth.ui.body.addEventListener ( event, function () {
+                idrinth.ui.body.addEventListener ( event, function ( e ) {
                     e = e || window.event;
                     idrinth.core.multibind.triggered ( e.target, e.type );
                 } );
