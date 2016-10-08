@@ -61,18 +61,16 @@ idrinth.text = {
                 disableTimedAutoJoin: 'disable timed Autojoin',
                 enableTimedAutoJoin: 'enable timed Autojoin'
             },
-            misc: {
-                lastRaidsJoined: 'Last raids joined:',
-                enterBossName: 'Enter Boss\' Name',
-                settingInfo: 'This script will always import the raids you manually set to be imported on the website and if it\'s enabled it will also import all raids matched by one of the faved searches provided.',
-                maxPopupsFrame: 'Maximum Popups/Frames for joining raids',
-                timeAutoJoin: 'Time to automatically join raids slowly(reloads game multiple times). Format is [Hours]:[Minutes] without leading zeros, so 7:1 is fine, 07:01 is not',
-                getFavFrom: 'Get your search-favorites from ',
-                raidsearch: 'Idrinth\'s Raidsearch',
-                goldHour: ' gold per hour each',
-                availGold: 'Avaible Gold',
-                clickCopy: 'click to copy raid link'
-            },
+            lastRaidsJoined: 'Last raids joined:',
+            enterBossName: 'Enter Boss\' Name',
+            settingInfo: 'This script will always import the raids you manually set to be imported on the website and if it\'s enabled it will also import all raids matched by one of the faved searches provided.',
+            maxPopupsFrame: 'Maximum Popups/Frames for joining raids',
+            timeAutoJoin: 'Time to automatically join raids slowly(reloads game multiple times). Format is [Hours]:[Minutes] without leading zeros, so 7:1 is fine, 07:01 is not',
+            getFavFrom: 'Get your search-favorites from ',
+            raidsearch: 'Idrinth\'s Raidsearch',
+            goldHour: ' gold per hour each',
+            availGold: 'Avaible Gold',
+            clickCopy: 'click to copy raid link',
             reloadGameFail: 'The game couldn\'t be reloaded',
             setting: {
                 enableExtendedCharInfo: 'Enable extended Characterinformation?',

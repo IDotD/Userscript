@@ -452,7 +452,7 @@ idrinth.ui = {
                         }, {
                             css: 'idrinth-line',
                             id: 'idrinth-joined-raids',
-                            content: idrinth.text.get("ui.misc.lastRaidsJoined"),
+                            content: idrinth.text.get("ui.lastRaidsJoined"),
                             children: [
                                 {
                                     type: 'ul'
@@ -466,7 +466,7 @@ idrinth.ui = {
                             css: 'idrinth-line',
                             children: [ {
                                     type: 'label',
-                                    content: idrinth.text.get("ui.misc.enterBossName"),
+                                    content: idrinth.text.get("ui.enterBossName"),
                                     css: 'idrinth-float-half',
                                     attributes: [
                                         {
@@ -542,7 +542,7 @@ idrinth.ui = {
                         }, {
                             css: 'idrinth-line',
                             type: 'span',
-                            content: idrinth.text.get("ui.misc.settingInfo")
+                            content: idrinth.text.get("ui.settingInfo")
                         }, {
                             name: 'raids',
                             rType: '#input',
@@ -578,19 +578,19 @@ idrinth.ui = {
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'dawnofthedragons', 'facebook' ],
-                            label: idrinth.text.get("ui.misc.maxPopupsFrame")
+                            label: idrinth.text.get("ui.maxPopupsFrame")
                         }, {
                             name: 'alarmTime',
                             rType: '#input',
                             type: 'text',
                             platforms: [ 'newgrounds' ],
-                            label: idrinth.text.get("ui.misc.timeAutoJoin")
+                            label: idrinth.text.get("ui.timeAutoJoin")
                         }, {
                             css: 'idrinth-line',
                             type: 'p',
                             children: [ {
                                     type: '#text',
-                                    content: idrinth.text.get("ui.misc.getFavFrom")
+                                    content: idrinth.text.get("ui.getFavFrom")
                                 }, {
                                     type: 'a',
                                     attributes: [ {
@@ -600,7 +600,7 @@ idrinth.ui = {
                                             name: 'target',
                                             value: '_blank'
                                         } ],
-                                    content: idrinth.text.get("ui.misc.raidsearch")
+                                    content: idrinth.text.get("ui.raidsearch")
                                 } ]
                         } ];
                 };
@@ -634,7 +634,7 @@ idrinth.ui = {
                             attributes: [
                                 {
                                     name: 'title',
-                                    value: idrinth.land.data[label.toLowerCase()].perHour + idrinth.text.get("ui.misc.goldHour")
+                                    value: idrinth.land.data[label.toLowerCase()].perHour + idrinth.text.get("ui.goldHour")
                                 }
                             ]
                         };
@@ -666,7 +666,7 @@ idrinth.ui = {
                                     type: 'tr',
                                     children: [ {
                                             type: 'th',
-                                            content: idrinth.text.get("ui.misc.availGold")
+                                            content: idrinth.text.get("ui.availGold")
                                         }, {
                                             type: 'td',
                                             children: [ {
