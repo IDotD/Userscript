@@ -605,7 +605,7 @@ idrinth.chat = {
                                                 children: [
                                                     makeInput ( 'Username' ),
                                                     makeInput ( 'Password' ),
-                                                    makeButton ( idrinth.text.get ( "chat.message.offline" ), "idrinth.chat.login()" )
+                                                    makeButton ( 'chat.message.offline', "idrinth.chat.login()" )
                                                 ]
                                             }
                                         ]
@@ -622,7 +622,7 @@ idrinth.chat = {
                                                 children: [
                                                     makeInput ( 'Chat-ID' ),
                                                     makeInput ( 'Chat-Password' ),
-                                                    makeButton ( idrinth.text.get ( "chat.ui.createAddChat" ), "idrinth.chat.add()" )
+                                                    makeButton ( 'chat.ui.createAddChat', "idrinth.chat.add()" )
                                                 ]
                                             }
                                         ]
@@ -639,7 +639,7 @@ idrinth.chat = {
                                                 css: 'settings',
                                                 children: [
                                                     makeInput ( "Name" ),
-                                                    makeButton ( idrinth.text.get ( "chat.ui.createAddChat" ), "idrinth.chat.create()" )
+                                                    makeButton ( 'chat.ui.createAddChat', "idrinth.chat.create()" )
                                                 ]
                                             }
                                         ]
