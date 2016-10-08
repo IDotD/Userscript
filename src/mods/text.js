@@ -69,9 +69,13 @@ idrinth.text = {
             error: {
                 modify: 'Can\'t modify that user at the moment',
                 create: 'Can\'t create at the moment',
-                joinMoment: 'Can\'t join at the moment',
                 join: 'Joining didn\'t work',
                 login: 'Login failed in an unexpected way'
+            },
+            notification: {
+                mentionNotis: 'chat-mention notifications?',
+                raidNotis: 'chat-raid notifications?',
+                messageNotis: 'chat-message notifications?'
             }
         },
         default: 'Unexpected error occurred. Please contact script developers'
@@ -132,12 +136,7 @@ idrinth.text = {
                 enableFavRequest: 'Enable Auto-Raid-Request for Favorites?',
                 favIdToJoin: 'FavoriteIds to join (separate multiple by comma)',
                 worldserver: 'Worldserver?',
-                disableAutoJoinSpecific: 'Disable Autojoining for specific raids',
-                chat:{
-                    mentionNotis: 'chat-mention notifications?',
-                    raidNotis: 'chat-raid notifications?',
-                    messageNotis:'chat-message notifications?',
-                }
+                disableAutoJoinSpecific: 'Disable Autojoining for specific raids'
             }
         }
     },

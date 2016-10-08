@@ -563,17 +563,17 @@ idrinth.ui = {
                             name: 'notification#mention',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'ui.setting.chat.mentionNotis'
+                            label: 'chat.notification.mentionNotis'
                         }, {
                             name: 'notification#raid',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'ui.setting.chat.raidNotis'
+                            label: 'chat.notification.raidNotis'
                         }, {
                             name: 'notification#message',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'ui.setting.chat.messageNotis'
+                            label: 'chat.notification.messageNotis'
                         }, {
                             name: 'windows',
                             rType: '#input',

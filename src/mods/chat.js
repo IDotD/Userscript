@@ -749,19 +749,19 @@ idrinth.chat = {
                     idrinth.core.alert ( idrinth.text.get ( "chat.error.create" ) );
                 },
                 function ( reply ) {
-                    idrinth.core.alert ( idrinth.text.get ( "chat.error.createFail" ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.create" ) );
                 },
                 document.getElementById ( 'idrinth-make-chat' ).getElementsByTagName ( 'input' )[0].value
                 );
     },
     joinCallback: function ( reply ) {
         if ( !reply ) {
-            idrinth.core.alert ( idrinth.text.get ( "chat.error.joinMoment" ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.join" ) );
             return;
         }
         reply = JSON.parse ( reply );
         if ( !reply ) {
-            idrinth.core.alert ( idrinth.text.get ( "chat.error.joinMoment" ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.join" ) );
             return;
         }
         if ( !reply.success ) {
@@ -784,10 +784,10 @@ idrinth.chat = {
                 'chat-service/join/',
                 idrinth.chat.joinCallback,
                 function ( reply ) {
-                    idrinth.core.alert ( idrinth.text.get ( "chat.error.joinMoment" ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.join" ) );
                 },
                 function ( reply ) {
-                    idrinth.core.alert ( idrinth.text.get ( "chat.error.joinMoment" ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.join" ) );
                 },
                 JSON.stringify ( {
                     id: document.getElementById ( 'idrinth-add-chat' ).getElementsByTagName ( 'input' )[0].value,
@@ -827,12 +827,12 @@ idrinth.chat = {
     },
     loginCallback: function ( data ) {
         if ( !data ) {
-            idrinth.core.alert ( idrinth.text.get ( "chat.error.loginMoment" ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
             return;
         }
         data = JSON.parse ( data );
         if ( !data ) {
-            idrinth.core.alert ( idrinth.text.get ( "chat.error.loginMoment" ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
             return;
         }
         if ( !data.success && data.message && data['allow-reg'] ) {
@@ -851,7 +851,7 @@ idrinth.chat = {
             idrinth.chat.join ( data.data );
             return;
         }
-        idrinth.core.alert ( idrinth.text.get ( "chat.error.loginMoment" ) );
+        idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
     },
     register: function () {
         this.loginActions ( 'register' );
