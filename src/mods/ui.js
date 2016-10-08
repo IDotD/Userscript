@@ -497,68 +497,68 @@ idrinth.ui = {
                             rType: '#input',
                             type: 'checkbox',
                             platforms: [ 'kongregate' ],
-                            label: idrinth.text.get ( "ui.setting.enableExtendedCharInfo" )
+                            label: "ui.setting.enableExtendedCharInfo"
                         }, {
                             name: 'minimalist',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get ( "ui.setting.minimLayout" )
+                            label: "ui.setting.minimLayout"
                         }, {
                             name: 'moveLeft',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get ( "ui.setting.moveSettingLeft" )
+                            label: "ui.setting.moveSettingLeft"
                         }, {
                             name: 'warBottom',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get ( "ui.setting.warBottomPage" )
+                            label: "ui.setting.warBottomPage"
                         }, {
                             name: 'landMax',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get ( "ui.setting.useGoldEfficiently" )
+                            label: "ui.setting.useGoldEfficiently"
                         }, {
                             name: 'factor',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get ( "ui.setting.tenBuildOnce" )
+                            label: "ui.setting.tenBuildOnce"
                         }, {
                             name: 'timeout',
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'kongregate' ],
-                            label: idrinth.text.get ( "ui.setting.extCharInfoDuration" )
+                            label: "ui.setting.extCharInfoDuration"
                         }, {
                             name: 'newgroundLoad',
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'newgrounds' ],
-                            label: idrinth.text.get ( "ui.setting.joiningDuration" )
+                            label: "ui.setting.joiningDuration"
                         }, {
                             name: 'chatting',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get ( "ui.setting.enableChat" )
+                            label: "ui.setting.enableChat"
                         }, {
                             css: 'idrinth-line',
                             type: 'span',
-                            content: idrinth.text.get ( "ui.settingInfo" )
+                            content: "ui.settingInfo"
                         }, {
                             name: 'raids',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get ( "ui.setting.enableFavRequest" )
+                            label: "ui.setting.enableFavRequest"
                         }, {
                             name: 'favs',
                             rType: '#input',
                             type: 'text',
-                            label: idrinth.text.get ( "ui.setting.favIdToJoin" )
+                            label: "ui.setting.favIdToJoin"
                         }, {
                             name: 'isWorldServer',
                             rType: '#input',
                             type: 'checkbox',
-                            label: idrinth.text.get ( "ui.setting.worldserver" )
+                            label: "ui.setting.worldserver"
                         }, {
                             name: 'notification#mention',
                             rType: '#input',
@@ -579,13 +579,13 @@ idrinth.ui = {
                             rType: '#input',
                             type: 'number',
                             platforms: [ 'dawnofthedragons', 'facebook' ],
-                            label: idrinth.text.get ( "ui.maxPopupsFrame" )
+                            label: "ui.maxPopupsFrame"
                         }, {
                             name: 'alarmTime',
                             rType: '#input',
                             type: 'text',
                             platforms: [ 'newgrounds' ],
-                            label: idrinth.text.get ( "ui.timeAutoJoin" )
+                            label: "ui.timeAutoJoin"
                         }, {
                             css: 'idrinth-line',
                             type: 'p',
