@@ -13,7 +13,7 @@ idrinth.text = {
     start: function () {
         var language = idrinth.settings.language || window.navigator.userLanguage || window.navigator.language;
         if ( language === 'en' ) {
-            idrinth.lang.initialized = true;
+            idrinth.text.initialized = true;
             return;
         }
         idrinth.core.ajax.runHome ( '', function ( file ) {
