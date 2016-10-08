@@ -57,25 +57,25 @@ idrinth.chat = {
                 var promotionModes = [
                     {
                         chat: chat,
-                        label: chat.actions.banUser,
+                        label: 'chat.actions.banUser',
                         rank: 'Banned',
                         requiredRank: 3
                     },
                     {
                         chat: chat,
-                        label: chat.actions.makeMod,
+                        label: 'chat.actions.makeMod',
                         rank: 'Mod',
                         requiredRank: 3
                     },
                     {
                         chat: chat,
-                        label: chat.actions.makeAdmin,
+                        label: 'chat.actions.makeAdmin',
                         rank: 'Owner',
                         requiredRank: 4
                     },
                     {
                         chat: chat,
-                        label: chat.actions.makeUser,
+                        label: 'chat.actions.makeUser',
                         rank: 'User',
                         requiredRank: 3
                     }

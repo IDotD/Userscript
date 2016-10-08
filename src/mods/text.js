@@ -94,17 +94,19 @@ idrinth.text = {
             button: {
                 ok: 'Ok',
                 cancel: 'Cancel',
-                importManually: 'Import all manually',
-                importFav: 'Import favs manually',
                 reloadGame: 'Reload game',
                 clearRaids: 'Clear Raids',
                 reloadScript: 'Reload Script',
-                restartRaidJoin: 'Restart Raidjoin',
                 refreshFBGameLogin: 'Refresh Facebook Game Login',
                 ngRaidJoin: 'NG Raid Join(slow!)',
                 calc: 'Calculate',
                 disableTimedAutoJoin: 'disable timed Autojoin',
                 enableTimedAutoJoin: 'enable timed Autojoin'
+            },
+            imports:{
+                manually:'Import all manually',
+                favs:'Import favs manually',
+                restart:'Restart Raidjoin'
             },
             lastRaidsJoined: 'Last raids joined:',
             enterBossName: 'Enter Boss\' Name',
@@ -118,7 +120,7 @@ idrinth.text = {
             clickCopy: 'click to copy raid link',
             reloadGameFail: 'The game couldn\'t be reloaded',
             setting: {
-                enableExtendedCharInfo: 'Enable extended Characterinformation?',
+                enableExtCharInfo: 'Enable extended Characterinformation?',
                 minimLayout: 'Minimalist Layout',
                 moveSettingLeft: 'Move settings left',
                 warBottomPage: 'Show war at the bottom of the page',
@@ -130,7 +132,12 @@ idrinth.text = {
                 enableFavRequest: 'Enable Auto-Raid-Request for Favorites?',
                 favIdToJoin: 'FavoriteIds to join (separate multiple by comma)',
                 worldserver: 'Worldserver?',
-                disableAutoJoinSpecific: 'Disable Autojoining for specific raids'
+                disableAutoJoinSpecific: 'Disable Autojoining for specific raids',
+                chat:{
+                    mentionNotis: 'chat-mention notifications?',
+                    raidNotis: 'chat-raid notifications?',
+                    messageNotis:'chat-message notifications?',
+                }
             }
         }
     },

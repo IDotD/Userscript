@@ -440,12 +440,12 @@ idrinth.ui = {
                     };
                     return [ {
                             children: [
-                                buttonMaker ( idrinth.text.get ( "ui.button.importManually" ), 'idrinth.raids.import(\'\');' ),
-                                buttonMaker ( idrinth.text.get ( "ui.button.importFav" ), 'idrinth.raids.import(idrinth.settings.favs);' ),
+                                buttonMaker ( idrinth.text.get ( "ui.imports.manually" ), 'idrinth.raids.import(\'\');' ),
+                                buttonMaker ( idrinth.text.get ( "ui.imports.favs" ), 'idrinth.raids.import(idrinth.settings.favs);' ),
                                 buttonMaker ( idrinth.text.get ( "ui.button.reloadGame" ), 'idrinth.ui.reloadGame();' ),
                                 buttonMaker ( idrinth.text.get ( "ui.button.clearRaids" ), 'idrinth.raids.clearAll();' ),
                                 buttonMaker ( idrinth.text.get ( "ui.button.reloadScript" ), 'idrinth.reload();' ),
-                                buttonMaker ( idrinth.text.get ( "ui.button.restartRaidJoin" ), 'idrinth.raids.restartInterval();' ),
+                                buttonMaker ( idrinth.text.get ( "ui.imports.restart" ), 'idrinth.raids.restartInterval();' ),
                                 buttonMaker ( idrinth.text.get ( "ui.button.refreshFBGameLogin" ), 'idrinth.facebook.rejoin()', 'facebook' ),
                                 buttonMaker ( idrinth.text.get ( "ui.button.ngRaidJoin" ), 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
                                 buttonMaker ( idrinth.settings.alarmActive ? idrinth.text.get ( "ui.button.disableTimedAutoJoin" ) : idrinth.text.get ( "ui.button.enableTimedAutoJoin" ), 'idrinth.settings.change(\'alarmActive\',!idrinth.settings.alarmActive);this.innerHTML=idrinth.settings.alarmActive?\'disable timed Autojoin\':\'enable timed Autojoin\'', 'newgrounds' )
@@ -497,7 +497,7 @@ idrinth.ui = {
                             rType: '#input',
                             type: 'checkbox',
                             platforms: [ 'kongregate' ],
-                            label: "ui.setting.enableExtendedCharInfo"
+                            label: "ui.setting.enableExtCharInfo"
                         }, {
                             name: 'minimalist',
                             rType: '#input',
@@ -563,17 +563,17 @@ idrinth.ui = {
                             name: 'notification#mention',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'chat-mention notifications?'
+                            label: 'ui.setting.chat.mentionNotis'
                         }, {
                             name: 'notification#raid',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'chat-raid notifications?'
+                            label: 'ui.setting.chat.raidNotis'
                         }, {
                             name: 'notification#message',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'chat-message notifications?'
+                            label: 'ui.setting.chat.messageNotis'
                         }, {
                             name: 'windows',
                             rType: '#input',
