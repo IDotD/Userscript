@@ -66,10 +66,10 @@ idrinth.text = {
                 unknown: 'The given username for dotd.idrinth.de is unknown, do you want to register it there?'
             },
             error: {
-                default: 'Unexpected error occurred. Please contact script developers'
-                        + ' (https://github.com/Idrinth/IDotD).'
             }
         },
+        default: 'Unexpected error occurred. Please contact script developers'
+                + ' (https://github.com/Idrinth/IDotD).',
         land: {
             lackGold: 'You lack gold to buy any more buildings at the moment.'
         },
@@ -143,7 +143,7 @@ idrinth.text = {
                 }
                 return obj[key];
             }
-            return idrinth.text.data.chat.error.errorDefault;
+            return idrinth.text.data.error;
         };
         return getSub ( idrinth.text.data, key.split ( '.' ), getSub );
     }

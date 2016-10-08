@@ -186,12 +186,13 @@ idrinth.ui = {
                     value: 'idrinth.settings.change(\'' + config.name + '\',this.checked)'
                 } );
             }
+            var translation = idrinth.text.get ( config.label );
             return idrinth.ui.buildElement ( {
                 css: 'idrinth-line' + ( config.platforms && !inArray ( idrinth.platform, config.platforms ) ? ' idrinth-hide' : '' ),
                 children: [ {
                         type: 'label',
                         css: 'idrinth-float-half',
-                        content: config.label,
+                        content: translation === idrinth.text.data.error ? config.label : translation,
                         attributes: [ {
                                 name: 'for',
                                 value: 'idrinth-' + config.name
