@@ -40,6 +40,12 @@ idrinth.text = {
     },
     data: {
         chat: {
+            actions:{
+                banUser: 'Ban User',
+                makeMod: 'Make Moderator',
+                makeAdmin: 'Make Admin',
+                makeUser: 'Make User'
+            },
             ui: {
                 close: 'Close',
                 invite: 'Invite to Chat ',
@@ -58,14 +64,14 @@ idrinth.text = {
                 optional: 'This part of the script is optional, so logging in is unneeded for raid catching etc.',
                 invalid: 'This should not be the data for logging in on the related gaming site and the login does not need to match your ingame name - you can set a display name after the registration.',
                 offline: "Not logged in, click to login/register",
-                modifyFail: 'Can\'t modify that user at the moment',
-                createFail: 'Can\'t create at the moment',
-                joinFailMoment: 'Can\'t join at the moment',
-                joinFail: 'Joining didn\'t work',
-                loginFail: 'Login failed in an unexpected way',
                 unknown: 'The given username for dotd.idrinth.de is unknown, do you want to register it there?'
             },
             error: {
+                modify: 'Can\'t modify that user at the moment',
+                create: 'Can\'t create at the moment',
+                joinMoment: 'Can\'t join at the moment',
+                join: 'Joining didn\'t work',
+                login: 'Login failed in an unexpected way'
             }
         },
         default: 'Unexpected error occurred. Please contact script developers'

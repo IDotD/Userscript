@@ -57,25 +57,25 @@ idrinth.chat = {
                 var promotionModes = [
                     {
                         chat: chat,
-                        label: 'Ban User',
+                        label: chat.actions.banUser,
                         rank: 'Banned',
                         requiredRank: 3
                     },
                     {
                         chat: chat,
-                        label: 'Make Moderator',
+                        label: chat.actions.makeMod,
                         rank: 'Mod',
                         requiredRank: 3
                     },
                     {
                         chat: chat,
-                        label: 'Make Admin',
+                        label: chat.actions.makeAdmin,
                         rank: 'Owner',
                         requiredRank: 4
                     },
                     {
                         chat: chat,
-                        label: 'Make User',
+                        label: chat.actions.makeUser,
                         rank: 'User',
                         requiredRank: 3
                     }
@@ -155,10 +155,10 @@ idrinth.chat = {
                     }
                 },
                 function ( reply ) {
-                    idrinth.core.alert ( idrinth.text.get ( "chat.message.modifyFail" ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.modify" ) );
                 },
                 function ( reply ) {
-                    idrinth.core.alert ( idrinth.text.get ( "chat.message.modifyFail" ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.modify" ) );
                 },
                 JSON.stringify ( {
                     chat: chat,
@@ -744,29 +744,29 @@ idrinth.chat = {
                 'chat-service/create/',
                 idrinth.chat.joinCallback,
                 function ( reply ) {
-                    idrinth.core.alert ( idrinth.text.get ( "chat.message.createFail" ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.create" ) );
                 },
                 function ( reply ) {
-                    idrinth.core.alert ( idrinth.text.get ( "chat.message.createFail" ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.createFail" ) );
                 },
                 document.getElementById ( 'idrinth-make-chat' ).getElementsByTagName ( 'input' )[0].value
                 );
     },
     joinCallback: function ( reply ) {
         if ( !reply ) {
-            idrinth.core.alert ( idrinth.text.get ( "chat.message.joinFailMoment" ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.joinMoment" ) );
             return;
         }
         reply = JSON.parse ( reply );
         if ( !reply ) {
-            idrinth.core.alert ( idrinth.text.get ( "chat.message.joinFailMoment" ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.joinMoment" ) );
             return;
         }
         if ( !reply.success ) {
             if ( reply.message ) {
                 idrinth.core.alert ( reply.message );
             } else {
-                idrinth.core.alert ( idrinth.text.get ( "chat.message.joinFail" ) );
+                idrinth.core.alert ( idrinth.text.get ( "chat.error.join" ) );
             }
             return;
         }
@@ -782,10 +782,10 @@ idrinth.chat = {
                 'chat-service/join/',
                 idrinth.chat.joinCallback,
                 function ( reply ) {
-                    idrinth.core.alert ( idrinth.text.get ( "chat.message.joinFailMoment" ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.joinMoment" ) );
                 },
                 function ( reply ) {
-                    idrinth.core.alert ( idrinth.text.get ( "chat.message.joinFailMoment" ) );
+                    idrinth.core.alert ( idrinth.text.get ( "chat.error.joinMoment" ) );
                 },
                 JSON.stringify ( {
                     id: document.getElementById ( 'idrinth-add-chat' ).getElementsByTagName ( 'input' )[0].value,
@@ -825,12 +825,12 @@ idrinth.chat = {
     },
     loginCallback: function ( data ) {
         if ( !data ) {
-            idrinth.core.alert ( idrinth.text.get ( "chat.message.loginFailMoment" ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.loginMoment" ) );
             return;
         }
         data = JSON.parse ( data );
         if ( !data ) {
-            idrinth.core.alert ( idrinth.text.get ( "chat.message.loginFailMoment" ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.loginMoment" ) );
             return;
         }
         if ( !data.success && data.message && data['allow-reg'] ) {
@@ -849,7 +849,7 @@ idrinth.chat = {
             idrinth.chat.join ( data.data );
             return;
         }
-        idrinth.core.alert ( idrinth.text.get ( "chat.message.loginFailMoment" ) );
+        idrinth.core.alert ( idrinth.text.get ( "chat.error.loginMoment" ) );
     },
     register: function () {
         this.loginActions ( 'register' );
@@ -939,7 +939,7 @@ idrinth.chat = {
                     'relogin': 'chat-service/login/'
                 },
         fail = function () {
-            idrinth.core.alert ( idrinth.text.get ( "chat.message.loginFail" ) );
+            idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
         },
                 timeout = function () {
                     window.setTimeout ( idrinth.chat.login, 1 );
