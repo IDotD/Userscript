@@ -585,17 +585,17 @@ idrinth.chat = {
                                     },
                                     {
                                         type: 'p',
-                                        content: idrinth.text.get ( "chat.message.optional" ),
+                                        content: idrinth.text.get ( "chat.message.optional" )
                                     }, {
                                         id: 'idrinth-chat-login',
                                         children: [
                                             {
                                                 type: 'h2',
-                                                content: idrinth.text.get ( "chat.ui.account" ),
+                                                content: idrinth.text.get ( "chat.ui.account" )
                                             },
                                             {
                                                 type: 'p',
-                                                content: idrinth.text.get ( "chat.message.invalid" ),
+                                                content: idrinth.text.get ( "chat.message.invalid" )
                                             },
                                             {
                                                 type: 'ul',
@@ -612,7 +612,7 @@ idrinth.chat = {
                                         children: [
                                             {
                                                 type: 'h2',
-                                                content: idrinth.text.get ( "chat.ui.joinChat" ),
+                                                content: idrinth.text.get ( "chat.ui.joinChat" )
                                             },
                                             {
                                                 type: 'ul',
@@ -646,7 +646,7 @@ idrinth.chat = {
                                         children: [
                                             {
                                                 type: '#text',
-                                                content: idrinth.text.get ( "chat.ui.moreSettings" ),
+                                                content: idrinth.text.get ( "chat.ui.moreSettings" )
                                             },
                                             {
                                                 type: 'a',
