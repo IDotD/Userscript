@@ -59,23 +59,31 @@ idrinth.core = {
             idrinth.core.ajax.active[url].send ( );
         }
     },
-    copyToClipboard: function ( text ) {
-        var success;
-        try {
-            var textAreaElement = idrinth.ui.buildElement ( {
-                type: 'textarea',
-                id: "idrinth-copy-helper"
-            } );
-            textAreaElement.value = text;
-            idrinth.ui.body.appendChild ( textAreaElement );
-            textAreaElement.select ( );
-            success = document.execCommand ( 'copy' );
-        } catch ( exception ) {
-            idrinth.core.log ( exception.getMessage ( ) );
-            success = false;
+    copyToClipboard: {
+        text: function ( text ) {
+            var success;
+            try {
+                var textAreaElement = idrinth.ui.buildElement ( {
+                    type: 'textarea',
+                    id: "idrinth-copy-helper"
+                } );
+                textAreaElement.value = text;
+                idrinth.ui.body.appendChild ( textAreaElement );
+                textAreaElement.select ( );
+                success = document.execCommand ( 'copy' );
+            } catch ( exception ) {
+                idrinth.core.log ( exception.getMessage ( ) );
+                success = false;
+            }
+            idrinth.ui.removeElement ( "idrinth-copy-helper" );
+            return success;
+        },
+        element: function ( element ) {
+            return idrinth.core.copyToClipboard (
+                    element.hasAttribute ( 'data-clipboard-text' )
+                    ? element.getAttribute ( 'data-clipboard-text' )
+                    : element.innerHTML );
         }
-        idrinth.ui.removeElement ( "idrinth-copy-helper" );
-        return success;
     },
     sendNotification: function ( title, content ) {
         if ( !( "Notification" in window ) ) {

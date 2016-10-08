@@ -138,16 +138,9 @@ var idrinth = {
         }
         startModules ();
         window.setTimeout ( function () {
-            var clipboard = new Clipboard ( '#idrinth-raid-link-list span' );
-            clipboard.on ( 'success', function ( e ) {
+            idrinth.core.multibind.add ( 'click', '.clipboard-copy', function ( e ) {
                 e = e || window.event;
-                e.trigger.parentNode.removeChild ( e.trigger );
-            } );
-        }, 1000 );
-        window.setTimeout ( function () {
-            var clipboard = new Clipboard ( '.clipboard-copy' );
-            clipboard.on ( 'success', function ( e ) {
-                e = e || window.event;
+                idrinth.core.copyToClipboard.element ( e.trigger );
                 e.trigger.parentNode.parentNode.removeChild ( e.trigger.parentNode );
             } );
         }, 1000 );
