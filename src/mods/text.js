@@ -143,7 +143,7 @@ idrinth.text = {
                 }
                 return obj[key];
             }
-            return idrinth.text.data.error;
+            return idrinth.text.data.default;
         };
         return getSub ( idrinth.text.data, key.split ( '.' ), getSub );
     }
