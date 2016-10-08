@@ -119,15 +119,15 @@ idrinth.core = {
                 idrinth.core.multibind.events[event][selector].push ( method );
             };
             if ( !idrinth.core.multibind.events[event] ) {
-                var attribute = 'idrinth.core.multibind.triggered(event.target,\'' + event + '\');';
+                idrinth.ui.body.addEventListener ( event, function () {
+                    e = e || window.event;
+                    idrinth.core.multibind.triggered ( e.target, e.type );
+                } );
                 //trying not to break all old code there
-                if ( idrinth.ui.body.getAttribute ( 'on' + event ) ) {
-                    attribute += idrinth.ui.body.getAttribute ( 'on' + event );
+                if ( idrinth.ui.body.hasAttribute ( 'on' + event ) ) {
+                    idrinth.ui.body.addEventListener ( event, new Function ( idrinth.ui.body.getAttribute ( 'on' + event ) ) );
+                    idrinth.ui.body.removeAttribute ( 'on' + event );
                 }
-                if ( idrinth.ui.body['on' + event] && typeof idrinth.ui.body['on' + event] === 'function' ) {
-                    bind ( event, 'body', idrinth.ui.body['on' + event] );
-                }
-                idrinth.ui.body.setAttribute ( 'on' + event, attribute );
             }
             bind ( event, selector, method );
         },
@@ -138,7 +138,7 @@ idrinth.core = {
                 }
                 for (var pos = 0; pos < idrinth.core.multibind.events[event][selector].length; pos++) {
                     try {
-                        idrinth.core.multibind.events[event][selector][pos].bind ( el, event );
+                        idrinth.core.multibind.events[event][selector][pos] ( el, event );
                     } catch ( exception ) {
                         idrinth.core.log ( exception.getMessage () );
                     }
