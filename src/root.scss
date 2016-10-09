@@ -1,13 +1,26 @@
+@mixin basic-box() {
+    box-sizing: border-box;
+    display:block;
+    width:100%;
+    height:auto;
+    overflow:hidden;
+    margin:0;
+    padding:0;
+}
+@mixin simple-square($size) {
+    width:$size;
+    height:$size;
+}
 /**
     * These styles modify pages changed by the script of IDotD
 **/
 .idrinth-hovering-box {
+    @include basic-box();
     background: #cccccc;
     background: rgba(204, 204, 204, 0.9);
     border-radius: 2px;
     width: 200px;
     z-index: 100000;
-    display: block;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.65);
 }
 
@@ -26,23 +39,21 @@
 
 .idrinth-emoticon {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    @include simple-square(16px);
 }
 
 .idrinth-emoticon > span {
     display: none;
-    width: 64px;
-    height: 64px;
+    @include simple-square(64px);
     position: absolute;
 }
 
 .idrinth-emoticon:hover > span {
-    display: block;
+    @include basic-box();
 }
 
 #idrinth-raid-link-list span {
-    display: block;
+    @include basic-box();
     cursor: pointer;
 }
 
@@ -94,24 +105,21 @@
 }
 
 #idrinth-tierlist .tier-wrapper table {
-    width: 100%;
-    box-sizing: border-box;
+    @include basic-box();
+    display: table;
 }
 
 #idrinth-tierlist .tier-wrapper strong,
 #idrinth-tierlist .tier-wrapper span {
-    display: block;
+    @include basic-box();
 }
 
 .idrinth-hovering-box .tab-activator {
+    @include basic-box();
     float: left;
     border-top-left-radius: 5px;
-    box-sizing: border-box;
     border-top-right-radius: 5px;
     border: 1px solid #000;
-    display: block;
-    padding: 0;
-    margin: 0;
     text-align: center;
     cursor: pointer;
 }
@@ -121,9 +129,7 @@
 }
 
 .idrinth-hovering-box .tab-element {
-    padding: 0;
-    display:block;
-    margin: 0;
+    @include basic-box();
 }
 
 #idrinth-controls {
@@ -145,21 +151,15 @@
 
 .idrinth-line,
 #idrinth-tierlist .tier-wrapper {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    height: auto;
-    overflow: hidden;
+    @include basic-box();
     padding: 2px;
 }
 
 .idrinth-float-half {
-    display: block;
+    @include basic-box();
     width: 50%;
-    box-sizing: border-box;
     float: left;
     padding: 2px;
-    margin: 0;
 }
 
 #idrinth-tooltip .idrinth-tooltip-header {
@@ -201,10 +201,8 @@
 
 #idrinth-chat ul,
 #idrinth-chat li {
-    display: block;
-    margin: 0;
+    @include basic-box();
     padding: 1px;
-    box-sizing: border-box;
 }
 
 #idrinth-chat .chat-labels,
@@ -213,13 +211,13 @@
 }
 
 #idrinth-chat.active .chat-labels {
+    @include basic-box();
     width: 3em;
-    display: block;
     float: left;
 }
 
 #idrinth-chat.active .chat-tabs {
-    display: block;
+    @include basic-box();
 }
 
 #idrinth-chat .chat-labels li {
@@ -241,9 +239,7 @@
 }
 
 #idrinth-chat .chat-tabs > li.active {
-    display: block;
-    height: 100%;
-    overflow: hidden;
+    @include basic-box();
 }
 
 #idrinth-chat .chat-tabs, #idrinth-chat .chat-labels {
@@ -329,10 +325,7 @@
     height: auto;
 }
 .idrinth-ui-menu {
-    margin:0;
-    padding:0;
-    overflow:hidden;
-    width:100%;
+    @include basic-box();
 }
 
 #idrinth-chat .styled-scrollbar::-webkit-scrollbar,
@@ -361,12 +354,9 @@
 }
 
 #idrinth-chat .add-chat-box {
+    @include basic-box();
     height: 5%;
-    display: block;
     float: left;
-    margin: 0;
-    width: 100%;
-    box-sizing: border-box;
 }
 
 #idrinth-chat > .chat-labels > li {
@@ -440,23 +430,20 @@
 
 .idrinth-userinfo-box {
     position: fixed;
-    display: block;
+    @include basic-box();
     background: #333;
     color: #fff;
     padding: 2px;
     border-radius: 2px;
     box-shadow: 3px 3px 5px rgba(255, 255, 255, 0.9);
-    margin: 0;
     max-width: 150px;
     z-index: 120000;
 }
 
 .idrinth-userinfo-box > li {
-    display: block;
+    @include basic-box();
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
-    padding: 0;
-    margin: 0;
     cursor: pointer;
 }
 
@@ -480,8 +467,8 @@
 #idrinth-chat > .chat-tabs li > button {
     min-width: 50%;
     max-width: 100%;
+    @include basic-box();
     width: auto !important;
-    display: block;
 }
 
 #idrinth-chat .chat > li {
@@ -516,16 +503,14 @@
 }
 
 .idrinth-central-box td.traffic > span {
-    width: 2em;
-    height: 2em;
-    display: block;
+    @include basic-box();
+    @include simple-square(2em);
 }
 
 .idrinth-central-box td.traffic > span {
-    width: 2em;
-    height: 2em;
+    @include basic-box();
+    @include simple-square(2em);
     border-radius: 1em;
-    display: block;
     overflow: hidden;
 }
 
@@ -625,14 +610,12 @@ td.is-os {
 .idrinth-join-frame {
     position:absolute;
     left:0;
-    width:1px;
-    height:1px;
+    @include simple-square(1px);
     z-index:-100;
 }
 .idrinth-circle {
     padding:0.2em;
-    width:1em;
-    height:1em;
+    @include simple-square(1em);
     float:right;
     cursor:pointer;
     background:#000;
@@ -662,14 +645,13 @@ td.is-os {
     background:rgba(255,255,255,0.45);
 }
 .idrinth-tier-box > div > div {
+    @include basic-box();
     width: 50%;
     float: left;
     padding:2px;
-    box-sizing: border-box;
 }
 .idrinth-tier-box > div > strong {
-    width: 100%;
-    display:block;
+    @include basic-box();
     padding-bottom:2px;
     text-align:center;
     background:rgba(255,255,255,0.25);
