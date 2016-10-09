@@ -901,7 +901,7 @@ idrinth.chat = {
             ],
             attributes: [ {
                     name: 'style',
-                    value: idrinth.ui.getPosition ( element )
+                    value: idrinth.ui.getElementPositioning ( element, 0, 0 )
                 } ]
         } ) );
     },
