@@ -236,32 +236,23 @@ idrinth.ui = {
         mod.children.push ( {
             css: 'buttons'
         } );
-        var closeFunc = 'this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);';
+        var makeButton = function ( text, func ) {
+            return {
+                type: 'button',
+                content: idrinth.text.get ( "ui.button." + text ),
+                attributes: [ {
+                        name: 'onclick',
+                        value: 'this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);' + func
+                    } ]
+            };
+        };
         if ( typeof altFunc === 'string' ) {
-            mod.children[mod.children.length - 1].children = [ {
-                    type: 'button',
-                    content: idrinth.text.get ( "ui.button.ok" ),
-                    attributes: [ {
-                            name: 'onclick',
-                            value: closeFunc + altFunc
-                        } ]
-                }, {
-                    type: 'button',
-                    content: idrinth.text.get ( "ui.button.cancel" ),
-                    attributes: [ {
-                            name: 'onclick',
-                            value: closeFunc
-                        } ]
-                } ];
+            mod.children[mod.children.length - 1].children = [
+                makeButton ( 'ok', altFunc ),
+                makeButton ( 'cancel', '' )
+            ];
         } else {
-            mod.children[mod.children.length - 1].children = [ {
-                    type: 'button',
-                    content: idrinth.text.get ( "ui.button.ok" ),
-                    attributes: [ {
-                            name: 'onclick',
-                            value: closeFunc
-                        } ]
-                } ];
+            mod.children[mod.children.length - 1].children = [ makeButton ( 'ok', '' ) ];
         }
         idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( mod ) );
     },
@@ -804,7 +795,7 @@ idrinth.ui = {
                     value: 'stylesheet'
                 }, {
                     name: 'href',
-                    value: 'https://dotd.idrinth.de###PATH###/script-styles.css?###VERSION###'
+                    value: 'https://dotd.idrinth.de/static/userscript-styles/###RELOAD-VERSION###/'
                 } ]
         } ) );
         build ();
