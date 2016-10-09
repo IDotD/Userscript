@@ -91,12 +91,13 @@ idrinth.settings = {
                 return item;
             };
             for (var key in idrinth.settings) {
-                if ( key !== 'land' ) {
+                if ( typeof idrinth.settings[key] !== 'object' ) {
                     idrinth.settings[key] = itemHandler ( '', key, idrinth.settings[key] );
+                } else {
+                    for (var key2 in idrinth.settings[key]) {
+                        idrinth.settings[key][key2] = itemHandler ( key + '-', key2, idrinth.settings[key][key2] );
+                    }
                 }
-            }
-            for (var building in idrinth.settings.land) {
-                idrinth.settings.land[building] = itemHandler ( 'land-', building, idrinth.settings.land[building] );
             }
         }
     }

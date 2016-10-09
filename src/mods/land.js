@@ -66,7 +66,9 @@ idrinth.land = {
             idrinth.settings.save ();
         };
         for (var key in idrinth.settings.land) {
-            idrinth.settings.change ( 'land-' + key, parseInt ( document.getElementById ( 'idrinth-land-' + key ).value, 10 ) );
+            if ( idrinth.settings.land.hasOwnProperty ( key ) ) {
+                idrinth.settings.change ( 'land-' + key, parseInt ( document.getElementById ( 'idrinth-land-' + key ).value, 10 ) );
+            }
         }
         var results = baseCalculator ( getRequirements () );
         if ( Object.keys ( results ).length === 0 ) {
