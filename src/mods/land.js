@@ -60,8 +60,10 @@ idrinth.land = {
         };
         var putResults = function ( results ) {
             for (var key in results) {
-                document.getElementById ( 'idrinth-land-' + key ).value = idrinth.settings.land[key];
-                document.getElementById ( 'idrinth-land-' + key ).parentNode.nextSibling.innerHTML = '+' + results[key];
+                if ( results.hasOwnProperty ( key ) ) {
+                    document.getElementById ( 'idrinth-land-' + key ).value = idrinth.settings.land[key];
+                    document.getElementById ( 'idrinth-land-' + key ).parentNode.nextSibling.innerHTML = '+' + results[key];
+                }
             }
             document.getElementById ( 'idrinth-land-gold' ).value = idrinth.settings.land.gold;
             idrinth.settings.save ();
