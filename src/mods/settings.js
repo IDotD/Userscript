@@ -90,15 +90,19 @@ idrinth.settings = {
                 }
                 return item;
             };
-            for (var key in idrinth.settings) {
-                if ( typeof idrinth.settings[key] !== 'object' ) {
-                    idrinth.settings[key] = itemHandler ( '', key, idrinth.settings[key] );
-                } else {
-                    for (var key2 in idrinth.settings[key]) {
-                        idrinth.settings[key][key2] = itemHandler ( key + '-', key2, idrinth.settings[key][key2] );
+            var objectIterator = function ( object, prefix, itemHandler, objectIterator ) {
+                for (var key in object) {
+                    if ( object.hasOwnProperty ( key ) ) {
+                        if ( typeof idrinth.settings[key] !== 'object' ) {
+                            object[key] = itemHandler ( prefix, key, object[key] );
+                        } else {
+                            object[key] = objectIterator ( object[key], prefix + key + '-', itemHandler, objectIterator );
+                        }
                     }
                 }
-            }
+                return object;
+            };
+            objectIterator ( idrinth.settings, '', itemHandler, objectIterator );
         }
     }
 };
