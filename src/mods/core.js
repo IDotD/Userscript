@@ -128,11 +128,6 @@ idrinth.core = {
                     e = e || window.event;
                     idrinth.core.multibind.triggered ( e.target, e.type );
                 } );
-                //trying not to break all old code there
-                if ( idrinth.ui.body.hasAttribute ( 'on' + event ) ) {
-                    idrinth.ui.body.addEventListener ( event, new Function ( idrinth.ui.body.getAttribute ( 'on' + event ) ) );
-                    idrinth.ui.body.removeAttribute ( 'on' + event );
-                }
             }
             bind ( event, selector, method );
         },
