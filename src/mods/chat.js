@@ -81,14 +81,16 @@ idrinth.chat = {
                     }
                 ];
                 for (var chatId in idrinth.chat.chatRank) {
-                    var intChatId = parseInt ( chatId, 10 );
-                    if ( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ) && intChatId !== chat && intChatId > 1 && !( user in idrinth.chat.chatRank[chatId] ) ) {
-                        promotionModes.push ( {
-                            chat: chatId,
-                            label: 'Invite to Chat ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML,
-                            rank: 'User',
-                            requiredRank: 1
-                        } );
+                    if ( idrinth.chat.chatRank.hasOwnProperty ( chatId ) ) {
+                        var intChatId = parseInt ( chatId, 10 );
+                        if ( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ) && intChatId !== chat && intChatId > 1 && !( user in idrinth.chat.chatRank[chatId] ) ) {
+                            promotionModes.push ( {
+                                chat: chatId,
+                                label: 'Invite to Chat ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML,
+                                rank: 'User',
+                                requiredRank: 1
+                            } );
+                        }
                     }
                 }
                 return promotionModes;
