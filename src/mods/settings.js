@@ -76,24 +76,24 @@ idrinth.settings = {
     start: function ( ) {
         'use strict';
         if ( window.localStorage ) {
-            var itemHandler = function ( prefix, key, item ) {
-                if ( typeof item !== 'function' ) {
-                    var tmp = window.localStorage.getItem ( 'idrinth-dotd-' + prefix + key );
-                    if ( tmp ) {
-                        if ( tmp === 'false' ) {
-                            tmp = false;
-                        } else if ( tmp === 'true' ) {
-                            tmp = true;
+            var objectIterator = function ( object, prefix, objectIterator ) {
+                var itemHandler = function ( prefix, key, item ) {
+                    if ( typeof item !== 'function' ) {
+                        var tmp = window.localStorage.getItem ( 'idrinth-dotd-' + prefix + key );
+                        if ( tmp ) {
+                            if ( tmp === 'false' ) {
+                                tmp = false;
+                            } else if ( tmp === 'true' ) {
+                                tmp = true;
+                            }
+                            item = tmp;
                         }
-                        item = tmp;
                     }
-                }
-                return item;
-            };
-            var objectIterator = function ( object, prefix, itemHandler, objectIterator ) {
+                    return item;
+                };
                 for (var key in object) {
                     if ( object.hasOwnProperty ( key ) ) {
-                        if ( typeof idrinth.settings[key] !== 'object' ) {
+                        if ( typeof object[key] !== 'object' ) {
                             object[key] = itemHandler ( prefix, key, object[key] );
                         } else {
                             object[key] = objectIterator ( object[key], prefix + key + '-', itemHandler, objectIterator );
@@ -102,7 +102,7 @@ idrinth.settings = {
                 }
                 return object;
             };
-            objectIterator ( idrinth.settings, '', itemHandler, objectIterator );
+            objectIterator ( idrinth.settings, '', objectIterator );
         }
     }
 };
