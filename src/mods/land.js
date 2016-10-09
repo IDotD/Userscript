@@ -6,10 +6,11 @@ idrinth.land = {
                 return ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base;
             };
             var results = { };
-            var applyResult = function ( res, factor, nextPrice ) {
+            var applyResult = function ( results, res, factor, nextPrice ) {
                 idrinth.settings.land.gold = idrinth.settings.land.gold - nextPrice () * factor / 10;
                 results[res.key] = ( results[res.key] === undefined ? 0 : results[res.key] ) + factor;
                 idrinth.settings.land[res.key] = idrinth.settings.land[res.key] + factor;
+                return results;
             };
             var processBuildings = function ( checkElementFunc, factor, nextPrice ) {
                 var check = function ( checkElementFunc, building, factor, res, nextPrice ) {
@@ -39,7 +40,7 @@ idrinth.land = {
                 if ( res.key === null ) {
                     return results;
                 }
-                applyResult ( res, factor, nextPrice );
+                results = applyResult ( results, res, factor, nextPrice );
             }
             idrinth.settings.save ();
             return results;
