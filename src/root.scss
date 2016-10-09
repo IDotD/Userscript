@@ -2,6 +2,7 @@
     width:$size;
     height:$size;
 }
+@import "styles/mutik.scss";
 /**
     * These styles modify pages changed by the script of IDotD
 **/
@@ -561,23 +562,6 @@
 .idrinth-central-box.small-window {
     background: transparent;
     width: auto;
-}
-
-#DRMng_main {
-    margin-right: 5em;
-    display: block;
-    border-right: solid 1px #444;
-}
-
-#DRMng_status {
-    float: right;
-    text-align: right;
-}
-
-#DRMng_onoff {
-    float: left;
-    border-left-width: 0;
-    border-right: solid 1px #444;
 }
 
 td.is-os {
