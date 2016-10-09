@@ -11,7 +11,7 @@ idrinth.text = {
      * @returns {undefined}
      */
     start: function () {
-        var language = idrinth.settings.language || window.navigator.userLanguage || window.navigator.language;
+        var language = idrinth.settings.get("language") || window.navigator.userLanguage || window.navigator.language;
         if ( language === 'en' ) {
             idrinth.text.initialized = true;
             return;

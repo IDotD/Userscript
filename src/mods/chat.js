@@ -544,11 +544,11 @@ idrinth.chat = {
             };
             return idrinth.ui.buildElement ( {
                 id: 'idrinth-chat',
-                css: 'idrinth-hovering-box' + ( !idrinth.settings.chatHiddenOnStart ? ' active' : '' ) + ( idrinth.settings.moveLeft ? ' left-sided' : '' ),
+                css: 'idrinth-hovering-box' + ( !idrinth.settings.get("chatHiddenOnStart") ? ' active' : '' ) + ( idrinth.settings.get("moveLeft") ? ' left-sided' : '' ),
                 children: [
                     {
                         type: 'button',
-                        content: ( idrinth.settings.chatHiddenOnStart ? '<<' : '>>' ),
+                        content: ( idrinth.settings.get("chatHiddenOnStart") ? '<<' : '>>' ),
                         attributes: [ {
                                 name: 'onclick',
                                 value: 'idrinth.chat.openCloseChat(this);'
@@ -706,7 +706,7 @@ idrinth.chat = {
                 ]
             } );
         };
-        if ( !idrinth.settings.chatting ) {
+        if ( !idrinth.settings.get("chatting") ) {
             return;
         }
         if ( !document.getElementById ( 'idrinth-chat' ) ) {
@@ -724,8 +724,8 @@ idrinth.chat = {
                         window.setTimeout ( idrinth.chat.login, 1 );
                     },
                     JSON.stringify ( {
-                        user: idrinth.settings.chatuser,
-                        pass: idrinth.settings.chatpass
+                        user: idrinth.settings.get("chatuser"),
+                        pass: idrinth.settings.get("chatpass")
                     } )
                     );
         }, 2500 );
@@ -847,8 +847,8 @@ idrinth.chat = {
             return;
         }
         if ( data.success ) {
-            idrinth.settings.chatuser = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[0].value;
-            idrinth.settings.chatpass = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[1].value;
+            idrinth.settings.get("chatuser") = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[0].value;
+            idrinth.settings.get("chatpass") = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[1].value;
             idrinth.settings.save ();
             idrinth.ui.removeElement ( 'idrinth-chat-login' );
             idrinth.chat.join ( data.data );
@@ -927,11 +927,11 @@ idrinth.chat = {
     openCloseChat: function ( element ) {
         var chat = element.parentNode;
         if ( chat.getAttribute ( 'class' ) === 'idrinth-hovering-box active' || chat.getAttribute ( 'class' ) === 'idrinth-hovering-box active left-sided' ) {
-            chat.setAttribute ( 'class', 'idrinth-hovering-box' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ) +
+            chat.setAttribute ( 'class', 'idrinth-hovering-box' + ( idrinth.settings.get("moveLeft") ? ' left-sided' : '' ) +
                     ( chat.getElementsByClassName ( 'new-message' ) && chat.getElementsByClassName ( 'new-message' ).length ? ' new-message' : '' ) );
             element.innerHTML = '&lt;&lt;';
         } else {
-            chat.setAttribute ( 'class', 'idrinth-hovering-box active' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ) );
+            chat.setAttribute ( 'class', 'idrinth-hovering-box active' + ( idrinth.settings.get("moveLeft") ? ' left-sided' : '' ) );
             element.innerHTML = '&gt;&gt;';
         }
     },
@@ -962,8 +962,8 @@ idrinth.chat = {
             success = function () {
                 idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 1500 );
             };
-            headers.user = idrinth.settings.chatuser;
-            headers.pass = idrinth.settings.chatpass;
+            headers.user = idrinth.settings.get("chatuser");
+            headers.pass = idrinth.settings.get("chatpass");
         } else {
             chatLogin = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' );
             headers.user = chatLogin[0].value;
