@@ -7,7 +7,7 @@ idrinth.land = {
             };
             var results = { };
             var applyResult = function ( results, res, factor, nextPrice ) {
-                idrinth.settings.land.gold = idrinth.settings.land.gold - nextPrice () * factor / 10;
+                idrinth.settings.land.gold = idrinth.settings.land.gold - nextPrice ( res.key ) * factor / 10;
                 results[res.key] = ( results[res.key] === undefined ? 0 : results[res.key] ) + factor;
                 idrinth.settings.land[res.key] = idrinth.settings.land[res.key] + factor;
                 return results;
