@@ -143,29 +143,11 @@ idrinth.ui = {
                 }
                 return list.indexOf ( value ) > -1;
             };
-            var get = function ( field ) {
-                'use strict';
-                var getValue = function ( parent, field ) {
-                    if ( idrinth.core.fieldIsSetting ( parent, field ) ) {
-                        return parent[field];
-                    }
-                    return null;
-                };
-                if ( !field ) {
-                    return;
-                }
-                var value = getValue ( idrinth.settings, field );
-                if ( value !== null ) {
-                    return value;
-                }
-                field = field.split ( '#' );
-                return getValue ( idrinth.settings[field[0]], field[1] );
-            };
             var input = [ {
                     name: 'type',
                     value: config.type
                 } ];
-            if ( get ( config.name ) && config.type === 'checkbox' ) {
+            if ( idrinth.settings.get ( config.name ) && config.type === 'checkbox' ) {
                 input.push ( {
                     name: 'checked',
                     value: 'checked'
@@ -174,7 +156,7 @@ idrinth.ui = {
             if ( config.type !== 'checkbox' ) {
                 input.push ( {
                     name: 'value',
-                    value: get ( config.name )
+                    value: idrinth.settings.get ( config.name )
                 } );
                 input.push ( {
                     name: 'onchange',

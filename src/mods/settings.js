@@ -49,6 +49,24 @@ idrinth.settings = {
         };
         store ( 'idrinth-dotd-', idrinth.settings, store );
     },
+    get: function ( field ) {
+        'use strict';
+        var getValue = function ( parent, field ) {
+            if ( idrinth.core.fieldIsSetting ( parent, field ) ) {
+                return parent[field];
+            }
+            return null;
+        };
+        if ( !field ) {
+            return;
+        }
+        var value = getValue ( idrinth.settings, field );
+        if ( value !== null && typeof value !== 'object' ) {
+            return value;
+        }
+        field = field.split ( '#' );
+        return getValue ( idrinth.settings[field[0]], field[1] );
+    },
     change: function ( field, value ) {
         'use strict';
         var setValue = function ( parent, field, value ) {
