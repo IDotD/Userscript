@@ -795,7 +795,7 @@ idrinth.ui = {
                     value: 'stylesheet'
                 }, {
                     name: 'href',
-                    value: 'https://dotd.idrinth.de###PATH###/script-styles.css?###VERSION###'
+                    value: 'https://dotd.idrinth.de/static/userscript-styles/###RELOAD-VERSION###/'
                 } ]
         } ) );
         build ();
