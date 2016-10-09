@@ -81,14 +81,16 @@ idrinth.chat = {
                     }
                 ];
                 for (var chatId in idrinth.chat.chatRank) {
-                    var intChatId = parseInt ( chatId, 10 );
-                    if ( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ) && intChatId !== chat && intChatId > 1 && !( user in idrinth.chat.chatRank[chatId] ) ) {
-                        promotionModes.push ( {
-                            chat: chatId,
-                            label: 'Invite to Chat ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML,
-                            rank: 'User',
-                            requiredRank: 1
-                        } );
+                    if ( idrinth.chat.chatRank.hasOwnProperty ( chatId ) ) {
+                        var intChatId = parseInt ( chatId, 10 );
+                        if ( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ) && intChatId !== chat && intChatId > 1 && !( user in idrinth.chat.chatRank[chatId] ) ) {
+                            promotionModes.push ( {
+                                chat: chatId,
+                                label: 'Invite to Chat ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML,
+                                rank: 'User',
+                                requiredRank: 1
+                            } );
+                        }
                     }
                 }
                 return promotionModes;
@@ -100,8 +102,9 @@ idrinth.chat = {
                 if ( !hasRights ( node.requiredRank, ownRank ) ) {
                     return;
                 }
+                var translation = idrinth.text.get ( config.label );
                 return {
-                    content: node.label,
+                    content: translation === idrinth.text.data.default ? config.label : translation,
                     type: 'li',
                     attributes: [ {
                             name: 'onclick',
@@ -493,7 +496,7 @@ idrinth.chat = {
     start: function () {
         var build = function () {
             var makeInput = function ( label ) {
-                var translation = idrinth.text.get( label );
+                var translation = idrinth.text.get ( label );
                 return {
                     type: 'li',
                     children: [
@@ -518,7 +521,7 @@ idrinth.chat = {
                 };
             };
             var makeButton = function ( label, onclick ) {
-                var translation = idrinth.text.get( label );
+                var translation = idrinth.text.get ( label );
                 return {
                     type: 'li',
                     children: [
@@ -900,7 +903,7 @@ idrinth.chat = {
             ],
             attributes: [ {
                     name: 'style',
-                    value: idrinth.ui.getPosition ( element )
+                    value: idrinth.ui.getElementPositioning ( element, 0, 0 )
                 } ]
         } ) );
     },

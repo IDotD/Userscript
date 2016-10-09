@@ -220,15 +220,15 @@ idrinth.tier = {
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get ( "tier.diff.normal" )
+                                                    content: idrinth.text.get ( "tier.diff.hard" )
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get ( "tier.diff.normal" )
+                                                    content: idrinth.text.get ( "tier.diff.legend" )
                                                 },
                                                 {
                                                     type: 'th',
-                                                    content: idrinth.text.get ( "tier.diff.normal" )
+                                                    content: idrinth.text.get ( "tier.diff.night" )
                                                 }
                                             ]
                                         }
