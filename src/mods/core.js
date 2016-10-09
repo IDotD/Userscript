@@ -37,7 +37,9 @@ idrinth.core = {
             requestHandler.timeout = 30000;
             requestHandler.ontimeout = function ( event ) {
                 var request = ( event || window.event ).target;
-                timeout.bind ( request );
+                if ( typeof timeout === 'function' ) {
+                    timeout.bind ( request );
+                }
                 delete idrinth.core.ajax.active[request._url];
                 idrinth.core.log ( 'Request to ' + request._url + ' failed.' );
             };
