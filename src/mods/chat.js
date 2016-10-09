@@ -100,8 +100,9 @@ idrinth.chat = {
                 if ( !hasRights ( node.requiredRank, ownRank ) ) {
                     return;
                 }
+                var translation = idrinth.text.get ( config.label );
                 return {
-                    content: node.label,
+                    content: translation === idrinth.text.data.default ? config.label : translation,
                     type: 'li',
                     attributes: [ {
                             name: 'onclick',
@@ -493,7 +494,7 @@ idrinth.chat = {
     start: function () {
         var build = function () {
             var makeInput = function ( label ) {
-                var translation = idrinth.text.get( label );
+                var translation = idrinth.text.get ( label );
                 return {
                     type: 'li',
                     children: [
@@ -518,7 +519,7 @@ idrinth.chat = {
                 };
             };
             var makeButton = function ( label, onclick ) {
-                var translation = idrinth.text.get( label );
+                var translation = idrinth.text.get ( label );
                 return {
                     type: 'li',
                     children: [
