@@ -42,7 +42,6 @@ idrinth.land = {
                 }
                 results = applyResult ( results, res, factor, nextPrice );
             }
-            idrinth.settings.save ();
             return results;
         };
         var getRequirements = function () {
@@ -66,7 +65,6 @@ idrinth.land = {
                 }
             }
             document.getElementById( 'idrinth-land-gold' ).value = idrinth.settings.get( "land#gold" );
-            idrinth.settings.save ();
         };
         for (var key in idrinth.settings.get("land#")) {
             if ( idrinth.settings.land.hasOwnProperty ( key ) ) {
