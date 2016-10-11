@@ -847,8 +847,8 @@ idrinth.chat = {
             return;
         }
         if ( data.success ) {
-            idrinth.settings.change(("chatuser"), document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[0].value);
-            idrinth.settings.change(("chatpass"), document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[1].value);
+            idrinth.settings.change("chatuser", document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[0].value);
+            idrinth.settings.change("chatpass", document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[1].value);
             idrinth.ui.removeElement ( 'idrinth-chat-login' );
             idrinth.chat.join ( data.data );
             return;
