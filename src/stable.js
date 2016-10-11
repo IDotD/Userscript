@@ -138,17 +138,10 @@ var idrinth = {
         }
         startModules ();
         window.setTimeout ( function () {
-            var clipboard = new Clipboard ( '#idrinth-raid-link-list span' );
-            clipboard.on ( 'success', function ( e ) {
-                e = e || window.event;
-                e.trigger.parentNode.removeChild ( e.trigger );
-            } );
-        }, 1000 );
-        window.setTimeout ( function () {
-            var clipboard = new Clipboard ( '.clipboard-copy' );
-            clipboard.on ( 'success', function ( e ) {
-                e = e || window.event;
-                e.trigger.parentNode.parentNode.removeChild ( e.trigger.parentNode );
+            idrinth.core.multibind.add ( 'click', '.clipboard-copy', function ( element, event ) {
+                idrinth.core.copyToClipboard.element ( element );
+                element.parentNode.parentNode.removeChild ( element.parentNode );
+                idrinth.core.log ( event + ' fired on ' + element );
             } );
         }, 1000 );
         delete idrinth['start'];

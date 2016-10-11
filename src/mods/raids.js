@@ -250,11 +250,26 @@ idrinth.raids = {
                     var postLink = function ( key ) {
                         'use strict';
                         if ( !document.getElementById ( 'idrinth-raid-link-' + key ) ) {
-                            var span = document.createElement ( 'span' );
-                            span.id = 'idrinth-raid-link-' + key;
-                            span.setAttribute ( 'data-clipboard-text', idrinth.raids.join.getServerLink ( key ) );
-                            span.appendChild ( document.createTextNode ( idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid ) );
-                            document.getElementById ( 'idrinth-raid-link-list' ).appendChild ( span );
+                            document.getElementById ( 'idrinth-raid-link-list' ).appendChild (
+                                    idrinth.ui.buildElement (
+                                            {
+                                                children: [
+                                                    {
+                                                        type: 'span',
+                                                        css: 'clipboard-copy',
+                                                        id: 'idrinth-raid-link-' + key,
+                                                        attributes: [
+                                                            {
+                                                                name: 'data-clipboard-text',
+                                                                value: idrinth.raids.join.getServerLink ( key )
+                                                            }
+                                                        ],
+                                                        content: idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid
+                                                    }
+                                                ]
+                                            }
+                                    )
+                                    );
                         }
                     };
                     var options = [ postLink ];

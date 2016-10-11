@@ -6,10 +6,11 @@ idrinth.land = {
                 return ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base;
             };
             var results = { };
-            var applyResult = function ( res, factor, nextPrice ) {
-                idrinth.settings.land.gold = idrinth.settings.land.gold - nextPrice () * factor / 10;
+            var applyResult = function ( results, res, factor, nextPrice ) {
+                idrinth.settings.land.gold = idrinth.settings.land.gold - nextPrice ( res.key ) * factor / 10;
                 results[res.key] = ( results[res.key] === undefined ? 0 : results[res.key] ) + factor;
                 idrinth.settings.land[res.key] = idrinth.settings.land[res.key] + factor;
+                return results;
             };
             var processBuildings = function ( checkElementFunc, factor, nextPrice ) {
                 var check = function ( checkElementFunc, building, factor, res, nextPrice ) {
@@ -39,7 +40,7 @@ idrinth.land = {
                 if ( res.key === null ) {
                     return results;
                 }
-                applyResult ( res, factor, nextPrice );
+                results = applyResult ( results, res, factor, nextPrice );
             }
             idrinth.settings.save ();
             return results;
@@ -59,18 +60,22 @@ idrinth.land = {
         };
         var putResults = function ( results ) {
             for (var key in results) {
-                document.getElementById ( 'idrinth-land-' + key ).value = idrinth.settings.land[key];
-                document.getElementById ( 'idrinth-land-' + key ).parentNode.nextSibling.innerHTML = '+' + results[key];
+                if ( results.hasOwnProperty ( key ) ) {
+                    document.getElementById ( 'idrinth-land-' + key ).value = idrinth.settings.land[key];
+                    document.getElementById ( 'idrinth-land-' + key ).parentNode.nextSibling.innerHTML = '+' + results[key];
+                }
             }
             document.getElementById ( 'idrinth-land-gold' ).value = idrinth.settings.land.gold;
             idrinth.settings.save ();
         };
         for (var key in idrinth.settings.land) {
-            idrinth.settings.change ( 'land-' + key, parseInt ( document.getElementById ( 'idrinth-land-' + key ).value, 10 ) );
+            if ( idrinth.settings.land.hasOwnProperty ( key ) ) {
+                idrinth.settings.change ( 'land#' + key, parseInt ( document.getElementById ( 'idrinth-land-' + key ).value, 10 ) );
+            }
         }
         var results = baseCalculator ( getRequirements () );
         if ( Object.keys ( results ).length === 0 ) {
-            idrinth.core.alert ( 'You lack gold to buy any more buildings at the moment.' );
+            idrinth.core.alert ( idrinth.text.get ( "land.lackGold" ) );
         }
         putResults ( results );
     },
