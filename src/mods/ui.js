@@ -277,7 +277,7 @@ idrinth.ui = {
         }
         idrinth.names.isHovering = false;
         var name = idrinth.names.parse ( element ).toLowerCase ( );
-        if ( idrinth.settings.get("names") && idrinth.ui.tooltip && idrinth.names.users[name] ) {
+        if ( idrinth.settings.get ( "names" ) && idrinth.ui.tooltip && idrinth.names.users[name] ) {
             window.clearTimeout ( idrinth.ui.tooltipTO );
             idrinth.ui.tooltip.setAttribute ( 'style', idrinth.ui.getElementPositioning ( element, -200, -100 ) );
             tooltip ( idrinth.names.users[name].kongregate, idrinth.ui.tooltip.firstChild, false );
@@ -294,7 +294,7 @@ idrinth.ui = {
         }
     },
     setTooltipTimeout: function () {
-        idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.get("timeout") ? idrinth.settings.get("timeout") : 5000 );
+        idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.get ( "timeout" ) ? idrinth.settings.get ( "timeout" ) : 5000 );
     },
     hideTooltip: function () {
         if ( idrinth.names.isHovering ) {
@@ -305,10 +305,10 @@ idrinth.ui = {
     openCloseSettings: function ( ) {
         'use strict';
         var toRemove = [ ( idrinth.ui.controls.getAttribute ( 'class' ) ).match ( /(^|\s)inactive($|\s)/ ) ? 'inactive' : 'active' ];
-        if ( !idrinth.settings.get("moveLeft") ) {
+        if ( !idrinth.settings.get ( "moveLeft" ) ) {
             toRemove.push ( 'left-sided' );
         }
-        if ( !idrinth.settings.get("minimalist") ) {
+        if ( !idrinth.settings.get ( "minimalist" ) ) {
             toRemove.push ( 'small' );
         }
         idrinth.ui.updateClassesList ( idrinth.ui.controls, [ 'active', 'inactive', 'left-sided', 'small' ], toRemove );
@@ -421,7 +421,7 @@ idrinth.ui = {
                                 buttonMaker ( idrinth.text.get ( "raids.imports.restart" ), 'idrinth.raids.restartInterval();' ),
                                 buttonMaker ( idrinth.text.get ( "button.refreshFBGameLogin" ), 'idrinth.facebook.rejoin()', 'facebook' ),
                                 buttonMaker ( idrinth.text.get ( "button.ngRaidJoin" ), 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
-                                buttonMaker ( idrinth.settings.get("alarmActive") ? idrinth.text.get ( "button.disableTimedAutoJoin" ) : idrinth.text.get ( "button.enableTimedAutoJoin" ),
+                                buttonMaker ( idrinth.settings.get ( "alarmActive" ) ? idrinth.text.get ( "button.disableTimedAutoJoin" ) : idrinth.text.get ( "button.enableTimedAutoJoin" ),
                                         'idrinth.settings.change(\'alarmActive\',!idrinth.settings.get("alarmActive"));this.innerHTML=idrinth.settings.get("alarmActive") ? idrinth.text.get ( "button.disableTimedAutoJoin" ):"button.enableTimedAutoJoin"', 'newgrounds' )
                             ]
                         }, {
@@ -594,7 +594,7 @@ idrinth.ui = {
                                             attributes: [
                                                 {
                                                     name: 'value',
-                                                    value: idrinth.settings.get("land#"+label.toLowerCase ())
+                                                    value: idrinth.settings.get ( "land#" + label.toLowerCase () )
                                                 },
                                                 {
                                                     name: 'type',
@@ -650,7 +650,7 @@ idrinth.ui = {
                                                     attributes: [
                                                         {
                                                             name: 'value',
-                                                            value: idrinth.settings.get("land#gold")
+                                                            value: idrinth.settings.get ( "land#gold" )
                                                         },
                                                         {
                                                             name: 'type',
@@ -781,7 +781,7 @@ idrinth.ui = {
                     } ]
             } );
             idrinth.ui.controls = idrinth.ui.buildElement ( {
-                css: 'idrinth-hovering-box idrinth-controls-overwrite inactive' + ( idrinth.settings.get("moveLeft") ? ' left-sided' : '' ) + ( idrinth.settings.get("minimalist") ? ' small' : '' ),
+                css: 'idrinth-hovering-box idrinth-controls-overwrite inactive' + ( idrinth.settings.get ( "moveLeft" ) ? ' left-sided' : '' ) + ( idrinth.settings.get ( "minimalist" ) ? ' small' : '' ),
                 id: 'idrinth-controls',
                 children: children
             } );

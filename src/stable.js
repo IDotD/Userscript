@@ -41,7 +41,7 @@ var idrinth = {
         },
         alarmCheck: function () {
             var now = new Date ();
-            if ( idrinth.settings.get("alarmActive") && now.getHours () + ':' + now.getMinutes () === idrinth.settings.get("alarmTime") ) {
+            if ( idrinth.settings.get ( "alarmActive" ) && now.getHours () + ':' + now.getMinutes () === idrinth.settings.get ( "alarmTime" ) ) {
                 window.setTimeout ( idrinth.newgrounds.joinRaids, 1 );
             }
             window.setTimeout ( idrinth.newgrounds.alarmCheck, 60000 );
@@ -85,7 +85,7 @@ var idrinth = {
                         idrinth.raids.join.messages.trying ( key );
                         idrinth.newgrounds.join ();
                     },
-                    idrinth.settings.get("newgroundLoad") * 1000 );
+                    idrinth.settings.get ( "newgroundLoad" ) * 1000 );
         }
     },
     clearTimeout: function ( timeout ) {
