@@ -15,7 +15,7 @@ idrinth.text = {
             idrinth.text.initialized = true;
             return;
         }
-        idrinth.core.ajax.runHome ( '', function ( file ) {
+        idrinth.core.ajax.runHome ( 'lang-service/', function ( file ) {
             /**
              *
              * @param {object} to
@@ -49,6 +49,13 @@ idrinth.text = {
      * @returns {string}
      */
     get: function ( key ) {
+        /**
+         *
+         * @param {object} obj
+         * @param {Array} keys
+         * @param {function} func
+         * @returns {string}
+         */
         var getSub = function ( obj, keys, func ) {
             var key = keys.shift ( );
             if ( obj.hasOwnProperty ( key ) ) {
