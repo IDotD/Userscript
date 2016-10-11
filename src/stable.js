@@ -85,7 +85,7 @@ var idrinth = {
                         idrinth.raids.join.messages.trying ( key );
                         idrinth.newgrounds.join ();
                     },
-                    idrinth.settings.change(idrinth.settings.get("newgroundLoad"),idrinth.settings.get("newgroundLoad")  * 1000 ));
+                    idrinth.settings.newgroundLoad * 1000 );
         }
     },
     clearTimeout: function ( timeout ) {
