@@ -19,6 +19,7 @@ idrinth.settings = {
     alarmTime: '8:0',
     alarmActive: false,
     bannedRaids: { },
+    language: 'en',
     notification: {
         mention: true,
         message: true,

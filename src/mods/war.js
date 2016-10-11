@@ -5,7 +5,12 @@ idrinth.war = {
     warTO: null,
     setTO: function ( ) {
         if ( !idrinth.war.warTO ) {
-            idrinth.war.warTO = window.setTimeout ( idrinth.war.getData, 1000 );
+            idrinth.war.warTO = window.setTimeout (
+                    idrinth.war.getData,
+                    ( idrinth.war.element.getAttribute ( 'class' ) ).match ( /(^|\s)idrinth-hide($|\s)/ ) !== null ?
+                    30000 :
+                    120000
+                    );
         }
     },
     getData: function () {

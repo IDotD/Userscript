@@ -73,7 +73,7 @@ idrinth.land = {
         }
         var results = baseCalculator ( getRequirements () );
         if ( Object.keys ( results ).length === 0 ) {
-            idrinth.core.alert ( idrinth.text.get ( "land.lackGold" ) );
+            idrinth.core.alert ( idrinth.text.get ( "land.lack" ) );
         }
         putResults ( results );
     },
