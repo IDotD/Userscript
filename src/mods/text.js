@@ -15,7 +15,7 @@ idrinth.text = {
             idrinth.text.initialized = true;
             return;
         }
-        idrinth.core.ajax.runHome ( 'lang-service/', function ( file ) {
+        idrinth.core.ajax.runHome ( 'lang-service/###RELOAD-VERSION###/', function ( file ) {
             /**
              *
              * @param {object} to
