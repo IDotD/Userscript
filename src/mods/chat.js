@@ -651,7 +651,7 @@ idrinth.chat = {
                                         children: [
                                             {
                                                 type: '#text',
-                                                content: idrinth.text.get ( "chat.text.settings" )
+                                                content: idrinth.text.get ( "chat.texts.settings" )
                                             },
                                             {
                                                 type: 'a',
