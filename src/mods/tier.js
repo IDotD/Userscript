@@ -94,8 +94,8 @@ idrinth.tier = {
         if ( data ) {
             idrinth.tier.list = data;
             for (var key in data) {
-                if ( data[key].name && idrinth.settings.get("bannedRaids#"+"data#"+"key.name") === undefined ) {
-                    idrinth.settings.get("bannedRaids#"+"data#"+"key.name") = false;
+                if ( data[key].name && idrinth.settings.get("bannedRaids#"+"data#"+"key#name") === undefined ) {
+                    idrinth.settings.get("bannedRaids#"+"data#"+"key#name") = false;
                     document.getElementById ( 'idrinth-raid-may-join-list' ).appendChild ( idrinth.ui.buildElement ( {
                         name: 'bannedRaids#' + data[key].name,
                         rType: '#input',

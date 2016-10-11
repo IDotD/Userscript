@@ -313,9 +313,9 @@ idrinth.chat = {
                         };
                         var messageAllowed = function ( text ) {
                             try {
-                                return ( idrinth.settings.get("notification.message") && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
-                                        ( idrinth.settings.get("notification.mention") && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
-                                        ( idrinth.settings.("notification.raid") && text.match ( /\{[A-Z]{2}-Raid / ) !== null );
+                                return ( idrinth.settings.get("notification#message") && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
+                                        ( idrinth.settings.get("notification#mention") && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
+                                        ( idrinth.settings.("notification#raid") && text.match ( /\{[A-Z]{2}-Raid / ) !== null );
                             } catch ( e ) {
                                 idrinth.core.log ( e.getMessage () );
                                 return false;
