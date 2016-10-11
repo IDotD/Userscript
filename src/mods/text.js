@@ -10,7 +10,7 @@ idrinth.text = {
      * @method start
      * @returns {undefined}
      */
-    start: function () {
+    start: function ( ) {
         var language = idrinth.settings.language || window.navigator.userLanguage || window.navigator.language;
         if ( language === 'en' ) {
             idrinth.text.initialized = true;
@@ -40,7 +40,7 @@ idrinth.text = {
     },
     data: {
         chat: {
-            actions:{
+            actions: {
                 banUser: 'Ban User',
                 makeMod: 'Make Moderator',
                 makeAdmin: 'Make Admin',
@@ -81,63 +81,65 @@ idrinth.text = {
         default: 'Unexpected error occurred. Please contact script developers'
                 + ' (https://github.com/Idrinth/IDotD).',
         land: {
-            lackGold: 'You lack gold to buy any more buildings at the moment.'
+            lack: 'You lack gold to buy any more buildings at the moment.',
+            hour: ' gold per hour each',
+            calc: 'Calculate',
+            avaible: 'Avaible Gold'
         },
         tier: {
+            search: 'Enter Boss\' Name',
             diff: {
                 normal: 'Normal',
                 hard: 'Hard',
                 legend: 'Legend',
                 night: 'Nightmare'
             },
-            tagTop: 'Tag to screen-top',
-            maxBoxes: 'There is no space for another tier-box at the moment, please close one first.',
-            disableJoining: 'Disable joining for '
+            tag: 'Tag to screen-top',
+            maxBoxes: 'There is no space for another tier-box at the moment, please close one first.'
+        },
+        raids: {
+            lastJoined: 'Last raids joined:',
+            clear: 'Clear Raids',
+            disableJoining: 'Disable joining for ',
+            clickCopy: 'click to copy raid link',
+            imports: {
+                manually: 'Import all manually',
+                favs: 'Import favs manually',
+                restart: 'Restart Raidjoin'
+            }
+        },
+        button: {
+            ok: 'Ok',
+            cancel: 'Cancel',
+            reloadGame: 'Reload game',
+            reloadScript: 'Reload Script',
+            refreshFBGameLogin: 'Refresh Facebook Game Login',
+            ngRaidJoin: 'NG Raid Join(slow!)',
+            disableTimedAutoJoin: 'disable timed Autojoin',
+            enableTimedAutoJoin: 'enable timed Autojoin'
+        },
+        setting: {
+            enableExtCharInfo: 'Enable extended Characterinformation?',
+            minimLayout: 'Minimalist Layout',
+            moveSettingLeft: 'Move settings left',
+            warBottomPage: 'Show war at the bottom of the page',
+            useGoldEfficiently: 'Check to try and use up the gold as efficient as possible - uncheck to only use the most efficient buy in the land buy calculator',
+            tenBuildOnce: 'Buy 10 Buildings at once?(Rec)',
+            extCharInfoDuration: 'Milliseconds until the extended Characterinformation disappears',
+            joiningDuration: 'Seconds needed to load the game for joining',
+            enableChat: 'Enable chat(needs script reload)',
+            enableFavRequest: 'Enable Auto-Raid-Request for Favorites?',
+            favIdToJoin: 'FavoriteIds to join (separate multiple by comma)',
+            worldserver: 'Worldserver?',
+            disableAutoJoinSpecific: 'Disable Autojoining for specific raids'
         },
         ui: {
-            button: {
-                ok: 'Ok',
-                cancel: 'Cancel',
-                reloadGame: 'Reload game',
-                clearRaids: 'Clear Raids',
-                reloadScript: 'Reload Script',
-                refreshFBGameLogin: 'Refresh Facebook Game Login',
-                ngRaidJoin: 'NG Raid Join(slow!)',
-                calc: 'Calculate',
-                disableTimedAutoJoin: 'disable timed Autojoin',
-                enableTimedAutoJoin: 'enable timed Autojoin'
-            },
-            imports:{
-                manually:'Import all manually',
-                favs:'Import favs manually',
-                restart:'Restart Raidjoin'
-            },
-            lastRaidsJoined: 'Last raids joined:',
-            enterBossName: 'Enter Boss\' Name',
             settingInfo: 'This script will always import the raids you manually set to be imported on the website and if it\'s enabled it will also import all raids matched by one of the faved searches provided.',
             maxPopupsFrame: 'Maximum Popups/Frames for joining raids',
             timeAutoJoin: 'Time to automatically join raids slowly(reloads game multiple times). Format is [Hours]:[Minutes] without leading zeros, so 7:1 is fine, 07:01 is not',
             getFavFrom: 'Get your search-favorites from ',
             raidsearch: 'Idrinth\'s Raidsearch',
-            goldHour: ' gold per hour each',
-            availGold: 'Avaible Gold',
-            clickCopy: 'click to copy raid link',
             reloadGameFail: 'The game couldn\'t be reloaded',
-            setting: {
-                enableExtCharInfo: 'Enable extended Characterinformation?',
-                minimLayout: 'Minimalist Layout',
-                moveSettingLeft: 'Move settings left',
-                warBottomPage: 'Show war at the bottom of the page',
-                useGoldEfficiently: 'Check to try and use up the gold as efficient as possible - uncheck to only use the most efficient buy in the land buy calculator',
-                tenBuildOnce: 'Buy 10 Buildings at once?(Rec)',
-                extCharInfoDuration: 'Milliseconds until the extended Characterinformation disappears',
-                joiningDuration: 'Seconds needed to load the game for joining',
-                enableChat: 'Enable chat(needs script reload)',
-                enableFavRequest: 'Enable Auto-Raid-Request for Favorites?',
-                favIdToJoin: 'FavoriteIds to join (separate multiple by comma)',
-                worldserver: 'Worldserver?',
-                disableAutoJoinSpecific: 'Disable Autojoining for specific raids'
-            }
         }
     },
     /**
@@ -148,7 +150,7 @@ idrinth.text = {
      */
     get: function ( key ) {
         var getSub = function ( obj, keys, func ) {
-            var key = keys.shift ();
+            var key = keys.shift ( );
             if ( obj.hasOwnProperty ( key ) ) {
                 if ( keys.length > 0 ) {
                     return func ( obj[key], keys, func );
