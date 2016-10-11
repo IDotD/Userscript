@@ -288,7 +288,7 @@ idrinth.raids = {
                     if ( !raid.joined ) {
                         added++;
                         options[0] ( key );//post link
-                        if ( !idrinth.settings.get("bannedRaids"+raid.raid) ) {
+                        if ( !idrinth.settings.get("bannedRaids#"+raid.raid) ) {
                             for (var count = 1; count < options.length; count++) {
                                 options[count] ( key );
                             }

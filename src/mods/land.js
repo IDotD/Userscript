@@ -7,9 +7,9 @@ idrinth.land = {
             };
             var results = { };
             var applyResult = function ( results, res, factor, nextPrice ) {
-                idrinth.settings.change( idrinth.settings.get( "land#gold" ), idrinth.settings.get( "land#gold" ) - nextPrice( res.key ) * factor / 10 );
+                idrinth.settings.change( "land#gold", idrinth.settings.get( "land#gold" ) - nextPrice( res.key ) * factor / 10 );
                 results[res.key] = ( results[res.key] === undefined ? 0 : results[res.key] ) + factor;
-                idrinth.settings.change( idrinth.settings.get( "land" + res.key ), idrinth.settings.get( "land" + res.key ) + factor );
+                idrinth.settings.change( "land#" + res.key, idrinth.settings.get( "land#" + res.key ) + factor );
                 return results;
             };
             var processBuildings = function ( checkElementFunc, factor, nextPrice ) {
