@@ -43,7 +43,7 @@ idrinth.war = {
                 if ( toggle === true ) {
                     removeClasses.push ( 'idrinth-hide' );
                     addClasses.push ( "bottom" );
-                    if ( !idrinth.settings.warBottom ) {
+                    if ( !idrinth.settings.get("warBottom") ) {
                         removeClasses.push ( "bottom" );
                     }
                 } else {

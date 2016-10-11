@@ -1,7 +1,7 @@
 idrinth.land = {
     calculate: function () {
         var baseCalculator = function ( checkElementFunc ) {
-            var factor = idrinth.settings.factor ? 10 : 1;
+            var factor = idrinth.settings.get("factor") ? 10 : 1;
             var nextPrice = function ( building ) {
                 return ( 10 + idrinth.settings.get("land#" + building ) ) * idrinth.land.data[building].base;
             };

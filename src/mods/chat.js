@@ -313,9 +313,9 @@ idrinth.chat = {
                         };
                         var messageAllowed = function ( text ) {
                             try {
-                                return ( idrinth.settings.notification.message && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
-                                        ( idrinth.settings.notification.mention && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
-                                        ( idrinth.settings.notification.raid && text.match ( /\{[A-Z]{2}-Raid / ) !== null );
+                                return ( idrinth.settings.get("notification.message") && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
+                                        ( idrinth.settings.get("notification.mention") && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
+                                        ( idrinth.settings.("notification.raid") && text.match ( /\{[A-Z]{2}-Raid / ) !== null );
                             } catch ( e ) {
                                 idrinth.core.log ( e.getMessage () );
                                 return false;
@@ -847,9 +847,8 @@ idrinth.chat = {
             return;
         }
         if ( data.success ) {
-            idrinth.settings.get("chatuser") = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[0].value;
-            idrinth.settings.get("chatpass") = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[1].value;
-            idrinth.settings.save ();
+            idrinth.settings.change(("chatuser"), document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[0].value);
+            idrinth.settings.change(("chatpass"), document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[1].value);
             idrinth.ui.removeElement ( 'idrinth-chat-login' );
             idrinth.chat.join ( data.data );
             return;
