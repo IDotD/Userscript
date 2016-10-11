@@ -590,7 +590,7 @@ idrinth.chat = {
                                     },
                                     {
                                         type: 'p',
-                                        content: idrinth.text.get ( "chat.message.optional" )
+                                        content: idrinth.text.get ( "chat.texts.optional" )
                                     }, {
                                         id: 'idrinth-chat-login',
                                         children: [
@@ -600,7 +600,7 @@ idrinth.chat = {
                                             },
                                             {
                                                 type: 'p',
-                                                content: idrinth.text.get ( "chat.message.invalid" )
+                                                content: idrinth.text.get ( "chat.texts.invalid" )
                                             },
                                             {
                                                 type: 'ul',
@@ -608,7 +608,7 @@ idrinth.chat = {
                                                 children: [
                                                     makeInput ( 'Username' ),
                                                     makeInput ( 'Password' ),
-                                                    makeButton ( 'chat.message.offline', "idrinth.chat.login()" )
+                                                    makeButton ( 'chat.texts.offline', "idrinth.chat.login()" )
                                                 ]
                                             }
                                         ]
@@ -677,7 +677,7 @@ idrinth.chat = {
                                         children: [
                                             {
                                                 type: '#text',
-                                                content: idrinth.text.get ( "chat.creditEmoticon" )
+                                                content: idrinth.text.get ( "chat.texts.creditEmoticon" )
                                             },
                                             {
                                                 type: 'a',
