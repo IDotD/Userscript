@@ -51,24 +51,23 @@ describe ( 'Land.js tests', function () {
     describe ( "Land calculate method", function () {
 
         beforeEach ( function () {
-            var mock = {},
-                    defaultStructure = '{ "value": "", "parentNode": { "nextSibling": { "innerHTML": "" } } }',
-                    document_getElementById;
-            document_getElementById = jasmine.createSpyObj ( "input", [ 'value', 'parentNode', 'nextSibling', 'innerHTML' ] );
+            this.mock = {};
+            this.defaultStructure = '{ "value": "", "parentNode": { "nextSibling": { "innerHTML": "" } } }';
+            this.document_getElementById = jasmine.createSpyObj ( "input", [ 'value', 'parentNode', 'nextSibling', 'innerHTML' ] );
 
             for ( var i in idrinth.land.data ) {
                 if ( idrinth.land.data.hasOwnProperty ( i ) ) {
-                    mock[ 'idrinth-land-' + i ] = JSON.parse ( defaultStructure );
+                    this.mock[ 'idrinth-land-' + i ] = JSON.parse ( defaultStructure );
                 }
             }
-            mock[ 'idrinth-land-gold' ] = { value: '' };
+            this.mock[ 'idrinth-land-gold' ] = { value: '' };
 
             spyOn ( document, "getElementById" ).and.callFake ( function ( id ) {
-                if ( mock.hasOwnProperty ( id ) ) {
-                    return mock[ id ];
+                if ( this.mock.hasOwnProperty ( id ) ) {
+                    return this.mock[ id ];
                 }
 
-                return document_getElementById ( id );
+                return this.document_getElementById ( id );
             } );
 
             spyOn(idrinth.core, 'alert');
@@ -79,8 +78,11 @@ describe ( 'Land.js tests', function () {
 
         it ( "Should properly calculate without errors", function () {
             //Prepare values
+            idrinth.settings.land.gold = 8000000000;
 
             idrinth.land.calculate ();
+
+
         } );
 
     } );

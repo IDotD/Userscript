@@ -2,10 +2,10 @@ idrinth.land = {
     calculate: function () {
         var baseCalculator = function ( checkElementFunc ) {
             var factor = idrinth.settings.factor ? 10 : 1;
+            var results = { };
             var nextPrice = function ( building ) {
                 return ( 10 + idrinth.settings.land[building] ) * idrinth.land.data[building].base;
             };
-            var results = { };
             var applyResult = function ( results, res, factor, nextPrice ) {
                 idrinth.settings.land.gold = idrinth.settings.land.gold - nextPrice ( res.key ) * factor / 10;
                 results[res.key] = ( results[res.key] === undefined ? 0 : results[res.key] ) + factor;
@@ -29,7 +29,7 @@ idrinth.land = {
                     min: null
                 };
                 for (var building in idrinth.land.data) {
-                    if ( building && idrinth.land.data[building] && idrinth.land.data.hasOwnProperty ( building ) ) {
+                    if ( building && idrinth.land.data.hasOwnProperty ( building ) && idrinth.land.data[building] ) {
                         res = check ( checkElementFunc, building, factor, res, nextPrice );
                     }
                 }
