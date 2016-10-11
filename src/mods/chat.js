@@ -847,10 +847,9 @@ idrinth.chat = {
             return;
         }
         if ( data.success ) {
-            var login = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[0].value;
-            idrinth.settings.change( "chatuser", login );
-            login = document.getElementById( 'idrinth-chat-login' ).getElementsByTagName( 'input' )[1].value;
-            idrinth.settings.change("chatpass", login);
+            var login = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' );
+            idrinth.settings.change( "chatuser", login[0].value );
+            idrinth.settings.change( "chatpass", login[1].value );
             idrinth.ui.removeElement ( 'idrinth-chat-login' );
             idrinth.chat.join ( data.data );
             return;
