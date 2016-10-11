@@ -7,7 +7,6 @@ idrinth.text = {
     /**
      * Loads language specific code and signals it's readyness by setting
      * idrinth.text.initialized to true
-     * @method start
      * @returns {undefined}
      */
     start: function ( ) {
@@ -38,6 +37,10 @@ idrinth.text = {
             applyRecursive ( idrinth.text.data, JSON.parse ( file ), applyRecursive );
         }, idrinth.text.start, idrinth.text.start, null, true );
     },
+    /**
+     * See languages/en.json for an example
+     * @type {object}
+     */
     data: JSON.parse ( '###LANG###' ),
     /**
      * returns the translation of a provided key or an error-message if no
