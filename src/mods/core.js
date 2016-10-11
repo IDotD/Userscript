@@ -37,7 +37,9 @@ idrinth.core = {
             requestHandler.timeout = 30000;
             requestHandler.ontimeout = function ( event ) {
                 var request = ( event || window.event ).target;
-                timeout.bind ( request );
+                if ( typeof timeout === 'function' ) {
+                    timeout.bind ( request );
+                }
                 delete idrinth.core.ajax.active[request._url];
                 idrinth.core.log ( 'Request to ' + request._url + ' failed.' );
             };
@@ -59,23 +61,34 @@ idrinth.core = {
             idrinth.core.ajax.active[url].send ( );
         }
     },
-    copyToClipboard: function ( text ) {
-        var success;
-        try {
-            var textAreaElement = idrinth.ui.buildElement ( {
-                type: 'textarea',
-                id: "idrinth-copy-helper"
-            } );
-            textAreaElement.value = text;
-            idrinth.ui.body.appendChild ( textAreaElement );
-            textAreaElement.select ( );
-            success = document.execCommand ( 'copy' );
-        } catch ( exception ) {
-            idrinth.core.log ( exception.getMessage ( ) );
-            success = false;
+    copyToClipboard: {
+        text: function ( text ) {
+            var success;
+            try {
+                var textAreaElement = idrinth.ui.buildElement ( {
+                    type: 'textarea',
+                    id: "idrinth-copy-helper"
+                } );
+                textAreaElement.value = text;
+                idrinth.ui.body.appendChild ( textAreaElement );
+                textAreaElement.select ( );
+                success = document.execCommand ( 'copy' );
+            } catch ( exception ) {
+                idrinth.core.log ( exception.getMessage ( ) );
+                success = false;
+            }
+            idrinth.ui.removeElement ( "idrinth-copy-helper" );
+            return success;
+        },
+        element: function ( element ) {
+            if ( element.hasAttribute ( 'data-clipboard-text' ) ) {
+                return idrinth.core.copyToClipboard.text ( element.getAttribute ( 'data-clipboard-text' ) );
+            }
+            if ( element.value ) {
+                return idrinth.core.copyToClipboard.text ( element.value );
+            }
+            return idrinth.core.copyToClipboard.text ( element.innerHTML );
         }
-        idrinth.ui.removeElement ( "idrinth-copy-helper" );
-        return success;
     },
     sendNotification: function ( title, content ) {
         if ( !( "Notification" in window ) ) {
@@ -110,16 +123,11 @@ idrinth.core = {
                 idrinth.core.multibind.events[event][selector] = idrinth.core.multibind.events[event][selector] ? idrinth.core.multibind.events[event][selector] : [ ];
                 idrinth.core.multibind.events[event][selector].push ( method );
             };
-            if ( idrinth.core.multibind.events[event] ) {
-                var attribute = 'idrinth.core.triggered(this,\'' + event + '\');';
-                //trying not to break all old code there
-                if ( idrinth.ui.body.getAttribute ( 'on' + event ) ) {
-                    attribute += idrinth.ui.body.getAttribute ( 'on' + event );
-                }
-                if ( idrinth.ui.body['on' + event] && typeof idrinth.ui.body['on' + event] === 'function' ) {
-                    bind ( event, 'body', idrinth.ui.body['on' + event] );
-                }
-                idrinth.ui.body.setAttribute ( 'on' + event, attribute );
+            if ( !idrinth.core.multibind.events[event] ) {
+                idrinth.ui.body.addEventListener ( event, function ( e ) {
+                    e = e || window.event;
+                    idrinth.core.multibind.triggered ( e.target, e.type );
+                } );
             }
             bind ( event, selector, method );
         },
@@ -130,9 +138,9 @@ idrinth.core = {
                 }
                 for (var pos = 0; pos < idrinth.core.multibind.events[event][selector].length; pos++) {
                     try {
-                        idrinth.core.multibind.events[event][selector][pos].bind ( el, event );
+                        idrinth.core.multibind.events[event][selector][pos] ( el, event );
                     } catch ( exception ) {
-                        idrinth.core.log ( exception.getMessage () );
+                        idrinth.core.log ( exception.message ? exception.message : exception.getMessage () );
                     }
                 }
             };
