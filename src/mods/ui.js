@@ -537,17 +537,17 @@ idrinth.ui = {
                             name: 'notification#mention',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'chat.notification.mentionNotis'
+                            label: 'chat.notification.mention'
                         }, {
                             name: 'notification#raid',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'chat.notification.raidNotis'
+                            label: 'chat.notification.raid'
                         }, {
                             name: 'notification#message',
                             rType: '#input',
                             type: 'checkbox',
-                            label: 'chat.notification.messageNotis'
+                            label: 'chat.notification.message'
                         }, {
                             name: 'windows',
                             rType: '#input',
@@ -741,7 +741,7 @@ idrinth.ui = {
                         }, {
                             id: 'idrinth-raid-link-list'
                         }, {
-                            content: idrinth.text.get ( "setting.disableAutoJoinSpecific" ),
+                            content: idrinth.text.get ( "raids.disableSpecific" ),
                             type: 'strong'
                         }, {
                             id: 'idrinth-raid-may-join-list'
