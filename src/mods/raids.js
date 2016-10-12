@@ -80,7 +80,7 @@ idrinth.raids = {
                                 tag + 'raid_id=' + data.raidId + '&' +
                                 tag + 'difficulty=' + data.difficulty + '&' +
                                 tag + 'hash=' + data.hash +
-                                ( idrinth.settings.isWorldServer ? '&' + tag + 'serverid=' + 2 : '' );
+                                ( idrinth.settings.get ( "isWorldServer" ) ? '&' + tag + 'serverid=' + 2 : '' );
                     } catch ( e1 ) {
                         return false;
                     }
@@ -208,7 +208,7 @@ idrinth.raids = {
                     var byFrame = function ( key ) {
                         'use strict';
                         var exist = document.getElementsByClassName ( 'idrinth-join-frame' ).length;
-                        if ( exist >= idrinth.settings.windows ) {
+                        if ( exist >= idrinth.settings.get ( "windows" ) ) {
                             idrinth.raids.list[key].joined = false;
                             return;
                         }
@@ -281,14 +281,14 @@ idrinth.raids = {
                     return options;
                 };
                 var reachedMax = function ( amount ) {
-                    return amount > 99 || ( ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) && amount >= idrinth.settings.windows );
+                    return amount > 99 || ( ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) && amount >= idrinth.settings.get ( "windows" ) );
                 };
                 var handleKey = function ( added, key, options ) {
                     var raid = idrinth.raids.list[key];
                     if ( !raid.joined ) {
                         added++;
                         options[0] ( key );//post link
-                        if ( !idrinth.settings.bannedRaids[raid.raid] ) {
+                        if ( !idrinth.settings.get ( "bannedRaids#" + raid.raid ) ) {
                             for (var count = 1; count < options.length; count++) {
                                 options[count] ( key );
                             }
@@ -310,7 +310,7 @@ idrinth.raids = {
             };
             if ( !join ( ) && Date.now ( ) - 60000 > idrinth.raids.requested ) {
                 idrinth.raids.requested = Date.now ( );
-                idrinth.raids.import ( idrinth.settings.raids ? idrinth.settings.favs : '-1' );
+                idrinth.raids.import ( idrinth.settings.get ( "raids" ) ? idrinth.settings.get ( "favs" ) : '-1' );
             }
         }
     },
