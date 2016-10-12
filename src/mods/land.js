@@ -61,7 +61,7 @@ idrinth.land = {
         var putResults = function ( results ) {
             for (var key in results) {
                 if ( results.hasOwnProperty ( key ) ) {
-                    document.getElementById ( 'idrinth-land-' + key ).value = idrinth.settings.land[key];
+                    document.getElementById ( 'idrinth-land-' + key ).value = results[key];
                     document.getElementById ( 'idrinth-land-' + key ).parentNode.nextSibling.innerHTML = '+' + results[key];
                 }
             }

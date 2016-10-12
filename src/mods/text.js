@@ -13,6 +13,7 @@ idrinth.text = {
         var language = idrinth.settings.get ( "language" ) || window.navigator.userLanguage || window.navigator.language;
         if ( language === 'en' ) {
             idrinth.text.initialized = true;
+            idrinth.text.data = JSON.parse ( '###LANG###' );
             return;
         }
         idrinth.core.ajax.runHome ( 'lang-service/###RELOAD-VERSION###/', function ( file ) {
@@ -41,11 +42,11 @@ idrinth.text = {
      * See languages/en.json for an example
      * @type {object}
      */
-    data: JSON.parse ( '###LANG###' ),
+    data: {},
     /**
      * returns the translation of a provided key or an error-message if no
      * matching translation is found
-     * @param string key
+     * @param {string} key
      * @returns {string}
      */
     get: function ( key ) {

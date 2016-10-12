@@ -49,30 +49,32 @@ describe ( 'Land.js tests', function () {
     } );
 
     describe ( "Land calculate method", function () {
+        var mockDOM = {}, defaultStructure, document_getElementById;
 
         beforeEach ( function () {
-            this.mock = {};
-            this.defaultStructure = '{ "value": "", "parentNode": { "nextSibling": { "innerHTML": "" } } }';
-            this.document_getElementById = jasmine.createSpyObj ( "input", [ 'value', 'parentNode', 'nextSibling', 'innerHTML' ] );
+            defaultStructure = '{ "parentNode.nextSibling.innerHTML": "", "parentNode": { "nextSibling": { "innerHTML": "" } } }';
+            document_getElementById = jasmine.createSpyObj ( "input", [ 'value', 'parentNode', 'nextSibling', 'innerHTML' ] );
 
             for ( var i in idrinth.land.data ) {
                 if ( idrinth.land.data.hasOwnProperty ( i ) ) {
-                    this.mock[ 'idrinth-land-' + i ] = JSON.parse ( defaultStructure );
+                    mockDOM[ 'idrinth-land-' + i ] = JSON.parse ( defaultStructure );
                 }
             }
-            this.mock[ 'idrinth-land-gold' ] = { value: '' };
+            mockDOM[ 'idrinth-land-gold' ] = { value: '' };
 
             spyOn ( document, "getElementById" ).and.callFake ( function ( id ) {
-                if ( this.mock.hasOwnProperty ( id ) ) {
-                    return this.mock[ id ];
+                if ( mockDOM.hasOwnProperty ( id ) ) {
+                    return mockDOM[ id ];
                 }
 
-                return this.document_getElementById ( id );
+                return document_getElementById ( id );
             } );
 
             spyOn(idrinth.core, 'alert');
             spyOn(idrinth.settings, 'save');
             spyOn(idrinth.settings, 'change');
+            spyOn(idrinth.text, 'get');
+            spyOn(idrinth.text, 'start');
         } );
 
 
@@ -82,6 +84,26 @@ describe ( 'Land.js tests', function () {
 
             idrinth.land.calculate ();
 
+            expect(mockDOM['idrinth-land-cornfield'].value).toEqual(840);
+            expect(mockDOM['idrinth-land-stable'].value).toEqual(650);
+            expect(mockDOM['idrinth-land-barn'].value).toEqual(520);
+            expect(mockDOM['idrinth-land-store'].value).toEqual(450);
+            expect(mockDOM['idrinth-land-pub'].value).toEqual(390);
+            expect(mockDOM['idrinth-land-inn'].value).toEqual(350);
+            expect(mockDOM['idrinth-land-tower'].value).toEqual(280);
+            expect(mockDOM['idrinth-land-fort'].value).toEqual(230);
+            expect(mockDOM['idrinth-land-castle'].value).toEqual(200);
+            expect(mockDOM['idrinth-land-gold'].value).toEqual(1450000);
+
+            expect(mockDOM['idrinth-land-cornfield'].parentNode.nextSibling.innerHTML).toEqual("+840");
+            expect(mockDOM['idrinth-land-stable'].parentNode.nextSibling.innerHTML).toEqual("+650");
+            expect(mockDOM['idrinth-land-barn'].parentNode.nextSibling.innerHTML).toEqual("+520");
+            expect(mockDOM['idrinth-land-store'].parentNode.nextSibling.innerHTML).toEqual("+450");
+            expect(mockDOM['idrinth-land-pub'].parentNode.nextSibling.innerHTML).toEqual("+390");
+            expect(mockDOM['idrinth-land-inn'].parentNode.nextSibling.innerHTML).toEqual("+350");
+            expect(mockDOM['idrinth-land-tower'].parentNode.nextSibling.innerHTML).toEqual("+280");
+            expect(mockDOM['idrinth-land-fort'].parentNode.nextSibling.innerHTML).toEqual("+230");
+            expect(mockDOM['idrinth-land-castle'].parentNode.nextSibling.innerHTML).toEqual("+200");
 
         } );
 
