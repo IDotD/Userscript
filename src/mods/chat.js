@@ -313,9 +313,9 @@ idrinth.chat = {
                         };
                         var messageAllowed = function ( text ) {
                             try {
-                                return ( idrinth.settings.notification.message && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
-                                        ( idrinth.settings.notification.mention && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
-                                        ( idrinth.settings.notification.raid && text.match ( /\{[A-Z]{2}-Raid / ) !== null );
+                                return ( idrinth.settings.get ( "notification#message" ) && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
+                                        ( idrinth.settings.get ( "notification#mention" ) && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
+                                        ( idrinth.settings.get ( "notification#raid" ) && text.match ( /\{[A-Z]{2}-Raid / ) !== null );
                             } catch ( e ) {
                                 idrinth.core.log ( e.getMessage () );
                                 return false;
@@ -544,11 +544,11 @@ idrinth.chat = {
             };
             return idrinth.ui.buildElement ( {
                 id: 'idrinth-chat',
-                css: 'idrinth-hovering-box' + ( !idrinth.settings.chatHiddenOnStart ? ' active' : '' ) + ( idrinth.settings.moveLeft ? ' left-sided' : '' ),
+                css: 'idrinth-hovering-box' + ( !idrinth.settings.get ( "chatHiddenOnStart" ) ? ' active' : '' ) + ( idrinth.settings.get ( "moveLeft" ) ? ' left-sided' : '' ),
                 children: [
                     {
                         type: 'button',
-                        content: ( idrinth.settings.chatHiddenOnStart ? '<<' : '>>' ),
+                        content: ( idrinth.settings.get ( "chatHiddenOnStart" ) ? '<<' : '>>' ),
                         attributes: [ {
                                 name: 'onclick',
                                 value: 'idrinth.chat.openCloseChat(this);'
@@ -706,7 +706,7 @@ idrinth.chat = {
                 ]
             } );
         };
-        if ( !idrinth.settings.chatting ) {
+        if ( !idrinth.settings.get ( "chatting" ) ) {
             return;
         }
         if ( !document.getElementById ( 'idrinth-chat' ) ) {
@@ -724,8 +724,8 @@ idrinth.chat = {
                         window.setTimeout ( idrinth.chat.login, 1 );
                     },
                     JSON.stringify ( {
-                        user: idrinth.settings.chatuser,
-                        pass: idrinth.settings.chatpass
+                        user: idrinth.settings.get ( "chatuser" ),
+                        pass: idrinth.settings.get ( "chatpass" )
                     } )
                     );
         }, 2500 );
@@ -847,9 +847,9 @@ idrinth.chat = {
             return;
         }
         if ( data.success ) {
-            idrinth.settings.chatuser = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[0].value;
-            idrinth.settings.chatpass = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' )[1].value;
-            idrinth.settings.save ();
+            var login = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' );
+            idrinth.settings.change ( "chatuser", login[0].value );
+            idrinth.settings.change ( "chatpass", login[1].value );
             idrinth.ui.removeElement ( 'idrinth-chat-login' );
             idrinth.chat.join ( data.data );
             return;
@@ -927,11 +927,11 @@ idrinth.chat = {
     openCloseChat: function ( element ) {
         var chat = element.parentNode;
         if ( chat.getAttribute ( 'class' ) === 'idrinth-hovering-box active' || chat.getAttribute ( 'class' ) === 'idrinth-hovering-box active left-sided' ) {
-            chat.setAttribute ( 'class', 'idrinth-hovering-box' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ) +
+            chat.setAttribute ( 'class', 'idrinth-hovering-box' + ( idrinth.settings.get ( "moveLeft" ) ? ' left-sided' : '' ) +
                     ( chat.getElementsByClassName ( 'new-message' ) && chat.getElementsByClassName ( 'new-message' ).length ? ' new-message' : '' ) );
             element.innerHTML = '&lt;&lt;';
         } else {
-            chat.setAttribute ( 'class', 'idrinth-hovering-box active' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ) );
+            chat.setAttribute ( 'class', 'idrinth-hovering-box active' + ( idrinth.settings.get ( "moveLeft" ) ? ' left-sided' : '' ) );
             element.innerHTML = '&gt;&gt;';
         }
     },
@@ -962,8 +962,8 @@ idrinth.chat = {
             success = function () {
                 idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 1500 );
             };
-            headers.user = idrinth.settings.chatuser;
-            headers.pass = idrinth.settings.chatpass;
+            headers.user = idrinth.settings.get ( "chatuser" );
+            headers.pass = idrinth.settings.get ( "chatpass" );
         } else {
             chatLogin = document.getElementById ( 'idrinth-chat-login' ).getElementsByTagName ( 'input' );
             headers.user = chatLogin[0].value;
