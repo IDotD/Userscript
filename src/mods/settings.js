@@ -72,15 +72,15 @@ idrinth.settings = {
         if ( !field ) {
             return;
         }
-        if ( setValue ( idrinth.settings, field, value ) ) {
+        if ( setValue ( idrinth.settings.data, field, value ) ) {
             store ();
             return;
         }
         field = field.split ( '#' );
-        if ( !idrinth.settings[field[0]] || !field[1] ) {
+        if ( !idrinth.settings.data[field[0]] || !field[1] ) {
             return;
         }
-        if ( setValue ( idrinth.settings[field[0]], field[1], value ) ) {
+        if ( setValue ( idrinth.settings.data[field[0]], field[1], value ) ) {
             store ();
             return;
         }
@@ -116,6 +116,7 @@ idrinth.settings = {
                             }
                             item = tmp;
                         }
+                        // window.localStorage.removeItem ( 'idrinth-dotd-' + prefix + key );
                     }
                     return item;
                 };
