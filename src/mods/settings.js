@@ -47,14 +47,23 @@ idrinth.settings = {
             }
             return null;
         };
+        var remove = function ( key ) {
+            try {
+                window.localStorage.removeItem ( key );
+            } catch ( e ) {
+                //not really relevant
+            }
+        };
         if ( !field ) {
             return;
         }
         var value = getValue ( idrinth.settings.data, field );
         if ( value !== null && typeof value !== 'object' ) {
+            remove ( 'idrinth-dotd-' + field );
             return value;
         }
         field = field.split ( '#' );
+        remove ( 'idrinth-dotd-' + field[0] + '-' + field[1] );
         return getValue ( idrinth.settings.data[field[0]], field[1] );
     },
     change: function ( field, value ) {
@@ -116,7 +125,6 @@ idrinth.settings = {
                             }
                             item = tmp;
                         }
-                        // window.localStorage.removeItem ( 'idrinth-dotd-' + prefix + key );
                     }
                     return item;
                 };
