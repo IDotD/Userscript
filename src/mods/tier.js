@@ -95,7 +95,7 @@ idrinth.tier = {
             idrinth.tier.list = data;
             var create = function ( name, url ) {
                 'use strict';
-                if ( !idrinth.settings.bannedRaids[name] ) {
+                if ( !idrinth.settings.data.bannedRaids[name] ) {
                     idrinth.settings.data.bannedRaids[name] = false;
                     window.localStorage.setItem ( 'idotd', JSON.stringify ( idrinth.settings.data ) );
                 }
