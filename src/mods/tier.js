@@ -96,17 +96,13 @@ idrinth.tier = {
             var create = function ( field, value ) {
                 'use strict';
                 field = field.split ( '#' );
-                if ( !field[1] ) {
-                    idrinth.settings.data[field[0]] = value;
-                } else {
-                    idrinth.settings.data[field[0]][field[1]] = value;
-                }
+                idrinth.settings.data.bannedRaids[field[1]] = value;
                 window.localStorage.setItem ( 'idotd', JSON.stringify ( idrinth.settings.data ) );
             };
             for (var key in data) {
                 if ( data[key].name ) {
                     if ( idrinth.settings.get ( "bannedRaids#" + data[key].name ) === undefined ) {
-                        create ( "bannedRaids#" + data[key].name, false );
+                        create ( data[key].name, false );
                     }
                     document.getElementById ( 'idrinth-raid-may-join-list' ).appendChild ( idrinth.ui.buildElement ( {
                         name: 'bannedRaids#' + data[key].name,
