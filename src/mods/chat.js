@@ -10,11 +10,228 @@ idrinth.chat = {
     chatRank: { },
     refreshCount: 0,
     refreshChats: function () {
+        var applyMessages = function ( data ) {
+            var processMessages = function ( messages ) {
+                var addMessages = function ( chatMessages, chatId, chatElement ) {
+                    var buildMessage = function ( message, chat, chatId, messageId ) {
+                        var getfullDateInt = function () {
+                            function addZero ( x, n ) {
+                                while ( x.toString ().length < n ) {
+                                    x = "0" + x;
+                                }
+                                return x;
+                            }
+                            var d = new Date ();
+                            return addZero ( d.getFullYear (), 2 ) +
+                                    addZero ( d.getMonth (), 2 ) +
+                                    addZero ( d.getDate (), 2 ) +
+                                    addZero ( d.getHours (), 2 ) +
+                                    addZero ( d.getMinutes (), 2 ) +
+                                    addZero ( d.getSeconds (), 2 ) +
+                                    addZero ( d.getMilliseconds (), 3 );
+                        };
+                        var notify = function ( message, own, chatId ) {
+                            var notActive = function ( chatId ) {
+                                try {
+                                    return !idrinth.windowactive ||
+                                            !( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ ) ||
+                                            !( document.getElementById ( 'idrinth-chat' ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ );
+                                } catch ( e ) {
+                                    idrinth.core.log ( e.getMessage );
+                                    return true;
+                                }
+                            };
+                            var messageAllowed = function ( text ) {
+                                try {
+                                    return ( idrinth.settings.get ( "notification#message" ) && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
+                                            ( idrinth.settings.get ( "notification#mention" ) && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
+                                            ( idrinth.settings.get ( "notification#raid" ) && text.match ( /\{[A-Z]{2}-Raid / ) !== null );
+                                } catch ( e ) {
+                                    idrinth.core.log ( e.getMessage () );
+                                    return false;
+                                }
+                            };
+                            if ( !own && notActive ( chatId ) && messageAllowed ( message.text ) ) {
+                                try {
+                                    idrinth.core.sendNotification (
+                                            message.time.split ( ' ' )[1] + ' ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML + ':',
+                                            idrinth.chat.users[message.user].name + ': ' + message.text
+                                            );
+                                } catch ( exception ) {
+                                    idrinth.core.log ( exception.getMessage () );
+                                }
+                            }
+                        };
+                        var own = parseInt ( message.user, 10 ) === parseInt ( idrinth.chat.self, 10 );
+                        notify ( message, own, chatId );
+                        chat.appendChild ( idrinth.ui.buildElement (
+                                {
+                                    type: 'li',
+                                    id: 'idrinth-single-chat-message-' + messageId + ( parseInt ( messageId, 10 ) < 1 ? '-' + getfullDateInt () : '' ),
+                                    css: own ? 'self-written ' : '',
+                                    children: [
+                                        {
+                                            type: 'span',
+                                            css: 'time',
+                                            content: message.time.split ( ' ' )[1],
+                                            attributes: [ {
+                                                    name: 'title',
+                                                    value: message.time
+                                                } ]
+                                        },
+                                        {
+                                            type: 'span',
+                                            css: 'user ' + idrinth.chat.ranks[parseInt ( idrinth.chat.chatRank[chatId][message.user], 10 )] + ( message.user === 0 ? ' system-message' : '' ),
+                                            content: idrinth.chat.users[message.user].name,
+                                            attributes: [
+                                                {
+                                                    name: 'data-id',
+                                                    value: message.user
+                                                },
+                                                {
+                                                    name: 'onclick',
+                                                    value: 'idrinth.chat.userclick(this,' + message.user + ',' + chatId + ')'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            type: '#text',
+                                            content: ':'
+                                        },
+                                        {
+                                            type: 'span',
+                                            children: idrinth.chat.buildMessageText ( message.text )
+                                        }
+                                    ]
+                                }
+                        ) );
+                    };
+                    var isNew = false;
+                    for (var messageId in chatMessages) {
+                        if ( parseInt ( messageId, 10 ) < 1 || !document.getElementById ( 'idrinth-single-chat-message-' + messageId ) ) {
+                            isNew = true;
+                            buildMessage ( messages[chatId][messageId], chatElement, chatId, messageId );
+                            if ( parseInt ( messageId, 10 ) > parseInt ( idrinth.chat.maxId, 10 ) ) {
+                                idrinth.chat.maxId = messageId;
+                            }
+                        }
+                    }
+                    return isNew;
+                };
+                var setChatClass = function ( isNew, chat, chatId ) {
+                    var isActive = function ( element ) {
+                        var cssClass = element.getAttribute ( 'class' );
+                        return !( !cssClass ) && !( !cssClass.match ( /(^|\s)active(\s|$)/ ) );
+                    };
+                    var chatActive = isActive ( document.getElementById ( 'idrinth-chat' ) );
+                    if ( isNew && !chatActive ) {
+                        document.getElementById ( 'idrinth-chat' ).setAttribute ( 'class', 'new-message' );
+                    }
+                    var tab = document.getElementById ( 'idrinth-chat-tab-click-' + chatId );
+                    var tabActive = isActive ( tab );
+                    if ( isNew && !tabActive ) {
+                        tab.setAttribute ( 'class', tab.getAttribute ( 'class' ) + ' new-message' );
+                    } else if ( tabActive && chatActive && chat.lastChild.scrollTop < chat.lastChild.scrollHeight ) {
+                        try {
+                            chat.lastChild.scrollIntoView ( false );
+                        } catch ( e ) {
+                            idrinth.core.log ( e );
+                        }
+                        chat.lastChild.scrollTop = chat.lastChild.scrollHeight;
+                    }
+                };
+                if ( idrinth.chat.maxId === 0 ) {
+                    idrinth.chat.maxId = 1;
+                }
+                for (var key in messages) {
+                    if (
+                            !isNaN ( parseInt ( key, 10 ) )
+                            && document.getElementById ( 'idrinth-chat-tab-' + key )
+                            && document.getElementById ( 'idrinth-chat-tab-' + key ).getElementsByTagName ( 'ul' )[1] ) {
+                        var chat = document.getElementById ( 'idrinth-chat-tab-' + key ).getElementsByTagName ( 'ul' )[1];
+                        setChatClass ( addMessages ( messages[key], key, chat ), chat, key );
+                    }
+                }
+            };
+            if ( !data ) {
+                return idrinth.chat.returnMessages ( data );
+            }
+            data = JSON.parse ( data );
+            if ( !data ) {
+                return idrinth.chat.returnMessages ( data );
+            }
+            if ( data.login ) {
+                return idrinth.chat.relogin ();
+            }
+            if ( data.messages ) {
+                processMessages ( data.messages );
+            }
+            idrinth.chat.oldMessages = [ ];
+            idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 999 );
+        };
+        var refreshMembers = function () {
+            var applyMembers = function ( data ) {
+                var applyMemberData = function () {
+                    var addMemberElement = function ( chat, chatId, userId ) {
+                        var usedPlatforms = '';
+                        for (var pkey in idrinth.chat.users[userId].platforms) {
+                            if ( idrinth.chat.users[userId].platforms[pkey] ) {
+                                usedPlatforms += pkey;
+                            }
+                        }
+                        chat.appendChild ( idrinth.ui.buildElement ( {
+                            type: 'li',
+                            css: 'user ' + idrinth.chat.ranks[parseInt ( idrinth.chat.chatRank[chatId][userId], 10 )],
+                            content: ( usedPlatforms === '' ? '' : '[' + usedPlatforms.toUpperCase () + '] ' ) + idrinth.chat.users[userId].name,
+                            attributes: [
+                                {
+                                    name: 'data-id',
+                                    value: userId
+                                },
+                                {
+                                    name: 'onclick',
+                                    value: 'idrinth.chat.userclick(this,' + userId + ', ' + chatId + ')'
+                                }
+                            ]
+                        }
+                        ) );
+                    };
+                    for (var chatId in idrinth.chat.chatRank) {
+                        if ( document.getElementById ( 'idrinth-chat-tab-' + chatId ) ) {
+                            var chat = document.getElementById ( 'idrinth-chat-tab-' + chatId ).getElementsByTagName ( 'ul' )[0];
+                            while ( chat.firstChild ) {
+                                chat.removeChild ( chat.firstChild );
+                            }
+                            for (var userId in idrinth.chat.chatRank[chatId]) {
+                                if ( idrinth.chat.chatRank[chatId].hasOwnProperty ( userId ) ) {
+                                    addMemberElement ( chat, chatId, userId );
+                                }
+                            }
+                        }
+                    }
+                };
+                if ( !data ) {
+                    return;
+                }
+                data = JSON.parse ( data );
+                if ( !data ) {
+                    return;
+                }
+                idrinth.chat.self = data.self;
+                idrinth.chat.users = data.users;
+                idrinth.chat.chatRank = data.members;
+                applyMemberData ();
+            };
+            idrinth.core.ajax.runHome (
+                    'chat-service/accounts/',
+                    applyMembers
+                    );
+        };
         idrinth.chat.oldMessages = JSON.parse ( JSON.stringify ( idrinth.chat.messages ) );
         idrinth.chat.messages = [ ];
         idrinth.core.ajax.runHome (
                 'chat-service/update/',
-                idrinth.chat.applyMessages,
+                applyMessages,
                 idrinth.chat.returnMessages,
                 idrinth.chat.returnMessages,
                 JSON.stringify ( {
@@ -23,22 +240,9 @@ idrinth.chat = {
                 } )
                 );
         if ( idrinth.chat.refreshCount % 25 === 0 ) {
-            idrinth.chat.refreshMembers ();
+            refreshMembers ();
         }
         idrinth.chat.refreshCount++;
-    },
-    refreshMembers: function () {
-        idrinth.core.ajax.runHome (
-                'chat-service/accounts/',
-                idrinth.chat.applyMembers,
-                function () {
-                    window.setTimeout ( idrinth.chat.refreshMembers, 1000 );
-                },
-                function () {
-                    window.setTimeout ( idrinth.chat.refreshMembers, 1000 );
-                },
-                ''
-                );
     },
     returnMessages: function ( data ) {
         for (var count = idrinth.chat.oldMessages.length - 1; count >= 0; count--) {
@@ -102,9 +306,9 @@ idrinth.chat = {
                 if ( !hasRights ( node.requiredRank, ownRank ) ) {
                     return;
                 }
-                var translation = idrinth.text.get ( config.label );
+                var translation = idrinth.text.get ( node.label );
                 return {
-                    content: translation === idrinth.text.data.default ? config.label : translation,
+                    content: translation === idrinth.text.data.default ? node.label : translation,
                     type: 'li',
                     attributes: [ {
                             name: 'onclick',
@@ -280,218 +484,7 @@ idrinth.chat = {
                 };
             }, idrinth.chat.buildEmoticons ], 5 );
     },
-    applyMessages: function ( data ) {
-        var processMessages = function ( messages ) {
-            var addMessages = function ( chatMessages, chatId, chatElement ) {
-                var buildMessage = function ( message, chat, chatId, messageId ) {
-                    var getfullDateInt = function () {
-                        function addZero ( x, n ) {
-                            while ( x.toString ().length < n ) {
-                                x = "0" + x;
-                            }
-                            return x;
-                        }
-                        var d = new Date ();
-                        return addZero ( d.getFullYear (), 2 ) +
-                                addZero ( d.getMonth (), 2 ) +
-                                addZero ( d.getDate (), 2 ) +
-                                addZero ( d.getHours (), 2 ) +
-                                addZero ( d.getMinutes (), 2 ) +
-                                addZero ( d.getSeconds (), 2 ) +
-                                addZero ( d.getMilliseconds (), 3 );
-                    };
-                    var notify = function ( message, own, chatId ) {
-                        var notActive = function ( chatId ) {
-                            try {
-                                return !idrinth.windowactive ||
-                                        !( document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ ) ||
-                                        !( document.getElementById ( 'idrinth-chat' ).getAttribute ( 'class' ) ).match ( /(\s|^)active( |$)/ );
-                            } catch ( e ) {
-                                idrinth.core.log ( e.getMessage );
-                                return true;
-                            }
-                        };
-                        var messageAllowed = function ( text ) {
-                            try {
-                                return ( idrinth.settings.get ( "notification#message" ) && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
-                                        ( idrinth.settings.get ( "notification#mention" ) && text.match ( new RegExp ( '(\s|^)' + idrinth.core.escapeRegExp ( idrinth.chat.users[idrinth.chat.self].name ) + '(\s|$)', 'i' ) ) !== null ) ||
-                                        ( idrinth.settings.get ( "notification#raid" ) && text.match ( /\{[A-Z]{2}-Raid / ) !== null );
-                            } catch ( e ) {
-                                idrinth.core.log ( e.getMessage () );
-                                return false;
-                            }
-                        };
-                        if ( !own && notActive ( chatId ) && messageAllowed ( message.text ) ) {
-                            try {
-                                idrinth.core.sendNotification (
-                                        message.time.split ( ' ' )[1] + ' ' + document.getElementById ( 'idrinth-chat-tab-click-' + chatId ).innerHTML + ':',
-                                        idrinth.chat.users[message.user].name + ': ' + message.text
-                                        );
-                            } catch ( exception ) {
-                                idrinth.core.log ( exception.getMessage () );
-                            }
-                        }
-                    };
-                    var own = parseInt ( message.user, 10 ) === parseInt ( idrinth.chat.self, 10 );
-                    notify ( message, own, chatId );
-                    chat.appendChild ( idrinth.ui.buildElement (
-                            {
-                                type: 'li',
-                                id: 'idrinth-single-chat-message-' + messageId + ( parseInt ( messageId, 10 ) < 1 ? '-' + getfullDateInt () : '' ),
-                                css: own ? 'self-written ' : '',
-                                children: [
-                                    {
-                                        type: 'span',
-                                        css: 'time',
-                                        content: message.time.split ( ' ' )[1],
-                                        attributes: [ {
-                                                name: 'title',
-                                                value: message.time
-                                            } ]
-                                    },
-                                    {
-                                        type: 'span',
-                                        css: 'user ' + idrinth.chat.ranks[parseInt ( idrinth.chat.chatRank[chatId][message.user], 10 )] + ( message.user === 0 ? ' system-message' : '' ),
-                                        content: idrinth.chat.users[message.user].name,
-                                        attributes: [
-                                            {
-                                                name: 'data-id',
-                                                value: message.user
-                                            },
-                                            {
-                                                name: 'onclick',
-                                                value: 'idrinth.chat.userclick(this,' + message.user + ',' + chatId + ')'
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        type: '#text',
-                                        content: ':'
-                                    },
-                                    {
-                                        type: 'span',
-                                        children: idrinth.chat.buildMessageText ( message.text )
-                                    }
-                                ]
-                            }
-                    ) );
-                };
-                var isNew = false;
-                for (var messageId in chatMessages) {
-                    if ( parseInt ( messageId, 10 ) < 1 || !document.getElementById ( 'idrinth-single-chat-message-' + messageId ) ) {
-                        isNew = true;
-                        buildMessage ( messages[chatId][messageId], chatElement, chatId, messageId );
-                        if ( parseInt ( messageId, 10 ) > parseInt ( idrinth.chat.maxId, 10 ) ) {
-                            idrinth.chat.maxId = messageId;
-                        }
-                    }
-                }
-                return isNew;
-            };
-            var setChatClass = function ( isNew, chat, chatId ) {
-                var isActive = function ( element ) {
-                    var cssClass = element.getAttribute ( 'class' );
-                    return !( !cssClass ) && !( !cssClass.match ( /(^|\s)active(\s|$)/ ) );
-                };
-                var chatActive = isActive ( document.getElementById ( 'idrinth-chat' ) );
-                if ( isNew && !chatActive ) {
-                    document.getElementById ( 'idrinth-chat' ).setAttribute ( 'class', 'new-message' );
-                }
-                var tab = document.getElementById ( 'idrinth-chat-tab-click-' + chatId );
-                var tabActive = isActive ( tab );
-                if ( isNew && !tabActive ) {
-                    tab.setAttribute ( 'class', tab.getAttribute ( 'class' ) + ' new-message' );
-                } else if ( tabActive && chatActive && chat.lastChild.scrollTop < chat.lastChild.scrollHeight ) {
-                    try {
-                        chat.lastChild.scrollIntoView ( false );
-                    } catch ( e ) {
-                        idrinth.core.log ( e );
-                    }
-                    chat.lastChild.scrollTop = chat.lastChild.scrollHeight;
-                }
-            };
-            if ( idrinth.chat.maxId === 0 ) {
-                idrinth.chat.maxId = 1;
-            }
-            for (var key in messages) {
-                if (
-                        !isNaN ( parseInt ( key, 10 ) )
-                        && document.getElementById ( 'idrinth-chat-tab-' + key )
-                        && document.getElementById ( 'idrinth-chat-tab-' + key ).getElementsByTagName ( 'ul' )[1] ) {
-                    var chat = document.getElementById ( 'idrinth-chat-tab-' + key ).getElementsByTagName ( 'ul' )[1];
-                    setChatClass ( addMessages ( messages[key], key, chat ), chat, key );
-                }
-            }
-        };
-        if ( !data ) {
-            return idrinth.chat.returnMessages ( data );
-        }
-        data = JSON.parse ( data );
-        if ( !data ) {
-            return idrinth.chat.returnMessages ( data );
-        }
-        if ( data.login ) {
-            return idrinth.chat.relogin ();
-        }
-        if ( data.messages ) {
-            processMessages ( data.messages );
-        }
-        idrinth.chat.oldMessages = [ ];
-        idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 999 );
-    },
     ranks: [ '', 'banned', 'user', 'mod', 'owner' ],
-    applyMembers: function ( data ) {
-        var applyMemberData = function () {
-            var addMemberElement = function ( chat, chatId, userId ) {
-                var usedPlatforms = '';
-                for (var pkey in idrinth.chat.users[userId].platforms) {
-                    if ( idrinth.chat.users[userId].platforms[pkey] ) {
-                        usedPlatforms += pkey;
-                    }
-                }
-                chat.appendChild ( idrinth.ui.buildElement ( {
-                    type: 'li',
-                    css: 'user ' + idrinth.chat.ranks[parseInt ( idrinth.chat.chatRank[chatId][userId], 10 )],
-                    content: ( usedPlatforms === '' ? '' : '[' + usedPlatforms.toUpperCase () + '] ' ) + idrinth.chat.users[userId].name,
-                    attributes: [
-                        {
-                            name: 'data-id',
-                            value: userId
-                        },
-                        {
-                            name: 'onclick',
-                            value: 'idrinth.chat.userclick(this,' + userId + ', ' + chatId + ')'
-                        }
-                    ]
-                }
-                ) );
-            };
-            for (var chatId in idrinth.chat.chatRank) {
-                if ( document.getElementById ( 'idrinth-chat-tab-' + chatId ) ) {
-                    var chat = document.getElementById ( 'idrinth-chat-tab-' + chatId ).getElementsByTagName ( 'ul' )[0];
-                    while ( chat.firstChild ) {
-                        chat.removeChild ( chat.firstChild );
-                    }
-                    for (var userId in idrinth.chat.chatRank[chatId]) {
-                        if ( idrinth.chat.chatRank[chatId].hasOwnProperty ( userId ) ) {
-                            addMemberElement ( chat, chatId, userId );
-                        }
-                    }
-                }
-            }
-        };
-        if ( !data ) {
-            return idrinth.chat.returnMessages ( data );
-        }
-        data = JSON.parse ( data );
-        if ( !data ) {
-            return idrinth.chat.returnMessages ( data );
-        }
-        idrinth.chat.self = data.self;
-        idrinth.chat.users = data.users;
-        idrinth.chat.chatRank = data.members;
-        applyMemberData ();
-    },
     emotes: { },
     start: function () {
         var build = function () {
