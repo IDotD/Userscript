@@ -1,0 +1,21 @@
+{
+    "chat": {
+        "actions": {
+            "banUser": "Nutzer bannen",
+            "makeMod": "Moderator ernennen",
+            "makeAdmin": "Admin ernennen",
+            "makeUser": "Nutzer ernennen",
+            "close": "Schließen",
+            "createChat": "Chat erstellen",
+            "joinChat": "Chat beitreten",
+            "createAddChat": "Weiteren Chat erstellen",
+            "copyIdPasswort": "Password&Id kopieren",
+            "deleteRoom": "Raum löschen",
+            "leaveRoom": "Raum verlassen"
+        },
+        "texts": {
+            "settings": "Weitere Einstellungen auf ",
+        },
+    },
+    "default": "Unexpected error occurred. Please contact script developers (https://github.com/Idrinth/IDotD)."
+}
