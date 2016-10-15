@@ -1,54 +1,43 @@
 idrinth.settings = {
-    raids: false,
-    favs: '',
-    factor: true,
-    moveLeft: false,
-    minimalist: false,
-    chatHiddenOnStart: true,
-    names: true,
-    timeout: 5000,
-    loadtime: 5000,
-    windows: 3,
-    warBottom: false,
-    landMax: true,
-    chatting: true,
-    chatuser: '',
-    newgroundLoad: 30,
-    chatpass: '',
-    isWorldServer: false,
-    alarmTime: '8:0',
-    alarmActive: false,
-    bannedRaids: { },
-    language: 'en',
-    notification: {
-        mention: true,
-        message: true,
-        raid: true
-    },
-    land: {
-        cornfield: 0,
-        stable: 0,
-        barn: 0,
-        store: 0,
-        pub: 0,
-        inn: 0,
-        tower: 0,
-        fort: 0,
-        castle: 0,
-        gold: 0
-    },
-    save: function ( ) {
-        'use strict';
-        var store = function ( prefix, list, store ) {
-            for (var key in list) {
-                if ( list.hasOwnProperty ( key ) && typeof list[key] !== 'object' && typeof list[key] !== 'function' ) {
-                    window.localStorage.setItem ( prefix + key, list[key] );
-                } else if ( list.hasOwnProperty ( key ) && typeof list[key] === 'object' ) {
-                    store ( prefix + key + '-', list[key], store );
-                }
-            }
-        };
-        store ( 'idrinth-dotd-', idrinth.settings, store );
+    data: {
+        raids: false,
+        favs: '',
+        factor: true,
+        moveLeft: false,
+        minimalist: false,
+        chatHiddenOnStart: true,
+        names: true,
+        timeout: 5000,
+        loadtime: 5000,
+        windows: 3,
+        warBottom: false,
+        landMax: true,
+        chatting: true,
+        chatuser: '',
+        newgroundLoad: 30,
+        chatpass: '',
+        isWorldServer: false,
+        alarmTime: '8:0',
+        alarmActive: false,
+        bannedRaids: { },
+        language: 'en',
+        notification: {
+            mention: true,
+            message: true,
+            raid: true
+        },
+        land: {
+            cornfield: 0,
+            stable: 0,
+            barn: 0,
+            store: 0,
+            pub: 0,
+            inn: 0,
+            tower: 0,
+            fort: 0,
+            castle: 0,
+            gold: 0
+        }
     },
     get: function ( field ) {
         'use strict';
@@ -61,27 +50,30 @@ idrinth.settings = {
         if ( !field ) {
             return;
         }
-        var value = getValue ( idrinth.settings, field );
+        var value = getValue ( idrinth.settings.data, field );
         if ( value !== null && typeof value !== 'object' ) {
             return value;
         }
         field = field.split ( '#' );
-        return getValue ( idrinth.settings[field[0]], field[1] );
+        return getValue ( idrinth.settings.data[field[0]], field[1] );
     },
     change: function ( field, value ) {
         'use strict';
         var setValue = function ( parent, field, value ) {
             if ( idrinth.core.fieldIsSetting ( parent, field ) ) {
                 parent[field] = value;
-                idrinth.settings.save ( );
                 return true;
             }
             return false;
+        };
+        var store = function ( ) {
+            window.localStorage.setItem ( 'idotd', JSON.stringify ( idrinth.settings.data ) );
         };
         if ( !field ) {
             return;
         }
         if ( setValue ( idrinth.settings, field, value ) ) {
+            store ();
             return;
         }
         field = field.split ( '#' );
@@ -89,12 +81,29 @@ idrinth.settings = {
             return;
         }
         if ( setValue ( idrinth.settings[field[0]], field[1], value ) ) {
+            store ();
             return;
         }
     },
     start: function ( ) {
         'use strict';
-        if ( window.localStorage ) {
+        var getCurrent = function () {
+            var data = JSON.parse ( window.localStorage.getItem ( 'idotd' ) );
+            var apply = function ( to, from, apply ) {
+                for (var key in from) {
+                    if ( from.hasOwnProperty ( key ) ) {
+                        if ( typeof from[key] === 'object' ) {
+                            to[key] = typeof to[key] === 'object' ? to[key] : { };
+                            apply ( to[key], from[key] );
+                        } else {
+                            to[key] = from[key];
+                        }
+                    }
+                }
+            };
+            apply ( idrinth.settings.data, data, apply );
+        };
+        var getOld = function () {
             var objectIterator = function ( object, prefix, objectIterator ) {
                 var itemHandler = function ( prefix, key, item ) {
                     if ( typeof item !== 'function' ) {
@@ -121,7 +130,14 @@ idrinth.settings = {
                 }
                 return object;
             };
-            objectIterator ( idrinth.settings, '', objectIterator );
+            objectIterator ( idrinth.settings.data, '', objectIterator );
+        };
+        if ( window.localStorage ) {
+            if ( window.localStorage.getItem ( 'idotd' ) ) {
+                getCurrent ();
+            } else {
+                getOld ();
+            }
         }
     }
 };
