@@ -186,10 +186,6 @@ idrinth.tier = {
                                 } ]
                         },
                         {
-                            type: 'label',
-                            content: boss.types
-                        },
-                        {
                             type: 'strong',
                             content: idrinth.tier.list[list[count]].name
                         },
