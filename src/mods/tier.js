@@ -204,6 +204,11 @@ idrinth.tier = {
                             ]
                         },
                         {
+                            type: 'label',
+                            content: idrinth.tier.list[list[count]].types.join(', ')
+                            
+                        },
+                        {
                             type: 'span',
                             content: 'AP: ' + idrinth.ui.formatNumber ( idrinth.tier.list[list[count]].ap )
                         },
