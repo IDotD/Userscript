@@ -204,7 +204,7 @@ idrinth.tier = {
                             ]
                         },
                         {
-                            type: 'label',
+                            type: 'span',
                             content: idrinth.tier.list[list[count]].types.join(', ')
                             
                         },
