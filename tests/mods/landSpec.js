@@ -70,10 +70,21 @@ describe ( 'Land.js tests', function () {
                 return document_getElementById ( id );
             } );
 
-            spyOn(idrinth.core, 'alert');
-            spyOn(idrinth.settings, 'save');
-            spyOn(idrinth.settings, 'change');
-            spyOn(idrinth.text, 'get');
+            spyOn ( idrinth.core, 'alert' );
+            spyOn ( idrinth.settings, 'save' );
+            spyOn ( idrinth.settings, 'change' );
+            spyOn ( idrinth.text, 'get' );
+        } );
+
+        afterEach ( function () {
+            //cleanup all defined values settings
+            if ( idrinth && idrinth.settings ) {
+                for ( var i in idrinth.settings.land ) {
+                    if ( idrinth.settings.land.hasOwnProperty ( i ) ) {
+                        idrinth.settings.land[ i ] = 0;
+                    }
+                }
+            }
         } );
 
 
@@ -81,32 +92,32 @@ describe ( 'Land.js tests', function () {
             idrinth.settings.land.gold = 8000000000;
             idrinth.land.calculate ();
 
-            expect(mockDOM['idrinth-land-cornfield'].value).toEqual(840);
-            expect(mockDOM['idrinth-land-stable'].value).toEqual(650);
-            expect(mockDOM['idrinth-land-barn'].value).toEqual(520);
-            expect(mockDOM['idrinth-land-store'].value).toEqual(450);
-            expect(mockDOM['idrinth-land-pub'].value).toEqual(390);
-            expect(mockDOM['idrinth-land-inn'].value).toEqual(350);
-            expect(mockDOM['idrinth-land-tower'].value).toEqual(280);
-            expect(mockDOM['idrinth-land-fort'].value).toEqual(230);
-            expect(mockDOM['idrinth-land-castle'].value).toEqual(200);
-            expect(mockDOM['idrinth-land-gold'].value).toEqual(1450000);
+            expect ( mockDOM[ 'idrinth-land-cornfield' ].value ).toEqual ( 840 );
+            expect ( mockDOM[ 'idrinth-land-stable' ].value ).toEqual ( 650 );
+            expect ( mockDOM[ 'idrinth-land-barn' ].value ).toEqual ( 520 );
+            expect ( mockDOM[ 'idrinth-land-store' ].value ).toEqual ( 450 );
+            expect ( mockDOM[ 'idrinth-land-pub' ].value ).toEqual ( 390 );
+            expect ( mockDOM[ 'idrinth-land-inn' ].value ).toEqual ( 350 );
+            expect ( mockDOM[ 'idrinth-land-tower' ].value ).toEqual ( 280 );
+            expect ( mockDOM[ 'idrinth-land-fort' ].value ).toEqual ( 230 );
+            expect ( mockDOM[ 'idrinth-land-castle' ].value ).toEqual ( 200 );
+            expect ( mockDOM[ 'idrinth-land-gold' ].value ).toEqual ( 1450000 );
 
-            expect(mockDOM['idrinth-land-cornfield'].parentNode.nextSibling.innerHTML).toEqual("+840");
-            expect(mockDOM['idrinth-land-stable'].parentNode.nextSibling.innerHTML).toEqual("+650");
-            expect(mockDOM['idrinth-land-barn'].parentNode.nextSibling.innerHTML).toEqual("+520");
-            expect(mockDOM['idrinth-land-store'].parentNode.nextSibling.innerHTML).toEqual("+450");
-            expect(mockDOM['idrinth-land-pub'].parentNode.nextSibling.innerHTML).toEqual("+390");
-            expect(mockDOM['idrinth-land-inn'].parentNode.nextSibling.innerHTML).toEqual("+350");
-            expect(mockDOM['idrinth-land-tower'].parentNode.nextSibling.innerHTML).toEqual("+280");
-            expect(mockDOM['idrinth-land-fort'].parentNode.nextSibling.innerHTML).toEqual("+230");
-            expect(mockDOM['idrinth-land-castle'].parentNode.nextSibling.innerHTML).toEqual("+200");
+            expect ( mockDOM[ 'idrinth-land-cornfield' ].parentNode.nextSibling.innerHTML ).toEqual ( "+840" );
+            expect ( mockDOM[ 'idrinth-land-stable' ].parentNode.nextSibling.innerHTML ).toEqual ( "+650" );
+            expect ( mockDOM[ 'idrinth-land-barn' ].parentNode.nextSibling.innerHTML ).toEqual ( "+520" );
+            expect ( mockDOM[ 'idrinth-land-store' ].parentNode.nextSibling.innerHTML ).toEqual ( "+450" );
+            expect ( mockDOM[ 'idrinth-land-pub' ].parentNode.nextSibling.innerHTML ).toEqual ( "+390" );
+            expect ( mockDOM[ 'idrinth-land-inn' ].parentNode.nextSibling.innerHTML ).toEqual ( "+350" );
+            expect ( mockDOM[ 'idrinth-land-tower' ].parentNode.nextSibling.innerHTML ).toEqual ( "+280" );
+            expect ( mockDOM[ 'idrinth-land-fort' ].parentNode.nextSibling.innerHTML ).toEqual ( "+230" );
+            expect ( mockDOM[ 'idrinth-land-castle' ].parentNode.nextSibling.innerHTML ).toEqual ( "+200" );
 
-            expect(idrinth.settings.change.calls.count()).toEqual(10);
-            expect(idrinth.settings.save.calls.count()).toEqual(1);
+            expect ( idrinth.settings.change.calls.count () ).toEqual ( 10 );
+            expect ( idrinth.settings.save.calls.count () ).toEqual ( 1 );
 
-            expect(idrinth.core.alert.calls.count()).toEqual(0);
-            expect(idrinth.text.get.calls.count()).toEqual(0);
+            expect ( idrinth.core.alert.calls.count () ).toEqual ( 0 );
+            expect ( idrinth.text.get.calls.count () ).toEqual ( 0 );
         } );
 
 
@@ -114,10 +125,10 @@ describe ( 'Land.js tests', function () {
             idrinth.settings.land.gold = 0;
             idrinth.land.calculate ();
 
-            expect(idrinth.settings.save.calls.count()).toEqual(1);
+            expect ( idrinth.settings.save.calls.count () ).toEqual ( 1 );
 
-            expect(idrinth.core.alert.calls.count()).toEqual(1);
-            expect(idrinth.text.get.calls.count()).toEqual(1);
+            expect ( idrinth.core.alert.calls.count () ).toEqual ( 1 );
+            expect ( idrinth.text.get.calls.count () ).toEqual ( 1 );
         } );
 
         it ( "Should properly calculate when gold is 8000000000 and 10 for each land type", function () {
@@ -135,32 +146,32 @@ describe ( 'Land.js tests', function () {
 
             idrinth.land.calculate ();
 
-            expect(mockDOM['idrinth-land-cornfield'].value).toEqual(790);
-            expect(mockDOM['idrinth-land-stable'].value).toEqual(600);
-            expect(mockDOM['idrinth-land-barn'].value).toEqual(450);
-            expect(mockDOM['idrinth-land-store'].value).toEqual(380);
-            expect(mockDOM['idrinth-land-pub'].value).toEqual(310);
-            expect(mockDOM['idrinth-land-inn'].value).toEqual(270);
-            expect(mockDOM['idrinth-land-tower'].value).toEqual(200);
-            expect(mockDOM['idrinth-land-fort'].value).toEqual(150);
-            expect(mockDOM['idrinth-land-castle'].value).toEqual(120);
-            expect(mockDOM['idrinth-land-gold'].value).toEqual(2450000);
+            expect ( mockDOM[ 'idrinth-land-cornfield' ].value ).toEqual ( 790 );
+            expect ( mockDOM[ 'idrinth-land-stable' ].value ).toEqual ( 600 );
+            expect ( mockDOM[ 'idrinth-land-barn' ].value ).toEqual ( 450 );
+            expect ( mockDOM[ 'idrinth-land-store' ].value ).toEqual ( 380 );
+            expect ( mockDOM[ 'idrinth-land-pub' ].value ).toEqual ( 310 );
+            expect ( mockDOM[ 'idrinth-land-inn' ].value ).toEqual ( 270 );
+            expect ( mockDOM[ 'idrinth-land-tower' ].value ).toEqual ( 200 );
+            expect ( mockDOM[ 'idrinth-land-fort' ].value ).toEqual ( 150 );
+            expect ( mockDOM[ 'idrinth-land-castle' ].value ).toEqual ( 120 );
+            expect ( mockDOM[ 'idrinth-land-gold' ].value ).toEqual ( 2450000 );
 
-            expect(mockDOM['idrinth-land-cornfield'].parentNode.nextSibling.innerHTML).toEqual("+790");
-            expect(mockDOM['idrinth-land-stable'].parentNode.nextSibling.innerHTML).toEqual("+600");
-            expect(mockDOM['idrinth-land-barn'].parentNode.nextSibling.innerHTML).toEqual("+450");
-            expect(mockDOM['idrinth-land-store'].parentNode.nextSibling.innerHTML).toEqual("+380");
-            expect(mockDOM['idrinth-land-pub'].parentNode.nextSibling.innerHTML).toEqual("+310");
-            expect(mockDOM['idrinth-land-inn'].parentNode.nextSibling.innerHTML).toEqual("+270");
-            expect(mockDOM['idrinth-land-tower'].parentNode.nextSibling.innerHTML).toEqual("+200");
-            expect(mockDOM['idrinth-land-fort'].parentNode.nextSibling.innerHTML).toEqual("+150");
-            expect(mockDOM['idrinth-land-castle'].parentNode.nextSibling.innerHTML).toEqual("+120");
+            expect ( mockDOM[ 'idrinth-land-cornfield' ].parentNode.nextSibling.innerHTML ).toEqual ( "+790" );
+            expect ( mockDOM[ 'idrinth-land-stable' ].parentNode.nextSibling.innerHTML ).toEqual ( "+600" );
+            expect ( mockDOM[ 'idrinth-land-barn' ].parentNode.nextSibling.innerHTML ).toEqual ( "+450" );
+            expect ( mockDOM[ 'idrinth-land-store' ].parentNode.nextSibling.innerHTML ).toEqual ( "+380" );
+            expect ( mockDOM[ 'idrinth-land-pub' ].parentNode.nextSibling.innerHTML ).toEqual ( "+310" );
+            expect ( mockDOM[ 'idrinth-land-inn' ].parentNode.nextSibling.innerHTML ).toEqual ( "+270" );
+            expect ( mockDOM[ 'idrinth-land-tower' ].parentNode.nextSibling.innerHTML ).toEqual ( "+200" );
+            expect ( mockDOM[ 'idrinth-land-fort' ].parentNode.nextSibling.innerHTML ).toEqual ( "+150" );
+            expect ( mockDOM[ 'idrinth-land-castle' ].parentNode.nextSibling.innerHTML ).toEqual ( "+120" );
 
-            expect(idrinth.settings.change.calls.count()).toEqual(10);
-            expect(idrinth.settings.save.calls.count()).toEqual(1);
+            expect ( idrinth.settings.change.calls.count () ).toEqual ( 10 );
+            expect ( idrinth.settings.save.calls.count () ).toEqual ( 1 );
 
-            expect(idrinth.core.alert.calls.count()).toEqual(0);
-            expect(idrinth.text.get.calls.count()).toEqual(0);
+            expect ( idrinth.core.alert.calls.count () ).toEqual ( 0 );
+            expect ( idrinth.text.get.calls.count () ).toEqual ( 0 );
         } );
 
 
