@@ -191,7 +191,7 @@ idrinth.tier = {
                         },
                         {
                             type: 'span',
-                            content: idrinth.tier.list[list[count]].types.join( ', ' )
+                            content: idrinth.tier.list[list[count]].types.join ( ', ' )
                         },
                         {
                             type: 'button',
