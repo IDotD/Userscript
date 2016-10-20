@@ -2,9 +2,9 @@
     "chat": {
         "actions": {
             "banUser": "Τιμωρία Χρήστη",
-            "makeMod": "Make Moderator",
-            "makeAdmin": "Make Admin",
-            "makeUser": "Make User",
+            "makeMod": "Κάνε Συντονιστή",
+            "makeAdmin": "Κάνε Διαχειριστή",
+            "makeUser": "Κάνε Χρήστη",
             "close": "Κλείσιμο",
             "invite": "Προσκάλεσε στη συζήτηση ",
             "createChat": "Δημιουργία συζητήσεως",
@@ -19,16 +19,16 @@
             "account": "Λογαριασμός",
             "title": "Συζήτηση",
             "creditEmoticon": "Emoticons provided by ",
-            "optional": "This part of the script is optional, so logging in is unneeded for raid catching etc.",
+            "optional": "Πεδίο προαιρετικό, δεν χρειάζεται να εισέλθετε.",
             "invalid": "This should not be the data for logging in on the related gaming site and the login does not need to match your ingame name - you can set a display name after the registration.",
-            "offline": "Not logged in, click to login/register"
+            "offline": "Δεν έχει γίνει σύνδεση, πατήστε Εισαγωγή/Εγγραφή"
         },
         "error": {
-            "modify": "Can't modify that user at the moment",
-            "create": "Can't create at the moment",
-            "join": "Joining didn't work",
-            "login": "Login failed in an unexpected way",
-            "unknown": "The given username for dotd.idrinth.de is unknown, do you want to register it there?"
+            "modify": "Δεν μπορεί να γίνει μεταβολή του χρήστη",
+            "create": "Δεν μπορεί να γίνει δημιουργία",
+            "join": "Αποτυχία εγγραφής",
+            "login": "Η σύνδεση απέτυχε",
+            "unknown": "Το όνομα χρήστη για την σελίδα dotd.idrinth.de είναι άγνωστο., θέλετε να κάνετε εγγραφή;"
         },
         "notification": {
             "mention": "chat-mention notifications?",
@@ -36,22 +36,22 @@
             "message": "chat-message notifications?"
         }
     },
-    "default": "Unexpected error occurred. Please contact script developers (https://github.com/Idrinth/IDotD).",
+    "default": "Προέκυψε απρόσμενο σφάλμα. Παρακαλώ επικοινωνήστε με τους διαχειριστές (https://github.com/Idrinth/IDotD).",
     "land": {
-        "lack": "You lack gold to buy any more buildings at the moment.",
-        "hour": " gold per hour each",
-        "calc": "Calculate",
-        "avaible": "Avaible Gold"
+        "lack": "Λόγω ελλείψεως χρυσού δεν μπορεί να γίνει αγορά κτιρίων.",
+        "hour": " χρυσός ανά ώρα έκαστο",
+        "calc": "Υπολογισμός",
+        "avaible": "Διαθέσιμος χρυσός"
     },
     "tier": {
-        "search": "Enter Boss' Name",
+        "search": "Εισαγωγή ονόματος",
         "diff": {
-            "normal": "Normal",
-            "hard": "Hard",
-            "legend": "Legend",
-            "night": "Nightmare"
+            "normal": "Κανονικό",
+            "hard": "Δύσκολο",
+            "legend": "Θρυλικό",
+            "night": "Εφιαλτικό"
         },
-        "tag": "Tag to screen-top",
+        "tag": "Προσθήκη στην οθόμη",
         "maxBoxes": "There is no space for another tier-box at the moment, please close one first."
     },
     "raids": {
