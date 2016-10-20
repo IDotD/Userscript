@@ -190,6 +190,10 @@ idrinth.tier = {
                             content: idrinth.tier.list[list[count]].name
                         },
                         {
+                            type: 'span',
+                            content: idrinth.tier.list[list[count]].types.join ( ', ' )
+                        },
+                        {
                             type: 'button',
                             content: idrinth.text.get ( "tier.tag" ),
                             attributes: [
