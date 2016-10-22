@@ -1,0 +1,67 @@
+{
+    "nightmare":{
+        "100000":{
+            "epic": 10,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+},
+        "300000":{
+            "epic": 25,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+},
+        "500000":{
+            "epic": 45,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+},
+        "1000000":{
+            "epic": 91,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+},
+        "3000000":{
+          "epic": 273,
+          "legendary": null,
+          "uncommon": null,
+          "common": null,
+           "stats": null
+},
+        "5000000":{
+          "epic": 325,
+          "legendary": null,
+          "uncommon": null,
+          "common": null,
+           "stats": null
+},
+        "7000000":{
+          "epic": 377,
+          "legendary": null,
+          "uncommon": null,
+          "common": null,
+           "stats": null
+},
+        "8000000":{
+          "epic": 428,
+          "legendary": null,
+          "uncommon": null,
+          "common": null,
+           "stats": null
+},
+        "10000000":{
+          "epic": 480,
+          "legendary": null,
+          "uncommon": null,
+          "common": null,
+           "stats": null
+}
+    }
+}
