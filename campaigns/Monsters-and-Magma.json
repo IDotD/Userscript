@@ -1,0 +1,34 @@
+{
+    "name": "Monsters and Magma",
+    "map": null,
+    "nodes": {
+        "Imryx's Whelps": {
+            "image": null,
+            "tiers": {}
+        }
+    },
+    "challenges": {
+        "Speed Run": {
+            "drawback": "Campaign Length -50%",
+            "benefit": "+20% Guild Reputation"
+        },
+        "Hailstorm": {
+            "drawback": "Nodes have an additional prefix",
+            "benefit": "+20% Guild Experience"
+        },
+        "Fatigued": {
+            "drawback": "-45% player damage",
+            "benefit": "3 additional special loot slots at the end"
+        },
+        "Endurance Run": {
+            "drawback": "Node timers are set to 4h",
+            "benefit": "Endloot contains Molten Troves"
+        }
+    },
+    "prefixes": {
+        "Regenerating": "Raid health grows 1% of total raid health every 10 mins, starts when health drops below 50% first time",
+        "Chilling": "Chance to freeze your buttons for few seconds, disrupts long clicks",
+        "Vengeful": "Members of named class (e.g. Voidwalker, Luminary) do 20% less damage",
+        "Curse": "Chance to add one of the following curses for 5min (can each stack up to 3 times) that will follow you from node to node:\n10% chance to miss target per curse\n20% reduction to legion bonus per curse\n10% reduction to total attack damage per curse"
+    }
+}
