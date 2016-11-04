@@ -1,63 +1,70 @@
 {
     "nightmare": {
-        "15000000": {
-            "epic": 2,
-            "legendary": 4,
-            "uncommon": 6,
-            "common": 8,
-            "stats": null
-        },
-        "18000000": {
-            "epic": 3,
-            "legendary": 5,
-            "uncommon": 7,
-            "common": 9,
-            "stats": null
-        },
-        "21000000": {
-            "epic": 4,
-            "legendary": 6,
-            "uncommon": 8,
-            "common": 10,
-            "stats": null
-        },
-        "24000000": {
-            "epic": 5,
+        "500000000": {
+            "epic": 25,
             "legendary": null,
             "uncommon": null,
             "common": null,
             "stats": null
         },
-        "27000000": {
-            "epic": 6,
+        "1000000000": {
+            "epic": 71,
             "legendary": null,
             "uncommon": null,
             "common": null,
             "stats": null
         },
-        "30000000": {
-            "epic": 7,
+        "2000000000": {
+            "epic": 142,
             "legendary": null,
             "uncommon": null,
             "common": null,
             "stats": null
         },
-        "33000000": {
-            "epic": 8,
+        "3000000000": {
+            "epic": 223,
             "legendary": null,
             "uncommon": null,
             "common": null,
             "stats": null
         },
-        "36000000": {
-            "epic": 9,
+        "4000000000": {
+            "epic": 309,
             "legendary": null,
             "uncommon": null,
             "common": null,
             "stats": null
         },
-        "39000000": {
-            "epic": 10,
+        "5000000000": {
+            "epic": 391,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+        },
+        "7500000000": {
+            "epic": 598,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+        },
+        "10000000000": {
+            "epic": 785,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+        },
+        "15000000000": {
+            "epic": 930,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+        },
+        "20000000000": {
+            "epic": 1015,
             "legendary": null,
             "uncommon": null,
             "common": null,
