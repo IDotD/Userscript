@@ -36,7 +36,7 @@
             "message": "Benachrichtigungen für Chat-Nachrichten?"
         }
     },
-    "default": "Ein unerwareteter Fehler ist eingetreten. Bitte kontaktiere den Entwickler auf (https://github.com/Idrinth/IDotD).",
+    "default": "Ein unerwareteter Fehler ist eingetreten. Bitte kontaktiere die Entwickler (https://github.com/Idrinth/IDotD).",
     "land": {
         "lack": "Sie haben nicht genug Gold, um Gebäude zu kaufen.",
         "hour": " Gold pro Stunde und Gebäude",
