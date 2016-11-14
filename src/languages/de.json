@@ -1,16 +1,16 @@
 {
     "chat": {
         "actions": {
-            "banUser": "Ban Benutzer",
-            "makeMod": "Promote zu Moderator",
-            "makeAdmin": "Promote zu Admin",
-            "makeUser": "Promote zu Benutzer",
+            "banUser": "Benutzer bannen",
+            "makeMod": "Zu Moderator befördern",
+            "makeAdmin": "Zu Admin befördern",
+            "makeUser": "Zu Benutzer degradieren",
             "close": "Schließen",
             "invite": "Zu Chat einladen ",
             "createChat": "Chat erstellen",
             "joinChat": "Chat beitreten",
             "createAddChat": "Klicke, um neuen Chat zu erstellen",
-            "copyIdPasswort": "Kopiere Passwort&Id",
+            "copyIdPasswort": "Passwort&Id kopieren",
             "deleteRoom": "Raum löschen",
             "leaveRoom": "Raum verlassen"
         },
@@ -47,9 +47,9 @@
         "search": "Geben Sie den Namen des Bosses ein",
         "diff": {
             "normal": "Normal",
-            "hard": "Hard",
-            "legend": "Legend",
-            "night": "Nightmare"
+            "hard": "Hart",
+            "legend": "Legendär",
+            "night": "Alptraum"
         },
         "tag": "An den oberen Bildschirmrand anheften",
         "maxBoxes": "Es gibt keinen Platz für eine weitere Tierbox , bitte schließe eine."
