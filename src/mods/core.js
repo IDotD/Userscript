@@ -2,8 +2,15 @@ idrinth.core = {
     escapeRegExp: function ( str ) {
         return str.replace ( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&" );
     },
-    fieldIsSetting: function ( parent, field ) {
-        return parent && typeof parent === 'object' && field && parent.hasOwnProperty ( field ) && typeof parent[field] !== 'object' && typeof parent[field] !== 'function';
+    /**
+     *
+     * @param {object} parent
+     * @param {string} field
+     * @param {Boolean} allowObjects
+     * @returns {Boolean}
+     */
+    fieldIsSetting: function ( parent, field, allowObjects ) {
+        return parent && typeof parent === 'object' && field && parent.hasOwnProperty ( field ) && ( typeof parent[field] !== 'object' || allowObjects ) && typeof parent[field] !== 'function';
     },
     ajax: {
         runHome: function ( url, success, failure, timeout, additionalHeader, isStatic ) {
