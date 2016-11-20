@@ -76,7 +76,7 @@ idrinth.settings = {
             return;
         }
         var value = getValue ( idrinth.settings.data, field, allowObject );
-        if ( value !== null && typeof value !== 'object' ) {
+        if ( value !== null && ( typeof value !== 'object' || allowObject ) ) {
             remove ( 'idrinth-dotd-' + field );
             return value;
         }
