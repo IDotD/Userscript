@@ -39,14 +39,32 @@ idrinth.settings = {
             gold: 0
         }
     },
-    get: function ( field ) {
+    /**
+     *
+     * @param {string} field
+     * @param {Boolean} allowObject
+     * @returns {int|string|object}
+     */
+    get: function ( field, allowObject ) {
         'use strict';
-        var getValue = function ( parent, field ) {
-            if ( idrinth.core.fieldIsSetting ( parent, field ) ) {
+        /**
+         *
+         * @param {object} parent
+         * @param {string} field
+         * @param {Boolean} allowObject
+         * @returns {int|string|object}
+         */
+        var getValue = function ( parent, field, allowObject ) {
+            if ( idrinth.core.fieldIsSetting ( parent, field, allowObject ) ) {
                 return parent[field];
             }
             return null;
         };
+        /**
+         *
+         * @param {string} key
+         * @returns {undefined}
+         */
         var remove = function ( key ) {
             try {
                 window.localStorage.removeItem ( key );
@@ -57,14 +75,14 @@ idrinth.settings = {
         if ( !field ) {
             return;
         }
-        var value = getValue ( idrinth.settings.data, field );
+        var value = getValue ( idrinth.settings.data, field, allowObject );
         if ( value !== null && typeof value !== 'object' ) {
             remove ( 'idrinth-dotd-' + field );
             return value;
         }
         field = field.split ( '#' );
         remove ( 'idrinth-dotd-' + field[0] + '-' + field[1] );
-        return getValue ( idrinth.settings.data[field[0]], field[1] );
+        return getValue ( idrinth.settings.data[field[0]], field[1], allowObject );
     },
     change: function ( field, value ) {
         'use strict';
