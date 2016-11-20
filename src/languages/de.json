@@ -1,21 +1,101 @@
 {
     "chat": {
         "actions": {
-            "banUser": "Nutzer bannen",
-            "makeMod": "Moderator ernennen",
-            "makeAdmin": "Admin ernennen",
-            "makeUser": "Nutzer ernennen",
+            "banUser": "Benutzer bannen",
+            "makeMod": "Zu Moderator befördern",
+            "makeAdmin": "Zu Admin befördern",
+            "makeUser": "Zu Benutzer degradieren",
             "close": "Schließen",
+            "invite": "Zu Chat einladen ",
             "createChat": "Chat erstellen",
             "joinChat": "Chat beitreten",
-            "createAddChat": "Weiteren Chat erstellen",
-            "copyIdPasswort": "Password&Id kopieren",
+            "createAddChat": "Klicke, um neuen Chat zu erstellen",
+            "copyIdPasswort": "Passwort&Id kopieren",
             "deleteRoom": "Raum löschen",
             "leaveRoom": "Raum verlassen"
         },
         "texts": {
-            "settings": "Weitere Einstellungen auf ",
+            "settings": "Mehr Einstellungen auf ",
+            "account": "Account",
+            "title": "Chat",
+            "creditEmoticon": "Emoticons erstellt durch ",
+            "optional": "Dieser Teil des Skripts ist optional, einloggen ist nicht nötig, um beispielsweise Raids beizutreten",
+            "invalid": "Sie sollten nicht Ihre Login-Daten, wie Name oder Passwort der Website oder des Spiels, benutzen - der angezeigte Name kann nach der Registrierung angepasst werden.",
+            "offline": "Sie sind nicht eingeloggt, bitte registrieren oder loggen Sie sich ein"
         },
+        "error": {
+            "modify": "Konnte Benutzer nicht modifizieren",
+            "create": "Erstellung fehlgeschlagen",
+            "join": "Beitritt fehlgeschlagen",
+            "login": "Login auf unerwartete Weise fehlgeschlagen",
+            "unknown": "Der eingegebene Benutzername ist dotd.idrinth.de nicht bekannt, möchten Sie sich dort registrieren?"
+        },
+        "notification": {
+            "mention": "Benachrichtigungen bei Erwähnung im Chat?",
+            "raid": "Benachrichtigung, wenn ein Raid gepostet wird?",
+            "message": "Benachrichtigungen für Chat-Nachrichten?"
+        }
     },
-    "default": "Unexpected error occurred. Please contact script developers (https://github.com/Idrinth/IDotD)."
+    "default": "Ein unerwareteter Fehler ist eingetreten. Bitte kontaktiere die Entwickler (https://github.com/Idrinth/IDotD).",
+    "land": {
+        "lack": "Sie haben nicht genug Gold, um Gebäude zu kaufen.",
+        "hour": " Gold pro Stunde und Gebäude",
+        "calc": "Berechne",
+        "avaible": "Verfügbares Gold"
+    },
+    "tier": {
+        "search": "Geben Sie den Namen des Bosses ein",
+        "diff": {
+            "normal": "Normal",
+            "hard": "Hart",
+            "legend": "Legendär",
+            "night": "Alptraum"
+        },
+        "tag": "An den oberen Bildschirmrand anheften",
+        "maxBoxes": "Es gibt keinen Platz für eine weitere Tierbox , bitte schließe eine."
+    },
+    "raids": {
+        "lastJoined": "Zuletzt beigetretene Raids",
+        "clear": "Lösche Raids",
+        "disableJoining": "Beitreten der Raids deaktivieren",
+        "clickCopy": "Klicke, um Raidlink zu kopieren",
+        "imports": {
+            "manually": "Importiere alle Raids manuell",
+            "favs": "Importiere favorisierte Raids manuell",
+            "restart": "Starte das Beitreten von Raids neu"
+        },
+        "disableSpecific": "Deaktiviere automatisches Beitreten für bestimmte Raids"
+    },
+    "button": {
+        "ok": "Ok",
+        "cancel": "Abbrechen",
+        "reloadGame": "Lade Spiel neu",
+        "reloadScript": "Lade Skript neu",
+        "refreshFBGameLogin": "Erneuere Facebook Game Login",
+        "ngRaidJoin": "NG Raid Beitritt ( langsam!)",
+        "disableTimedAutoJoin": "Deaktiviere geplantes Beitreten",
+        "enableTimedAutoJoin": "Aktiviere geplantes Beitreten"
+    },
+    "setting": {
+        "enableExtCharInfo": "Aktiviere erweiterte Charakterinformation?",
+        "minimLayout": "Minimiertes Layout",
+        "moveSettingLeft": "Einstellungen nach links",
+        "warBottomPage": "Stelle War am unteren Rand der Seite dar",
+        "useGoldEfficiently": "Aktivieren, um so viel Gold wie möglich zum Kaufen zu verwenden - deaktivieren, um nur die effizienteste Möglichkeit aus dem Calculator zu kaufen",
+        "tenBuildOnce": "Kaufe 10 Gebäude auf einmal ( empfohlen)",
+        "extCharInfoDuration": "Millisekunden bevor die erweiterte Charakterinformation verschwindet",
+        "joiningDuration": "Sekunden, die das Spiel zum Laden braucht, bevor man Raids beitreten kann",
+        "enableChat": "Chat aktivieren ( benötigt Neustart des Skripts)",
+        "enableFavRequest": "Aktiviere automatische Nachfrage für Raids für Favoriten?",
+        "favIdToJoin": "Favorisierte Ids zum beitreten ( mehrere mit Komma trennen)",
+        "worldserver": "Worldserver?"
+    },
+    "ui": {
+        "settingInfo": "Dieses Skript wird immer alle Raids importieren, die Sie manuell auf der Website festgelegt haben und, falls aktiviert, wird es auch alle Favouriten aus Suchergebnissen importieren.",
+        "maxPopupsFrame": "Maximale Popups/Frames beim Beitreten von Raids",
+        "timeAutoJoin": "Zeit, um langsam automatisch Raids beizutreten ( lädt Spiel mehrere Male neu). Format ist [Stunden]:[Minuten] ohne anführende Nullen, also 7:1 ist gut, 07:01 ist schlecht",
+        "getFavFrom": "Bekomme Suchfavoriten aus ",
+        "raidsearch": "Idrinths Raidsearch",
+        "reloadGameFail": "Das Spiel konnte nicht neu gestartet werden"
+    }
 }
