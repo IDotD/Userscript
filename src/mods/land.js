@@ -66,10 +66,8 @@ idrinth.land = {
             }
             document.getElementById ( 'idrinth-land-gold' ).value = idrinth.settings.get ( "land#gold" );
         };
-        for (var key in idrinth.settings.get ( "land#" )) {
-            if ( idrinth.settings.get ( "land#" + hasOwnProperty ( key ) ) ) {
-                idrinth.settings.change ( 'land#' + key, parseInt ( document.getElementById ( 'idrinth-land-' + key ).value, 10 ) );
-            }
+        for (var key in idrinth.settings.get ( "land", true )) {
+            idrinth.settings.change ( 'land#' + key, parseInt ( document.getElementById ( 'idrinth-land-' + key ).value, 10 ) );
         }
         var results = baseCalculator ( getRequirements () );
         if ( Object.keys ( results ).length === 0 ) {
