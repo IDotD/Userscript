@@ -1,38 +1,206 @@
 {
     "normal": {
-        "55000": 1,
-        "308000": 1,
-        "418000": 1,
-        "902000": 2,
-        "1375000": 2.5,
-        "2970000": 3,
-        "3740000": 3.5
+        "55000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "308000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "418000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "902000":{
+            "epic": 2,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "1375000":{
+            "epic": 2.5,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "2970000":{
+            "epic": 3,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "3740000":{
+            "epic": 3.5,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    }
     },
     "hard": {
-        "69000": 1,
-        "385000": 1,
-        "523000": 1,
-        "1128000": 2,
-        "1719000": 2.5,
-        "3713000": 3,
-        "4675000": 3.5
+        "69000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "385000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "523000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "1128000":{
+            "epic": 2,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "1719000":{
+            "epic": 2.5,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "3713000":{
+            "epic": 3,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "4675000":{
+            "epic": 3.5,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    }
     },
     "legendary": {
-        "88000": 1,
-        "493000": 1,
-        "669000": 1,
-        "1443000": 2,
-        "2200000": 2.5,
-        "4752000": 3,
-        "5984000": 3.5
+        "88000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "493000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "669000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "1443000":{
+            "epic": 2,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "2200000":{
+            "epic": 2.5,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "4752000":{
+            "epic": 3,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "5984000":{
+            "epic": 3.5,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    }
     },
     "nightmare": {
-        "110000": 1,
-        "616000": 1,
-        "836000": 1,
-        "1804000": 2,
-        "2750000": 2.5,
-        "5840000": 3,
-        "7480000": 3.5
+        "110000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "616000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "836000":{
+            "epic": 1,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "1804000":{
+            "epic": 2,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "2750000":{
+            "epic": 2.5,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "5840000":{
+            "epic": 3,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    },
+        "7480000":{
+            "epic": 3.5,
+            "legendary": null,
+            "uncommon": null,
+            "common": null,
+            "stats": null
+    }
     }
 }
