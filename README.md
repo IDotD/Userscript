@@ -22,4 +22,4 @@ We prefer the usage of the [tracker](https://github.com/IDotD/Userscript/issues)
 
 ## How To Help
 
-We can use helpers for the following: update and improve the wiki, help coding the userscript and testing any of the branches. For any of the later two have a look at the related documentation in the wiki.
+We can use helpers for the following: update and improve the wiki, help coding the userscript and testing any of the branches. For any of the later two have a look at the related documentation in the [wiki](https://idotd.github.io/).
