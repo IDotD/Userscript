@@ -13,13 +13,13 @@ IDotD combines a raid catcher, a way of automatically joining desired raids, wit
 
 Additionally there are a few platform specific features, for example quick information about players in the kongregate chat rooms or a timeable autojoin for newgrounds to replace the usual ones on other platforms.
 
-Most information is avaible at [this project's wiki](https://github.com/Idrinth/IDotD/wiki).
+Most information is avaible at [this project's wiki](https://idotd.github.io/).
 
 ## Bugs, desired Features etc.
 
-We prefer the usage of the [tracker](https://github.com/Idrinth/IDotD/issues) here, otherwise we do import requests from [GoogleDocs](https://docs.google.com/document/d/1ozOWQuAEKCNnt2cwQ4SZtkpYM_pvrl8Bnj0e_O1KKWs/edit) from time to time.
-[Previous GoogleDoc Tickets](https://github.com/Idrinth/IDotD/issues?utf8=%E2%9C%93&q=is%3Aissue%20label%3A%22Source%20GoogleDocs%22%20)
+We prefer the usage of the [tracker](https://github.com/IDotD/Userscript/issues) here, otherwise we do import requests from [GoogleDocs](https://docs.google.com/document/d/1ozOWQuAEKCNnt2cwQ4SZtkpYM_pvrl8Bnj0e_O1KKWs/edit) from time to time.
+[Previous GoogleDoc Tickets](https://github.com/IDotD/Userscript/issues?utf8=%E2%9C%93&q=is%3Aissue%20label%3A%22Source%20GoogleDocs%22%20)
 
 ## How To Help
 
-We can use helpers for the following: update and improve the wiki, help coding the userscript and testing any of the branches. For any of the later two have a look athe related documentation in the wiki.
+We can use helpers for the following: update and improve the wiki, help coding the userscript and testing any of the branches. For any of the later two have a look at the related documentation in the wiki.
