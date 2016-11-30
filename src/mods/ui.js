@@ -641,7 +641,7 @@ idrinth.ui = {
                                     type: 'tr',
                                     children: [ {
                                             type: 'th',
-                                            content: idrinth.text.get ( "land.avaible" )
+                                            content: idrinth.text.get ( "land.available" )
                                         }, {
                                             type: 'td',
                                             children: [ {
