@@ -116,13 +116,20 @@ var idrinth = {
         var startModules = function () {
             idrinth.settings.start ( );
             idrinth.text.start ( );
-            idrinth.ui.start ( );
-            idrinth.user.start ( );
-            idrinth.names.start ( );
-            idrinth.raids.start ( );
-            idrinth.tier.start ();
-            idrinth.chat.start ();
-            idrinth.war.start ();
+            idrinth._tmp=window.setInterval(function() {
+                if(!idrinth.text.initialized) {
+                    return;
+                }
+                window.clearInterval(idrinth._tmp);
+                delete idrinth['_tmp'];
+                idrinth.ui.start ( );
+                idrinth.user.start ( );
+                idrinth.names.start ( );
+                idrinth.raids.start ( );
+                idrinth.tier.start ();
+                idrinth.chat.start ();
+                idrinth.war.start ();
+            },123);
         };
         if ( idrinth.platform === 'newgrounds' ) {
             try {
