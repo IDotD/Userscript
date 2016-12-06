@@ -119,6 +119,7 @@ var idrinth = {
             idrinth.user.start ( );
             idrinth.names.start ( );
             idrinth.raids.start ( );
+            idrinth.text.start()
             idrinth.tier.start ();
             idrinth.chat.start ();
             idrinth.war.start ();
