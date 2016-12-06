@@ -113,24 +113,6 @@ var idrinth = {
     },
     platform: '',
     startInternal: function ( ) {
-        var startModules = function () {
-            idrinth.settings.start ( );
-            idrinth.text.start ( );
-            idrinth._tmp=window.setInterval(function() {
-                if(!idrinth.text.initialized) {
-                    return;
-                }
-                window.clearInterval(idrinth._tmp);
-                delete idrinth['_tmp'];
-                idrinth.ui.start ( );
-                idrinth.user.start ( );
-                idrinth.names.start ( );
-                idrinth.raids.start ( );
-                idrinth.tier.start ();
-                idrinth.chat.start ();
-                idrinth.war.start ();
-            },123);
-        };
         if ( idrinth.platform === 'newgrounds' ) {
             try {
                 var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
@@ -144,6 +126,24 @@ var idrinth = {
             }
             window.setTimeout ( idrinth.newgrounds.alarmCheck, 3333 );
         }
+        idrinth.settings.start ( );
+        idrinth.text.start ( );
+        idrinth._tmp=window.setInterval(function() {
+                if(!idrinth.text.initialized) {
+                    return;
+                }
+        var startModules = function () {
+            idrinth._tmp=window.setInterval(function() {
+                idrinth.ui.start ( );
+                idrinth.user.start ( );
+                idrinth.names.start ( );
+                idrinth.raids.start ( );
+                idrinth.tier.start ();
+                idrinth.chat.start ();
+                idrinth.war.start ();
+        };
+                window.clearInterval(idrinth._tmp);
+                delete idrinth['_tmp'];
         startModules ();
         window.setTimeout ( function () {
             idrinth.core.multibind.add ( 'click', '.clipboard-copy', function ( element, event ) {
@@ -154,6 +154,7 @@ var idrinth = {
         }, 1000 );
         delete idrinth['start'];
         delete idrinth['startInternal'];
+        },123);
     },
     start: function ( ) {
         'use strict';
