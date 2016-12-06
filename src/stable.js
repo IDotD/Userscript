@@ -115,11 +115,11 @@ var idrinth = {
     startInternal: function ( ) {
         var startModules = function () {
             idrinth.settings.start ( );
+            idrinth.text.start ( );
             idrinth.ui.start ( );
             idrinth.user.start ( );
             idrinth.names.start ( );
             idrinth.raids.start ( );
-            idrinth.text.start ( );
             idrinth.tier.start ();
             idrinth.chat.start ();
             idrinth.war.start ();
