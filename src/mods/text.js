@@ -35,6 +35,7 @@ idrinth.text = {
                 }
             };
             applyRecursive ( idrinth.text.data, JSON.parse ( file ), applyRecursive );
+            idrinth.text.initialized = true;
         }, idrinth.text.start, idrinth.text.start, null, true );
     },
     /**
