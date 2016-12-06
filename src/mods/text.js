@@ -27,7 +27,7 @@ idrinth.text = {
                 for (var prop in from) {
                     if ( from.hasOwnProperty ( prop ) ) {
                         if ( typeof to[prop] === 'string' && typeof from[prop] === 'string' ) {
-                            to[prop] = file[prop];
+                            to[prop] = from[prop];
                         } else if ( typeof to[prop] === 'object' && typeof from[prop] === 'object' ) {
                             func ( to[prop], from[prop], func );
                         }
