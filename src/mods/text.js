@@ -15,7 +15,6 @@ idrinth.text = {
             idrinth.text.initialized = true;
             return;
         }
-        idrinth.settings.change( "language", language );
         idrinth.core.ajax.runHome (  'userscript-translation/'+language+'/###RELOAD-VERSION###/', function ( file ) {
             /**
              *
@@ -43,7 +42,7 @@ idrinth.text = {
      * See languages/en.json for an example
      * @type {object}
      */
-    data: JSON.parse ( language+'.json' ),
+    data: JSON.parse ( '###LANG###' ),
     /**
      * returns the translation of a provided key or an error-message if no
      * matching translation is found
