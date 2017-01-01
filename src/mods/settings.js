@@ -21,6 +21,7 @@ idrinth.settings = {
         alarmActive: false,
         bannedRaids: { },
         language: 'en',
+        lang : null,
         notification: {
             mention: true,
             message: true,

@@ -473,7 +473,7 @@ idrinth.ui = {
                             platforms: [ 'kongregate' ],
                             label: "setting.enableExtCharInfo"
                         },{
-                            name: 'language',
+                            name: 'lang',
                             rType: '#input',
                             type: 'text',
                             label: "setting.language"
