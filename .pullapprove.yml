@@ -1,0 +1,18 @@
+version: 2
+requirements:
+  signed_off_by:
+    required: false
+group_defaults:
+  approve_by_comment:
+    approve_regex: '(?i)^(:shipit:|:\\+1:|LGTM|Approved|Looks\\s+Good\\s+To\\s+Me|Seems\\s+good|Looks\\s+good)'
+  reset_on_push:
+    enabled: true
+groups:
+  -reviewers:
+    required: 1
+    users:
+      - Idrinth
+      - w20k
+    conditions:
+      branches:
+        - master
