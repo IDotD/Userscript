@@ -476,7 +476,7 @@ idrinth.ui = {
                             name: 'lang',
                             rType: '#input',
                             type: 'text',
-                            label: "setting.language"
+                            label: "setting.lang"
                         }, {
                             name: 'minimalist',
                             rType: '#input',
