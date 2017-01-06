@@ -113,16 +113,6 @@ var idrinth = {
     },
     platform: '',
     startInternal: function ( ) {
-        var startModules = function () {
-            idrinth.settings.start ( );
-            idrinth.ui.start ( );
-            idrinth.user.start ( );
-            idrinth.names.start ( );
-            idrinth.raids.start ( );
-            idrinth.tier.start ();
-            idrinth.chat.start ();
-            idrinth.war.start ();
-        };
         if ( idrinth.platform === 'newgrounds' ) {
             try {
                 var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
@@ -136,16 +126,31 @@ var idrinth = {
             }
             window.setTimeout ( idrinth.newgrounds.alarmCheck, 3333 );
         }
-        startModules ();
-        window.setTimeout ( function () {
-            idrinth.core.multibind.add ( 'click', '.clipboard-copy', function ( element, event ) {
-                idrinth.core.copyToClipboard.element ( element );
-                element.parentNode.parentNode.removeChild ( element.parentNode );
-                idrinth.core.log ( event + ' fired on ' + element );
-            } );
-        }, 1000 );
-        delete idrinth['start'];
-        delete idrinth['startInternal'];
+        idrinth.settings.start ( );
+        idrinth.text.start ( );
+        idrinth._tmp=window.setInterval(function() {
+            if(!idrinth.text.initialized) {
+                return;
+            }
+            idrinth.ui.start ( );
+            idrinth.user.start ( );
+            idrinth.names.start ( );
+            idrinth.raids.start ( );
+            idrinth.tier.start ( );
+            idrinth.chat.start ( );
+            idrinth.war.start ( );
+            window.clearInterval(idrinth._tmp);
+            delete idrinth['_tmp'];
+            window.setTimeout ( function () {
+                idrinth.core.multibind.add ( 'click', '.clipboard-copy', function ( element, event ) {
+                    idrinth.core.copyToClipboard.element ( element );
+                    element.parentNode.parentNode.removeChild ( element.parentNode );
+                    idrinth.core.log ( event + ' fired on ' + element );
+                } );
+            }, 1000 );
+            delete idrinth['start'];
+            delete idrinth['startInternal'];
+        },123);
     },
     start: function ( ) {
         'use strict';

@@ -472,6 +472,11 @@ idrinth.ui = {
                             type: 'checkbox',
                             platforms: [ 'kongregate' ],
                             label: "setting.enableExtCharInfo"
+                        },{
+                            name: 'lang',
+                            rType: '#input',
+                            type: 'text',
+                            label: "setting.lang"
                         }, {
                             name: 'minimalist',
                             rType: '#input',
