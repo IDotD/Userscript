@@ -1,4 +1,4 @@
-dir: lib
+dir: src
 branches:
  	- master
 articles:
