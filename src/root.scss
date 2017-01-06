@@ -2,6 +2,10 @@
     width:$size;
     height:$size;
 }
+@mixin z-offset($offset) {
+    //make sure we are always above the default pages
+    z-index:10000000+$offset;
+}
 @import "styles/mutik.scss";
 /**
     * These styles modify pages changed by the script of IDotD
@@ -11,7 +15,7 @@
     background: rgba(204, 204, 204, 0.9);
     border-radius: 2px;
     width: 200px;
-    z-index: 100000;
+    @include z-offset(0);
     display: block;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.65);
 }
@@ -438,7 +442,7 @@
 }
 
 #idrinth-chat {
-    z-index: 99999;
+    @include z-offset(1);
 }
 
 .idrinth-userinfo-box {
@@ -451,7 +455,7 @@
     box-shadow: 3px 3px 5px rgba(255, 255, 255, 0.9);
     margin: 0;
     max-width: 150px;
-    z-index: 120000;
+    @include z-offset(2);
 }
 
 .idrinth-userinfo-box > li {
