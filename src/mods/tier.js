@@ -113,6 +113,12 @@ idrinth.tier = {
             data = JSON.parse ( data );
             if ( data ) {
                 idrinth.tier.list = data;
+                /**
+                 *
+                 * @param {string} name
+                 * @param {string} url
+                 * @returns {undefined}
+                 */
                 var create = function ( name, url ) {
                     if ( !idrinth.settings.data.bannedRaids[name] ) {
                         idrinth.settings.data.bannedRaids[name] = false;
