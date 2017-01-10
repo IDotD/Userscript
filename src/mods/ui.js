@@ -448,7 +448,7 @@ idrinth.ui = {
                                     value: 'idrinth.tier.getMatchingTiers();'
                                 },
                                 {
-                                    namea: [ 'placeholder', 'title' ],
+                                    names: [ 'placeholder', 'title' ],
                                     value: idrinth.text.get ( "tier." + label )
                                 }
                             ]
@@ -482,7 +482,7 @@ idrinth.ui = {
                             type: 'checkbox',
                             platforms: [ 'kongregate' ],
                             label: "setting.enableExtCharInfo"
-                        },{
+                        }, {
                             name: 'lang',
                             rType: '#input',
                             type: 'text',
