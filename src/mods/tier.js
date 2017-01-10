@@ -104,55 +104,56 @@ idrinth.tier = {
     start: function ( ) {
         'use strict';
         var pos = 1;
+        /**
+         * parsed a json-response and fills tier list and exclusion list
+         * @param {string} data
+         * @returns {undefined}
+         */
+        var importData = function ( data ) {
+            'use strict';
+            data = JSON.parse ( data );
+            if ( data ) {
+                idrinth.tier.list = data;
+                var create = function ( name, url ) {
+                    'use strict';
+                    if ( !idrinth.settings.data.bannedRaids[name] ) {
+                        idrinth.settings.data.bannedRaids[name] = false;
+                        window.localStorage.setItem ( 'idotd', JSON.stringify ( idrinth.settings.data ) );
+                    }
+                    document.getElementById ( 'idrinth-raid-may-join-list' ).appendChild ( idrinth.ui.buildElement ( {
+                        name: 'bannedRaids#' + name,
+                        rType: '#input',
+                        type: 'checkbox',
+                        id: 'idrinth-raid-may-join-list-' + name,
+                        label: idrinth.text.get ( "raids.disableJoining" ) + name
+                    } ) );
+                    document.getElementById ( 'idrinth-raid-may-join-list' ).lastChild.setAttribute ( 'style',
+                            'background-image:url(https://dotd.idrinth.de/static/raid-image-service/' + url + '/);' );
+                };
+                for (var key in data) {
+                    if ( data[key].name ) {
+                        create ( data[key].name, data[key].url );
+                    }
+                }
+            } else {
+                window.setTimeout ( idrinth.tier.start, 1000 );
+            }
+        };
         while ( 0 < window.innerWidth - 140 * ( pos + 1 ) ) {
             this.taggedSlots[( pos * 140 ).toString ( )] = null;
             pos++;
         }
         idrinth.core.ajax.runHome (
                 'tier-service/',
-                /**
-                 * parsed a json-response and fills tier list and exclusion list
-                 * @param {string} data
-                 * @returns {undefined}
-                 */
-                        function ( data ) {
-                            'use strict';
-                            data = JSON.parse ( data );
-                            if ( data ) {
-                                idrinth.tier.list = data;
-                                var create = function ( name, url ) {
-                                    'use strict';
-                                    if ( !idrinth.settings.data.bannedRaids[name] ) {
-                                        idrinth.settings.data.bannedRaids[name] = false;
-                                        window.localStorage.setItem ( 'idotd', JSON.stringify ( idrinth.settings.data ) );
-                                    }
-                                    document.getElementById ( 'idrinth-raid-may-join-list' ).appendChild ( idrinth.ui.buildElement ( {
-                                        name: 'bannedRaids#' + name,
-                                        rType: '#input',
-                                        type: 'checkbox',
-                                        id: 'idrinth-raid-may-join-list-' + name,
-                                        label: idrinth.text.get ( "raids.disableJoining" ) + name
-                                    } ) );
-                                    document.getElementById ( 'idrinth-raid-may-join-list' ).lastChild.setAttribute ( 'style',
-                                            'background-image:url(https://dotd.idrinth.de/static/raid-image-service/' + url + '/);' );
-                                };
-                                for (var key in data) {
-                                    if ( data[key].name ) {
-                                        create ( data[key].name, data[key].url );
-                                    }
-                                }
-                            } else {
-                                window.setTimeout ( idrinth.tier.start, 1000 );
-                            }
-                        },
-                        function ( ) {
-                            window.setTimeout ( idrinth.tier.start, 10000 );
-                        },
-                        function ( ) {
-                            window.setTimeout ( idrinth.tier.start, 10000 );
-                        }
-                );
-            },
+                importData,
+                function ( ) {
+                    window.setTimeout ( idrinth.tier.start, 10000 );
+                },
+                function ( ) {
+                    window.setTimeout ( idrinth.tier.start, 10000 );
+                }
+        );
+    },
     /**
      * displays bosses that match both name and type
      * @returns {undefined}
