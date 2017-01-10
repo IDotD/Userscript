@@ -110,12 +110,10 @@ idrinth.tier = {
          * @returns {undefined}
          */
         var importData = function ( data ) {
-            'use strict';
             data = JSON.parse ( data );
             if ( data ) {
                 idrinth.tier.list = data;
                 var create = function ( name, url ) {
-                    'use strict';
                     if ( !idrinth.settings.data.bannedRaids[name] ) {
                         idrinth.settings.data.bannedRaids[name] = false;
                         window.localStorage.setItem ( 'idotd', JSON.stringify ( idrinth.settings.data ) );
