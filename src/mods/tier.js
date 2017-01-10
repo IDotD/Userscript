@@ -1,9 +1,33 @@
 idrinth.tier = {
+    /**
+     *
+     * @type {object}
+     */
     list: { },
+    /**
+     *
+     * @type {object}
+     */
+    taggedSlots: { },
+    /**
+     *
+     * @param {string} name
+     * @returns {undefined}
+     */
     addTagged: function ( name ) {
+        /**
+         *
+         * @param {string} key
+         * @returns {Boolean}
+         */
         var isValidParameter = function ( name ) {
             return name && idrinth.tier.list.hasOwnProperty ( name ) && typeof idrinth.tier.list[name] !== 'function' && !document.getElementById ( 'idrinth-tier-box-' + name );
         };
+        /**
+         *
+         * @param {string} key
+         * @returns {Boolean}
+         */
         var isFreeSlot = function ( key ) {
             return idrinth.tier.taggedSlots.hasOwnProperty ( key ) && typeof key !== 'function' && idrinth.tier.taggedSlots[key] === null;
         };
@@ -11,6 +35,12 @@ idrinth.tier = {
             return;
         }
         var boss = this.list[name];
+        /**
+         *
+         * @param {int} x
+         * @param {string} name
+         * @returns {undefined}
+         */
         var make = function ( x, name ) {
             var makeElement = function ( label, number, description ) {
                 return {
@@ -67,7 +97,10 @@ idrinth.tier = {
         }
         idrinth.core.alert ( idrinth.text.get ( "tier.maxBoxes" ) );
     },
-    taggedSlots: { },
+    /**
+     * initializes this module
+     * @returns {undefined}
+     */
     start: function ( ) {
         'use strict';
         var pos = 1;
@@ -77,9 +110,7 @@ idrinth.tier = {
         }
         idrinth.core.ajax.runHome (
                 'tier-service/',
-                function ( text ) {
-                    idrinth.tier.import ( text );
-                },
+                idrinth.tier.import,
                 function ( ) {
                     window.setTimeout ( idrinth.tier.start, 10000 );
                 },
@@ -88,6 +119,11 @@ idrinth.tier = {
                 }
         );
     },
+    /**
+     * parsed a json-response and fills tier list and exclusion list
+     * @param {string} data
+     * @returns {undefined}
+     */
     import: function ( data ) {
         'use strict';
         data = JSON.parse ( data );
@@ -118,13 +154,34 @@ idrinth.tier = {
             window.setTimeout ( idrinth.tier.start, 1000 );
         }
     },
+    /**
+     * displays bosses that match both name and type
+     * @returns {undefined}
+     */
     getMatchingTiers: function ( ) {
         var name = document.getElementById ( 'idrinth-tierlist-namesearch' ).value;
         var type = document.getElementById ( 'idrinth-tierlist-typesearch' ).value;
+        /**
+         *
+         * @param {HTMLElement} elem
+         * @returns {undefined}
+         */
         var clearInnerHtml = function ( elem ) {
             elem.innerHTML = '';
         };
+        /**
+         *
+         * @param {string} list
+         * @returns {undefined}
+         */
         var makeList = function ( list ) {
+            /**
+             *
+             * @param {string} listKey
+             * @param {string} difficulty
+             * @param {string} ic
+             * @returns {object} for the buildElement wrapper
+             */
             var makeField = function ( listKey, difficulty, ic ) {
                 var ln = {
                     type: 'td'
@@ -147,6 +204,12 @@ idrinth.tier = {
                 }
                 return ln;
             };
+            /**
+             *
+             * @param {string} title
+             * @param {object} dataset
+             * @returns {HTMLElement}
+             */
             var makeRow = function ( title, dataset ) {
                 return {
                     type: 'tr',
@@ -282,6 +345,12 @@ idrinth.tier = {
                 wrapper.appendChild ( sub );
             }
         };
+        /**
+         *
+         * @param {Array} list
+         * @param {RegExp} regExp
+         * @returns {Boolean}
+         */
         var matchesAny = function ( list, regExp ) {
             for (var count = 0; count < list.length; count++) {
                 if ( list[count] && list[count].match ( regExp ) ) {
