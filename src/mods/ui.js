@@ -482,6 +482,11 @@ idrinth.ui = {
                             type: 'checkbox',
                             platforms: [ 'kongregate' ],
                             label: "setting.enableExtCharInfo"
+                        },{
+                            name: 'lang',
+                            rType: '#input',
+                            type: 'text',
+                            label: "setting.lang"
                         }, {
                             name: 'minimalist',
                             rType: '#input',
@@ -651,7 +656,7 @@ idrinth.ui = {
                                     type: 'tr',
                                     children: [ {
                                             type: 'th',
-                                            content: idrinth.text.get ( "land.avaible" )
+                                            content: idrinth.text.get ( "land.available" )
                                         }, {
                                             type: 'td',
                                             children: [ {

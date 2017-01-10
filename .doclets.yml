@@ -1,0 +1,5 @@
+dir: src
+branches:
+ 	- master
+articles:
+ 	- Overview: README.md

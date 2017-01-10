@@ -10,12 +10,13 @@ idrinth.text = {
      * @returns {undefined}
      */
     start: function ( ) {
-        var language = idrinth.settings.get ( "language" ) || window.navigator.userLanguage || window.navigator.language;
-        if ( language === 'en' ) {
+        var language = idrinth.settings.get( "lang" ) || window.navigator.userLanguage || window.navigator.language || "en";
+        idrinth.settings.change( "lang", language );
+        if ( language === "en" ) {
             idrinth.text.initialized = true;
             return;
         }
-        idrinth.core.ajax.runHome ( 'lang-service/###RELOAD-VERSION###/', function ( file ) {
+        idrinth.core.ajax.runHome (  'userscript-translation/'+language+'/###RELOAD-VERSION###/', function ( file ) {
             /**
              *
              * @param {object} to
@@ -27,7 +28,7 @@ idrinth.text = {
                 for (var prop in from) {
                     if ( from.hasOwnProperty ( prop ) ) {
                         if ( typeof to[prop] === 'string' && typeof from[prop] === 'string' ) {
-                            to[prop] = file[prop];
+                            to[prop] = from[prop];
                         } else if ( typeof to[prop] === 'object' && typeof from[prop] === 'object' ) {
                             func ( to[prop], from[prop], func );
                         }
@@ -35,6 +36,7 @@ idrinth.text = {
                 }
             };
             applyRecursive ( idrinth.text.data, JSON.parse ( file ), applyRecursive );
+            idrinth.text.initialized = true;
         }, idrinth.text.start, idrinth.text.start, null, true );
     },
     /**
