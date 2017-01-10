@@ -118,7 +118,9 @@ idrinth.tier = {
             window.setTimeout ( idrinth.tier.start, 1000 );
         }
     },
-    getTierForName: function ( name ) {
+    getMatchingTiers: function ( ) {
+        var name = document.getElementById ( 'idrinth-tierlist-namesearch' ).value;
+        var type = document.getElementById ( 'idrinth-tierlist-typesearch' ).value;
         var clearInnerHtml = function ( elem ) {
             elem.innerHTML = '';
         };
@@ -280,14 +282,23 @@ idrinth.tier = {
                 wrapper.appendChild ( sub );
             }
         };
-        if ( !name || name.length === 0 ) {
+        var matchesAny = function ( list, regExp ) {
+            for (var count = 0; count < list.length; count++) {
+                if ( list[count] && list[count].match ( regExp ) ) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        if ( ( !name || name.length === 0 ) && ( !type || type.length === 0 ) ) {
             clearInnerHtml ( document.getElementById ( 'idrinth-tierlist' ) );
             return;
         }
         var result = [ ];
-        var regExp = new RegExp ( name, 'i' );
+        var nameRegExp = new RegExp ( name, 'i' );
+        var typeRegExp = new RegExp ( type, 'i' );
         for (var key in idrinth.tier.list) {
-            if ( key.match ( regExp ) ) {
+            if ( key.match ( nameRegExp ) && matchesAny ( idrinth.tier.list[key].types, typeRegExp ) ) {
                 result.push ( key );
             }
         }

@@ -437,6 +437,23 @@ idrinth.ui = {
                     ];
                 };
                 var buildTiers = function () {
+                    var makeSearch = function ( label ) {
+                        return {
+                            type: 'input',
+                            css: 'idrinth-float-half',
+                            id: 'idrinth-tierlist-' + label + 'search',
+                            attributes: [
+                                {
+                                    names: [ 'onblur', 'onchange', 'onkeyup' ],
+                                    value: 'idrinth.tier.getMatchingTiers();'
+                                },
+                                {
+                                    namea: [ 'placeholder', 'title' ],
+                                    value: idrinth.text.get ( "tier." + label )
+                                }
+                            ]
+                        };
+                    };
                     return [ {
                             css: 'idrinth-line',
                             children: [ {
@@ -449,17 +466,10 @@ idrinth.ui = {
                                             value: 'idrinth-tierlist-bosssearch'
                                         }
                                     ]
-                                }, {
-                                    type: 'input',
-                                    css: 'idrinth-float-half',
-                                    id: 'idrinth-tierlist-bosssearch',
-                                    attributes: [
-                                        {
-                                            names: [ 'onblur', 'onchange', 'onkeyup' ],
-                                            value: 'idrinth.tier.getTierForName(this.value);'
-                                        }
-                                    ]
-                                } ]
+                                },
+                                makeSearch ( 'name' ),
+                                makeSearch ( 'type' )
+                            ]
                         }, {
                             id: 'idrinth-tierlist'
                         } ];
