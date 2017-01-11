@@ -340,7 +340,7 @@ idrinth.chat = {
                     value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
                 } ]
         } );
-        idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( {
+        idrinth.ui.base.appendChild ( idrinth.ui.buildElement ( {
             type: 'ul',
             children: popupContent,
             css: 'idrinth-userinfo-box',
@@ -703,7 +703,7 @@ idrinth.chat = {
             return;
         }
         if ( !document.getElementById ( 'idrinth-chat' ) ) {
-            idrinth.ui.body.appendChild ( build () );
+            idrinth.ui.base.appendChild ( build () );
             idrinth.chat.elements.chats = document.getElementById ( 'idrinth-chat' ).getElementsByTagName ( 'ul' )[1];
             idrinth.chat.elements.menu = document.getElementById ( 'idrinth-chat' ).getElementsByTagName ( 'ul' )[0];
         }
@@ -855,7 +855,7 @@ idrinth.chat = {
     },
     showOptions: function ( event, element ) {
         event.preventDefault ();
-        idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( {
+        idrinth.ui.base.appendChild ( idrinth.ui.buildElement ( {
             type: 'ul',
             css: 'idrinth-hovering-box',
             children: [ {

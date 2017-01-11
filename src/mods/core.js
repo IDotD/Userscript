@@ -119,7 +119,7 @@ idrinth.core = {
                     id: "idrinth-copy-helper"
                 } );
                 textAreaElement.value = text;
-                idrinth.ui.body.appendChild ( textAreaElement );
+                idrinth.ui.base.appendChild ( textAreaElement );
                 textAreaElement.select ( );
                 success = document.execCommand ( 'copy' );
             } catch ( exception ) {
@@ -303,7 +303,7 @@ idrinth.core = {
                 idrinth.core.multibind.events[event][selector].push ( method );
             };
             if ( !idrinth.core.multibind.events[event] ) {
-                idrinth.ui.body.addEventListener ( event, function ( e ) {
+                idrinth.ui.base.addEventListener ( event, function ( e ) {
                     e = e || window.event;
                     idrinth.core.multibind.triggered ( e.target, e.type );
                 } );

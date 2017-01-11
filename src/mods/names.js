@@ -218,7 +218,7 @@ idrinth.names = {
                     }
                 ]
             } );
-            idrinth.ui.body.appendChild ( idrinth.ui.tooltip );
+            idrinth.ui.base.appendChild ( idrinth.ui.tooltip );
         };
         /**
          * shows the tooltip if the element has a known name

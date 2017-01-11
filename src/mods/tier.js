@@ -88,7 +88,7 @@ idrinth.tier = {
                         ]
                     }
             );
-            idrinth.ui.body.appendChild ( idrinth.tier.taggedSlots[x] );
+            idrinth.ui.base.appendChild ( idrinth.tier.taggedSlots[x] );
         };
         for (var key in this.taggedSlots) {
             if ( isFreeSlot ( key ) ) {

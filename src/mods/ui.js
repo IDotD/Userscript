@@ -253,7 +253,7 @@ idrinth.ui = {
         } else {
             mod.children[mod.children.length - 1].children = [ makeButton ( 'ok', '' ) ];
         }
-        idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( mod ) );
+        idrinth.ui.base.appendChild ( idrinth.ui.buildElement ( mod ) );
     },
     matchesCss: function ( element, selector ) {
         while ( element && element !== document ) {
@@ -289,7 +289,7 @@ idrinth.ui = {
             if ( element.className.match ( new RegExp ( '(^|\s)' + cssClass + '(\s|$)' ) ) ) {
                 return true;
             }
-            if ( !element.parentNode || element === document.getElementsByTagName ( 'body' )[0] ) {
+            if ( !element.parentNode || element === idrinth.ui.base ) {
                 return false;
             }
             element = element.parentNode;
@@ -770,10 +770,10 @@ idrinth.ui = {
                 id: 'idrinth-controls',
                 children: children
             } );
-            idrinth.ui.body.appendChild ( idrinth.ui.controls );
+            idrinth.ui.base.appendChild ( idrinth.ui.controls );
             document.getElementById ( 'idrinth-favs' ).setAttribute ( 'onkeyup', 'this.value=this.value.replace(/[^a-f0-9,]/g,\'\')' );
         };
-        idrinth.ui.body = document.getElementsByTagName ( 'body' )[0];
+        idrinth.ui.base = document.getElementsByTagName ( 'body' )[0];
         document.getElementsByTagName ( 'head' )[0].appendChild ( idrinth.ui.buildElement ( {
             type: 'link',
             attributes: [ {

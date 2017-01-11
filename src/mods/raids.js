@@ -233,7 +233,7 @@ idrinth.raids = {
                                 idrinth.ui.removeElement ( 'join-' + key );
                             }, 30000 );
                         } ) ( key ) );
-                        idrinth.ui.body.appendChild ( frame );
+                        idrinth.ui.base.appendChild ( frame );
                         idrinth.raids.join.messages.trying ( key );
                     };
                     var postLink = function ( key ) {
