@@ -1,7 +1,42 @@
 idrinth.names = {
+    /**
+     * @type {object}
+     */
+    users: { },
+    /**
+     * @type {object}
+     */
+    classes: { },
+    /**
+     * @type {object}
+     */
+    guilds: { },
+    /**
+     * a timeout
+     * @type {object}
+     */
+    ownTimeout: null,
+    /**
+     * @type {Number}
+     */
+    counter: 0,
+    /**
+     * the method being run to handle data im- and export
+     * @returns {undefined}
+     */
     run: function ( ) {
         'use strict';
+        /**
+         *
+         * @param {string} added the path-segment defining the data returned
+         * @returns {undefined}
+         */
         var load = function ( added ) {
+            /**
+             *
+             * @param {string} data
+             * @returns {undefined}
+             */
             var importNames = function ( data ) {
                 data = JSON.parse ( data );
                 if ( !data ) {
@@ -22,9 +57,23 @@ idrinth.names = {
                     importNames
                     );
         };
+        /**
+         * adds names from elements on the page
+         * @returns {undefined}
+         */
         var add = function ( ) {
+            /**
+             *
+             * @param {HTMLElement} element
+             * @returns {undefined}
+             */
             var processName = function ( element ) {
                 var name = '';
+                /**
+                 *
+                 * @param {HTMLElement} element
+                 * @returns {string}
+                 */
                 var parse = function ( element ) {
                     'use strict';
                     if ( element.getAttribute ( 'dotdxname' ) ) {
@@ -69,14 +118,22 @@ idrinth.names = {
         idrinth.names.counter = idrinth.names.counter + 1;
         idrinth.names.ownTimeout = window.setTimeout ( idrinth.names.run, 6666 );
     },
-    users: { },
-    classes: { },
-    guilds: { },
-    ownTimeout: null,
+    /**
+     * initialises the module
+     * @returns {undefined}
+     */
     start: function ( ) {
         'use strict';
+        /**
+         * creates the tooltip-element
+         * @returns {undefined}
+         */
         var build = function ( ) {
-            'use strict';
+            /**
+             *
+             * @param {string} name
+             * @returns {Array}
+             */
             function getServerPart ( name ) {
                 return [ {
                         css: 'idrinth-line idrinth-tooltip-header',
@@ -173,6 +230,5 @@ idrinth.names = {
             idrinth.names.ownTimeout = window.setTimeout ( idrinth.names.run, 10000 );
             build ();
         }
-    },
-    counter: 0
+    }
 };
