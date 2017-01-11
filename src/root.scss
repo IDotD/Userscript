@@ -135,6 +135,7 @@
 
 #idrinth-controls {
     top: 5px;
+    @include z-offset(5);
     right: 5px;
     position: fixed;
 }
