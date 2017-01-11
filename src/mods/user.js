@@ -1,10 +1,35 @@
 idrinth.user = {
+    /**
+     *
+     * @type String
+     */
     token: '',
+    /**
+     *
+     * @type Number
+     */
     id: 0,
+    /**
+     *
+     * @type String
+     */
     name: '',
+    /**
+     *
+     * @type String
+     */
     identifier: '',
+    /**
+     * initializes the module
+     * @returns {undefined}
+     */
     start: function ( ) {
         'use strict';
+        /**
+         *
+         * @param {Sstring} name
+         * @returns {String}
+         */
         var getCookie = function ( name ) {
             var ca = document.cookie.split ( ';' );
             for (var i = 0; i < ca.length; i++) {
@@ -27,10 +52,25 @@ idrinth.user = {
             idrinth.user.id = ag[1];
             idrinth.user.token = ag[2];
         }
+        /**
+         * sends an id to the server for statistic purposes
+         * @returns {undefined}
+         */
         var sendAlive = function () {
+            /**
+             *
+             * @returns {String|idrinth.user.identifier}
+             */
             var getIdentifier = function () {
+                /**
+                 * from http://stackoverflow.com/a/105074
+                 * @returns {String}
+                 */
                 var guid = function () {
-                    //from http://stackoverflow.com/a/105074
+                    /**
+                     *
+                     * @returns {String}
+                     */
                     var s4 = function () {
                         return Math.floor ( ( 1 + Math.random () ) * 0x10000 ).toString ( 36 );
                     };
