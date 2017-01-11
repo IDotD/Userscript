@@ -204,7 +204,7 @@ idrinth.core = {
             var date = new Date ();
             idrinth.core.timeouts.list[identifier] = {
                 func: func,
-                next: date.getTime () + date.getMilliseconds () + time / 1000,
+                next: date.getTime () + date.getMilliseconds () / 1000 + time / 1000,
                 duration: time,
                 interval: !!isInterval
             };
@@ -215,7 +215,7 @@ idrinth.core = {
          */
         process: function () {
             'use strict';
-            var date = ( new Date () ).getTime () + ( new Date () ).getMilliseconds ();
+            var date = ( new Date () ).getTime () + ( new Date () ).getMilliseconds () / 1000;
             var min = 10000;
             /**
              *
