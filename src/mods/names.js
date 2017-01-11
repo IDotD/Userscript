@@ -21,6 +21,21 @@ idrinth.names = {
      */
     counter: 0,
     /**
+     *
+     * @param {HTMLElement} element
+     * @returns {string}
+     */
+    parse: function ( element ) {
+        'use strict';
+        if ( element.getAttribute ( 'dotdxname' ) ) {
+            return ( element.getAttribute ( 'dotdxname' ) );
+        }
+        if ( element.getAttribute ( 'username' ) ) {
+            return ( element.getAttribute ( 'username' ) );
+        }
+        return ( element.innerHTML ).replace ( /(<([^>]+)>)/ig, "" );
+    },
+    /**
      * the method being run to handle data im- and export
      * @returns {undefined}
      */
@@ -69,23 +84,8 @@ idrinth.names = {
              */
             var processName = function ( element ) {
                 var name = '';
-                /**
-                 *
-                 * @param {HTMLElement} element
-                 * @returns {string}
-                 */
-                var parse = function ( element ) {
-                    'use strict';
-                    if ( element.getAttribute ( 'dotdxname' ) ) {
-                        return ( element.getAttribute ( 'dotdxname' ) );
-                    }
-                    if ( element.getAttribute ( 'username' ) ) {
-                        return ( element.getAttribute ( 'username' ) );
-                    }
-                    return ( element.innerHTML ).replace ( /(<([^>]+)>)/ig, "" );
-                };
                 try {
-                    name = parse ( element );
+                    name = idrinth.names.parse ( element );
                 } catch ( e ) {
                     return;
                 }
