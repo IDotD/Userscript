@@ -248,7 +248,7 @@ idrinth.core = {
                     }
                 }
             }
-            idrinth.core.timeouts.next = window.setTimeout ( idrinth.core.timeouts.process, min * 1000 );
+            idrinth.core.timeouts.next = window.setTimeout ( idrinth.core.timeouts.process, Math.ceil ( min * 1000 ) );
         }
     },
     /**

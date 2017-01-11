@@ -132,8 +132,8 @@ var idrinth = {
             }, 1000 );
             delete idrinth['start'];
             delete idrinth['startInternal'];
-            idrinth.core.timeouts.process ();
         }, 123, true );
+        idrinth.core.timeouts.process ();
     },
     start: function ( ) {
         'use strict';
