@@ -93,7 +93,6 @@ idrinth.names = {
                     return;
                 }
                 if ( !element.getAttribute ( 'data-idrinth-parsed' ) && idrinth.ui.childOf ( element, 'chat_message_window' ) ) {
-                    element.setAttribute ( 'onmouseover', 'idrinth.ui.showTooltip(this);' );
                     element.setAttribute ( 'data-idrinth-parsed', '1' );
                 }
                 if ( !idrinth.names.users[name.toLowerCase ( )] && name.length > 0 ) {
@@ -226,7 +225,48 @@ idrinth.names = {
             } );
             idrinth.ui.body.appendChild ( idrinth.ui.tooltip );
         };
+        /**
+         * shows the tooltip if the element has a known name
+         * @param {HTMLElement} element
+         * @returns {undefined}
+         */
+        var showTooltip = function ( element ) {
+            /**
+             *
+             * @param {object} set
+             * @param {HTMLElement} element
+             * @param {Boolean} world
+             * @returns {undefined}
+             */
+            function tooltip ( set, element, world ) {
+                if ( !set ) {
+                    idrinth.ui.updateClassesList ( element, [ 'idrinth-hide' ], [ ] );
+                    return;
+                }
+                var baseUrl = 'https://dotd.idrinth.de/' + ( world ? 'world-kongregate' : 'kongregate' );
+                idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ ], [ 'idrinth-hide' ] );
+                idrinth.ui.updateClassesList ( element, [ ], [ 'idrinth-hide' ] );
+                element.childNodes[0].setAttribute ( 'href', baseUrl + '/summoner/' + set.id + '/' );
+                element.childNodes[0].innerHTML = set.name;
+                element.childNodes[1].childNodes[1].innerHTML = set.level + ' (' + set['7day'] + '/week, ' + set['30day'] + '/month)';
+                element.childNodes[1].childNodes[3].innerHTML = idrinth.names.classes[set.class];
+                element.childNodes[2].childNodes[1].setAttribute ( 'href', baseUrl + '/guild/' + set.guildId + '/' );
+                element.childNodes[2].childNodes[1].innerHTML = idrinth.names.guilds[world ? 'world' : 'kongregate'][set.guildId];
+                element.childNodes[3].childNodes[1].innerHTML = set.updated;
+                element.childNodes[3].setAttribute ( 'style', ( new Date () ) - ( new Date ( set.updated ) ) > 86400000 ? 'color:#aa0000;' : '' );
+            }
+            idrinth.names.isHovering = false;
+            var name = idrinth.names.parse ( element ).toLowerCase ( );
+            if ( idrinth.settings.get ( "names" ) && idrinth.ui.tooltip && idrinth.names.users[name] ) {
+                window.clearTimeout ( idrinth.ui.tooltipTO );
+                idrinth.ui.tooltip.setAttribute ( 'style', idrinth.ui.getElementPositioning ( element, -200, -100 ) );
+                tooltip ( idrinth.names.users[name].kongregate, idrinth.ui.tooltip.firstChild, false );
+                tooltip ( idrinth.names.users[name].world, idrinth.ui.tooltip.lastChild, true );
+                idrinth.ui.setTooltipTimeout ();
+            }
+        };
         if ( idrinth.platform === 'kongregate' ) {
+            idrinth.core.multibind.add ( 'mouseover', '.chat_message_window .username', showTooltip );
             idrinth.names.ownTimeout = window.setTimeout ( idrinth.names.run, 10000 );
             build ();
         }
