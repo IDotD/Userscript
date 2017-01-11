@@ -1,10 +1,6 @@
 # IDotD
 A script for dawn of the dragons, that works based on data provided to https://dotd.idrinth.de via UgUp.
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e80204911a734a56a471ab9b9ac649db)](https://www.codacy.com/app/eldrim/IDotD?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Idrinth/IDotD&amp;utm_campaign=Badge_Grade)
-[![Code Climate](https://codeclimate.com/github/Idrinth/IDotD/badges/gpa.svg)](https://codeclimate.com/github/Idrinth/IDotD)
-[![Issue Count](https://codeclimate.com/github/Idrinth/IDotD/badges/issue_count.svg)](https://codeclimate.com/github/Idrinth/IDotD)
-
 We support Opera, Firefox and Chrome. Please make sure to update your installation of those on a regular basis, since we can't guarantee, that the script will work on outdated versions.
 
 ## What is it?

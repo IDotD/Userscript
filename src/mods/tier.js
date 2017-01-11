@@ -1,9 +1,33 @@
 idrinth.tier = {
+    /**
+     *
+     * @type {object}
+     */
     list: { },
+    /**
+     *
+     * @type {object}
+     */
+    taggedSlots: { },
+    /**
+     *
+     * @param {string} name
+     * @returns {undefined}
+     */
     addTagged: function ( name ) {
+        /**
+         *
+         * @param {string} key
+         * @returns {Boolean}
+         */
         var isValidParameter = function ( name ) {
             return name && idrinth.tier.list.hasOwnProperty ( name ) && typeof idrinth.tier.list[name] !== 'function' && !document.getElementById ( 'idrinth-tier-box-' + name );
         };
+        /**
+         *
+         * @param {string} key
+         * @returns {Boolean}
+         */
         var isFreeSlot = function ( key ) {
             return idrinth.tier.taggedSlots.hasOwnProperty ( key ) && typeof key !== 'function' && idrinth.tier.taggedSlots[key] === null;
         };
@@ -11,6 +35,12 @@ idrinth.tier = {
             return;
         }
         var boss = this.list[name];
+        /**
+         *
+         * @param {int} x
+         * @param {string} name
+         * @returns {undefined}
+         */
         var make = function ( x, name ) {
             var makeElement = function ( label, number, description ) {
                 return {
@@ -67,19 +97,59 @@ idrinth.tier = {
         }
         idrinth.core.alert ( idrinth.text.get ( "tier.maxBoxes" ) );
     },
-    taggedSlots: { },
+    /**
+     * initializes this module
+     * @returns {undefined}
+     */
     start: function ( ) {
         'use strict';
         var pos = 1;
+        /**
+         * parsed a json-response and fills tier list and exclusion list
+         * @param {string} data
+         * @returns {undefined}
+         */
+        var importData = function ( data ) {
+            data = JSON.parse ( data );
+            if ( data ) {
+                idrinth.tier.list = data;
+                /**
+                 *
+                 * @param {string} name
+                 * @param {string} url
+                 * @returns {undefined}
+                 */
+                var create = function ( name, url ) {
+                    if ( !idrinth.settings.data.bannedRaids[name] ) {
+                        idrinth.settings.data.bannedRaids[name] = false;
+                        window.localStorage.setItem ( 'idotd', JSON.stringify ( idrinth.settings.data ) );
+                    }
+                    document.getElementById ( 'idrinth-raid-may-join-list' ).appendChild ( idrinth.ui.buildElement ( {
+                        name: 'bannedRaids#' + name,
+                        rType: '#input',
+                        type: 'checkbox',
+                        id: 'idrinth-raid-may-join-list-' + name,
+                        label: idrinth.text.get ( "raids.disableJoining" ) + name
+                    } ) );
+                    document.getElementById ( 'idrinth-raid-may-join-list' ).lastChild.setAttribute ( 'style',
+                            'background-image:url(https://dotd.idrinth.de/static/raid-image-service/' + url + '/);' );
+                };
+                for (var key in data) {
+                    if ( data[key].name ) {
+                        create ( data[key].name, data[key].url );
+                    }
+                }
+            } else {
+                window.setTimeout ( idrinth.tier.start, 1000 );
+            }
+        };
         while ( 0 < window.innerWidth - 140 * ( pos + 1 ) ) {
             this.taggedSlots[( pos * 140 ).toString ( )] = null;
             pos++;
         }
         idrinth.core.ajax.runHome (
                 'tier-service/',
-                function ( text ) {
-                    idrinth.tier.import ( text );
-                },
+                importData,
                 function ( ) {
                     window.setTimeout ( idrinth.tier.start, 10000 );
                 },
@@ -88,41 +158,34 @@ idrinth.tier = {
                 }
         );
     },
-    import: function ( data ) {
-        'use strict';
-        data = JSON.parse ( data );
-        if ( data ) {
-            idrinth.tier.list = data;
-            var create = function ( name, url ) {
-                'use strict';
-                if ( !idrinth.settings.data.bannedRaids[name] ) {
-                    idrinth.settings.data.bannedRaids[name] = false;
-                    window.localStorage.setItem ( 'idotd', JSON.stringify ( idrinth.settings.data ) );
-                }
-                document.getElementById ( 'idrinth-raid-may-join-list' ).appendChild ( idrinth.ui.buildElement ( {
-                    name: 'bannedRaids#' + name,
-                    rType: '#input',
-                    type: 'checkbox',
-                    id: 'idrinth-raid-may-join-list-' + name,
-                    label: idrinth.text.get ( "raids.disableJoining" ) + name
-                } ) );
-                document.getElementById ( 'idrinth-raid-may-join-list' ).lastChild.setAttribute ( 'style',
-                        'background-image:url(https://dotd.idrinth.de/static/raid-image-service/' + url + '/);' );
-            };
-            for (var key in data) {
-                if ( data[key].name ) {
-                    create ( data[key].name, data[key].url );
-                }
-            }
-        } else {
-            window.setTimeout ( idrinth.tier.start, 1000 );
-        }
-    },
-    getTierForName: function ( name ) {
+    /**
+     * displays bosses that match both name and type
+     * @returns {undefined}
+     */
+    getMatchingTiers: function ( ) {
+        var name = document.getElementById ( 'idrinth-tierlist-namesearch' ).value;
+        var type = document.getElementById ( 'idrinth-tierlist-typesearch' ).value;
+        /**
+         *
+         * @param {HTMLElement} elem
+         * @returns {undefined}
+         */
         var clearInnerHtml = function ( elem ) {
             elem.innerHTML = '';
         };
+        /**
+         *
+         * @param {string} list
+         * @returns {undefined}
+         */
         var makeList = function ( list ) {
+            /**
+             *
+             * @param {string} listKey
+             * @param {string} difficulty
+             * @param {string} ic
+             * @returns {object} for the buildElement wrapper
+             */
             var makeField = function ( listKey, difficulty, ic ) {
                 var ln = {
                     type: 'td'
@@ -145,6 +208,12 @@ idrinth.tier = {
                 }
                 return ln;
             };
+            /**
+             *
+             * @param {string} title
+             * @param {object} dataset
+             * @returns {HTMLElement}
+             */
             var makeRow = function ( title, dataset ) {
                 return {
                     type: 'tr',
@@ -280,14 +349,29 @@ idrinth.tier = {
                 wrapper.appendChild ( sub );
             }
         };
-        if ( !name || name.length === 0 ) {
+        /**
+         *
+         * @param {Array} list
+         * @param {RegExp} regExp
+         * @returns {Boolean}
+         */
+        var matchesAny = function ( list, regExp ) {
+            for (var count = 0; count < list.length; count++) {
+                if ( list[count] && list[count].match ( regExp ) ) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        if ( ( !name || name.length === 0 ) && ( !type || type.length === 0 ) ) {
             clearInnerHtml ( document.getElementById ( 'idrinth-tierlist' ) );
             return;
         }
         var result = [ ];
-        var regExp = new RegExp ( name, 'i' );
+        var nameRegExp = new RegExp ( name, 'i' );
+        var typeRegExp = new RegExp ( type, 'i' );
         for (var key in idrinth.tier.list) {
-            if ( key.match ( regExp ) ) {
+            if ( key.match ( nameRegExp ) && matchesAny ( idrinth.tier.list[key].types, typeRegExp ) ) {
                 result.push ( key );
             }
         }
