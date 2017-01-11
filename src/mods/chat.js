@@ -774,7 +774,6 @@ idrinth.chat = {
         document.getElementById ( 'idrinth-make-chat' ).getElementsByTagName ( 'input' )[0].value = '';
     },
     users: { },
-    updateTimeout: null,
     add: function () {
         idrinth.core.ajax.runHome (
                 'chat-service/join/',
@@ -803,9 +802,6 @@ idrinth.chat = {
             if ( !document.getElementById ( 'idrinth-chat-tab-' + chatId ) ) {
                 idrinth.ui.buildChat ( chatId, list[chatId].name, list[chatId].access, list[chatId].pass );
             }
-        }
-        if ( idrinth.chat.updateTimeout ) {
-            return;
         }
         idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 1500 );
     },
