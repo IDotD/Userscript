@@ -181,14 +181,16 @@ idrinth.core = {
          */
         list: { },
         /**
-         *
+         * makes sure the timeout is removed when called next
          * @param {string} identifier
          * @returns {undefined}
          */
         remove: function ( identifier ) {
             'use strict';
             if ( idrinth.core.timeouts.list[identifier] !== undefined ) {
-                delete idrinth.core.timeouts.list[identifier];
+                idrinth.core.timeouts.list[identifier].interval = false;
+                idrinth.core.timeouts.list[identifier].func = function () {
+                };
             }
         },
         /**
@@ -216,7 +218,7 @@ idrinth.core = {
         process: function () {
             'use strict';
             var date = ( new Date () ).getTime () + ( new Date () ).getMilliseconds () / 1000;
-            var min = 10000;
+            var min = 10;
             /**
              *
              * @param {Number} durationLeft
