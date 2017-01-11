@@ -2,19 +2,7 @@ idrinth.raids = {
     script: null,
     list: { },
     joined: { },
-    interval: null,
     requested: 0,
-    clearInterval: function () {
-        try {
-            window.clearInterval ( idrinth.raids.interval );
-        } catch ( e ) {
-            idrinth.raids.interval = null;
-        }
-    },
-    restartInterval: function () {
-        this.clearInterval ();
-        idrinth.raids.interval = window.setInterval ( idrinth.raids.join.process, 1500 );
-    },
     import: function ( id ) {
         'use strict';
         if ( !idrinth.platform ) {
@@ -59,13 +47,13 @@ idrinth.raids = {
         return ( ( Object.keys ( idrinth.raids.joined ) ).concat ( Object.keys ( idrinth.raids.list ) ) ).join ();
     },
     clearAll: function () {
-        this.clearInterval ( );
+        idrinth.core.timeouts.remove ( 'raids' );
         while ( document.getElementById ( "idrinth-raid-link-list" ).firstChild ) {
             idrinth.ui.removeElement ( document.getElementById ( "idrinth-raid-link-list" ).firstChild.id );
         }
         idrinth.raids.list = { };
         idrinth.raids.joined = { };
-        idrinth.raids.restartInterval ();
+        idrinth.raids.start ();
     },
     join: {
         data: {
@@ -172,7 +160,7 @@ idrinth.raids = {
             trying: function ( key ) {
                 'use strict';
                 ( ( function ( key ) {
-                    window.setTimeout ( function () {
+                    idrinth.core.timeouts.add ( 'raid.join.' + key, function () {
                         var id = 'idrinth-raid-link-' + key;
                         if ( document.getElementById ( id ) ) {
                             idrinth.ui.removeElement ( id );
@@ -232,7 +220,7 @@ idrinth.raids = {
                                 },
                                 {
                                     name: 'onload',
-                                    value: 'try{event.stopPropagation();}catch(e){}window.setTimeout(){function(){idrinth.ui.removeElement(\'' + key + '\');},1234);'
+                                    value: 'try{event.stopPropagation();}catch(e){}idrinth.core.timeouts.add(\'raids.join.cleanup.' + key + '\',{function(){idrinth.ui.removeElement(\'' + key + '\');},1234);'
                                 },
                                 {
                                     name: 'onunload',
@@ -241,7 +229,7 @@ idrinth.raids = {
                             ]
                         } );
                         ( ( function ( key ) {
-                            return window.setTimeout ( function () {
+                            return idrinth.core.timeouts.add ( 'raids.join.remove.' + key, function () {
                                 idrinth.ui.removeElement ( 'join-' + key );
                             }, 30000 );
                         } ) ( key ) );
@@ -317,6 +305,7 @@ idrinth.raids = {
     },
     start: function ( ) {
         'use strict';
-        idrinth.raids.restartInterval ();
+        idrinth.core.timeouts.remove ( 'raids' );
+        idrinth.core.timeouts.add ( 'raids', idrinth.raids.join.process, 1500, true );
     }
 };

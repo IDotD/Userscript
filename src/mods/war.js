@@ -2,16 +2,9 @@ idrinth.war = {
     from: null,
     to: null,
     element: null,
-    warTO: null,
     setTO: function ( ) {
-        if ( !idrinth.war.warTO ) {
-            idrinth.war.warTO = window.setTimeout (
-                    idrinth.war.getData,
-                    ( idrinth.war.element.getAttribute ( 'class' ) ).match ( /(^|\s)idrinth-hide($|\s)/ ) !== null ?
-                    30000 :
-                    120000
-                    );
-        }
+        var active = ( idrinth.war.element.getAttribute ( 'class' ) ).match ( /(^|\s)idrinth-hide($|\s)/ ) !== null;
+        idrinth.core.timeouts.add ( 'war', idrinth.war.getData, active ? 30000 : 120000 );
     },
     getData: function () {
         var raids2Join = function () {
@@ -246,7 +239,7 @@ idrinth.war = {
             );
             idrinth.ui.body.appendChild ( idrinth.war.element );
         };
-        idrinth.war.warTO = window.setTimeout ( idrinth.war.getData, 5000 );
+        idrinth.core.timeouts.add ( 'war', idrinth.war.getData, 5000 );
         build ();
     }
 };

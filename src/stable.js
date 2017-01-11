@@ -3,10 +3,9 @@ var idrinth = {
     windowactive: true,
     facebook: {
         popup: null,
-        timeout: null,
         restart: function () {
             try {
-                window.clearTimeout ( idrinth.facebook.timeout );
+                idrinth.core.timeouts.remove ( 'facebook' );
                 idrinth.facebook.popup.close ();
                 idrinth.ui.reloadGame ();
                 idrinth.raids.clearAll ();
@@ -15,17 +14,12 @@ var idrinth = {
             }
         },
         rejoin: function () {
-            try {
-                window.clearInterval ( idrinth.raids.interval );
-            } catch ( e ) {
-                idrinth.core.log ( e );
-            }
+            idrinth.core.timeouts.remove ( 'raids' );
             idrinth.facebook.popup = window.open ( "https://apps.facebook.com/dawnofthedragons/" );
             idrinth.facebook.popup.onload = function () {
-                window.clearTimeout ( idrinth.facebook.timeout );
-                idrinth.facebook.timeout = window.setTimeout ( idrinth.facebook.restart, 3333 );
+                idrinth.core.timeouts.add ( 'facebook', idrinth.facebook.restart, 3333 );
             };
-            idrinth.facebook.timeout = window.setTimeout ( idrinth.facebook.restart, 11111 );
+            idrinth.core.timeouts.add ( 'facebook', idrinth.facebook.restart, 11111 );
         }
     },
     newgrounds: {
@@ -42,9 +36,9 @@ var idrinth = {
         alarmCheck: function () {
             var now = new Date ();
             if ( idrinth.settings.get ( "alarmActive" ) && now.getHours () + ':' + now.getMinutes () === idrinth.settings.get ( "alarmTime" ) ) {
-                window.setTimeout ( idrinth.newgrounds.joinRaids, 1 );
+                idrinth.core.timeouts.add ( 'newgrounds', idrinth.newgrounds.joinRaids, 1 );
             }
-            window.setTimeout ( idrinth.newgrounds.alarmCheck, 60000 );
+            idrinth.core.timeouts.add ( 'newgrounds', idrinth.newgrounds.alarmCheck, 60000 );
         },
         join: function () {
             if ( idrinth.newgrounds.raids.length === 0 ) {
@@ -58,7 +52,7 @@ var idrinth = {
             frame.setAttribute ( 'src', link );
         },
         remove: function ( key ) {
-            window.setTimeout (
+            idrinth.core.timeouts.add ( 'newgrounds.remove',
                     function () {
                         try {
                             idrinth.raids.list[key].joined = true;
@@ -88,19 +82,8 @@ var idrinth = {
                     idrinth.settings.get ( "newgroundLoad" ) * 1000 );
         }
     },
-    clearTimeout: function ( timeout ) {
-        if ( timeout ) {
-            try {
-                window.clearTimeout ( timeout );
-            } catch ( e ) {
-                idrinth.core.log ( typeof e.getMessage === 'function' ? e.getMessage : e )
-            }
-        }
-    },
     reload: function ( ) {
-        idrinth.clearTimeout ( idrinth.chat.updateTimeout );
-        idrinth.clearTimeout ( idrinth.war.warTO );
-        idrinth.raids.clearInterval ();
+        window.clearTimeout ( idrinth.core.timeouts.next );
         idrinth.ui.removeElement ( 'idrinth-controls' );
         idrinth.ui.removeElement ( 'idrinth-chat' );
         idrinth.ui.removeElement ( 'idrinth-war' );
@@ -121,17 +104,18 @@ var idrinth = {
                     frame.setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&' + ( window.location.search ).replace ( /^\?/, '' ) );
                 }
             } catch ( e ) {
-                window.setTimeout ( idrinth.startInternal, 500 );
+                return idrinth.core.timeouts.add ( 'start', idrinth.startInternal, 500 );
                 return;
             }
-            window.setTimeout ( idrinth.newgrounds.alarmCheck, 3333 );
+            return idrinth.core.timeouts.add ( 'newgrounds', idrinth.newgrounds.alarmCheck, 3333 );
         }
         idrinth.settings.start ( );
         idrinth.text.start ( );
-        idrinth._tmp=window.setInterval(function() {
-            if(!idrinth.text.initialized) {
+        idrinth.core.timeouts.add ( 'start', function () {
+            if ( !idrinth.text.initialized ) {
                 return;
             }
+            idrinth.core.timeouts.remove ( 'start' );
             idrinth.ui.start ( );
             idrinth.user.start ( );
             idrinth.names.start ( );
@@ -139,9 +123,7 @@ var idrinth = {
             idrinth.tier.start ( );
             idrinth.chat.start ( );
             idrinth.war.start ( );
-            window.clearInterval(idrinth._tmp);
-            delete idrinth['_tmp'];
-            window.setTimeout ( function () {
+            idrinth.core.timeouts.add ( 'core.multibind', function () {
                 idrinth.core.multibind.add ( 'click', '.clipboard-copy', function ( element, event ) {
                     idrinth.core.copyToClipboard.element ( element );
                     element.parentNode.parentNode.removeChild ( element.parentNode );
@@ -150,7 +132,8 @@ var idrinth = {
             }, 1000 );
             delete idrinth['start'];
             delete idrinth['startInternal'];
-        },123);
+        }, 123, true );
+        idrinth.core.timeouts.process ();
     },
     start: function ( ) {
         'use strict';
@@ -166,8 +149,7 @@ var idrinth = {
             idrinth.platform = 'facebook';
         }
         if ( idrinth.platform === 'armorgames' ) {
-            window.setTimeout ( idrinth.startInternal, 2222 );
-            return;
+            return idrinth.core.timeouts.add ( 'start', idrinth.startInternal, 2222 );
         }
         idrinth.startInternal ();
     }

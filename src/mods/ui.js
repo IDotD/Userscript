@@ -14,7 +14,7 @@ idrinth.ui = {
     },
     buildChat: function ( id, name, rank, pass ) {
         if ( !idrinth.chat.elements.chats ) {
-            window.setTimeout ( function () {
+            idrinth.core.timeouts.add ( 'chat-' + id, function () {
                 idrinth.ui.buildChat ( id, name, rank, pass );
             }, 500 );
         }
@@ -200,7 +200,6 @@ idrinth.ui = {
         return el;
     },
     controls: null,
-    tooltipTO: null,
     buildModal: function ( title, content, altFunc ) {
         var mod = {
             children: [ ],
@@ -265,7 +264,7 @@ idrinth.ui = {
         }
     },
     setTooltipTimeout: function () {
-        idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.get ( "timeout" ) ? idrinth.settings.get ( "timeout" ) : 5000 );
+        idrinth.core.timeouts.add ( 'names.tooltip', idrinth.ui.hideTooltip, idrinth.settings.get ( "timeout" ) ? idrinth.settings.get ( "timeout" ) : 5000 );
     },
     hideTooltip: function () {
         if ( idrinth.names.isHovering ) {

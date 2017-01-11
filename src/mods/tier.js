@@ -140,7 +140,7 @@ idrinth.tier = {
                     }
                 }
             } else {
-                window.setTimeout ( idrinth.tier.start, 1000 );
+                idrinth.core.timeouts.add ( 'tier', idrinth.tier.start, 1000 );
             }
         };
         while ( 0 < window.innerWidth - 140 * ( pos + 1 ) ) {
@@ -151,10 +151,10 @@ idrinth.tier = {
                 'tier-service/',
                 importData,
                 function ( ) {
-                    window.setTimeout ( idrinth.tier.start, 10000 );
+                    idrinth.core.timeouts.add ( 'tier', idrinth.tier.start, 10000 );
                 },
                 function ( ) {
-                    window.setTimeout ( idrinth.tier.start, 10000 );
+                    idrinth.core.timeouts.add ( 'tier', idrinth.tier.start, 10000 );
                 }
         );
     },

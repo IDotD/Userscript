@@ -167,7 +167,7 @@ idrinth.chat = {
                 processMessages ( data.messages );
             }
             idrinth.chat.oldMessages = [ ];
-            idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 999 );
+            idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 999 );
         };
         var refreshMembers = function () {
             var applyMembers = function ( data ) {
@@ -249,7 +249,7 @@ idrinth.chat = {
             idrinth.chat.messages.unshift ( idrinth.chat.oldMessages[count] );
         }
         idrinth.chat.oldMessages = [ ];
-        window.setTimeout ( idrinth.chat.refreshChats, 999 );
+        idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 999 );
     },
     userclick: function ( element, user, chat ) {
         'use strict';
@@ -707,14 +707,14 @@ idrinth.chat = {
             idrinth.chat.elements.chats = document.getElementById ( 'idrinth-chat' ).getElementsByTagName ( 'ul' )[1];
             idrinth.chat.elements.menu = document.getElementById ( 'idrinth-chat' ).getElementsByTagName ( 'ul' )[0];
         }
-        window.setTimeout ( function () {
+        idrinth.core.timeouts.add ( 'chat.login', function () {
             idrinth.core.ajax.runHome (
                     'chat-service/login/',
                     idrinth.chat.startLoginCallback,
                     function ( reply ) {
                     },
                     function ( reply ) {
-                        window.setTimeout ( idrinth.chat.login, 1 );
+                        idrinth.core.timeouts.add ( 'chat.login', idrinth.chat.login, 1 );
                     },
                     JSON.stringify ( {
                         user: idrinth.settings.get ( "chatuser" ),
@@ -722,7 +722,7 @@ idrinth.chat = {
                     } )
                     );
         }, 2500 );
-        window.setTimeout ( function () {
+        idrinth.core.timeouts.add ( 'chat.emoticons', function () {
             idrinth.core.ajax.runHome (
                     'emoticons/data/',
                     function ( reply ) {
@@ -807,7 +807,7 @@ idrinth.chat = {
         if ( idrinth.chat.updateTimeout ) {
             return;
         }
-        idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 1500 );
+        idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 1500 );
     },
     startLoginCallback: function ( data ) {
         if ( !data ) {
@@ -939,7 +939,7 @@ idrinth.chat = {
             idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
         },
                 timeout = function () {
-                    window.setTimeout ( idrinth.chat.login, 1 );
+                    idrinth.core.timeouts.add ( 'chat.login', idrinth.chat.login, 1 );
                 },
                 headers = {
                     user: '',
@@ -952,7 +952,7 @@ idrinth.chat = {
 
         if ( key === 'relogin' ) {
             success = function () {
-                idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 1500 );
+                idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 1500 );
             };
             headers.user = idrinth.settings.get ( "chatuser" );
             headers.pass = idrinth.settings.get ( "chatpass" );
