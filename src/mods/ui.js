@@ -1,5 +1,24 @@
 idrinth.ui = {
+    /**
+     *
+     * @type HTMLElement
+     */
     tooltip: null,
+    /**
+     *
+     * @type HTMLElement
+     */
+    base: null,
+    /**
+     *
+     * @type HTMLElement
+     */
+    controls: null,
+    /**
+     *
+     * @param {Number} number
+     * @returns {String}
+     */
     formatNumber: function ( number ) {
         if ( isNaN ( number ) ) {
             return '';
@@ -12,6 +31,14 @@ idrinth.ui = {
         }
         return number.toString () + post[count];
     },
+    /**
+     *
+     * @param {Number} id
+     * @param {string} name
+     * @param {string} rank
+     * @param {string} pass
+     * @returns {undefined}
+     */
     buildChat: function ( id, name, rank, pass ) {
         if ( !idrinth.chat.elements.chats ) {
             idrinth.core.timeouts.add ( 'chat-' + id, function () {
@@ -82,6 +109,13 @@ idrinth.ui = {
                 )
                 );
     },
+    /**
+     *
+     * @param {HTMLElement} element
+     * @param {Number} offsetX
+     * @param {Number} offsetY
+     * @returns {String}
+     */
     getElementPositioning: function ( element, offsetX, offsetY ) {
         var pos = {
             x: element.getBoundingClientRect ().left + ( offsetX ? offsetX : 0 ),
@@ -89,8 +123,19 @@ idrinth.ui = {
         };
         return 'position:fixed;left:' + pos.x + 'px;top:' + pos.y + 'px';
     },
+    /**
+     *
+     * @param {object} config
+     * @returns {HTMLElement}
+     */
     buildElement: function ( config ) {
         'use strict';
+        /**
+         *
+         * @param {HTMLElement} el
+         * @param {object} config
+         * @returns {undefined}
+         */
         var setBase = function ( el, config ) {
             if ( config.id ) {
                 el.id = config.id;
@@ -102,6 +147,12 @@ idrinth.ui = {
                 el.appendChild ( document.createTextNode ( config.content ) );
             }
         };
+        /**
+         *
+         * @param {HTMLElement} el
+         * @param {object} config
+         * @returns {undefined}
+         */
         var addChildren = function ( el, config ) {
             if ( !config.children || !config.children.length ) {
                 return;
@@ -110,7 +161,19 @@ idrinth.ui = {
                 el.appendChild ( idrinth.ui.buildElement ( config.children[count] ) );
             }
         };
+        /**
+         *
+         * @param {HTMLElement} el
+         * @param {object} config
+         * @returns {undefined}
+         */
         var addAttributes = function ( el, config ) {
+            /**
+             *
+             * @param {HTMLElement} el
+             * @param {object} set
+             * @returns {undefined}
+             */
             var applyValue = function ( el, set ) {
                 if ( !set || set.value === undefined ) {
                     return;
@@ -131,8 +194,19 @@ idrinth.ui = {
                 applyValue ( el, config.attributes[count] );
             }
         };
+        /**
+         *
+         * @param {object} config
+         * @returns {HTMLElement}
+         */
         var makeInputLabel = function ( config ) {
             'use strict';
+            /**
+             *
+             * @param {String|Number} value
+             * @param {Array} list
+             * @returns {Boolean}
+             */
             var inArray = function ( value, list ) {
                 'use strict';
                 if ( !Array.isArray ( list ) ) {
@@ -199,7 +273,13 @@ idrinth.ui = {
         addAttributes ( el, config );
         return el;
     },
-    controls: null,
+    /**
+     *
+     * @param {string} title
+     * @param {string|HTMLElement} content
+     * @param {string} altFunc
+     * @returns {undefined}
+     */
     buildModal: function ( title, content, altFunc ) {
         var mod = {
             children: [ ],
@@ -235,6 +315,12 @@ idrinth.ui = {
         mod.children.push ( {
             css: 'buttons'
         } );
+        /**
+         *
+         * @param {String} text
+         * @param {String} func
+         * @returns {object}
+         */
         var makeButton = function ( text, func ) {
             return {
                 type: 'button',
@@ -255,6 +341,12 @@ idrinth.ui = {
         }
         idrinth.ui.base.appendChild ( idrinth.ui.buildElement ( mod ) );
     },
+    /**
+     *
+     * @param {HTMLElement} element
+     * @param {string} selector
+     * @returns {HTMLElement}
+     */
     matchesCss: function ( element, selector ) {
         while ( element && element !== document ) {
             if ( typeof element.matches === 'function' && element.matches ( selector ) ) {
@@ -263,15 +355,27 @@ idrinth.ui = {
             element = element.parentNode
         }
     },
+    /**
+     *
+     * @returns {undefined}
+     */
     setTooltipTimeout: function () {
         idrinth.core.timeouts.add ( 'names.tooltip', idrinth.ui.hideTooltip, idrinth.settings.get ( "timeout" ) ? idrinth.settings.get ( "timeout" ) : 5000 );
     },
+    /**
+     *
+     * @returns {undefined}
+     */
     hideTooltip: function () {
         if ( idrinth.names.isHovering ) {
             return idrinth.ui.setTooltipTimeout ();
         }
         idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ 'idrinth-hide' ], [ ] );
     },
+    /**
+     *
+     * @returns {undefined}
+     */
     openCloseSettings: function ( ) {
         'use strict';
         var toRemove = [ ( idrinth.ui.controls.getAttribute ( 'class' ) ).match ( /(^|\s)inactive($|\s)/ ) ? 'inactive' : 'active' ];
@@ -283,6 +387,12 @@ idrinth.ui = {
         }
         idrinth.ui.updateClassesList ( idrinth.ui.controls, [ 'active', 'inactive', 'left-sided', 'small' ], toRemove );
     },
+    /**
+     *
+     * @param {HTMLElement} element
+     * @param {String} cssClass
+     * @returns {Boolean}
+     */
     childOf: function ( element, cssClass ) {
         'use strict';
         do {
@@ -296,6 +406,11 @@ idrinth.ui = {
         } while ( element );
         return false;
     },
+    /**
+     *
+     * @param {string} id
+     * @returns {undefined}
+     */
     removeElement: function ( id ) {
         'use strict';
         var el = document.getElementById ( id );
@@ -303,8 +418,15 @@ idrinth.ui = {
             el.parentNode.removeChild ( el );
         }
     },
+    /**
+     *
+     * @returns {undefined}
+     */
     reloadGame: function ( ) {
         'use strict';
+        /**
+         * @param {HTMLElement} parent
+         */
         var handleFrame = function ( parent ) {
             var frame = parent.getElementsByTagName ( 'iframe' )[0];
             var src = ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' );
@@ -324,14 +446,40 @@ idrinth.ui = {
             idrinth.core.alert ( idrinth.text.get ( "ui.reloadGameFail" ) );
         }
     },
+    /**
+     *
+     * @param {HTMLElement} element
+     * @param {Array|String} add
+     * @param {Array|String} remove
+     * @returns {undefined}
+     */
     updateClassesList: function ( element, add, remove ) {
+        /**
+         *
+         * @param {String} classString
+         * @param {Array|String} add
+         * @param {Array|String} remove
+         * @returns {unresolved}
+         */
         var getClassesList = function ( classString, add, remove ) {
+            /**
+             *
+             * @param {String|Array} value
+             * @returns {Array}
+             */
             var forceToArray = function ( value ) {
                 return value && typeof value === 'object' && Array.isArray ( value ) && value !== null ? value : [ ];
             };
             var original = classString === null ? [ ] : classString.split ( ' ' ).concat ( forceToArray ( add ) );
             var list = [ ];
             remove = forceToArray ( remove );
+            /**
+             *
+             * @param {Array} list
+             * @param {string} element
+             * @param {Array} forbidden
+             * @returns {unresolved}
+             */
             var addUnique = function ( list, element, forbidden ) {
                 if ( list.indexOf ( element ) === -1 && forbidden.indexOf ( element ) === -1 ) {
                     list.push ( element );
@@ -345,9 +493,21 @@ idrinth.ui = {
         };
         element.setAttribute ( 'class', getClassesList ( element.getAttribute ( 'class' ), add, remove ) );
     },
+    /**
+     *
+     * @param {String} name
+     * @returns {undefined}
+     */
     activateTab: function ( name ) {
         var head = document.getElementById ( 'tab-activator-' + name ).parentNode.childNodes;
         var body = document.getElementById ( 'tab-element-' + name ).parentNode.childNodes;
+        /**
+         *
+         * @param {HTMLElement} head
+         * @param {HTMLElement} body
+         * @param {string} name
+         * @returns {undefined}
+         */
         var setClasses = function ( head, body, name ) {
             if ( head === document.getElementById ( 'tab-activator-' + name ) ) {
                 idrinth.ui.updateClassesList ( head, [ 'active' ], [ ] );
@@ -361,12 +521,34 @@ idrinth.ui = {
             setClasses ( head[count], body[count], name );
         }
     },
+    /**
+     * initializes the gui
+     * @returns {undefined}
+     */
     start: function ( ) {
         'use strict';
+        /**
+         * builds most of the gui
+         * @returns {undefined}
+         */
         var build = function () {
-            'use strict';
+            /**
+             *
+             * @returns {Array}
+             */
             var wrapper = function ( ) {
+                /**
+                 * creates the action tab
+                 * @returns {Array}
+                 */
                 var buildActions = function () {
+                    /**
+                     *
+                     * @param {string} label
+                     * @param {string} onclick
+                     * @param {string} platform
+                     * @returns {object}
+                     */
                     var buttonMaker = function ( label, onclick, platform ) {
                         return {
                             css: 'idrinth-float-half' + ( platform && platform !== idrinth.platform ? " idrinth-hide" : "" ),
@@ -406,7 +588,16 @@ idrinth.ui = {
                         }
                     ];
                 };
+                /**
+                 *
+                 * @returns {Array}
+                 */
                 var buildTiers = function () {
+                    /**
+                     *
+                     * @param {string} label
+                     * @returns {object}
+                     */
                     var makeSearch = function ( label ) {
                         return {
                             type: 'input',
@@ -444,6 +635,10 @@ idrinth.ui = {
                             id: 'idrinth-tierlist'
                         } ];
                 };
+                /**
+                 *
+                 * @returns {Array}
+                 */
                 var buildControls = function () {
                     'use strict';
                     return [ {
@@ -564,7 +759,16 @@ idrinth.ui = {
                                 } ]
                         } ];
                 };
+                /**
+                 *
+                 * @returns {Array}
+                 */
                 var buildLand = function () {
+                    /**
+                     *
+                     * @param {string} label
+                     * @returns {object}
+                     */
                     var buildItem = function ( label ) {
                         return {
                             type: 'tr',
@@ -664,10 +868,22 @@ idrinth.ui = {
                             ]
                         } ];
                 };
+                /**
+                 *
+                 * @param {object} config
+                 * @returns {Array}
+                 */
                 var makeTabs = function ( config ) {
                     var head = [ ];
                     var first = true;
                     var body = [ ];
+                    /**
+                     *
+                     * @param {string} name
+                     * @param {Number} width
+                     * @param {Boolean} first
+                     * @returns {object}
+                     */
                     var buildHead = function ( name, width, first ) {
                         return {
                             type: 'li',
@@ -686,6 +902,13 @@ idrinth.ui = {
                             ]
                         };
                     };
+                    /**
+                     *
+                     * @param {string} name
+                     * @param {Array} children
+                     * @param {Boolean} first
+                     * @returns {object}
+                     */
                     var buildBody = function ( name, children, first ) {
                         return {
                             type: 'li',
@@ -719,6 +942,10 @@ idrinth.ui = {
                         }
                     ];
                 };
+                /**
+                 *
+                 * @returns {Array}
+                 */
                 var buildRaidJoinList = function () {
                     return [ {
                             content: idrinth.text.get ( "raids.clickCopy" ),
