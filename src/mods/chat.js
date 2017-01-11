@@ -808,7 +808,6 @@ idrinth.chat = {
             return;
         }
         idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 1500 );
-        idrinth.chat.refreshMembers ();
     },
     startLoginCallback: function ( data ) {
         if ( !data ) {
