@@ -10,7 +10,7 @@ idrinth.core = {
      * @returns {Boolean}
      */
     fieldIsSetting: function ( parent, field, allowObjects ) {
-        return parent && typeof parent === 'object' && field && parent.hasOwnProperty ( field ) && ( typeof parent[field] !== 'object' || allowObjects ) && typeof parent[field] !== 'function';
+        return parent && typeof parent === 'object' && field && parent.hasOwnProperty ( field ) && ( parent[field] === null || typeof parent[field] !== 'object' || allowObjects ) && typeof parent[field] !== 'function';
     },
     ajax: {
         runHome: function ( url, success, failure, timeout, additionalHeader, isStatic ) {
