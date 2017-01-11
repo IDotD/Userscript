@@ -1,36 +1,67 @@
 idrinth.names = {
-    load: function ( added ) {
-        'use strict';
-        idrinth.core.ajax.runHome (
-                'users-service/' + added,
-                function ( text ) {
-                    idrinth.names.import ( text );
-                }
-        );
-    },
-    import: function ( data ) {
-        'use strict';
-        data = JSON.parse ( data );
-        if ( !data ) {
-            return;
-        }
-        if ( data.users ) {
-            idrinth.names.users = data.users;
-        }
-        if ( data.guilds ) {
-            idrinth.names.guilds = data.guilds;
-        }
-        if ( data.classes ) {
-            idrinth.names.classes = data.classes;
-        }
-    },
     run: function ( ) {
         'use strict';
+        var load = function ( added ) {
+            var importNames = function ( data ) {
+                data = JSON.parse ( data );
+                if ( !data ) {
+                    return;
+                }
+                if ( data.users ) {
+                    idrinth.names.users = data.users;
+                }
+                if ( data.guilds ) {
+                    idrinth.names.guilds = data.guilds;
+                }
+                if ( data.classes ) {
+                    idrinth.names.classes = data.classes;
+                }
+            };
+            idrinth.core.ajax.runHome (
+                    'users-service/' + added,
+                    importNames
+                    );
+        };
+        var add = function ( ) {
+            var processName = function ( element ) {
+                var name = '';
+                var parse = function ( element ) {
+                    'use strict';
+                    if ( element.getAttribute ( 'dotdxname' ) ) {
+                        return ( element.getAttribute ( 'dotdxname' ) );
+                    }
+                    if ( element.getAttribute ( 'username' ) ) {
+                        return ( element.getAttribute ( 'username' ) );
+                    }
+                    return ( element.innerHTML ).replace ( /(<([^>]+)>)/ig, "" );
+                };
+                try {
+                    name = parse ( element );
+                } catch ( e ) {
+                    return;
+                }
+                if ( !name ) {
+                    return;
+                }
+                if ( !element.getAttribute ( 'data-idrinth-parsed' ) && idrinth.ui.childOf ( element, 'chat_message_window' ) ) {
+                    element.setAttribute ( 'onmouseover', 'idrinth.ui.showTooltip(this);' );
+                    element.setAttribute ( 'data-idrinth-parsed', '1' );
+                }
+                if ( !idrinth.names.users[name.toLowerCase ( )] && name.length > 0 ) {
+                    idrinth.names.users[name.toLowerCase ()] = { };
+                    idrinth.core.ajax.runHome ( 'users-service/add/' + encodeURIComponent ( name ) + '/' );
+                }
+            };
+            var el = document.getElementsByClassName ( 'username' );
+            for (var count = el.length - 1; count >= 0; count--) {
+                processName ( el[count] );
+            }
+        };
         try {
             if ( idrinth.names.counter % 300 === 0 || Object.keys ( idrinth.names.users ).length === 0 ) {
-                idrinth.names.load ( Object.keys ( idrinth.names.classes ).length === 0 ? 'init/' : 'get/' );
+                load ( Object.keys ( idrinth.names.classes ).length === 0 ? 'init/' : 'get/' );
             } else if ( Object.keys ( idrinth.names.users ).length > 0 ) {
-                idrinth.names.add ( );
+                add ( );
             }
         } catch ( e ) {
             idrinth.core.log ( e );
@@ -42,40 +73,6 @@ idrinth.names = {
     classes: { },
     guilds: { },
     ownTimeout: null,
-    add: function ( ) {
-        var processName = function ( element ) {
-            var name = '';
-            try {
-                name = idrinth.names.parse ( element );
-            } catch ( e ) {
-                return;
-            }
-            if ( !name ) {
-                return;
-            }
-            if ( element.getAttribute ( 'onmouseover' ) !== 'idrinth.ui.showTooltip()(this);' && idrinth.ui.childOf ( element, 'chat_message_window' ) ) {
-                element.setAttribute ( 'onmouseover', 'idrinth.ui.showTooltip(this);' );
-            }
-            if ( !idrinth.names.users[name.toLowerCase ( )] && name.length > 0 ) {
-                idrinth.names.users[name.toLowerCase ()] = { };
-                idrinth.core.ajax.runHome ( 'users-service/add/' + encodeURIComponent ( name ) + '/' );
-            }
-        };
-        var el = document.getElementsByClassName ( 'username' );
-        for (var count = el.length - 1; count >= 0; count--) {
-            processName ( el[count] );
-        }
-    },
-    parse: function ( element ) {
-        'use strict';
-        if ( element.getAttribute ( 'dotdxname' ) ) {
-            return ( element.getAttribute ( 'dotdxname' ) );
-        }
-        if ( element.getAttribute ( 'username' ) ) {
-            return ( element.getAttribute ( 'username' ) );
-        }
-        return ( element.innerHTML ).replace ( /(<([^>]+)>)/ig, "" );
-    },
     start: function ( ) {
         'use strict';
         var build = function ( ) {
