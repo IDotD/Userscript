@@ -238,7 +238,7 @@ idrinth.core = {
                             idrinth.core.timeouts.list[property].func ();
                             if ( idrinth.core.timeouts.list[property].interval ) {
                                 min = getVal ( idrinth.core.timeouts.list[property].duration, min );
-                                idrinth.core.timeouts.list[property].next = date + idrinth.core.timeouts.list[property].duration;
+                                idrinth.core.timeouts.list[property].next = date + idrinth.core.timeouts.list[property].duration / 1000;
                             } else {
                                 delete idrinth.core.timeouts.list[property];
                             }
