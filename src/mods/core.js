@@ -1,4 +1,9 @@
 idrinth.core = {
+    /**
+     *
+     * @param {string} str
+     * @returns {string}
+     */
     escapeRegExp: function ( str ) {
         return str.replace ( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&" );
     },
@@ -12,13 +17,41 @@ idrinth.core = {
     fieldIsSetting: function ( parent, field, allowObjects ) {
         return parent && typeof parent === 'object' && field && parent.hasOwnProperty ( field ) && ( parent[field] === null || typeof parent[field] !== 'object' || allowObjects ) && typeof parent[field] !== 'function';
     },
+    /**
+     *
+     * @type {object}
+     */
     ajax: {
+        /**
+         *
+         * @type {object}
+         */
+        active: { },
+        /**
+         *
+         * @param {string} url
+         * @param {function} success
+         * @param {function} failure
+         * @param {function} timeout
+         * @param {string} additionalHeader
+         * @param {Boolean} [false] isStatic
+         * @returns {undefined}
+         */
         runHome: function ( url, success, failure, timeout, additionalHeader, isStatic ) {
             var server = isStatic ? 'static' : ( idrinth.settings.get ( "isWorldServer" ) ? 'world-' : '' ) + idrinth.platform;
             var homeUrl = 'https://dotd.idrinth.de/' + server + ( '/' + url ).replace ( /\/\//, '/' );
             idrinth.core.ajax.run ( homeUrl, success, failure, timeout, additionalHeader );
         },
-        active: { },
+        /**
+         *
+         * @param {string} url
+         * @param {function} success
+         * @param {function} failure
+         * @param {function} timeout
+         * @param {string} additionalHeader
+         * @param {Boolean} [false] isStatic
+         * @returns {undefined}
+         */
         run: function ( url, success, failure, timeout, additionalHeader ) {
             'use strict';
             var requestHandler = new XMLHttpRequest ( );
@@ -68,7 +101,16 @@ idrinth.core = {
             idrinth.core.ajax.active[url].send ( );
         }
     },
+    /**
+     *
+     * @type {object}
+     */
     copyToClipboard: {
+        /**
+         *
+         * @param {string} text
+         * @returns {Boolean}
+         */
         text: function ( text ) {
             var success;
             try {
@@ -87,6 +129,11 @@ idrinth.core = {
             idrinth.ui.removeElement ( "idrinth-copy-helper" );
             return success;
         },
+        /**
+         *
+         * @param {HTMLElement} element
+         * @returns {string}
+         */
         element: function ( element ) {
             if ( element.hasAttribute ( 'data-clipboard-text' ) ) {
                 return idrinth.core.copyToClipboard.text ( element.getAttribute ( 'data-clipboard-text' ) );
@@ -97,6 +144,12 @@ idrinth.core = {
             return idrinth.core.copyToClipboard.text ( element.innerHTML );
         }
     },
+    /**
+     *
+     * @param {string} title
+     * @param {string|HTMLElement} content
+     * @returns {Boolean|window.Notification}
+     */
     sendNotification: function ( title, content ) {
         if ( !( "Notification" in window ) ) {
             return false;
@@ -112,18 +165,135 @@ idrinth.core = {
             body: content
         } );
     },
+    /**
+     *
+     * @type {object}
+     */
+    timeouts: {
+        /**
+         *
+         * @type {object}
+         */
+        next: null,
+        /**
+         *
+         * @type {object}
+         */
+        list: { },
+        /**
+         *
+         * @param {string} identifier
+         * @returns {undefined}
+         */
+        remove: function ( identifier ) {
+            'use strict';
+            if ( idrinth.core.timeouts.list[identifier] !== undefined ) {
+                delete idrinth.core.timeouts.list[identifier];
+            }
+        },
+        /**
+         *
+         * @param {string} identifier
+         * @param {function} func
+         * @param {int} time in milliseconds
+         * @param {Boolean} [false] isInterval
+         * @returns {undefined}
+         */
+        add: function ( identifier, func, time, isInterval ) {
+            'use strict';
+            var date = new Date ();
+            idrinth.core.timeouts.list[identifier] = {
+                func: func,
+                next: date.getTime () + date.getMilliseconds () + time / 1000,
+                duration: time,
+                interval: !!isInterval
+            };
+        },
+        /**
+         * activates all relevant timeouts and intervals
+         * @returns {undefined}
+         */
+        process: function () {
+            'use strict';
+            var date = ( new Date () ).getTime () + ( new Date () ).getMilliseconds ();
+            var min = 10000;
+            /**
+             *
+             * @param {Number} durationLeft
+             * @param {Number} minDuration
+             * @returns {Number}
+             */
+            var getVal = function ( durationLeft, minDuration ) {
+                if ( durationLeft < 0.1 ) {
+                    return 0.1;
+                }
+                return durationLeft < minDuration ? durationLeft : minDuration;
+            };
+            for (var property in idrinth.core.timeouts.list) {
+                if ( idrinth.core.timeouts.list.hasOwnProperty ( property ) ) {
+                    if ( date >= idrinth.core.timeouts.list[property].next ) {
+                        try {
+                            idrinth.core.timeouts.list[property].func ();
+                            if ( idrinth.core.timeouts.list[property].interval ) {
+                                min = getVal ( idrinth.core.timeouts.list[property].duration, min );
+                                idrinth.core.timeouts.list[property].next = date + idrinth.core.timeouts.list[property].duration;
+                            } else {
+                                delete idrinth.core.timeouts.list[property];
+                            }
+                        } catch ( e ) {
+                            idrinth.core.log ( e.message ? e.message : e.getMessage () );
+                        }
+                    } else {
+                        min = getVal ( idrinth.core.timeouts.list[property].next - date, min );
+                    }
+                }
+            }
+            idrinth.core.timeouts.next = window.setTimeout ( idrinth.core.timeouts.process, min * 1000 );
+        }
+    },
+    /**
+     *
+     * @param {string} string
+     * @returns {undefined}
+     */
     log: function ( string ) {
         'use strict';
         console.log ( '[IDotDS] ' + string );
     },
+    /**
+     *
+     * @param {string} text
+     * @returns {undefined}
+     */
     alert: function ( text ) {
         idrinth.ui.buildModal ( 'Info', text );
     },
+    /**
+     *
+     * @param {string} text
+     * @param {function} callback
+     * @returns {undefined}
+     */
     confirm: function ( text, callback ) {
         idrinth.ui.buildModal ( 'Do you?', text, callback );
     },
+    /**
+     *
+     * @type {object}
+     */
     multibind: {
+        /**
+         *
+         * @type {object}
+         */
         events: { },
+        /**
+         *
+         * @param {string} event
+         * @param {string} selector
+         * @param {function} method
+         * @returns {undefined}
+         */
         add: function ( event, selector, method ) {
             var bind = function ( event, selector, method ) {
                 idrinth.core.multibind.events[event] = idrinth.core.multibind.events[event] ? idrinth.core.multibind.events[event] : { };
@@ -138,7 +308,20 @@ idrinth.core = {
             }
             bind ( event, selector, method );
         },
+        /**
+         *
+         * @param {HTMLElement} element
+         * @param {string} event
+         * @returns {undefined}
+         */
         triggered: function ( element, event ) {
+            /**
+             *
+             * @param {HTMLElement} el
+             * @param {string} event
+             * @param {string} selector
+             * @returns {undefined}
+             */
             var handleElement = function ( el, event, selector ) {
                 if ( !el ) {
                     return;
