@@ -188,7 +188,7 @@ idrinth.core = {
         remove: function ( identifier ) {
             'use strict';
             if ( idrinth.core.timeouts.list[identifier] !== undefined ) {
-                idrinth.core.timeouts.list[identifier].interval = false;
+                idrinth.core.timeouts.list[identifier].repeats = 1;
                 idrinth.core.timeouts.list[identifier].func = function () {
                 };
             }
