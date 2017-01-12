@@ -210,6 +210,9 @@ idrinth.core = {
                 duration: time,
                 repeats: maxRepeats ? maxRepeats : 1
             };
+            if ( !idrinth.core.timeouts.next ) {
+                idrinth.core.timeouts.next = window.setTimeout ( idrinth.core.timeouts.process, 1000 );
+            }
         },
         /**
          * activates all relevant timeouts and intervals
