@@ -306,6 +306,6 @@ idrinth.raids = {
     start: function ( ) {
         'use strict';
         idrinth.core.timeouts.remove ( 'raids' );
-        idrinth.core.timeouts.add ( 'raids', idrinth.raids.join.process, 1500, true );
+        idrinth.core.timeouts.add ( 'raids', idrinth.raids.join.process, 1500, -1 );
     }
 };

@@ -198,19 +198,17 @@ idrinth.core = {
          * @param {string} identifier
          * @param {function} func
          * @param {int} time in milliseconds
-         * @param {Boolean} [false] isInterval
-         * @param {Number} [-1] isInterval -1 will repeat until the end of time
+         * @param {Number} [1] maxRepeats -1 will repeat until the end of time
          * @returns {undefined}
          */
-        add: function ( identifier, func, time, isInterval, maxIntervals ) {
+        add: function ( identifier, func, time, maxRepeats ) {
             'use strict';
             var date = new Date ();
             idrinth.core.timeouts.list[identifier] = {
                 func: func,
                 next: date.getTime () + date.getMilliseconds () / 1000 + time / 1000,
                 duration: time,
-                interval: !!isInterval,
-                max: maxIntervals ? maxIntervals : -1
+                repeats: maxRepeats ? maxRepeats : 1
             };
         },
         /**
@@ -238,9 +236,9 @@ idrinth.core = {
                     if ( date >= idrinth.core.timeouts.list[property].next ) {
                         try {
                             idrinth.core.timeouts.list[property].func ();
-                            if ( idrinth.core.timeouts.list[property].interval && idrinth.core.timeouts.list[property].max ) {
+                            idrinth.core.timeouts.list[property].repeats = Math.max ( -1, idrinth.core.timeouts.list[property].repeats - 1 );
+                            if ( idrinth.core.timeouts.list[property].repeats ) {
                                 min = getVal ( idrinth.core.timeouts.list[property].duration, min );
-                                idrinth.core.timeouts.list[property].max = Math.max ( -1, idrinth.core.timeouts.list[property].max - 1 );
                                 idrinth.core.timeouts.list[property].next = date + idrinth.core.timeouts.list[property].duration / 1000;
                             } else {
                                 delete idrinth.core.timeouts.list[property];
