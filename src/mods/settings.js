@@ -1,41 +1,189 @@
 idrinth.settings = {
+    /**
+     *
+     * @type {object}
+     */
     data: {
+        /**
+         *
+         * @type Boolean
+         */
         raids: false,
+        /**
+         *
+         * @type String
+         */
         favs: '',
+        /**
+         *
+         * @type Boolean
+         */
         factor: true,
+        /**
+         *
+         * @type Boolean
+         */
         moveLeft: false,
+        /**
+         *
+         * @type Boolean
+         */
         minimalist: false,
+        /**
+         *
+         * @type Boolean
+         */
         chatHiddenOnStart: true,
+        /**
+         *
+         * @type Boolean
+         */
         names: true,
+        /**
+         *
+         * @type Number
+         */
         timeout: 5000,
+        /**
+         *
+         * @type Number
+         */
         loadtime: 5000,
+        /**
+         *
+         * @type Number
+         */
         windows: 3,
+        /**
+         *
+         * @type Boolean
+         */
         warBottom: false,
+        /**
+         *
+         * @type Boolean
+         */
         landMax: true,
+        /**
+         *
+         * @type Boolean
+         */
         chatting: true,
+        /**
+         *
+         * @type String
+         */
         chatuser: '',
+        /**
+         *
+         * @type Number
+         */
         newgroundLoad: 30,
+        /**
+         *
+         * @type String
+         */
         chatpass: '',
+        /**
+         *
+         * @type Boolean
+         */
         isWorldServer: false,
+        /**
+         *
+         * @type String
+         */
         alarmTime: '8:0',
+        /**
+         *
+         * @type Boolean
+         */
         alarmActive: false,
+        /**
+         *
+         * @type Object
+         */
         bannedRaids: { },
-        lang : null,
+        /**
+         *
+         * @type String
+         */
+        lang: null,
+        /**
+         *
+         * @type {Object}
+         */
         notification: {
+            /**
+             *
+             * @type Boolean
+             */
             mention: true,
+            /**
+             *
+             * @type Boolean
+             */
             message: true,
+            /**
+             *
+             * @type Boolean
+             */
             raid: true
         },
+        /**
+         *
+         * @type Object
+         */
         land: {
+            /**
+             *
+             * @type Number
+             */
             cornfield: 0,
+            /**
+             *
+             * @type Number
+             */
             stable: 0,
+            /**
+             *
+             * @type Number
+             */
             barn: 0,
+            /**
+             *
+             * @type Number
+             */
             store: 0,
+            /**
+             *
+             * @type Number
+             */
             pub: 0,
+            /**
+             *
+             * @type Number
+             */
             inn: 0,
+            /**
+             *
+             * @type Number
+             */
             tower: 0,
+            /**
+             *
+             * @type Number
+             */
             fort: 0,
+            /**
+             *
+             * @type Number
+             */
             castle: 0,
+            /**
+             *
+             * @type Number
+             */
             gold: 0
         }
     },
@@ -84,8 +232,21 @@ idrinth.settings = {
         remove ( 'idrinth-dotd-' + field[0] + '-' + field[1] );
         return getValue ( idrinth.settings.data[field[0]], field[1], allowObject );
     },
+    /**
+     *
+     * @param {String} field
+     * @param {String|Booleab|Number} value
+     * @returns {undefined}
+     */
     change: function ( field, value ) {
         'use strict';
+        /**
+         *
+         * @param {obect} parent
+         * @param {string} field
+         * @param {String|Booleab|Number} value
+         * @returns {Boolean}
+         */
         var setValue = function ( parent, field, value ) {
             if ( idrinth.core.fieldIsSetting ( parent, field ) ) {
                 parent[field] = value;
@@ -93,6 +254,10 @@ idrinth.settings = {
             }
             return false;
         };
+        /**
+         * saves the data to local storage
+         * @returns {undefined}
+         */
         var store = function ( ) {
             window.localStorage.setItem ( 'idotd', JSON.stringify ( idrinth.settings.data ) );
         };
@@ -112,10 +277,25 @@ idrinth.settings = {
             return;
         }
     },
+    /**
+     * initializes the module
+     * @returns {undefined}
+     */
     start: function ( ) {
         'use strict';
+        /**
+         * fills the data from json in idotd
+         * @returns {undefined}
+         */
         var getCurrent = function () {
             var data = JSON.parse ( window.localStorage.getItem ( 'idotd' ) );
+            /**
+             *
+             * @param {object} to
+             * @param {object} from
+             * @param {function} apply
+             * @returns {undefined}
+             */
             var apply = function ( to, from, apply ) {
                 for (var key in from) {
                     if ( from.hasOwnProperty ( key ) ) {
@@ -130,8 +310,27 @@ idrinth.settings = {
             };
             apply ( idrinth.settings.data, data, apply );
         };
+        /**
+         * fills the data from seperate storages
+         * @returns {undefined}
+         */
         var getOld = function () {
+            /**
+             *
+             * @param {object} object
+             * @param {String} prefix
+             * @param {function} objectIterator
+             * @returns {Boolean}
+             */
             var objectIterator = function ( object, prefix, objectIterator ) {
+                /**
+                 *
+                 * @param {String} prefix
+                 * @param {String} key
+                 * @param {Number|String|Boolean} item
+                 * @returns {Boolean}
+                 * @todo remove this once old data is unlikely to exist
+                 */
                 var itemHandler = function ( prefix, key, item ) {
                     if ( typeof item !== 'function' ) {
                         var tmp = window.localStorage.getItem ( 'idrinth-dotd-' + prefix + key );

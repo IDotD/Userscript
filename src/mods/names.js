@@ -12,11 +12,6 @@ idrinth.names = {
      */
     guilds: { },
     /**
-     * a timeout
-     * @type {object}
-     */
-    ownTimeout: null,
-    /**
      * @type {Number}
      */
     counter: 0,
@@ -106,7 +101,7 @@ idrinth.names = {
             }
         };
         try {
-            if ( idrinth.names.counter % 300 === 0 || Object.keys ( idrinth.names.users ).length === 0 ) {
+            if ( idrinth.names.counter === 0 || Object.keys ( idrinth.names.users ).length === 0 ) {
                 load ( Object.keys ( idrinth.names.classes ).length === 0 ? 'init/' : 'get/' );
             } else if ( Object.keys ( idrinth.names.users ).length > 0 ) {
                 add ( );
@@ -114,8 +109,8 @@ idrinth.names = {
         } catch ( e ) {
             idrinth.core.log ( e );
         }
-        idrinth.names.counter = idrinth.names.counter + 1;
-        idrinth.names.ownTimeout = window.setTimeout ( idrinth.names.run, 6666 );
+        idrinth.names.counter = ( idrinth.names.counter + 1 ) % 300;
+        idrinth.core.timeouts.add ( 'names', idrinth.names.run, 6666 );
     },
     /**
      * initialises the module
@@ -223,7 +218,7 @@ idrinth.names = {
                     }
                 ]
             } );
-            idrinth.ui.body.appendChild ( idrinth.ui.tooltip );
+            idrinth.ui.base.appendChild ( idrinth.ui.tooltip );
         };
         /**
          * shows the tooltip if the element has a known name
@@ -258,7 +253,7 @@ idrinth.names = {
             idrinth.names.isHovering = false;
             var name = idrinth.names.parse ( element ).toLowerCase ( );
             if ( idrinth.settings.get ( "names" ) && idrinth.ui.tooltip && idrinth.names.users[name] ) {
-                window.clearTimeout ( idrinth.ui.tooltipTO );
+                idrinth.core.timeouts.remove ( 'names.tooltip' );
                 idrinth.ui.tooltip.setAttribute ( 'style', idrinth.ui.getElementPositioning ( element, -200, -100 ) );
                 tooltip ( idrinth.names.users[name].kongregate, idrinth.ui.tooltip.firstChild, false );
                 tooltip ( idrinth.names.users[name].world, idrinth.ui.tooltip.lastChild, true );
@@ -267,7 +262,7 @@ idrinth.names = {
         };
         if ( idrinth.platform === 'kongregate' ) {
             idrinth.core.multibind.add ( 'mouseover', '.chat_message_window .username', showTooltip );
-            idrinth.names.ownTimeout = window.setTimeout ( idrinth.names.run, 10000 );
+            idrinth.core.timeouts.add ( 'names', idrinth.names.run, 10000 );
             build ();
         }
     }

@@ -1,10 +1,35 @@
 idrinth.user = {
+    /**
+     *
+     * @type String
+     */
     token: '',
+    /**
+     *
+     * @type Number
+     */
     id: 0,
+    /**
+     *
+     * @type String
+     */
     name: '',
+    /**
+     *
+     * @type String
+     */
     identifier: '',
+    /**
+     * initializes the module
+     * @returns {undefined}
+     */
     start: function ( ) {
         'use strict';
+        /**
+         *
+         * @param {Sstring} name
+         * @returns {String}
+         */
         var getCookie = function ( name ) {
             var ca = document.cookie.split ( ';' );
             for (var i = 0; i < ca.length; i++) {
@@ -27,32 +52,47 @@ idrinth.user = {
             idrinth.user.id = ag[1];
             idrinth.user.token = ag[2];
         }
-        window.setTimeout ( idrinth.user.sendAlive, 20000 );
-    },
-    sendAlive: function () {
-        var getIdentifier = function () {
-            var guid = function () {
-                //from http://stackoverflow.com/a/105074
-                var s4 = function () {
-                    return Math.floor ( ( 1 + Math.random () ) * 0x10000 ).toString ( 36 );
+        /**
+         * sends an id to the server for statistic purposes
+         * @returns {undefined}
+         */
+        var sendAlive = function () {
+            /**
+             *
+             * @returns {String|idrinth.user.identifier}
+             */
+            var getIdentifier = function () {
+                /**
+                 * from http://stackoverflow.com/a/105074
+                 * @returns {String}
+                 */
+                var guid = function () {
+                    /**
+                     *
+                     * @returns {String}
+                     */
+                    var s4 = function () {
+                        return Math.floor ( ( 1 + Math.random () ) * 0x10000 ).toString ( 36 );
+                    };
+                    return s4 () + '-' +
+                            s4 () + s4 () + '-' +
+                            s4 () + s4 () + s4 () + '-' +
+                            s4 () + s4 () + s4 () + s4 () + '-' +
+                            s4 () + s4 () + s4 () + s4 () + s4 () + '-' +
+                            s4 () + s4 () + s4 () + s4 () + s4 () + s4 ();
                 };
-                return s4 () + '-' +
-                        s4 () + s4 () + '-' +
-                        s4 () + s4 () + s4 () + '-' +
-                        s4 () + s4 () + s4 () + s4 () + '-' +
-                        s4 () + s4 () + s4 () + s4 () + s4 () + '-' +
-                        s4 () + s4 () + s4 () + s4 () + s4 () + s4 ();
+                idrinth.user.identifier = window.localStorage.getItem ( 'idrinth-dotd-uuid' );
+                if ( !idrinth.user.identifier || idrinth.user.identifier === '' || idrinth.user.identifier === null || !idrinth.user.identifier.match ( /^[a-z0-9]{4}-[a-z0-9]{8}-[a-z0-9]{12}-[a-z0-9]{16}-[a-z0-9]{20}-[a-z0-9]{24}$/ ) ) {
+                    idrinth.user.identifier = guid ();
+                }
+                window.localStorage.setItem ( 'idrinth-dotd-uuid', idrinth.user.identifier );
+                return idrinth.user.identifier;
             };
-            idrinth.user.identifier = window.localStorage.getItem ( 'idrinth-dotd-uuid' );
-            if ( !idrinth.user.identifier || idrinth.user.identifier === '' || idrinth.user.identifier === null || !idrinth.user.identifier.match ( /^[a-z0-9]{4}-[a-z0-9]{8}-[a-z0-9]{12}-[a-z0-9]{16}-[a-z0-9]{20}-[a-z0-9]{24}$/ ) ) {
-                idrinth.user.identifier = guid ();
+            if ( !window.localStorage ) {
+                return;
             }
-            window.localStorage.setItem ( 'idrinth-dotd-uuid', idrinth.user.identifier );
-            return idrinth.user.identifier;
+            idrinth.core.ajax.runHome ( 'i-am-alive/' + getIdentifier () + '/' );
         };
-        if ( !window.localStorage ) {
-            return;
-        }
-        idrinth.core.ajax.runHome ( 'i-am-alive/' + getIdentifier () + '/' );
+        idrinth.core.timeouts.add ( 'user', sendAlive, 20000 );
     }
 };

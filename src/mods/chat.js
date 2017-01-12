@@ -167,7 +167,7 @@ idrinth.chat = {
                 processMessages ( data.messages );
             }
             idrinth.chat.oldMessages = [ ];
-            idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 999 );
+            idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 999 );
         };
         var refreshMembers = function () {
             var applyMembers = function ( data ) {
@@ -249,7 +249,7 @@ idrinth.chat = {
             idrinth.chat.messages.unshift ( idrinth.chat.oldMessages[count] );
         }
         idrinth.chat.oldMessages = [ ];
-        window.setTimeout ( idrinth.chat.refreshChats, 999 );
+        idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 999 );
     },
     userclick: function ( element, user, chat ) {
         'use strict';
@@ -340,7 +340,7 @@ idrinth.chat = {
                     value: 'this.parentNode.parentNode.removeChild(this.parentNode);'
                 } ]
         } );
-        idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( {
+        idrinth.ui.base.appendChild ( idrinth.ui.buildElement ( {
             type: 'ul',
             children: popupContent,
             css: 'idrinth-userinfo-box',
@@ -703,18 +703,18 @@ idrinth.chat = {
             return;
         }
         if ( !document.getElementById ( 'idrinth-chat' ) ) {
-            idrinth.ui.body.appendChild ( build () );
+            idrinth.ui.base.appendChild ( build () );
             idrinth.chat.elements.chats = document.getElementById ( 'idrinth-chat' ).getElementsByTagName ( 'ul' )[1];
             idrinth.chat.elements.menu = document.getElementById ( 'idrinth-chat' ).getElementsByTagName ( 'ul' )[0];
         }
-        window.setTimeout ( function () {
+        idrinth.core.timeouts.add ( 'chat.login', function () {
             idrinth.core.ajax.runHome (
                     'chat-service/login/',
                     idrinth.chat.startLoginCallback,
                     function ( reply ) {
                     },
                     function ( reply ) {
-                        window.setTimeout ( idrinth.chat.login, 1 );
+                        idrinth.core.timeouts.add ( 'chat.login', idrinth.chat.login, 1 );
                     },
                     JSON.stringify ( {
                         user: idrinth.settings.get ( "chatuser" ),
@@ -722,7 +722,7 @@ idrinth.chat = {
                     } )
                     );
         }, 2500 );
-        window.setTimeout ( function () {
+        idrinth.core.timeouts.add ( 'chat.emoticons', function () {
             idrinth.core.ajax.runHome (
                     'emoticons/data/',
                     function ( reply ) {
@@ -774,7 +774,6 @@ idrinth.chat = {
         document.getElementById ( 'idrinth-make-chat' ).getElementsByTagName ( 'input' )[0].value = '';
     },
     users: { },
-    updateTimeout: null,
     add: function () {
         idrinth.core.ajax.runHome (
                 'chat-service/join/',
@@ -804,10 +803,7 @@ idrinth.chat = {
                 idrinth.ui.buildChat ( chatId, list[chatId].name, list[chatId].access, list[chatId].pass );
             }
         }
-        if ( idrinth.chat.updateTimeout ) {
-            return;
-        }
-        idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 1500 );
+        idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 1500 );
     },
     startLoginCallback: function ( data ) {
         if ( !data ) {
@@ -859,7 +855,7 @@ idrinth.chat = {
     },
     showOptions: function ( event, element ) {
         event.preventDefault ();
-        idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( {
+        idrinth.ui.base.appendChild ( idrinth.ui.buildElement ( {
             type: 'ul',
             css: 'idrinth-hovering-box',
             children: [ {
@@ -939,7 +935,7 @@ idrinth.chat = {
             idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
         },
                 timeout = function () {
-                    window.setTimeout ( idrinth.chat.login, 1 );
+                    idrinth.core.timeouts.add ( 'chat.login', idrinth.chat.login, 1 );
                 },
                 headers = {
                     user: '',
@@ -952,7 +948,7 @@ idrinth.chat = {
 
         if ( key === 'relogin' ) {
             success = function () {
-                idrinth.chat.updateTimeout = window.setTimeout ( idrinth.chat.refreshChats, 1500 );
+                idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 1500 );
             };
             headers.user = idrinth.settings.get ( "chatuser" );
             headers.pass = idrinth.settings.get ( "chatpass" );
