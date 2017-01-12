@@ -80,7 +80,6 @@ var idrinth = {
             idrinth.settings.start ( );
             idrinth.text.start ( );
             idrinth.core.timeouts.add ( 'start', init, 123, -1 );
-            idrinth.core.timeouts.process ();
         };
         idrinth.core.log ( 'Starting Idrinth\'s DotD Script' );
         window.onblur = function () {
