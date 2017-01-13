@@ -47,6 +47,19 @@ var idrinth = {
                 if ( !idrinth.text.initialized ) {
                     return;
                 }
+                if ( idrinth.platform === 'newgrounds' ) {
+                    try {
+                        var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
+                        idrinth.newgrounds.originalUrl = frame.getAttribute ( 'src' );
+                        if ( window.location.search ) {
+                            frame.setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&' + ( window.location.search ).replace ( /^\?/, '' ) );
+                        }
+                    } catch ( e ) {
+                        idrinth.core.log ( e.message ? e.message : e.getMessage () );
+                        return;
+                    }
+                    idrinth.core.timeouts.add ( 'newgrounds', idrinth.newgrounds.alarmCheck, 3333 );
+                }
                 idrinth.core.timeouts.remove ( 'start' );
                 idrinth.ui.start ( );
                 idrinth.user.start ( );
@@ -63,20 +76,7 @@ var idrinth = {
                     } );
                 }, 1000 );
                 delete idrinth['start'];
-                delete idrinth['startInternal'];
             };
-            if ( idrinth.platform === 'newgrounds' ) {
-                try {
-                    var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
-                    idrinth.newgrounds.originalUrl = frame.getAttribute ( 'src' );
-                    if ( window.location.search ) {
-                        frame.setAttribute ( 'src', ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' ) + '&' + ( window.location.search ).replace ( /^\?/, '' ) );
-                    }
-                } catch ( e ) {
-                    return idrinth.core.timeouts.add ( 'start', idrinth.startInternal, 500 );
-                }
-                return idrinth.core.timeouts.add ( 'newgrounds', idrinth.newgrounds.alarmCheck, 3333 );
-            }
             idrinth.settings.start ( );
             idrinth.text.start ( );
             idrinth.core.timeouts.add ( 'start', init, 123, -1 );
