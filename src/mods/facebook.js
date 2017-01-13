@@ -28,6 +28,7 @@ idrinth.facebook = {
         idrinth.facebook.popup.onload = function () {
             idrinth.core.timeouts.add ( 'facebook', idrinth.facebook.restart, 3333 );
         };
+        // in case onload fails
         idrinth.core.timeouts.add ( 'facebook', idrinth.facebook.restart, 11111 );
     }
 };
