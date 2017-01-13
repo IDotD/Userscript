@@ -315,10 +315,10 @@ idrinth.core = {
         },
         /**
          *
-         * @param {Event} event
+         * @param {Event} [window.event] event
          * @returns {undefined}
          */
-        triggered: function ( e ) {
+        triggered: function ( event ) {
             /**
              *
              * @param {HTMLElement} el
@@ -338,11 +338,11 @@ idrinth.core = {
                     }
                 }
             };
-            e = e || window.event;
-            if ( idrinth.core.multibind.events[e.type] ) {
-                for (var selector in idrinth.core.multibind.events[e.type]) {
-                    if ( idrinth.core.multibind.events[e.type].hasOwnProperty ( selector ) ) {
-                        handleElement ( idrinth.ui.matchesCss ( e.target, selector ), e.type, selector );
+            event = event || window.event;
+            if ( idrinth.core.multibind.events[event.type] ) {
+                for (var selector in idrinth.core.multibind.events[event.type]) {
+                    if ( idrinth.core.multibind.events[event.type].hasOwnProperty ( selector ) ) {
+                        handleElement ( idrinth.ui.matchesCss ( event.target, selector ), event.type, selector );
                     }
                 }
             }
