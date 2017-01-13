@@ -669,3 +669,12 @@ td.is-os {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
 }
+.idrinth-openclick > strong {
+    cursor:pointer;
+}
+.idrinth-openclick > div {
+    display:none;
+}
+.idrinth-openclick.active > div {
+    display:block;
+}

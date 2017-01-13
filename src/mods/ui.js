@@ -754,9 +754,11 @@ idrinth.ui = {
                             platforms: [ 'kongregate' ],
                             label: "setting.extCharInfoDuration"
                         } ];
-                    idrinth.core.multibind.add ( 'click', '.idrinth-openclick > strong', function () {
-                        window.alert ( 'caugth your click on ' + this.innerHTML );
-                    } );
+                    var openCloseSwitch = function ( element ) {
+                        var isActive = ( element.parent.getAttribute ( 'class' ) ).match ( /(^|\s)active($|\s)/ );
+                        idrinth.ui.updateClassesList ( element.parent, isActive ? [ ] : [ 'active' ], isActive ? [ 'active' ] : [ ] );
+                    };
+                    idrinth.core.multibind.add ( 'click', '.idrinth-openclick > strong', openCloseSwitch );
                     return [
                         wrap ( general, 'General' ),
                         wrap ( names, 'Names' ),
