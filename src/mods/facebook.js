@@ -1,5 +1,13 @@
 idrinth.facbook = {
+    /**
+     *
+     * @type window
+     */
     popup: null,
+    /**
+     * restarts the script's fnctions
+     * @returns {undefined}
+     */
     restart: function () {
         try {
             idrinth.core.timeouts.remove ( 'facebook' );
@@ -10,6 +18,10 @@ idrinth.facbook = {
             idrinth.core.log ( e );
         }
     },
+    /**
+     * logs in again and then restarts the script's fnctions
+     * @returns {undefined}
+     */
     rejoin: function () {
         idrinth.core.timeouts.remove ( 'raids' );
         idrinth.facebook.popup = window.open ( "https://apps.facebook.com/dawnofthedragons/" );
