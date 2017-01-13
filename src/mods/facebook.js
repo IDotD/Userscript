@@ -1,4 +1,4 @@
-idrinth.facbook = {
+idrinth.facebook = {
     /**
      *
      * @type window
@@ -19,7 +19,7 @@ idrinth.facbook = {
         }
     },
     /**
-     * logs in again and then restarts the script's fnctions
+     * logs in again and then restarts the script's functions(via restart)
      * @returns {undefined}
      */
     rejoin: function () {
@@ -28,6 +28,7 @@ idrinth.facbook = {
         idrinth.facebook.popup.onload = function () {
             idrinth.core.timeouts.add ( 'facebook', idrinth.facebook.restart, 3333 );
         };
+        // in case onload fails
         idrinth.core.timeouts.add ( 'facebook', idrinth.facebook.restart, 11111 );
     }
 };
