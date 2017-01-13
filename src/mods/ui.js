@@ -640,107 +640,138 @@ idrinth.ui = {
                  * @returns {Array}
                  */
                 var buildControls = function () {
-                    'use strict';
-                    return [ {
-                            name: 'names',
-                            rType: '#input',
-                            type: 'checkbox',
-                            platforms: [ 'kongregate' ],
-                            label: "setting.enableExtCharInfo"
-                        }, {
-                            name: 'lang',
-                            rType: '#input',
-                            type: 'text',
-                            label: "setting.lang"
-                        }, {
-                            name: 'minimalist',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: "setting.minimLayout"
-                        }, {
-                            name: 'moveLeft',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: "setting.moveSettingLeft"
-                        }, {
-                            name: 'warBottom',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: "setting.warBottomPage"
-                        }, {
-                            name: 'landMax',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: "setting.useGoldEfficiently"
-                        }, {
-                            name: 'factor',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: "setting.tenBuildOnce"
-                        }, {
-                            name: 'timeout',
-                            rType: '#input',
-                            type: 'number',
-                            platforms: [ 'kongregate' ],
-                            label: "setting.extCharInfoDuration"
-                        }, {
-                            name: 'newgroundLoad',
-                            rType: '#input',
-                            type: 'number',
-                            platforms: [ 'newgrounds' ],
-                            label: "setting.joiningDuration"
-                        }, {
-                            name: 'chatting',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: "setting.enableChat"
-                        }, {
-                            css: 'idrinth-line',
-                            type: 'span',
-                            content: "ui.settingInfo"
-                        }, {
-                            name: 'raids',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: "setting.enableFavRequest"
-                        }, {
-                            name: 'favs',
-                            rType: '#input',
-                            type: 'text',
-                            label: "setting.favIdToJoin"
-                        }, {
-                            name: 'isWorldServer',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: "setting.worldserver"
-                        }, {
-                            name: 'notification#mention',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'chat.notification.mention'
-                        }, {
-                            name: 'notification#raid',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'chat.notification.raid'
-                        }, {
-                            name: 'notification#message',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'chat.notification.message'
-                        }, {
-                            name: 'windows',
-                            rType: '#input',
-                            type: 'number',
-                            platforms: [ 'dawnofthedragons', 'facebook' ],
-                            label: "ui.maxPopupsFrame"
-                        }, {
-                            name: 'alarmTime',
-                            rType: '#input',
-                            type: 'text',
-                            platforms: [ 'newgrounds' ],
-                            label: "ui.timeAutoJoin"
-                        }, {
+                    /**
+                     *
+                     * @param {Array} list
+                     * @param {String} header
+                     * @returns {object}
+                     */
+                    var wrap = function ( list, header ) {
+                        return {
+                            children: [
+                                {
+                                    type: 'strong',
+                                    content: header
+                                },
+                                {
+                                    children: list
+                                }
+                            ],
+                            css: 'idrinth-openclick'
+                        };
+                    };
+                    /**
+                     *
+                     * @param {HTMLElement} element
+                     * @returns {undefined}
+                     */
+                    var openCloseSwitch = function ( element ) {
+                        var isActive = ( element.parentElement.getAttribute ( 'class' ) ).match ( /(^|\s)active($|\s)/ );
+                        idrinth.ui.updateClassesList ( element.parentElement, isActive ? [ ] : [ 'active' ], isActive ? [ 'active' ] : [ ] );
+                    };
+                    idrinth.core.multibind.add ( 'click', '.idrinth-openclick > strong', openCloseSwitch );
+                    return [
+                        wrap ( [ {
+                                name: 'lang',
+                                rType: '#input',
+                                type: 'text',
+                                label: "setting.lang"
+                            }, {
+                                name: 'minimalist',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.minimLayout"
+                            }, {
+                                name: 'moveLeft',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.moveSettingLeft"
+                            }, {
+                                name: 'warBottom',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.warBottomPage"
+                            } ], 'General' ),
+                        wrap ( [ {
+                                name: 'names',
+                                rType: '#input',
+                                type: 'checkbox',
+                                platforms: [ 'kongregate' ],
+                                label: "setting.enableExtCharInfo"
+                            }, {
+                                name: 'timeout',
+                                rType: '#input',
+                                type: 'number',
+                                platforms: [ 'kongregate' ],
+                                label: "setting.extCharInfoDuration"
+                            } ], 'Names' ),
+                        wrap ( [ {
+                                name: 'landMax',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.useGoldEfficiently"
+                            }, {
+                                name: 'factor',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.tenBuildOnce"
+                            } ], 'Land Buy' ),
+                        wrap ( [ {
+                                name: 'raids',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.enableFavRequest"
+                            }, {
+                                name: 'favs',
+                                rType: '#input',
+                                type: 'text',
+                                label: "setting.favIdToJoin"
+                            }, {
+                                name: 'isWorldServer',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.worldserver"
+                            }, {
+                                name: 'newgroundLoad',
+                                rType: '#input',
+                                type: 'number',
+                                platforms: [ 'newgrounds' ],
+                                label: "setting.joiningDuration"
+                            }, {
+                                name: 'alarmTime',
+                                rType: '#input',
+                                type: 'text',
+                                platforms: [ 'newgrounds' ],
+                                label: "ui.timeAutoJoin"
+                            }, {
+                                name: 'windows',
+                                rType: '#input',
+                                type: 'number',
+                                platforms: [ 'dawnofthedragons', 'facebook' ],
+                                label: "ui.maxPopupsFrame"
+                            } ], 'Raid Joining' ),
+                        wrap ( [ {
+                                name: 'chatting',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.enableChat"
+                            }, {
+                                name: 'notification#mention',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: 'chat.notification.mention'
+                            }, {
+                                name: 'notification#raid',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: 'chat.notification.raid'
+                            }, {
+                                name: 'notification#message',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: 'chat.notification.message'
+                            } ], 'Chat' ),
+                        {
                             css: 'idrinth-line',
                             type: 'p',
                             children: [ {
