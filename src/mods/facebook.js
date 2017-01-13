@@ -19,7 +19,7 @@ idrinth.facebook = {
         }
     },
     /**
-     * logs in again and then restarts the script's fnctions
+     * logs in again and then restarts the script's functions(via restart)
      * @returns {undefined}
      */
     rejoin: function () {
