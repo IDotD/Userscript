@@ -570,7 +570,7 @@ idrinth.ui = {
                                 buttonMaker ( idrinth.text.get ( "button.reloadGame" ), 'idrinth.ui.reloadGame();' ),
                                 buttonMaker ( idrinth.text.get ( "raids.clear" ), 'idrinth.raids.clearAll();' ),
                                 buttonMaker ( idrinth.text.get ( "button.reloadScript" ), 'idrinth.reload();' ),
-                                buttonMaker ( idrinth.text.get ( "raids.imports.restart" ), 'idrinth.raids.restartInterval();' ),
+                                buttonMaker ( idrinth.text.get ( "raids.imports.restart" ), 'idrinth.raidds.start();' ),
                                 buttonMaker ( idrinth.text.get ( "button.refreshFBGameLogin" ), 'idrinth.facebook.rejoin()', 'facebook' ),
                                 buttonMaker ( idrinth.text.get ( "button.ngRaidJoin" ), 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
                                 buttonMaker ( idrinth.settings.get ( "alarmActive" ) ? idrinth.text.get ( "button.disableTimedAutoJoin" ) : idrinth.text.get ( "button.enableTimedAutoJoin" ),
@@ -990,12 +990,62 @@ idrinth.ui = {
                             id: 'idrinth-raid-may-join-list'
                         } ];
                 };
+                var buildStats = function () {
+                    return [ {
+                            name: 'stats#perception',
+                            rType: '#input',
+                            type: 'text',
+                            label: 'stats.perception'
+                        }, {
+                            name: 'stats#attack',
+                            rType: '#input',
+                            type: 'text',
+                            label: 'stats.attack'
+                        }, {
+                            name: 'stats#defense',
+                            rType: '#input',
+                            type: 'text',
+                            label: 'stats.defense'
+                        }, {
+                            name: 'stats#stats',
+                            rType: '#input',
+                            type: 'text',
+                            label: 'stats.stats'
+                        }, {
+                            name: 'stats#critchance',
+                            rType: '#input',
+                            type: 'text',
+                            label: 'stats.critchance'
+                        }, {
+                            name: 'stats#utym',
+                            rType: '#input',
+                            type: 'checkbox',
+                            label: 'stats.utym'
+                        }, {
+                            name: 'stats#kraken',
+                            rType: '#input',
+                            type: 'checkbox',
+                            label: 'stats.kraken'
+                        }, {
+                            name: 'stats#mirele',
+                            rType: '#input',
+                            type: 'checkbox',
+                            label: 'stats.mirele'
+                        }, {
+                            name: 'stats#mount',
+                            rType: '#input',
+                            type: 'text',
+                            label: 'stats.mount'
+                        },
+                    ];
+                }
                 return makeTabs ( {
                     'Actions': buildActions (),
                     'Raids': buildRaidJoinList (),
                     'Settings': buildControls (),
                     'Tiers': buildTiers (),
-                    'Land': buildLand ()
+                    'Land': buildLand (),
+                    'Stats': buildStats ()
                 } );
             };
             var children = wrapper ();
