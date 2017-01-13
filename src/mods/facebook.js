@@ -1,4 +1,4 @@
-idrinth.facbook = {
+idrinth.facebook = {
     /**
      *
      * @type window
