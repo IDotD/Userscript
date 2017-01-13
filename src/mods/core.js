@@ -309,20 +309,16 @@ idrinth.core = {
                 idrinth.core.multibind.events[event][selector].push ( method );
             };
             if ( !idrinth.core.multibind.events[event] ) {
-                idrinth.ui.base.addEventListener ( event, function ( e ) {
-                    e = e || window.event;
-                    idrinth.core.multibind.triggered ( e.target, e.type );
-                } );
+                idrinth.ui.base.addEventListener ( event, idrinth.core.multibind.triggered );
             }
             bind ( event, selector, method );
         },
         /**
          *
-         * @param {HTMLElement} element
-         * @param {string} event
+         * @param {Event} [window.event] event
          * @returns {undefined}
          */
-        triggered: function ( element, event ) {
+        triggered: function ( event ) {
             /**
              *
              * @param {HTMLElement} el
@@ -342,10 +338,11 @@ idrinth.core = {
                     }
                 }
             };
-            if ( idrinth.core.multibind.events[event] ) {
-                for (var selector in idrinth.core.multibind.events[event]) {
-                    if ( idrinth.core.multibind.events[event].hasOwnProperty ( selector ) ) {
-                        handleElement ( idrinth.ui.matchesCss ( element, selector ), event, selector );
+            event = event || window.event;
+            if ( idrinth.core.multibind.events[event.type] ) {
+                for (var selector in idrinth.core.multibind.events[event.type]) {
+                    if ( idrinth.core.multibind.events[event.type].hasOwnProperty ( selector ) ) {
+                        handleElement ( idrinth.ui.matchesCss ( event.target, selector ), event.type, selector );
                     }
                 }
             }

@@ -24,6 +24,9 @@ var idrinth = {
         var sc = document.createElement ( 'script' );
         sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/###RELOAD-VERSION###/' + Math.random () + '/' );
         document.getElementsByTagName ( 'head' )[0].appendChild ( sc );
+        for (var event in idrinth.core.multibind.events) {
+            idrinth.ui.base.removeEventListener ( event, idrinth.core.multibind.triggered );
+        }
         window.setTimeout ( function () {
             idrinth = { };
         }, 1 );
