@@ -570,7 +570,7 @@ idrinth.ui = {
                                 buttonMaker ( idrinth.text.get ( "button.reloadGame" ), 'idrinth.ui.reloadGame();' ),
                                 buttonMaker ( idrinth.text.get ( "raids.clear" ), 'idrinth.raids.clearAll();' ),
                                 buttonMaker ( idrinth.text.get ( "button.reloadScript" ), 'idrinth.reload();' ),
-                                buttonMaker ( idrinth.text.get ( "raids.imports.restart" ), 'idrinth.raids.restartInterval();' ),
+                                buttonMaker ( idrinth.text.get ( "raids.imports.restart" ), 'idrinth.raids.start();' ),
                                 buttonMaker ( idrinth.text.get ( "button.refreshFBGameLogin" ), 'idrinth.facebook.rejoin()', 'facebook' ),
                                 buttonMaker ( idrinth.text.get ( "button.ngRaidJoin" ), 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
                                 buttonMaker ( idrinth.settings.get ( "alarmActive" ) ? idrinth.text.get ( "button.disableTimedAutoJoin" ) : idrinth.text.get ( "button.enableTimedAutoJoin" ),
