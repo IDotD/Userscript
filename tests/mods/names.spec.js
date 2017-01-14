@@ -44,4 +44,66 @@ describe ( 'Names.js tests', function () {
 
     } );
 
+    describe ( "Names run method", function () {
+
+        beforeAll(function(){
+
+            var SPANUsername = {};
+            document.getElementsByClassName = jasmine.createSpy('HTML Class Elements').andCallFake(function(className) {
+                if(!SPANUsername[className]) {
+                    SPANUsername[className] = document.createElement('span');
+                }
+                return SPANUsername[className];
+            });
+        });
+
+        it ( "Should run for new names and add them", function () {
+
+            var testUser = {
+                kongregate: { name : 'test'},
+                world: { name : 'test'}
+            };
+
+            idrinth.names.counter = 300;
+            idrinth.names.names['testUser'] = testUser;
+            
+            idrinth.names.run ();
+
+            expect ( idrinth.names.users ).toEqual ( 2 );
+            expect ( idrinth.names.counter ).toEqual ( 121312 );
+        } );
+
+        it ( "Should get attribute with name dotdxname", function () {
+
+            idrinth.names.run ();
+
+            expect ( idrinth.names.users ).toEqual ( 2 );
+            expect ( idrinth.names.counter ).toEqual ( 300 );
+        } );
+
+    } );
+
+    describe ( "Names start method for kongregate", function () {
+
+        it ( "Should start names for kongregate", function () {
+            // idrinth.ui.tooltip
+            // idrinth.ui.base
+            // idrinth.ui.updateClassesList
+            // idrinth.settings.get
+            // idrinth.ui.setTooltipTimeout
+            // idrinth.ui.getElementPositioning
+
+            spyOn(idrinth.core.multibind, 'add');
+            spyOn(idrinth.core.timeouts, 'add');
+
+            idrinth.names.run ();
+
+            expect(idrinth.core.multibind.add).toHaveBeenCalled();
+            expect(idrinth.core.multibind.add).toHaveBeenCalledTimes(1);
+
+            expect(idrinth.core.timeouts.add).toHaveBeenCalled();
+            expect(idrinth.core.timeouts.add).toHaveBeenCalledTimes(1);
+        });
+
+    } );
 } );
