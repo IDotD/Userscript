@@ -1,5 +1,24 @@
 idrinth.ui = {
+    /**
+     *
+     * @type HTMLElement
+     */
     tooltip: null,
+    /**
+     *
+     * @type HTMLElement
+     */
+    base: null,
+    /**
+     *
+     * @type HTMLElement
+     */
+    controls: null,
+    /**
+     *
+     * @param {Number} number
+     * @returns {String}
+     */
     formatNumber: function ( number ) {
         if ( isNaN ( number ) ) {
             return '';
@@ -12,9 +31,17 @@ idrinth.ui = {
         }
         return number.toString () + post[count];
     },
+    /**
+     *
+     * @param {Number} id
+     * @param {string} name
+     * @param {string} rank
+     * @param {string} pass
+     * @returns {undefined}
+     */
     buildChat: function ( id, name, rank, pass ) {
         if ( !idrinth.chat.elements.chats ) {
-            window.setTimeout ( function () {
+            idrinth.core.timeouts.add ( 'chat-' + id, function () {
                 idrinth.ui.buildChat ( id, name, rank, pass );
             }, 500 );
         }
@@ -82,6 +109,13 @@ idrinth.ui = {
                 )
                 );
     },
+    /**
+     *
+     * @param {HTMLElement} element
+     * @param {Number} offsetX
+     * @param {Number} offsetY
+     * @returns {String}
+     */
     getElementPositioning: function ( element, offsetX, offsetY ) {
         var pos = {
             x: element.getBoundingClientRect ().left + ( offsetX ? offsetX : 0 ),
@@ -89,8 +123,19 @@ idrinth.ui = {
         };
         return 'position:fixed;left:' + pos.x + 'px;top:' + pos.y + 'px';
     },
+    /**
+     *
+     * @param {object} config
+     * @returns {HTMLElement}
+     */
     buildElement: function ( config ) {
         'use strict';
+        /**
+         *
+         * @param {HTMLElement} el
+         * @param {object} config
+         * @returns {undefined}
+         */
         var setBase = function ( el, config ) {
             if ( config.id ) {
                 el.id = config.id;
@@ -102,6 +147,12 @@ idrinth.ui = {
                 el.appendChild ( document.createTextNode ( config.content ) );
             }
         };
+        /**
+         *
+         * @param {HTMLElement} el
+         * @param {object} config
+         * @returns {undefined}
+         */
         var addChildren = function ( el, config ) {
             if ( !config.children || !config.children.length ) {
                 return;
@@ -110,7 +161,19 @@ idrinth.ui = {
                 el.appendChild ( idrinth.ui.buildElement ( config.children[count] ) );
             }
         };
+        /**
+         *
+         * @param {HTMLElement} el
+         * @param {object} config
+         * @returns {undefined}
+         */
         var addAttributes = function ( el, config ) {
+            /**
+             *
+             * @param {HTMLElement} el
+             * @param {object} set
+             * @returns {undefined}
+             */
             var applyValue = function ( el, set ) {
                 if ( !set || set.value === undefined ) {
                     return;
@@ -131,8 +194,19 @@ idrinth.ui = {
                 applyValue ( el, config.attributes[count] );
             }
         };
+        /**
+         *
+         * @param {object} config
+         * @returns {HTMLElement}
+         */
         var makeInputLabel = function ( config ) {
             'use strict';
+            /**
+             *
+             * @param {String|Number} value
+             * @param {Array} list
+             * @returns {Boolean}
+             */
             var inArray = function ( value, list ) {
                 'use strict';
                 if ( !Array.isArray ( list ) ) {
@@ -143,29 +217,11 @@ idrinth.ui = {
                 }
                 return list.indexOf ( value ) > -1;
             };
-            var get = function ( field ) {
-                'use strict';
-                var getValue = function ( parent, field ) {
-                    if ( idrinth.core.fieldIsSetting ( parent, field ) ) {
-                        return parent[field];
-                    }
-                    return null;
-                };
-                if ( !field ) {
-                    return;
-                }
-                var value = getValue ( idrinth.settings, field );
-                if ( value !== null ) {
-                    return value;
-                }
-                field = field.split ( '#' );
-                return getValue ( idrinth.settings[field[0]], field[1] );
-            };
             var input = [ {
                     name: 'type',
                     value: config.type
                 } ];
-            if ( get ( config.name ) && config.type === 'checkbox' ) {
+            if ( idrinth.settings.get ( config.name ) && config.type === 'checkbox' ) {
                 input.push ( {
                     name: 'checked',
                     value: 'checked'
@@ -174,7 +230,7 @@ idrinth.ui = {
             if ( config.type !== 'checkbox' ) {
                 input.push ( {
                     name: 'value',
-                    value: get ( config.name )
+                    value: idrinth.settings.get ( config.name )
                 } );
                 input.push ( {
                     name: 'onchange',
@@ -186,12 +242,13 @@ idrinth.ui = {
                     value: 'idrinth.settings.change(\'' + config.name + '\',this.checked)'
                 } );
             }
+            var translation = idrinth.text.get ( config.label );
             return idrinth.ui.buildElement ( {
                 css: 'idrinth-line' + ( config.platforms && !inArray ( idrinth.platform, config.platforms ) ? ' idrinth-hide' : '' ),
                 children: [ {
                         type: 'label',
                         css: 'idrinth-float-half',
-                        content: config.label,
+                        content: translation === idrinth.text.data.default ? config.label : translation,
                         attributes: [ {
                                 name: 'for',
                                 value: 'idrinth-' + config.name
@@ -216,8 +273,13 @@ idrinth.ui = {
         addAttributes ( el, config );
         return el;
     },
-    controls: null,
-    tooltipTO: null,
+    /**
+     *
+     * @param {string} title
+     * @param {string|HTMLElement} content
+     * @param {string} altFunc
+     * @returns {undefined}
+     */
     buildModal: function ( title, content, altFunc ) {
         var mod = {
             children: [ ],
@@ -253,64 +315,38 @@ idrinth.ui = {
         mod.children.push ( {
             css: 'buttons'
         } );
-        var closeFunc = 'this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);';
+        /**
+         *
+         * @param {String} text
+         * @param {String} func
+         * @returns {object}
+         */
+        var makeButton = function ( text, func ) {
+            return {
+                type: 'button',
+                content: idrinth.text.get ( "button." + text ),
+                attributes: [ {
+                        name: 'onclick',
+                        value: 'this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);' + func
+                    } ]
+            };
+        };
         if ( typeof altFunc === 'string' ) {
-            mod.children[mod.children.length - 1].children = [ {
-                    type: 'button',
-                    content: 'Ok',
-                    attributes: [ {
-                            name: 'onclick',
-                            value: closeFunc + altFunc
-                        } ]
-                }, {
-                    type: 'button',
-                    content: 'Cancel',
-                    attributes: [ {
-                            name: 'onclick',
-                            value: closeFunc
-                        } ]
-                } ];
+            mod.children[mod.children.length - 1].children = [
+                makeButton ( 'ok', altFunc ),
+                makeButton ( 'cancel', '' )
+            ];
         } else {
-            mod.children[mod.children.length - 1].children = [ {
-                    type: 'button',
-                    content: 'Ok',
-                    attributes: [ {
-                            name: 'onclick',
-                            value: closeFunc
-                        } ]
-                } ];
+            mod.children[mod.children.length - 1].children = [ makeButton ( 'ok', '' ) ];
         }
-        idrinth.ui.body.appendChild ( idrinth.ui.buildElement ( mod ) );
+        idrinth.ui.base.appendChild ( idrinth.ui.buildElement ( mod ) );
     },
-    showTooltip: function ( element ) {
-        'use strict';
-        function tooltip ( set, element, world ) {
-            if ( !set ) {
-                idrinth.ui.updateClassesList ( element, [ 'idrinth-hide' ], [ ] );
-                return;
-            }
-            var baseUrl = 'https://dotd.idrinth.de/' + ( world ? 'world-kongregate' : 'kongregate' );
-            idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ ], [ 'idrinth-hide' ] );
-            idrinth.ui.updateClassesList ( element, [ ], [ 'idrinth-hide' ] );
-            element.childNodes[0].setAttribute ( 'href', baseUrl + '/summoner/' + set.id + '/' );
-            element.childNodes[0].innerHTML = set.name;
-            element.childNodes[1].childNodes[1].innerHTML = set.level + ' (' + set['7day'] + '/week, ' + set['30day'] + '/month)';
-            element.childNodes[1].childNodes[3].innerHTML = idrinth.names.classes[set.class];
-            element.childNodes[2].childNodes[1].setAttribute ( 'href', baseUrl + '/guild/' + set.guildId + '/' );
-            element.childNodes[2].childNodes[1].innerHTML = idrinth.names.guilds[world ? 'world' : 'kongregate'][set.guildId];
-            element.childNodes[3].childNodes[1].innerHTML = set.updated;
-            element.childNodes[3].setAttribute ( 'style', ( new Date () ) - ( new Date ( set.updated ) ) > 86400000 ? 'color:#aa0000;' : '' );
-        }
-        idrinth.names.isHovering = false;
-        var name = idrinth.names.parse ( element ).toLowerCase ( );
-        if ( idrinth.settings.names && idrinth.ui.tooltip && idrinth.names.users[name] ) {
-            window.clearTimeout ( idrinth.ui.tooltipTO );
-            idrinth.ui.tooltip.setAttribute ( 'style', idrinth.ui.getElementPositioning ( element, -200, -100 ) );
-            tooltip ( idrinth.names.users[name].kongregate, idrinth.ui.tooltip.firstChild, false );
-            tooltip ( idrinth.names.users[name].world, idrinth.ui.tooltip.lastChild, true );
-            idrinth.ui.setTooltipTimeout ();
-        }
-    },
+    /**
+     *
+     * @param {HTMLElement} element
+     * @param {string} selector
+     * @returns {HTMLElement}
+     */
     matchesCss: function ( element, selector ) {
         while ( element && element !== document ) {
             if ( typeof element.matches === 'function' && element.matches ( selector ) ) {
@@ -319,39 +355,62 @@ idrinth.ui = {
             element = element.parentNode
         }
     },
+    /**
+     *
+     * @returns {undefined}
+     */
     setTooltipTimeout: function () {
-        idrinth.ui.tooltipTO = window.setTimeout ( idrinth.ui.hideTooltip, idrinth.settings.timeout ? idrinth.settings.timeout : 5000 );
+        idrinth.core.timeouts.add ( 'names.tooltip', idrinth.ui.hideTooltip, idrinth.settings.get ( "timeout" ) ? idrinth.settings.get ( "timeout" ) : 5000 );
     },
+    /**
+     *
+     * @returns {undefined}
+     */
     hideTooltip: function () {
         if ( idrinth.names.isHovering ) {
             return idrinth.ui.setTooltipTimeout ();
         }
         idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ 'idrinth-hide' ], [ ] );
     },
+    /**
+     *
+     * @returns {undefined}
+     */
     openCloseSettings: function ( ) {
         'use strict';
         var toRemove = [ ( idrinth.ui.controls.getAttribute ( 'class' ) ).match ( /(^|\s)inactive($|\s)/ ) ? 'inactive' : 'active' ];
-        if ( !idrinth.settings.moveLeft ) {
+        if ( !idrinth.settings.get ( "moveLeft" ) ) {
             toRemove.push ( 'left-sided' );
         }
-        if ( !idrinth.settings.minimalist ) {
+        if ( !idrinth.settings.get ( "minimalist" ) ) {
             toRemove.push ( 'small' );
         }
         idrinth.ui.updateClassesList ( idrinth.ui.controls, [ 'active', 'inactive', 'left-sided', 'small' ], toRemove );
     },
+    /**
+     *
+     * @param {HTMLElement} element
+     * @param {String} cssClass
+     * @returns {Boolean}
+     */
     childOf: function ( element, cssClass ) {
         'use strict';
         do {
             if ( element.className.match ( new RegExp ( '(^|\s)' + cssClass + '(\s|$)' ) ) ) {
                 return true;
             }
-            if ( !element.parentNode || element === document.getElementsByTagName ( 'body' )[0] ) {
+            if ( !element.parentNode || element === idrinth.ui.base ) {
                 return false;
             }
             element = element.parentNode;
         } while ( element );
         return false;
     },
+    /**
+     *
+     * @param {string} id
+     * @returns {undefined}
+     */
     removeElement: function ( id ) {
         'use strict';
         var el = document.getElementById ( id );
@@ -359,8 +418,15 @@ idrinth.ui = {
             el.parentNode.removeChild ( el );
         }
     },
+    /**
+     *
+     * @returns {undefined}
+     */
     reloadGame: function ( ) {
         'use strict';
+        /**
+         * @param {HTMLElement} parent
+         */
         var handleFrame = function ( parent ) {
             var frame = parent.getElementsByTagName ( 'iframe' )[0];
             var src = ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' );
@@ -377,17 +443,43 @@ idrinth.ui = {
                 handleFrame ( document.getElementById ( 'gamefilearea' ) );
             }
         } catch ( e ) {
-            idrinth.core.alert ( 'The game couldn\'t be reloaded' );
+            idrinth.core.alert ( idrinth.text.get ( "ui.reloadGameFail" ) );
         }
     },
+    /**
+     *
+     * @param {HTMLElement} element
+     * @param {Array|String} add
+     * @param {Array|String} remove
+     * @returns {undefined}
+     */
     updateClassesList: function ( element, add, remove ) {
+        /**
+         *
+         * @param {String} classString
+         * @param {Array|String} add
+         * @param {Array|String} remove
+         * @returns {unresolved}
+         */
         var getClassesList = function ( classString, add, remove ) {
+            /**
+             *
+             * @param {String|Array} value
+             * @returns {Array}
+             */
             var forceToArray = function ( value ) {
                 return value && typeof value === 'object' && Array.isArray ( value ) && value !== null ? value : [ ];
             };
             var original = classString === null ? [ ] : classString.split ( ' ' ).concat ( forceToArray ( add ) );
             var list = [ ];
             remove = forceToArray ( remove );
+            /**
+             *
+             * @param {Array} list
+             * @param {string} element
+             * @param {Array} forbidden
+             * @returns {unresolved}
+             */
             var addUnique = function ( list, element, forbidden ) {
                 if ( list.indexOf ( element ) === -1 && forbidden.indexOf ( element ) === -1 ) {
                     list.push ( element );
@@ -401,9 +493,21 @@ idrinth.ui = {
         };
         element.setAttribute ( 'class', getClassesList ( element.getAttribute ( 'class' ), add, remove ) );
     },
+    /**
+     *
+     * @param {String} name
+     * @returns {undefined}
+     */
     activateTab: function ( name ) {
         var head = document.getElementById ( 'tab-activator-' + name ).parentNode.childNodes;
         var body = document.getElementById ( 'tab-element-' + name ).parentNode.childNodes;
+        /**
+         *
+         * @param {HTMLElement} head
+         * @param {HTMLElement} body
+         * @param {string} name
+         * @returns {undefined}
+         */
         var setClasses = function ( head, body, name ) {
             if ( head === document.getElementById ( 'tab-activator-' + name ) ) {
                 idrinth.ui.updateClassesList ( head, [ 'active' ], [ ] );
@@ -417,12 +521,34 @@ idrinth.ui = {
             setClasses ( head[count], body[count], name );
         }
     },
+    /**
+     * initializes the gui
+     * @returns {undefined}
+     */
     start: function ( ) {
         'use strict';
+        /**
+         * builds most of the gui
+         * @returns {undefined}
+         */
         var build = function () {
-            'use strict';
+            /**
+             *
+             * @returns {Array}
+             */
             var wrapper = function ( ) {
+                /**
+                 * creates the action tab
+                 * @returns {Array}
+                 */
                 var buildActions = function () {
+                    /**
+                     *
+                     * @param {string} label
+                     * @param {string} onclick
+                     * @param {string} platform
+                     * @returns {object}
+                     */
                     var buttonMaker = function ( label, onclick, platform ) {
                         return {
                             css: 'idrinth-float-half' + ( platform && platform !== idrinth.platform ? " idrinth-hide" : "" ),
@@ -439,20 +565,21 @@ idrinth.ui = {
                     };
                     return [ {
                             children: [
-                                buttonMaker ( 'Import all manually', 'idrinth.raids.import(\'\');' ),
-                                buttonMaker ( 'Import favs manually', 'idrinth.raids.import(idrinth.settings.favs);' ),
-                                buttonMaker ( 'Reload game', 'idrinth.ui.reloadGame();' ),
-                                buttonMaker ( 'Clear Raids', 'idrinth.raids.clearAll();' ),
-                                buttonMaker ( 'Reload Script', 'idrinth.reload();' ),
-                                buttonMaker ( 'Restart Raidjoin', 'idrinth.raids.restartInterval();' ),
-                                buttonMaker ( 'Refresh Facebook Game Login', 'idrinth.facebook.rejoin()', 'facebook' ),
-                                buttonMaker ( 'NG Raid Join(slow!)', 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
-                                buttonMaker ( idrinth.settings.alarmActive ? 'disable timed Autojoin' : 'enable timed Autojoin', 'idrinth.settings.change(\'alarmActive\',!idrinth.settings.alarmActive);this.innerHTML=idrinth.settings.alarmActive?\'disable timed Autojoin\':\'enable timed Autojoin\'', 'newgrounds' )
+                                buttonMaker ( idrinth.text.get ( "raids.imports.manually" ), 'idrinth.raids.import(\'\');' ),
+                                buttonMaker ( idrinth.text.get ( "raids.imports.favs" ), 'idrinth.raids.import(idrinth.settings.get("favs"));' ),
+                                buttonMaker ( idrinth.text.get ( "button.reloadGame" ), 'idrinth.ui.reloadGame();' ),
+                                buttonMaker ( idrinth.text.get ( "raids.clear" ), 'idrinth.raids.clearAll();' ),
+                                buttonMaker ( idrinth.text.get ( "button.reloadScript" ), 'idrinth.reload();' ),
+                                buttonMaker ( idrinth.text.get ( "raids.imports.restart" ), 'idrinth.raids.restartInterval();' ),
+                                buttonMaker ( idrinth.text.get ( "button.refreshFBGameLogin" ), 'idrinth.facebook.rejoin()', 'facebook' ),
+                                buttonMaker ( idrinth.text.get ( "button.ngRaidJoin" ), 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
+                                buttonMaker ( idrinth.settings.get ( "alarmActive" ) ? idrinth.text.get ( "button.disableTimedAutoJoin" ) : idrinth.text.get ( "button.enableTimedAutoJoin" ),
+                                        'idrinth.settings.change(\'alarmActive\',!idrinth.settings.get("alarmActive"));this.innerHTML=idrinth.settings.get("alarmActive") ? idrinth.text.get ( "button.disableTimedAutoJoin" ):"button.enableTimedAutoJoin"', 'newgrounds' )
                             ]
                         }, {
                             css: 'idrinth-line',
                             id: 'idrinth-joined-raids',
-                            content: 'Last raids joined:',
+                            content: idrinth.text.get ( "raids.lastJoined" ),
                             children: [
                                 {
                                     type: 'ul'
@@ -461,12 +588,38 @@ idrinth.ui = {
                         }
                     ];
                 };
+                /**
+                 *
+                 * @returns {Array}
+                 */
                 var buildTiers = function () {
+                    /**
+                     *
+                     * @param {string} label
+                     * @returns {object}
+                     */
+                    var makeSearch = function ( label ) {
+                        return {
+                            type: 'input',
+                            css: 'idrinth-float-half',
+                            id: 'idrinth-tierlist-' + label + 'search',
+                            attributes: [
+                                {
+                                    names: [ 'onblur', 'onchange', 'onkeyup' ],
+                                    value: 'idrinth.tier.getMatchingTiers();'
+                                },
+                                {
+                                    names: [ 'placeholder', 'title' ],
+                                    value: idrinth.text.get ( "tier." + label )
+                                }
+                            ]
+                        };
+                    };
                     return [ {
                             css: 'idrinth-line',
                             children: [ {
                                     type: 'label',
-                                    content: 'Enter Boss\' Name',
+                                    content: idrinth.text.get ( "tier.search" ),
                                     css: 'idrinth-float-half',
                                     attributes: [
                                         {
@@ -474,123 +627,156 @@ idrinth.ui = {
                                             value: 'idrinth-tierlist-bosssearch'
                                         }
                                     ]
-                                }, {
-                                    type: 'input',
-                                    css: 'idrinth-float-half',
-                                    id: 'idrinth-tierlist-bosssearch',
-                                    attributes: [
-                                        {
-                                            names: [ 'onblur', 'onchange', 'onkeyup' ],
-                                            value: 'idrinth.tier.getTierForName(this.value);'
-                                        }
-                                    ]
-                                } ]
+                                },
+                                makeSearch ( 'name' ),
+                                makeSearch ( 'type' )
+                            ]
                         }, {
                             id: 'idrinth-tierlist'
                         } ];
                 };
+                /**
+                 *
+                 * @returns {Array}
+                 */
                 var buildControls = function () {
-                    'use strict';
-                    return [ {
-                            name: 'names',
-                            rType: '#input',
-                            type: 'checkbox',
-                            platforms: [ 'kongregate' ],
-                            label: 'Enable extended Characterinformation?'
-                        }, {
-                            name: 'minimalist',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'Minimalist Layout'
-                        }, {
-                            name: 'moveLeft',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'Move settings left'
-                        }, {
-                            name: 'warBottom',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'Show war at the bottom of the page'
-                        }, {
-                            name: 'landMax',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'Check to try and use up the gold as efficient as possible - uncheck to only use the most efficient buy in the land buy calculator'
-                        }, {
-                            name: 'factor',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'Buy 10 Buildings at once?(Rec)'
-                        }, {
-                            name: 'timeout',
-                            rType: '#input',
-                            type: 'number',
-                            platforms: [ 'kongregate' ],
-                            label: 'Milliseconds until the extended Characterinformation disappears'
-                        }, {
-                            name: 'newgroundLoad',
-                            rType: '#input',
-                            type: 'number',
-                            platforms: [ 'newgrounds' ],
-                            label: 'Seconds needed to load the game for joining'
-                        }, {
-                            name: 'chatting',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'Enable chat(needs script reload)'
-                        }, {
-                            css: 'idrinth-line',
-                            type: 'span',
-                            content: 'This script will always import the raids you manually set to be imported on the website and if it\'s enabled it will also import all raids matched by one of the faved searches provided.'
-                        }, {
-                            name: 'raids',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'Enable Auto-Raid-Request for Favorites?'
-                        }, {
-                            name: 'favs',
-                            rType: '#input',
-                            type: 'text',
-                            label: 'FavoriteIds to join (separate multiple by comma)'
-                        }, {
-                            name: 'isWorldServer',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'Worldserver?'
-                        }, {
-                            name: 'notification#mention',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'chat-mention notifications?'
-                        }, {
-                            name: 'notification#raid',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'chat-raid notifications?'
-                        }, {
-                            name: 'notification#message',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'chat-message notifications?'
-                        }, {
-                            name: 'windows',
-                            rType: '#input',
-                            type: 'number',
-                            platforms: [ 'dawnofthedragons', 'facebook' ],
-                            label: 'Maximum Popups/Frames for joining raids'
-                        }, {
-                            name: 'alarmTime',
-                            rType: '#input',
-                            type: 'text',
-                            platforms: [ 'newgrounds' ],
-                            label: 'Time to automatically join raids slowly(reloads game multiple times). Format is [Hours]:[Minutes] without leading zeros, so 7:1 is fine, 07:01 is not'
-                        }, {
+                    /**
+                     *
+                     * @param {Array} list
+                     * @param {String} header
+                     * @returns {object}
+                     */
+                    var wrap = function ( list, header ) {
+                        return {
+                            children: [
+                                {
+                                    type: 'strong',
+                                    content: header
+                                },
+                                {
+                                    children: list
+                                }
+                            ],
+                            css: 'idrinth-openclick'
+                        };
+                    };
+                    /**
+                     *
+                     * @param {HTMLElement} element
+                     * @returns {undefined}
+                     */
+                    var openCloseSwitch = function ( element ) {
+                        var isActive = ( element.parentElement.getAttribute ( 'class' ) ).match ( /(^|\s)active($|\s)/ );
+                        idrinth.ui.updateClassesList ( element.parentElement, isActive ? [ ] : [ 'active' ], isActive ? [ 'active' ] : [ ] );
+                    };
+                    idrinth.core.multibind.add ( 'click', '.idrinth-openclick > strong', openCloseSwitch );
+                    return [
+                        wrap ( [ {
+                                name: 'lang',
+                                rType: '#input',
+                                type: 'text',
+                                label: "setting.lang"
+                            }, {
+                                name: 'minimalist',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.minimLayout"
+                            }, {
+                                name: 'moveLeft',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.moveSettingLeft"
+                            }, {
+                                name: 'warBottom',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.warBottomPage"
+                            } ], 'General' ),
+                        wrap ( [ {
+                                name: 'names',
+                                rType: '#input',
+                                type: 'checkbox',
+                                platforms: [ 'kongregate' ],
+                                label: "setting.enableExtCharInfo"
+                            }, {
+                                name: 'timeout',
+                                rType: '#input',
+                                type: 'number',
+                                platforms: [ 'kongregate' ],
+                                label: "setting.extCharInfoDuration"
+                            } ], 'Names' ),
+                        wrap ( [ {
+                                name: 'landMax',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.useGoldEfficiently"
+                            }, {
+                                name: 'factor',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.tenBuildOnce"
+                            } ], 'Land Buy' ),
+                        wrap ( [ {
+                                name: 'raids',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.enableFavRequest"
+                            }, {
+                                name: 'favs',
+                                rType: '#input',
+                                type: 'text',
+                                label: "setting.favIdToJoin"
+                            }, {
+                                name: 'isWorldServer',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.worldserver"
+                            }, {
+                                name: 'newgroundLoad',
+                                rType: '#input',
+                                type: 'number',
+                                platforms: [ 'newgrounds' ],
+                                label: "setting.joiningDuration"
+                            }, {
+                                name: 'alarmTime',
+                                rType: '#input',
+                                type: 'text',
+                                platforms: [ 'newgrounds' ],
+                                label: "ui.timeAutoJoin"
+                            }, {
+                                name: 'windows',
+                                rType: '#input',
+                                type: 'number',
+                                platforms: [ 'dawnofthedragons', 'facebook' ],
+                                label: "ui.maxPopupsFrame"
+                            } ], 'Raid Joining' ),
+                        wrap ( [ {
+                                name: 'chatting',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.enableChat"
+                            }, {
+                                name: 'notification#mention',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: 'chat.notification.mention'
+                            }, {
+                                name: 'notification#raid',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: 'chat.notification.raid'
+                            }, {
+                                name: 'notification#message',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: 'chat.notification.message'
+                            } ], 'Chat' ),
+                        {
                             css: 'idrinth-line',
                             type: 'p',
                             children: [ {
                                     type: '#text',
-                                    content: 'Get your search-favorites from '
+                                    content: idrinth.text.get ( "ui.getFavFrom" )
                                 }, {
                                     type: 'a',
                                     attributes: [ {
@@ -600,11 +786,20 @@ idrinth.ui = {
                                             name: 'target',
                                             value: '_blank'
                                         } ],
-                                    content: 'Idrinth\'s Raidsearch'
+                                    content: idrinth.text.get ( "ui.raidsearch" )
                                 } ]
                         } ];
                 };
+                /**
+                 *
+                 * @returns {Array}
+                 */
                 var buildLand = function () {
+                    /**
+                     *
+                     * @param {string} label
+                     * @returns {object}
+                     */
                     var buildItem = function ( label ) {
                         return {
                             type: 'tr',
@@ -619,7 +814,7 @@ idrinth.ui = {
                                             attributes: [
                                                 {
                                                     name: 'value',
-                                                    value: idrinth.settings.land[label.toLowerCase ()]
+                                                    value: idrinth.settings.get ( "land#" + label.toLowerCase () )
                                                 },
                                                 {
                                                     name: 'type',
@@ -634,7 +829,7 @@ idrinth.ui = {
                             attributes: [
                                 {
                                     name: 'title',
-                                    value: idrinth.land.data[label.toLowerCase ()].perHour + ' gold per hour each'
+                                    value: idrinth.land.data[label.toLowerCase ()].perHour + idrinth.text.get ( "land.hour" )
                                 }
                             ]
                         };
@@ -666,7 +861,7 @@ idrinth.ui = {
                                     type: 'tr',
                                     children: [ {
                                             type: 'th',
-                                            content: 'Avaible Gold'
+                                            content: idrinth.text.get ( "land.available" )
                                         }, {
                                             type: 'td',
                                             children: [ {
@@ -675,7 +870,7 @@ idrinth.ui = {
                                                     attributes: [
                                                         {
                                                             name: 'value',
-                                                            value: idrinth.settings.land.gold
+                                                            value: idrinth.settings.get ( "land#gold" )
                                                         },
                                                         {
                                                             name: 'type',
@@ -687,7 +882,7 @@ idrinth.ui = {
                                             type: 'td',
                                             children: [ {
                                                     type: 'button',
-                                                    content: 'Calculate',
+                                                    content: idrinth.text.get ( "land.calc" ),
                                                     attributes: [
                                                         {
                                                             name: 'onclick',
@@ -704,10 +899,22 @@ idrinth.ui = {
                             ]
                         } ];
                 };
+                /**
+                 *
+                 * @param {object} config
+                 * @returns {Array}
+                 */
                 var makeTabs = function ( config ) {
                     var head = [ ];
                     var first = true;
                     var body = [ ];
+                    /**
+                     *
+                     * @param {string} name
+                     * @param {Number} width
+                     * @param {Boolean} first
+                     * @returns {object}
+                     */
                     var buildHead = function ( name, width, first ) {
                         return {
                             type: 'li',
@@ -726,6 +933,13 @@ idrinth.ui = {
                             ]
                         };
                     };
+                    /**
+                     *
+                     * @param {string} name
+                     * @param {Array} children
+                     * @param {Boolean} first
+                     * @returns {object}
+                     */
                     var buildBody = function ( name, children, first ) {
                         return {
                             type: 'li',
@@ -759,14 +973,18 @@ idrinth.ui = {
                         }
                     ];
                 };
+                /**
+                 *
+                 * @returns {Array}
+                 */
                 var buildRaidJoinList = function () {
                     return [ {
-                            content: 'click to copy raid link',
+                            content: idrinth.text.get ( "raids.clickCopy" ),
                             type: 'strong'
                         }, {
                             id: 'idrinth-raid-link-list'
                         }, {
-                            content: 'Disable Autojoining for specific raids',
+                            content: idrinth.text.get ( "raids.disableSpecific" ),
                             type: 'strong'
                         }, {
                             id: 'idrinth-raid-may-join-list'
@@ -806,14 +1024,14 @@ idrinth.ui = {
                     } ]
             } );
             idrinth.ui.controls = idrinth.ui.buildElement ( {
-                css: 'idrinth-hovering-box idrinth-controls-overwrite inactive' + ( idrinth.settings.moveLeft ? ' left-sided' : '' ) + ( idrinth.settings.minimalist ? ' small' : '' ),
+                css: 'idrinth-hovering-box idrinth-controls-overwrite inactive' + ( idrinth.settings.get ( "moveLeft" ) ? ' left-sided' : '' ) + ( idrinth.settings.get ( "minimalist" ) ? ' small' : '' ),
                 id: 'idrinth-controls',
                 children: children
             } );
-            idrinth.ui.body.appendChild ( idrinth.ui.controls );
+            idrinth.ui.base.appendChild ( idrinth.ui.controls );
             document.getElementById ( 'idrinth-favs' ).setAttribute ( 'onkeyup', 'this.value=this.value.replace(/[^a-f0-9,]/g,\'\')' );
         };
-        idrinth.ui.body = document.getElementsByTagName ( 'body' )[0];
+        idrinth.ui.base = document.getElementsByTagName ( 'body' )[0];
         document.getElementsByTagName ( 'head' )[0].appendChild ( idrinth.ui.buildElement ( {
             type: 'link',
             attributes: [ {
@@ -821,7 +1039,7 @@ idrinth.ui = {
                     value: 'stylesheet'
                 }, {
                     name: 'href',
-                    value: 'https://dotd.idrinth.de###PATH###/script-styles.css?###VERSION###'
+                    value: 'https://dotd.idrinth.de/static/userscript-styles/###RELOAD-VERSION###/'
                 } ]
         } ) );
         build ();
