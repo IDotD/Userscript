@@ -63,8 +63,6 @@ describe ( 'Land.js tests', function () {
             }
             mock[ 'idrinth-land-gold' ] = { value: '' };
 
-            console.log ( mock );
-
             spyOn ( document, "getElementById" ).and.callFake ( function ( id ) {
                 if ( mock.hasOwnProperty ( id ) ) {
                     return mock[ id ];
