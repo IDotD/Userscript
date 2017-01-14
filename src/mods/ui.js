@@ -29,7 +29,7 @@ idrinth.ui = {
             number = Math.round ( number / 10 ) / 100;
             count++;
         }
-        return number.toString () + post[count];
+        return number.toString ( ) + post[count];
     },
     /**
      *
@@ -41,14 +41,14 @@ idrinth.ui = {
      */
     buildChat: function ( id, name, rank, pass ) {
         if ( !idrinth.chat.elements.chats ) {
-            idrinth.core.timeouts.add ( 'chat-' + id, function () {
+            idrinth.core.timeouts.add ( 'chat-' + id, function ( ) {
                 idrinth.ui.buildChat ( id, name, rank, pass );
             }, 500 );
         }
         idrinth.chat.elements.chats.appendChild ( idrinth.ui.buildElement ( {
             type: 'li',
             id: 'idrinth-chat-tab-' + id,
-            css: rank.toLowerCase (),
+            css: rank.toLowerCase ( ),
             attributes: [
                 {
                     name: 'data-id',
@@ -118,8 +118,8 @@ idrinth.ui = {
      */
     getElementPositioning: function ( element, offsetX, offsetY ) {
         var pos = {
-            x: element.getBoundingClientRect ().left + ( offsetX ? offsetX : 0 ),
-            y: element.getBoundingClientRect ().top + ( offsetY ? offsetY : 0 )
+            x: element.getBoundingClientRect ( ).left + ( offsetX ? offsetX : 0 ),
+            y: element.getBoundingClientRect ( ).top + ( offsetY ? offsetY : 0 )
         };
         return 'position:fixed;left:' + pos.x + 'px;top:' + pos.y + 'px';
     },
@@ -359,16 +359,16 @@ idrinth.ui = {
      *
      * @returns {undefined}
      */
-    setTooltipTimeout: function () {
+    setTooltipTimeout: function ( ) {
         idrinth.core.timeouts.add ( 'names.tooltip', idrinth.ui.hideTooltip, idrinth.settings.get ( "timeout" ) ? idrinth.settings.get ( "timeout" ) : 5000 );
     },
     /**
      *
      * @returns {undefined}
      */
-    hideTooltip: function () {
+    hideTooltip: function ( ) {
         if ( idrinth.names.isHovering ) {
-            return idrinth.ui.setTooltipTimeout ();
+            return idrinth.ui.setTooltipTimeout ( );
         }
         idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ 'idrinth-hide' ], [ ] );
     },
@@ -430,7 +430,7 @@ idrinth.ui = {
         var handleFrame = function ( parent ) {
             var frame = parent.getElementsByTagName ( 'iframe' )[0];
             var src = ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' );
-            frame.setAttribute ( 'src', src + ( src.indexOf ( '?' ) > -1 ? '&' : '?' ) + 'ir=' + Math.random () );
+            frame.setAttribute ( 'src', src + ( src.indexOf ( '?' ) > -1 ? '&' : '?' ) + 'ir=' + Math.random ( ) );
         };
         try {
             if ( idrinth.platform === 'kongregate' ) {
@@ -531,7 +531,7 @@ idrinth.ui = {
          * builds most of the gui
          * @returns {undefined}
          */
-        var build = function () {
+        var build = function ( ) {
             /**
              *
              * @returns {Array}
@@ -541,7 +541,7 @@ idrinth.ui = {
                  * creates the action tab
                  * @returns {Array}
                  */
-                var buildActions = function () {
+                var buildActions = function ( ) {
                     /**
                      *
                      * @param {string} label
@@ -570,7 +570,7 @@ idrinth.ui = {
                                 buttonMaker ( idrinth.text.get ( "button.reloadGame" ), 'idrinth.ui.reloadGame();' ),
                                 buttonMaker ( idrinth.text.get ( "raids.clear" ), 'idrinth.raids.clearAll();' ),
                                 buttonMaker ( idrinth.text.get ( "button.reloadScript" ), 'idrinth.reload();' ),
-                                buttonMaker ( idrinth.text.get ( "raids.imports.restart" ), 'idrinth.raidds.start();' ),
+                                buttonMaker ( idrinth.text.get ( "raids.imports.restart" ), 'idrinth.raids.start();' ),
                                 buttonMaker ( idrinth.text.get ( "button.refreshFBGameLogin" ), 'idrinth.facebook.rejoin()', 'facebook' ),
                                 buttonMaker ( idrinth.text.get ( "button.ngRaidJoin" ), 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
                                 buttonMaker ( idrinth.settings.get ( "alarmActive" ) ? idrinth.text.get ( "button.disableTimedAutoJoin" ) : idrinth.text.get ( "button.enableTimedAutoJoin" ),
@@ -592,7 +592,7 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-                var buildTiers = function () {
+                var buildTiers = function ( ) {
                     /**
                      *
                      * @param {string} label
@@ -639,7 +639,7 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-                var buildControls = function () {
+                var buildControls = function ( ) {
                     /**
                      *
                      * @param {Array} list
@@ -794,7 +794,7 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-                var buildLand = function () {
+                var buildLand = function ( ) {
                     /**
                      *
                      * @param {string} label
@@ -810,11 +810,11 @@ idrinth.ui = {
                                     type: 'td',
                                     children: [ {
                                             type: 'input',
-                                            id: 'idrinth-land-' + label.toLowerCase (),
+                                            id: 'idrinth-land-' + label.toLowerCase ( ),
                                             attributes: [
                                                 {
                                                     name: 'value',
-                                                    value: idrinth.settings.get ( "land#" + label.toLowerCase () )
+                                                    value: idrinth.settings.get ( "land#" + label.toLowerCase ( ) )
                                                 },
                                                 {
                                                     name: 'type',
@@ -829,7 +829,7 @@ idrinth.ui = {
                             attributes: [
                                 {
                                     name: 'title',
-                                    value: idrinth.land.data[label.toLowerCase ()].perHour + idrinth.text.get ( "land.hour" )
+                                    value: idrinth.land.data[label.toLowerCase ( )].perHour + idrinth.text.get ( "land.hour" )
                                 }
                             ]
                         };
@@ -920,11 +920,11 @@ idrinth.ui = {
                             type: 'li',
                             content: name,
                             css: 'tab-activator' + ( first ? ' active' : '' ),
-                            id: 'tab-activator-' + name.toLowerCase (),
+                            id: 'tab-activator-' + name.toLowerCase ( ),
                             attributes: [
                                 {
                                     name: 'onclick',
-                                    value: 'idrinth.ui.activateTab(\'' + name.toLowerCase () + '\');'
+                                    value: 'idrinth.ui.activateTab(\'' + name.toLowerCase ( ) + '\');'
                                 },
                                 {
                                     name: 'style',
@@ -944,7 +944,7 @@ idrinth.ui = {
                         return {
                             type: 'li',
                             css: 'tab-element' + ( first ? '' : ' idrinth-hide' ),
-                            id: 'tab-element-' + name.toLowerCase (),
+                            id: 'tab-element-' + name.toLowerCase ( ),
                             children: children
                         };
                     };
@@ -977,7 +977,7 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-                var buildRaidJoinList = function () {
+                var buildRaidJoinList = function ( ) {
                     return [ {
                             content: idrinth.text.get ( "raids.clickCopy" ),
                             type: 'strong'
@@ -990,7 +990,11 @@ idrinth.ui = {
                             id: 'idrinth-raid-may-join-list'
                         } ];
                 };
-                var buildStats = function () {
+                /**
+                 *
+                 * @returns {Array}
+                 */
+                var buildStats = function ( ) {
                     return [ {
                             name: 'stats#perception',
                             rType: '#input',
@@ -1011,6 +1015,11 @@ idrinth.ui = {
                             rType: '#input',
                             type: 'text',
                             label: 'stats.stats'
+                        }, {
+                            name: 'stats#level',
+                            rType: '#input',
+                            type: 'text',
+                            label: 'stats.level'
                         }, {
                             name: 'stats#critchance',
                             rType: '#input',
@@ -1040,15 +1049,15 @@ idrinth.ui = {
                     ];
                 }
                 return makeTabs ( {
-                    'Actions': buildActions (),
-                    'Raids': buildRaidJoinList (),
-                    'Settings': buildControls (),
-                    'Tiers': buildTiers (),
-                    'Land': buildLand (),
-                    'Stats': buildStats ()
+                    'Actions': buildActions ( ),
+                    'Raids': buildRaidJoinList ( ),
+                    'Settings': buildControls ( ),
+                    'Tiers': buildTiers ( ),
+                    'Land': buildLand ( ),
+                    'Stats': buildStats ( )
                 } );
             };
-            var children = wrapper ();
+            var children = wrapper ( );
             children.unshift ( {
                 css: 'idrinth-line',
                 type: 'strong',
@@ -1092,6 +1101,6 @@ idrinth.ui = {
                     value: 'https://dotd.idrinth.de/static/userscript-styles/###RELOAD-VERSION###/'
                 } ]
         } ) );
-        build ();
+        build ( );
     }
 };
