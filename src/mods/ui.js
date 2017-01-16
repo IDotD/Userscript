@@ -923,7 +923,7 @@ idrinth.ui = {
                                             id: 'idrinth-stats-' + label,
                                             attributes: [
                                                 {
-                                                    name: 'value',
+                                                    name: isCheck ? 'checked' : 'value',
                                                     value: idrinth.settings.get ( "stats#" + label )
                                                 },
                                                 {
