@@ -74,10 +74,5 @@ idrinth.stats = {
         }
     },
     start: function () {
-        var modify = function ( element ) {
-            idrinth.settings.change ( element.id.replace ( /^.*-/, '' ), element.hasOwnProperty ( 'checked' ) ? element.checked : element.value );
-        };
-        idrinth.core.multibind.add ( 'blur', '#tab-element-stats input', modify );
-        idrinth.core.multibind.add ( 'change', '#tab-element-stats input', modify );
     }
 };

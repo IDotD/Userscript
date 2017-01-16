@@ -910,6 +910,7 @@ idrinth.ui = {
                      * @returns {object}
                      */
                     var buildItem = function ( label ) {
+                        var isCheck = label === 'mirele' || label === 'kraken' || label === 'utym';
                         return {
                             type: 'tr',
                             children: [ {
@@ -927,7 +928,15 @@ idrinth.ui = {
                                                 },
                                                 {
                                                     name: 'type',
-                                                    value: label === 'mirele' || label === 'kraken' || label === 'utym' ? 'checkbox' : 'number'
+                                                    value: isCheck ? 'checkbox' : 'number'
+                                                },
+                                                {
+                                                    name: 'onchange',
+                                                    value: 'idrinth.settings.change(\'' + label + '\',' ( isCheck ? 'this.checked' : 'this.value' ) + ')'
+                                                },
+                                                {
+                                                    name: 'onblur',
+                                                    value: 'idrinth.settings.change(\'' + label + '\',' ( isCheck ? 'this.checked' : 'this.value' ) + ')'
                                                 }
                                             ]
                                         } ]
