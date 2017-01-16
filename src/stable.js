@@ -76,7 +76,6 @@ var idrinth = {
                     idrinth.core.multibind.add ( 'click', '.clipboard-copy', function ( element, event ) {
                         idrinth.core.copyToClipboard.element ( element );
                         element.parentNode.parentNode.removeChild ( element.parentNode );
-                        idrinth.core.log ( event + ' fired on ' + element );
                     } );
                 }, 1000 );
                 delete idrinth['start'];

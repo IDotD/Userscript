@@ -932,11 +932,11 @@ idrinth.ui = {
                                                 },
                                                 {
                                                     name: 'onchange',
-                                                    value: 'idrinth.settings.change(\'' + label + '\',' ( isCheck ? 'this.checked' : 'this.value' ) + ')'
+                                                    value: 'idrinth.settings.change(\'' + label + '\',' + ( isCheck ? 'this.checked' : 'this.value' ) + ')'
                                                 },
                                                 {
                                                     name: 'onblur',
-                                                    value: 'idrinth.settings.change(\'' + label + '\',' ( isCheck ? 'this.checked' : 'this.value' ) + ')'
+                                                    value: 'idrinth.settings.change(\'' + label + '\',' + ( isCheck ? 'this.checked' : 'this.value' ) + ')'
                                                 }
                                             ]
                                         } ]
