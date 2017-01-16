@@ -69,7 +69,7 @@ idrinth.stats = {
         }
         for (var key in result) {
             if ( result.hasOwnProperty ( key ) ) {
-                document.getElementById ( 'idrinth-stats-' + key ).parentNode.childNodes[2].innerHTML = result[key];
+                document.getElementById ( 'idrinth-stats-' + key ).parentNode.parentNode.childNodes[2].innerHTML = result[key];
             }
         }
     },
