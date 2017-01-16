@@ -50,24 +50,28 @@ idrinth.stats = {
             var attack = addProcs ( addOneAttack (), 'attack' ) / getCost ( 'attack' );
             if ( perc <= defense && perc <= attack && idrinth.settings.get ( 'stats#stats' ) >= getCost ( 'perception' ) ) {
                 idrinth.settings.change ( 'stats#stats', idrinth.settings.get ( 'stats#stats' ) - getCost ( 'perception' ) );
-                result.stats += getCost ( 'perception' );
+                result.stats -= getCost ( 'perception' );
                 result.perception++;
                 idrinth.settings.change ( 'stats#perception', idrinth.settings.get ( 'stats#perception' ) + 1 );
             } else if ( attack <= defense && perc >= attack && idrinth.settings.get ( 'stats#stats' ) >= getCost ( 'attack' ) ) {
                 idrinth.settings.change ( 'stats#stats', idrinth.settings.get ( 'stats#stats' ) - getCost ( 'attack' ) );
-                result.stats += getCost ( 'attack' );
+                result.stats -= getCost ( 'attack' );
                 result.attack++;
                 idrinth.settings.change ( 'stats#attack', idrinth.settings.get ( 'stats#attack' ) + 1 );
             } else if ( perc >= defense && defense <= attack && idrinth.settings.get ( 'stats#stats' ) >= getCost ( 'defense' ) ) {
                 idrinth.settings.change ( 'stats#stats', idrinth.settings.get ( 'stats#stats' ) - getCost ( 'defense' ) );
-                result.stats += getCost ( 'defense' );
+                result.stats -= getCost ( 'defense' );
                 result.defense++;
                 idrinth.settings.change ( 'stats#defense', idrinth.settings.get ( 'stats#defense' ) + 1 );
             } else {
                 break;
             }
         }
-        console.log ( result );
+        for (var key in result) {
+            if ( result.hasOwnProperty ( key ) ) {
+                document.getElementById ( 'idrinth-stats-' + key ).parentNode.childNodes[2].innerHTML = result[key];
+            }
+        }
     },
     start: function () {
         var modify = function ( element ) {

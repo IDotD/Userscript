@@ -927,7 +927,7 @@ idrinth.ui = {
                                                 },
                                                 {
                                                     name: 'type',
-                                                    value: label === 'mirele' || label === 'kraken' || label === 'utym' ? 'chackbox' : 'number'
+                                                    value: label === 'mirele' || label === 'kraken' || label === 'utym' ? 'checkbox' : 'number'
                                                 }
                                             ]
                                         } ]
