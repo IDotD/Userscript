@@ -901,6 +901,95 @@ idrinth.ui = {
                 };
                 /**
                  *
+                 * @returns {Array}
+                 */
+                var buildStats = function ( ) {
+                    /**
+                     *
+                     * @param {string} label
+                     * @returns {object}
+                     */
+                    var buildItem = function ( label ) {
+                        return {
+                            type: 'tr',
+                            children: [ {
+                                    type: 'th',
+                                    content: idrinth.settings.get ( "stats." + label )
+                                }, {
+                                    type: 'td',
+                                    children: [ {
+                                            type: 'input',
+                                            id: 'idrinth-stats-' + label,
+                                            attributes: [
+                                                {
+                                                    name: 'value',
+                                                    value: idrinth.settings.get ( "stats#" + label )
+                                                },
+                                                {
+                                                    name: 'type',
+                                                    value: label === 'mirele' || label === 'kraken' || label === 'utym' ? 'chackbox' : 'number'
+                                                }
+                                            ]
+                                        } ]
+                                }, {
+                                    type: 'td',
+                                    content: '-'
+                                } ]
+                        };
+                    };
+                    return [ {
+                            type: 'table',
+                            id: 'idrinth-stat-buy-table',
+                            children: [
+                                buildItem ( 'stats' ),
+                                buildItem ( 'perception' ),
+                                buildItem ( 'attack' ),
+                                buildItem ( 'defense' ),
+                                buildItem ( 'mirele' ),
+                                buildItem ( 'utym' ),
+                                buildItem ( 'kraken' ),
+                                buildItem ( 'level' ),
+                                buildItem ( 'mount' ),
+                                buildItem ( 'critchance' ),
+                                {
+                                    type: 'tr',
+                                    children: [ {
+                                            type: 'td'
+                                        }, {
+                                            type: 'td'
+                                        }, {
+                                            type: 'td'
+                                        } ]
+                                },
+                                {
+                                    type: 'tr',
+                                    children: [ {
+                                            type: 'th'
+                                        }, {
+                                            type: 'td'
+                                        }, {
+                                            type: 'td',
+                                            children: [ {
+                                                    type: 'button',
+                                                    content: idrinth.text.get ( "land.calc" ),
+                                                    attributes: [
+                                                        {
+                                                            name: 'onclick',
+                                                            value: 'idrinth.stats.calculate();'
+                                                        },
+                                                        {
+                                                            name: 'type',
+                                                            value: 'button'
+                                                        }
+                                                    ]
+                                                } ]
+                                        } ]
+                                }
+                            ]
+                        } ];
+                };
+                /**
+                 *
                  * @param {object} config
                  * @returns {Array}
                  */
@@ -990,64 +1079,6 @@ idrinth.ui = {
                             id: 'idrinth-raid-may-join-list'
                         } ];
                 };
-                /**
-                 *
-                 * @returns {Array}
-                 */
-                var buildStats = function ( ) {
-                    return [ {
-                            name: 'stats#perception',
-                            rType: '#input',
-                            type: 'text',
-                            label: 'stats.perception'
-                        }, {
-                            name: 'stats#attack',
-                            rType: '#input',
-                            type: 'text',
-                            label: 'stats.attack'
-                        }, {
-                            name: 'stats#defense',
-                            rType: '#input',
-                            type: 'text',
-                            label: 'stats.defense'
-                        }, {
-                            name: 'stats#stats',
-                            rType: '#input',
-                            type: 'text',
-                            label: 'stats.stats'
-                        }, {
-                            name: 'stats#level',
-                            rType: '#input',
-                            type: 'text',
-                            label: 'stats.level'
-                        }, {
-                            name: 'stats#critchance',
-                            rType: '#input',
-                            type: 'text',
-                            label: 'stats.critchance'
-                        }, {
-                            name: 'stats#utym',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'stats.utym'
-                        }, {
-                            name: 'stats#kraken',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'stats.kraken'
-                        }, {
-                            name: 'stats#mirele',
-                            rType: '#input',
-                            type: 'checkbox',
-                            label: 'stats.mirele'
-                        }, {
-                            name: 'stats#mount',
-                            rType: '#input',
-                            type: 'text',
-                            label: 'stats.mount'
-                        },
-                    ];
-                }
                 return makeTabs ( {
                     'Actions': buildActions ( ),
                     'Raids': buildRaidJoinList ( ),

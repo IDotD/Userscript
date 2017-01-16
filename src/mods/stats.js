@@ -26,7 +26,7 @@ idrinth.stats = {
         };
         var addProcs = function ( base, added ) {
             var perc = idrinth.settings.get ( 'stats#perception' ) + 1;
-            var total = base * ( 100 + idrinth.settings.get ( 'stats#mount' ) + idrinth.settings.get ( 'stats#critchance' ) * 0.01 * Floor ( perc < 500000 ? perc / 5000 : 50 + perc / 10000 ) ) / 100;
+            var total = base * ( 100 + idrinth.settings.get ( 'stats#mount' ) + idrinth.settings.get ( 'stats#critchance' ) * 0.01 * Math.floor ( perc < 500000 ? perc / 5000 : 50 + perc / 10000 ) ) / 100;
             if ( idrinth.settings.get ( 'stats#utym' ) && added === 'perception' ) {
                 total += ( idrinth.settings.get ( 'stats#perception' ) <= 10000 ? 4 : 2 ) * 0.1;
             }
@@ -70,7 +70,10 @@ idrinth.stats = {
         console.log ( result );
     },
     start: function () {
-        idrinth.core.multibind.add ( 'blur', '#tab-element-stats input', idrinth.stats.calculate );
-        idrinth.core.multibind.add ( 'change', '#tab-element-stats input', idrinth.stats.calculate );
+        var modify = function ( element ) {
+            idrinth.settings.change ( element.id.replace ( /^.*-/, '' ), element.hasOwnProperty ( 'checked' ) ? element.checked : element.value );
+        };
+        idrinth.core.multibind.add ( 'blur', '#tab-element-stats input', modify );
+        idrinth.core.multibind.add ( 'change', '#tab-element-stats input', modify );
     }
 };
