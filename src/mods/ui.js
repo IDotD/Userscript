@@ -620,7 +620,7 @@ idrinth.ui = {
                             children: [ {
                                     type: 'label',
                                     content: idrinth.text.get ( "tier.search" ),
-                                    css: 'idrinth-float-half',
+                                    css: 'idrinth-line',
                                     attributes: [
                                         {
                                             name: 'for',
