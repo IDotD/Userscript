@@ -918,7 +918,7 @@ idrinth.ui = {
                     var buildHead = function ( name, width, first ) {
                         return {
                             type: 'li',
-                            content: idrinth.text.get("ui.tabs."+name),
+                            content: idrinth.text.get( "ui.tabs." + name ),
                             css: 'tab-activator' + ( first ? ' active' : '' ),
                             id: 'tab-activator-' + name.toLowerCase (),
                             attributes: [
