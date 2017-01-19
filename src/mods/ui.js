@@ -805,7 +805,7 @@ idrinth.ui = {
                             type: 'tr',
                             children: [ {
                                     type: 'th',
-                                    content: label
+                                    content: idrinth.text.get("land."+label)
                                 }, {
                                     type: 'td',
                                     children: [ {
@@ -918,7 +918,7 @@ idrinth.ui = {
                     var buildHead = function ( name, width, first ) {
                         return {
                             type: 'li',
-                            content: name,
+                            content: idrinth.text.get("ui.tabs."+name),
                             css: 'tab-activator' + ( first ? ' active' : '' ),
                             id: 'tab-activator-' + name.toLowerCase (),
                             attributes: [
