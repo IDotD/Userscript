@@ -75,7 +75,7 @@ idrinth.tier = {
                         attributes: [
                             {
                                 name: 'title',
-                                value: 'click to close'
+                                value: idrinth.text.get("tiers.clickClose")
                             },
                             {
                                 name: 'onclick',
