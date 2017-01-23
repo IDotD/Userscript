@@ -691,7 +691,7 @@ idrinth.ui = {
                                 rType: '#input',
                                 type: 'checkbox',
                                 label: "setting.warBottomPage"
-                            } ], 'General' ),
+                            } ], idrinth.text.get("ui.wrap.general") ),
                         wrap ( [ {
                                 name: 'names',
                                 rType: '#input',
@@ -704,7 +704,7 @@ idrinth.ui = {
                                 type: 'number',
                                 platforms: [ 'kongregate' ],
                                 label: "setting.extCharInfoDuration"
-                            } ], 'Names' ),
+                            }], idrinth.text.get( "ui.wrap.names" ) ),
                         wrap ( [ {
                                 name: 'landMax',
                                 rType: '#input',
@@ -715,7 +715,7 @@ idrinth.ui = {
                                 rType: '#input',
                                 type: 'checkbox',
                                 label: "setting.tenBuildOnce"
-                            } ], 'Land Buy' ),
+                            }], idrinth.text.get( "ui.wrap.landbuy" ) ),
                         wrap ( [ {
                                 name: 'raids',
                                 rType: '#input',
@@ -749,7 +749,7 @@ idrinth.ui = {
                                 type: 'number',
                                 platforms: [ 'dawnofthedragons', 'facebook' ],
                                 label: "ui.maxPopupsFrame"
-                            } ], 'Raid Joining' ),
+                            }], idrinth.text.get( "ui.wrap.raidjoining" ) ),
                         wrap ( [ {
                                 name: 'chatting',
                                 rType: '#input',
@@ -770,7 +770,7 @@ idrinth.ui = {
                                 rType: '#input',
                                 type: 'checkbox',
                                 label: 'chat.notification.message'
-                            } ], 'Chat' ),
+                            }], idrinth.text.get( "ui.wrap.chat" ) ),
                         {
                             css: 'idrinth-line',
                             type: 'p',
