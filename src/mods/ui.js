@@ -651,7 +651,7 @@ idrinth.ui = {
                             children: [
                                 {
                                     type: 'strong',
-                                    content: header
+                                    content: idrinth.text.get("ui.wrap."+header)
                                 },
                                 {
                                     children: list
@@ -691,7 +691,7 @@ idrinth.ui = {
                                 rType: '#input',
                                 type: 'checkbox',
                                 label: "setting.warBottomPage"
-                            } ], idrinth.text.get("ui.wrap.general") ),
+                            } ], 'general' ),
                         wrap ( [ {
                                 name: 'names',
                                 rType: '#input',
@@ -704,7 +704,7 @@ idrinth.ui = {
                                 type: 'number',
                                 platforms: [ 'kongregate' ],
                                 label: "setting.extCharInfoDuration"
-                            }], idrinth.text.get( "ui.wrap.names" ) ),
+                            } ], 'names' ),
                         wrap ( [ {
                                 name: 'landMax',
                                 rType: '#input',
@@ -715,7 +715,7 @@ idrinth.ui = {
                                 rType: '#input',
                                 type: 'checkbox',
                                 label: "setting.tenBuildOnce"
-                            }], idrinth.text.get( "ui.wrap.landbuy" ) ),
+                            } ], 'landbuy' ),
                         wrap ( [ {
                                 name: 'raids',
                                 rType: '#input',
@@ -749,7 +749,7 @@ idrinth.ui = {
                                 type: 'number',
                                 platforms: [ 'dawnofthedragons', 'facebook' ],
                                 label: "ui.maxPopupsFrame"
-                            }], idrinth.text.get( "ui.wrap.raidjoining" ) ),
+                            } ], 'raidjoining' ),
                         wrap ( [ {
                                 name: 'chatting',
                                 rType: '#input',
@@ -770,7 +770,7 @@ idrinth.ui = {
                                 rType: '#input',
                                 type: 'checkbox',
                                 label: 'chat.notification.message'
-                            }], idrinth.text.get( "ui.wrap.chat" ) ),
+                            } ], 'chat' ),
                         {
                             css: 'idrinth-line',
                             type: 'p',
