@@ -52,13 +52,13 @@ idrinth.tier = {
                 };
             };
             var info = [
-                makeElement ( 'FS', boss.fs.nm, 'Fair share' ),
-                makeElement ( 'AP', boss.ap, 'Achievement point damage' )
+                makeElement ( 'FS', boss.fs.nm, idrinth.text.get( "tier.FS" ) ),
+                makeElement ( 'AP', boss.ap, idrinth.text.get( "tier.AP" ) )
             ];
             if ( boss.os && boss.os.nm ) {
-                info.push ( makeElement ( 'OS', boss.os.nm, 'Optimal share' ) );
-                info.unshift ( makeElement ( 'MA', boss.nm[boss.nm.length - 1], 'Maximum/highest tier' ) );
-                info.unshift ( makeElement ( 'MI', boss.nm[0], 'Minimum/lowest tier' ) );
+                info.push( makeElement( 'OS', boss.os.nm, idrinth.text.get( "tier.OS" ) ) );
+                info.unshift ( makeElement ( 'MA', boss.nm[boss.nm.length - 1], idrinth.text.get( "tier.MA" ) ) );
+                info.unshift ( makeElement ( 'MI', boss.nm[0], idrinth.text.get( "tier.MI" ) ) );
             }
             info.unshift (
                     {
@@ -75,7 +75,7 @@ idrinth.tier = {
                         attributes: [
                             {
                                 name: 'title',
-                                value: 'click to close'
+                                value: idrinth.text.get("tier.clickClose")
                             },
                             {
                                 name: 'onclick',

@@ -651,7 +651,7 @@ idrinth.ui = {
                             children: [
                                 {
                                     type: 'strong',
-                                    content: header
+                                    content: idrinth.text.get("ui.wrap."+header)
                                 },
                                 {
                                     children: list
@@ -691,7 +691,7 @@ idrinth.ui = {
                                 rType: '#input',
                                 type: 'checkbox',
                                 label: "setting.warBottomPage"
-                            } ], 'General' ),
+                            } ], 'general' ),
                         wrap ( [ {
                                 name: 'names',
                                 rType: '#input',
@@ -704,7 +704,7 @@ idrinth.ui = {
                                 type: 'number',
                                 platforms: [ 'kongregate' ],
                                 label: "setting.extCharInfoDuration"
-                            } ], 'Names' ),
+                            } ], 'names' ),
                         wrap ( [ {
                                 name: 'landMax',
                                 rType: '#input',
@@ -715,7 +715,7 @@ idrinth.ui = {
                                 rType: '#input',
                                 type: 'checkbox',
                                 label: "setting.tenBuildOnce"
-                            } ], 'Land Buy' ),
+                            } ], 'landbuy' ),
                         wrap ( [ {
                                 name: 'raids',
                                 rType: '#input',
@@ -749,7 +749,7 @@ idrinth.ui = {
                                 type: 'number',
                                 platforms: [ 'dawnofthedragons', 'facebook' ],
                                 label: "ui.maxPopupsFrame"
-                            } ], 'Raid Joining' ),
+                            } ], 'raidjoining' ),
                         wrap ( [ {
                                 name: 'chatting',
                                 rType: '#input',
@@ -770,7 +770,7 @@ idrinth.ui = {
                                 rType: '#input',
                                 type: 'checkbox',
                                 label: 'chat.notification.message'
-                            } ], 'Chat' ),
+                            } ], 'chat' ),
                         {
                             css: 'idrinth-line',
                             type: 'p',
@@ -805,7 +805,7 @@ idrinth.ui = {
                             type: 'tr',
                             children: [ {
                                     type: 'th',
-                                    content: label
+                                    content: idrinth.text.get( "land." + label )
                                 }, {
                                     type: 'td',
                                     children: [ {
@@ -918,7 +918,7 @@ idrinth.ui = {
                     var buildHead = function ( name, width, first ) {
                         return {
                             type: 'li',
-                            content: name,
+                            content: idrinth.text.get( "ui.tabs." + name ),
                             css: 'tab-activator' + ( first ? ' active' : '' ),
                             id: 'tab-activator-' + name.toLowerCase (),
                             attributes: [
