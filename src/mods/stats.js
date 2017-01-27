@@ -1,5 +1,13 @@
 idrinth.stats = {
+    /**
+     *
+     * @returns {undefined}
+     */
     calculate: function () {
+        /**
+         *
+         * @returns {Number}
+         */
         var addOnePerc = function () {
             var base = 0;
             if ( idrinth.settings.get ( 'stats#mirele' ) ) {
@@ -7,6 +15,10 @@ idrinth.stats = {
             }
             return base;
         };
+        /**
+         *
+         * @returns {Number}
+         */
         var addOneAttack = function () {
             var base = 4;
             if ( idrinth.settings.get ( 'stats#utym' ) ) {
@@ -14,6 +26,10 @@ idrinth.stats = {
             }
             return base;
         };
+        /**
+         *
+         * @returns {Number}
+         */
         var addOneDefense = function () {
             var base = 1;
             if ( idrinth.settings.get ( 'stats#utym' ) ) {
@@ -24,6 +40,12 @@ idrinth.stats = {
             }
             return base;
         };
+        /**
+         *
+         * @param {Number} base
+         * @param {string} added
+         * @returns {Number}
+         */
         var addProcs = function ( base, added ) {
             var perc = idrinth.settings.get ( 'stats#perception' ) + 1;
             var total = base * ( 100 + idrinth.settings.get ( 'stats#mount' ) + idrinth.settings.get ( 'stats#critchance' ) * 0.01 * Math.floor ( perc < 500000 ? perc / 5000 : 50 + perc / 10000 ) ) / 100;
@@ -35,6 +57,11 @@ idrinth.stats = {
             }
             return total;
         };
+        /**
+         *
+         * @param {string} stat
+         * @returns {Number}
+         */
         var getCost = function ( stat ) {
             return Math.ceil ( Math.max ( 0, idrinth.settings.get ( 'stats#' + stat ) - 10000 - Math.floor ( Math.max ( idrinth.settings.get ( 'stats#level' ) / 500 - 2, 0 ) ) * 1500 ) / 1500 ) + 1;
         };
