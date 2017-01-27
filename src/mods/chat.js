@@ -147,9 +147,8 @@
                     }
                     for ( var key in messages ) {
                         if (
-                                !isNaN( parseInt( key, 10 ) )
-                                && document.getElementById( 'idrinth-chat-tab-' + key )
-                                && document.getElementById( 'idrinth-chat-tab-' + key ).getElementsByTagName( 'ul' )[1] ) {
+                         !isNaN( parseInt( key, 10 ) ) &&
+                         document.getElementById( 'idrinth-chat-tab-' + key )&&  document.getElementById( 'idrinth-chat-tab-' + key ).getElementsByTagName( 'ul' )[1] ) {
                             var chat = document.getElementById( 'idrinth-chat-tab-' + key ).getElementsByTagName( 'ul' )[1];
                             setChatClass( addMessages( messages[key], key, chat ), chat, key );
                         }
