@@ -34,4 +34,4 @@
             idrinth.core.timeouts.add( 'facebook', idrinth.facebook.restart, 11111 );
         }
     };
-} )();
+} ());

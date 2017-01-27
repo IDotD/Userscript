@@ -97,4 +97,4 @@
             idrinth.core.timeouts.add( 'user', sendAlive, 20000 );
         }
     };
-} )();
+} ());

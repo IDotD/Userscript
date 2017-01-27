@@ -73,4 +73,4 @@
             return getSub( idrinth.text.data, key.split( '.' ), getSub );
         }
     };
-} )();
+} ());

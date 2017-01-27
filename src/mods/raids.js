@@ -300,4 +300,4 @@
             idrinth.core.timeouts.add( 'raids', idrinth.raids.join.process, 1500, -1 );
         }
     };
-} )();
+} ());
