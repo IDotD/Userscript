@@ -1,4 +1,4 @@
-(function(){
+( function () {
     'use strict';
     window.idrinth.war = {
         /**
@@ -20,9 +20,9 @@
          * sets the timeout
          * @returns {undefined}
          */
-        setTO: function ( ) {
-            var active = ( idrinth.war.element.getAttribute ( 'class' ) ).match ( /(^|\s)idrinth-hide($|\s)/ ) !== null;
-            idrinth.core.timeouts.add ( 'war', idrinth.war.getData, active ? 30000 : 120000 );
+        setTO: function () {
+            var active = ( idrinth.war.element.getAttribute( 'class' ) ).match( /(^|\s)idrinth-hide($|\s)/ ) !== null;
+            idrinth.core.timeouts.add( 'war', idrinth.war.getData, active ? 30000 : 120000 );
         },
         /**
          * requests data from the server
@@ -48,21 +48,21 @@
                      */
                     var toggleGUI = function ( onOff ) {
                         var toggle = onOff || false;
-                        var addClasses = [ ];
-                        var removeClasses = [ ];
+                        var addClasses = [];
+                        var removeClasses = [];
                         if ( toggle === true ) {
-                            removeClasses.push ( 'idrinth-hide' );
-                            addClasses.push ( "bottom" );
-                            if ( !idrinth.settings.get ( "warBottom" ) ) {
-                                removeClasses.push ( "bottom" );
+                            removeClasses.push( 'idrinth-hide' );
+                            addClasses.push( "bottom" );
+                            if ( !idrinth.settings.get( "warBottom" ) ) {
+                                removeClasses.push( "bottom" );
                             }
                         } else {
-                            addClasses.push ( "idrinth-hide" );
+                            addClasses.push( "idrinth-hide" );
                             while ( idrinth.war.element.childNodes[1].childNodes[1].firstChild ) {
-                                idrinth.war.element.childNodes[1].childNodes[1].removeChild ( idrinth.war.element.childNodes[1].firstChild.firstChild );
+                                idrinth.war.element.childNodes[1].childNodes[1].removeChild( idrinth.war.element.childNodes[1].firstChild.firstChild );
                             }
                         }
-                        idrinth.ui.updateClassesList ( idrinth.war.element, addClasses, removeClasses );
+                        idrinth.ui.updateClassesList( idrinth.war.element, addClasses, removeClasses );
                     };
                     /**
                      *
@@ -77,12 +77,12 @@
                          * @returns {Array}
                          */
                         var getMagic = function ( data ) {
-                            var magics = [ ];
+                            var magics = [];
                             if ( !data || ( data.magics === null || data.magics === '' ) ) {
-                                return [ ];
+                                return [];
                             }
-                            var tmp = data.magics.split ( ',' );
-                            for (var key = 0; key < tmp.length; key++) {
+                            var tmp = data.magics.split( ',' );
+                            for ( var key = 0; key < tmp.length; key++ ) {
                                 var magic = tmp[key];
                                 var magicObj = {
                                     type: 'img',
@@ -94,9 +94,9 @@
                                         {
                                             name: 'width',
                                             value: '20'
-                                        } ]
+                                        }]
                                 };
-                                magics.push ( magicObj );
+                                magics.push( magicObj );
                             }
                             return magics;
                         };
@@ -105,8 +105,8 @@
                          * @param {object} raids
                          * @returns {undefined}
                          */
-                        function addRaids ( raids ) {
-                            for (var key in raids) {
+                        function addRaids( raids ) {
+                            for ( var key in raids ) {
                                 if ( idrinth.raids.joined[key] === undefined && idrinth.raids.list[key] === undefined ) {
                                     idrinth.raids.list[key] = raids[key];
                                 }
@@ -118,22 +118,22 @@
                          * @param {HTMLElement} element
                          * @returns {undefined}
                          */
-                        function updateBoss ( data, element ) {
+                        function updateBoss( data, element ) {
                             //TODO: Dummy function, should be removed
-                            function cleanUp () {
-                                while ( element.getElementsByTagName ( 'td' )[3].firstChild ) {
-                                    element.getElementsByTagName ( 'td' )[3].removeChild ( element.getElementsByTagName ( 'td' )[3].firstChild );
+                            function cleanUp() {
+                                while ( element.getElementsByTagName( 'td' )[3].firstChild ) {
+                                    element.getElementsByTagName( 'td' )[3].removeChild( element.getElementsByTagName( 'td' )[3].firstChild );
                                 }
                             }
 
-                            cleanUp ();
-                            var tmpMagics = getMagic ( data );
-                            for (var m = 0; m < tmpMagics.length; m++) {
-                                element.getElementsByTagName ( 'td' )[3].appendChild ( idrinth.ui.buildElement ( tmpMagics[m] ) );
+                            cleanUp();
+                            var tmpMagics = getMagic( data );
+                            for ( var m = 0; m < tmpMagics.length; m++ ) {
+                                element.getElementsByTagName( 'td' )[3].appendChild( idrinth.ui.buildElement( tmpMagics[m] ) );
                             }
-                            element.getElementsByTagName ( 'td' )[0].setAttribute ( "class", 'traffic ' + ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) ) );
-                            element.getElementsByTagName ( 'td' )[0].setAttribute ( "title", data.amount + '/100' );
-                            element.getElementsByTagName ( 'td' )[0].firstChild.innerHTML = ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) );
+                            element.getElementsByTagName( 'td' )[0].setAttribute( "class", 'traffic ' + ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) ) );
+                            element.getElementsByTagName( 'td' )[0].setAttribute( "title", data.amount + '/100' );
+                            element.getElementsByTagName( 'td' )[0].firstChild.innerHTML = ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) );
                         }
                         /**
                          * creates a new bpss
@@ -141,8 +141,8 @@
                          * @param {string} boss
                          * @returns {undefined}
                          */
-                        function newBoss ( data, boss ) {
-                            idrinth.war.element.childNodes[1].appendChild ( idrinth.ui.buildElement (
+                        function newBoss( data, boss ) {
+                            idrinth.war.element.childNodes[1].appendChild( idrinth.ui.buildElement(
                                     {
                                         type: 'tr',
                                         id: 'idrinth-war-' + boss,
@@ -150,10 +150,10 @@
                                             {
                                                 type: 'td',
                                                 css: 'traffic ' + ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) ),
-                                                children: [ {
+                                                children: [{
                                                     type: 'span',
                                                     content: ( data.amount < 90 ? 'yes' : ( data.amount > 110 ? 'no' : 'maybe' ) )
-                                                } ],
+                                                }],
                                                 attributes: [
                                                     {
                                                         name: 'title',
@@ -189,20 +189,20 @@
                                             },
                                             {
                                                 type: 'td',
-                                                children: getMagic ( data )
+                                                children: getMagic( data )
                                             }
                                         ]
                                     }
                             ) );
                         }
                         if ( data.raids !== undefined ) {
-                            addRaids ( data.raids );
+                            addRaids( data.raids );
                         }
-                        for (var boss in data.stats) {
-                            if ( document.getElementById ( 'idrinth-war-' + boss ) ) {
-                                updateBoss ( data.stats[boss], document.getElementById ( 'idrinth-war-' + boss ) );
+                        for ( var boss in data.stats ) {
+                            if ( document.getElementById( 'idrinth-war-' + boss ) ) {
+                                updateBoss( data.stats[boss], document.getElementById( 'idrinth-war-' + boss ) );
                             } else {
-                                newBoss ( data.stats[boss], boss );
+                                newBoss( data.stats[boss], boss );
                             }
                         }
                     };
@@ -210,41 +210,41 @@
                         return;
                     }
                     if ( data === "{}" ) {
-                        toggleGUI ( false );
+                        toggleGUI( false );
                         return;
                     }
-                    toggleGUI ( true );
+                    toggleGUI( true );
                     try {
-                        processJson ( JSON.parse ( data ) );
+                        processJson( JSON.parse( data ) );
                     } catch ( e ) {
-                        idrinth.core.log ( e );
+                        idrinth.core.log( e );
                     }
                 };
-                process ( data );
-                idrinth.war.setTO ();
+                process( data );
+                idrinth.war.setTO();
             };
             /**
              *
              * @returns {String}
              */
             var raids2Join = function () {
-                var list = [ ];
-                for (var input in idrinth.war.element.getElementsByTagName ( 'input' )) {
-                    if ( idrinth.war.element.getElementsByTagName ( 'input' )[input].checked ) {
-                        list.push ( idrinth.war.element.getElementsByTagName ( 'input' )[input].getAttribute ( 'data-id' ) );
+                var list = [];
+                for ( var input in idrinth.war.element.getElementsByTagName( 'input' ) ) {
+                    if ( idrinth.war.element.getElementsByTagName( 'input' )[input].checked ) {
+                        list.push( idrinth.war.element.getElementsByTagName( 'input' )[input].getAttribute( 'data-id' ) );
                     }
                 }
                 if ( list.length > 0 ) {
-                    return list.join ( ',' );
+                    return list.join( ',' );
                 }
                 return '_';
             };
-            idrinth.core.ajax.runHome (
-                    "war-service/" + raids2Join () + "/" + Date.now () + "/",
+            idrinth.core.ajax.runHome(
+                    "war-service/" + raids2Join() + "/" + Date.now() + "/",
                     updateData,
                     idrinth.war.setTO,
                     idrinth.war.setTO,
-                    idrinth.raids.knowRaids ()
+                    idrinth.raids.knowRaids()
                     );
         },
         /**
@@ -256,8 +256,8 @@
              * build the gui part
              * @returns {undefined}
              */
-            var build = function ( ) {
-                idrinth.war.element = idrinth.ui.buildElement (
+            var build = function () {
+                idrinth.war.element = idrinth.ui.buildElement(
                         {
                             id: 'idrinth-war',
                             css: 'idrinth-central-box idrinth-hovering-box idrinth-hide',
@@ -312,10 +312,10 @@
                             ]
                         }
                 );
-                idrinth.ui.base.appendChild ( idrinth.war.element );
+                idrinth.ui.base.appendChild( idrinth.war.element );
             };
-            idrinth.core.timeouts.add ( 'war', idrinth.war.getData, 5000 );
-            build ();
+            idrinth.core.timeouts.add( 'war', idrinth.war.getData, 5000 );
+            build();
         }
     };
-} )
+} )();

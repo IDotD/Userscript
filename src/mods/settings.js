@@ -1,4 +1,4 @@
-(function(){
+( function () {
     'use strict';
     window.idrinth.settings = {
         /**
@@ -105,7 +105,7 @@
              *
              * @type Object
              */
-            bannedRaids: { },
+            bannedRaids: {},
             /**
              *
              * @type String
@@ -260,7 +260,7 @@
              * @returns {int|string|object}
              */
             var getValue = function ( parent, field, allowObject ) {
-                if ( idrinth.core.fieldIsSetting ( parent, field, allowObject ) ) {
+                if ( idrinth.core.fieldIsSetting( parent, field, allowObject ) ) {
                     return parent[field];
                 }
                 return null;
@@ -272,7 +272,7 @@
              */
             var remove = function ( key ) {
                 try {
-                    window.localStorage.removeItem ( key );
+                    window.localStorage.removeItem( key );
                 } catch ( e ) {
                     //not really relevant
                 }
@@ -280,14 +280,14 @@
             if ( !field ) {
                 return;
             }
-            var value = getValue ( idrinth.settings.data, field, allowObject );
+            var value = getValue( idrinth.settings.data, field, allowObject );
             if ( value !== null && ( typeof value !== 'object' || allowObject ) ) {
-                remove ( 'idrinth-dotd-' + field );
+                remove( 'idrinth-dotd-' + field );
                 return value;
             }
-            field = field.split ( '#' );
-            remove ( 'idrinth-dotd-' + field[0] + '-' + field[1] );
-            return getValue ( idrinth.settings.data[field[0]], field[1], allowObject );
+            field = field.split( '#' );
+            remove( 'idrinth-dotd-' + field[0] + '-' + field[1] );
+            return getValue( idrinth.settings.data[field[0]], field[1], allowObject );
         },
         /**
          *
@@ -304,7 +304,7 @@
              * @returns {Boolean}
              */
             var setValue = function ( parent, field, value ) {
-                if ( idrinth.core.fieldIsSetting ( parent, field ) ) {
+                if ( idrinth.core.fieldIsSetting( parent, field ) ) {
                     parent[field] = value;
                     return true;
                 }
@@ -314,22 +314,22 @@
              * saves the data to local storage
              * @returns {undefined}
              */
-            var store = function ( ) {
-                window.localStorage.setItem ( 'idotd', JSON.stringify ( idrinth.settings.data ) );
+            var store = function () {
+                window.localStorage.setItem( 'idotd', JSON.stringify( idrinth.settings.data ) );
             };
             if ( !field ) {
                 return;
             }
-            if ( setValue ( idrinth.settings.data, field, value ) ) {
-                store ();
+            if ( setValue( idrinth.settings.data, field, value ) ) {
+                store();
                 return;
             }
-            field = field.split ( '#' );
+            field = field.split( '#' );
             if ( !idrinth.settings.data[field[0]] || !field[1] ) {
                 return;
             }
-            if ( setValue ( idrinth.settings.data[field[0]], field[1], value ) ) {
-                store ();
+            if ( setValue( idrinth.settings.data[field[0]], field[1], value ) ) {
+                store();
                 return;
             }
         },
@@ -337,13 +337,13 @@
          * initializes the module
          * @returns {undefined}
          */
-        start: function ( ) {
+        start: function () {
             /**
              * fills the data from json in idotd
              * @returns {undefined}
              */
             var getCurrent = function () {
-                var data = JSON.parse ( window.localStorage.getItem ( 'idotd' ) );
+                var data = JSON.parse( window.localStorage.getItem( 'idotd' ) );
                 /**
                  *
                  * @param {object} to
@@ -352,18 +352,18 @@
                  * @returns {undefined}
                  */
                 var apply = function ( to, from, apply ) {
-                    for (var key in from) {
-                        if ( from.hasOwnProperty ( key ) ) {
+                    for ( var key in from ) {
+                        if ( from.hasOwnProperty( key ) ) {
                             if ( typeof from[key] === 'object' ) {
-                                to[key] = typeof to[key] === 'object' ? to[key] : { };
-                                apply ( to[key], from[key] );
+                                to[key] = typeof to[key] === 'object' ? to[key] : {};
+                                apply( to[key], from[key] );
                             } else {
                                 to[key] = from[key];
                             }
                         }
                     }
                 };
-                apply ( idrinth.settings.data, data, apply );
+                apply( idrinth.settings.data, data, apply );
             };
             /**
              * fills the data from seperate storages
@@ -388,7 +388,7 @@
                      */
                     var itemHandler = function ( prefix, key, item ) {
                         if ( typeof item !== 'function' ) {
-                            var tmp = window.localStorage.getItem ( 'idrinth-dotd-' + prefix + key );
+                            var tmp = window.localStorage.getItem( 'idrinth-dotd-' + prefix + key );
                             if ( tmp ) {
                                 if ( tmp === 'false' ) {
                                     tmp = false;
@@ -400,26 +400,26 @@
                         }
                         return item;
                     };
-                    for (var key in object) {
-                        if ( object.hasOwnProperty ( key ) ) {
+                    for ( var key in object ) {
+                        if ( object.hasOwnProperty( key ) ) {
                             if ( typeof object[key] !== 'object' ) {
-                                object[key] = itemHandler ( prefix, key, object[key] );
+                                object[key] = itemHandler( prefix, key, object[key] );
                             } else {
-                                object[key] = objectIterator ( object[key], prefix + key + '-', itemHandler, objectIterator );
+                                object[key] = objectIterator( object[key], prefix + key + '-', itemHandler, objectIterator );
                             }
                         }
                     }
                     return object;
                 };
-                objectIterator ( idrinth.settings.data, '', objectIterator );
+                objectIterator( idrinth.settings.data, '', objectIterator );
             };
             if ( window.localStorage ) {
-                if ( window.localStorage.getItem ( 'idotd' ) ) {
-                    getCurrent ();
+                if ( window.localStorage.getItem( 'idotd' ) ) {
+                    getCurrent();
                 } else {
-                    getOld ();
+                    getOld();
                 }
             }
         }
     };
-})
+} )();
