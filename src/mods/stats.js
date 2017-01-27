@@ -104,7 +104,7 @@ idrinth.stats = {
         for (var key in result) {
             if ( result.hasOwnProperty ( key ) ) {
                 document.getElementById ( 'idrinth-stats-' + key ).parentNode.parentNode.childNodes[2].innerHTML = result[key] < 0 ? result[key] : '+' + result[key];
-                document.getElementById ( 'idrinth-stats-' + key ).value = Number.parseInt ( document.getElementById ( 'idrinth-stats-' + key ).value ) + result[key];
+                document.getElementById ( 'idrinth-stats-' + key ).value = Number.parseInt ( document.getElementById ( 'idrinth-stats-' + key ).value, 10 ) + result[key];
             }
         }
     }
