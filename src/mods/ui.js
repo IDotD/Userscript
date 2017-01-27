@@ -915,7 +915,7 @@ idrinth.ui = {
                             type: 'tr',
                             children: [ {
                                     type: 'th',
-                                    content: idrinth.texts.get ( "stats." + label )
+                                    content: idrinth.text.get ( "stats." + label )
                                 }, {
                                     type: 'td',
                                     children: [ {
