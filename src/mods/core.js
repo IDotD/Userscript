@@ -234,18 +234,27 @@ idrinth.core = {
                 }
                 return durationLeft < minDuration ? durationLeft : minDuration;
             };
+            /**
+             *
+             * @param {string} property
+             * @returns {undefined}
+             */
+            var handle = function ( property, min ) {
+                idrinth.core.timeouts.list[property].func ();
+                idrinth.core.timeouts.list[property].repeats = Math.max ( -1, idrinth.core.timeouts.list[property].repeats - 1 );
+                if ( idrinth.core.timeouts.list[property].repeats ) {
+                    min = getVal ( idrinth.core.timeouts.list[property].duration, min );
+                    idrinth.core.timeouts.list[property].next = date + idrinth.core.timeouts.list[property].duration / 1000;
+                } else {
+                    delete idrinth.core.timeouts.list[property];
+                }
+                return min;
+            };
             for (var property in idrinth.core.timeouts.list) {
                 if ( idrinth.core.timeouts.list.hasOwnProperty ( property ) ) {
                     if ( date >= idrinth.core.timeouts.list[property].next ) {
                         try {
-                            idrinth.core.timeouts.list[property].func ();
-                            idrinth.core.timeouts.list[property].repeats = Math.max ( -1, idrinth.core.timeouts.list[property].repeats - 1 );
-                            if ( idrinth.core.timeouts.list[property].repeats ) {
-                                min = getVal ( idrinth.core.timeouts.list[property].duration, min );
-                                idrinth.core.timeouts.list[property].next = date + idrinth.core.timeouts.list[property].duration / 1000;
-                            } else {
-                                delete idrinth.core.timeouts.list[property];
-                            }
+                            min = handle ( property, min );
                         } catch ( e ) {
                             idrinth.core.log ( e.message ? e.message : e.getMessage () );
                         }
