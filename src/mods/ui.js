@@ -931,12 +931,8 @@ idrinth.ui = {
                                                     value: isCheck ? 'checkbox' : 'number'
                                                 },
                                                 {
-                                                    name: 'onchange',
-                                                    value: 'idrinth.settings.change(\'stats#' + label + '\',' + ( isCheck ? 'this.checked' : 'Number.parseInt ( this.value )' ) + ')'
-                                                },
-                                                {
-                                                    name: 'onblur',
-                                                    value: 'idrinth.settings.change(\'stats#' + label + '\',' + ( isCheck ? 'this.checked' : 'Number.parseInt ( this.value )' ) + ')'
+                                                    names: [ 'onchange', 'onblur' ],
+                                                    value: 'idrinth.settings.change(\'stats#' + label + '\',' + ( isCheck ? 'this.checked' : 'Number.parseInt ( this.value, 10 )' ) + ')'
                                                 }
                                             ]
                                         } ]
