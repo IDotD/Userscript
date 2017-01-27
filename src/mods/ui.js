@@ -651,7 +651,7 @@ idrinth.ui = {
                             children: [
                                 {
                                     type: 'strong',
-                                    content: idrinth.text.get("ui.wrap."+header)
+                                    content: idrinth.text.get ( "ui.wrap." + header )
                                 },
                                 {
                                     children: list
@@ -805,7 +805,7 @@ idrinth.ui = {
                             type: 'tr',
                             children: [ {
                                     type: 'th',
-                                    content: idrinth.text.get( "land." + label )
+                                    content: idrinth.text.get ( "land." + label )
                                 }, {
                                     type: 'td',
                                     children: [ {
@@ -915,7 +915,7 @@ idrinth.ui = {
                             type: 'tr',
                             children: [ {
                                     type: 'th',
-                                    content: idrinth.settings.get ( "stats." + label )
+                                    content: idrinth.texts.get ( "stats." + label )
                                 }, {
                                     type: 'td',
                                     children: [ {
@@ -1016,7 +1016,7 @@ idrinth.ui = {
                     var buildHead = function ( name, width, first ) {
                         return {
                             type: 'li',
-                            content: idrinth.text.get( "ui.tabs." + name ),
+                            content: idrinth.text.get ( "ui.tabs." + name ),
                             css: 'tab-activator' + ( first ? ' active' : '' ),
                             id: 'tab-activator-' + name.toLowerCase ( ),
                             attributes: [
