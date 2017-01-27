@@ -185,6 +185,62 @@ idrinth.settings = {
              * @type Number
              */
             gold: 0
+        },
+        /**
+         *
+         * @type {object}
+         */
+        stats: {
+            /**
+             *
+             * @type Number
+             */
+            stats: 0,
+            /**
+             *
+             * @type Number
+             */
+            level: 1,
+            /**
+             *
+             * @type Number
+             */
+            perception: 0,
+            /**
+             *
+             * @type Number
+             */
+            attack: 0,
+            /**
+             *
+             * @type Number
+             */
+            defense: 0,
+            /**
+             *
+             * @type Number
+             */
+            critchance: 5,
+            /**
+             *
+             * @type Number
+             */
+            mount: 0,
+            /**
+             *
+             * @type Boolean
+             */
+            kraken: false,
+            /**
+             *
+             * @type Boolean
+             */
+            mirele: false,
+            /**
+             *
+             * @type Boolean
+             */
+            utym: false
         }
     },
     /**

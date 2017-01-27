@@ -29,7 +29,7 @@ idrinth.ui = {
             number = Math.round ( number / 10 ) / 100;
             count++;
         }
-        return number.toString () + post[count];
+        return number.toString ( ) + post[count];
     },
     /**
      *
@@ -41,14 +41,14 @@ idrinth.ui = {
      */
     buildChat: function ( id, name, rank, pass ) {
         if ( !idrinth.chat.elements.chats ) {
-            idrinth.core.timeouts.add ( 'chat-' + id, function () {
+            idrinth.core.timeouts.add ( 'chat-' + id, function ( ) {
                 idrinth.ui.buildChat ( id, name, rank, pass );
             }, 500 );
         }
         idrinth.chat.elements.chats.appendChild ( idrinth.ui.buildElement ( {
             type: 'li',
             id: 'idrinth-chat-tab-' + id,
-            css: rank.toLowerCase (),
+            css: rank.toLowerCase ( ),
             attributes: [
                 {
                     name: 'data-id',
@@ -118,8 +118,8 @@ idrinth.ui = {
      */
     getElementPositioning: function ( element, offsetX, offsetY ) {
         var pos = {
-            x: element.getBoundingClientRect ().left + ( offsetX ? offsetX : 0 ),
-            y: element.getBoundingClientRect ().top + ( offsetY ? offsetY : 0 )
+            x: element.getBoundingClientRect ( ).left + ( offsetX ? offsetX : 0 ),
+            y: element.getBoundingClientRect ( ).top + ( offsetY ? offsetY : 0 )
         };
         return 'position:fixed;left:' + pos.x + 'px;top:' + pos.y + 'px';
     },
@@ -359,16 +359,16 @@ idrinth.ui = {
      *
      * @returns {undefined}
      */
-    setTooltipTimeout: function () {
+    setTooltipTimeout: function ( ) {
         idrinth.core.timeouts.add ( 'names.tooltip', idrinth.ui.hideTooltip, idrinth.settings.get ( "timeout" ) ? idrinth.settings.get ( "timeout" ) : 5000 );
     },
     /**
      *
      * @returns {undefined}
      */
-    hideTooltip: function () {
+    hideTooltip: function ( ) {
         if ( idrinth.names.isHovering ) {
-            return idrinth.ui.setTooltipTimeout ();
+            return idrinth.ui.setTooltipTimeout ( );
         }
         idrinth.ui.updateClassesList ( idrinth.ui.tooltip, [ 'idrinth-hide' ], [ ] );
     },
@@ -430,7 +430,7 @@ idrinth.ui = {
         var handleFrame = function ( parent ) {
             var frame = parent.getElementsByTagName ( 'iframe' )[0];
             var src = ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' );
-            frame.setAttribute ( 'src', src + ( src.indexOf ( '?' ) > -1 ? '&' : '?' ) + 'ir=' + Math.random () );
+            frame.setAttribute ( 'src', src + ( src.indexOf ( '?' ) > -1 ? '&' : '?' ) + 'ir=' + Math.random ( ) );
         };
         try {
             if ( idrinth.platform === 'kongregate' ) {
@@ -531,7 +531,7 @@ idrinth.ui = {
          * builds most of the gui
          * @returns {undefined}
          */
-        var build = function () {
+        var build = function ( ) {
             /**
              *
              * @returns {Array}
@@ -541,7 +541,7 @@ idrinth.ui = {
                  * creates the action tab
                  * @returns {Array}
                  */
-                var buildActions = function () {
+                var buildActions = function ( ) {
                     /**
                      *
                      * @param {string} label
@@ -592,7 +592,7 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-                var buildTiers = function () {
+                var buildTiers = function ( ) {
                     /**
                      *
                      * @param {string} label
@@ -620,7 +620,7 @@ idrinth.ui = {
                             children: [ {
                                     type: 'label',
                                     content: idrinth.text.get ( "tier.search" ),
-                                    css: 'idrinth-float-half',
+                                    css: 'idrinth-line',
                                     attributes: [
                                         {
                                             name: 'for',
@@ -639,7 +639,7 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-                var buildControls = function () {
+                var buildControls = function ( ) {
                     /**
                      *
                      * @param {Array} list
@@ -651,7 +651,7 @@ idrinth.ui = {
                             children: [
                                 {
                                     type: 'strong',
-                                    content: idrinth.text.get("ui.wrap."+header)
+                                    content: idrinth.text.get ( "ui.wrap." + header )
                                 },
                                 {
                                     children: list
@@ -794,7 +794,7 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-                var buildLand = function () {
+                var buildLand = function ( ) {
                     /**
                      *
                      * @param {string} label
@@ -805,16 +805,16 @@ idrinth.ui = {
                             type: 'tr',
                             children: [ {
                                     type: 'th',
-                                    content: idrinth.text.get( "land." + label )
+                                    content: idrinth.text.get ( "land." + label )
                                 }, {
                                     type: 'td',
                                     children: [ {
                                             type: 'input',
-                                            id: 'idrinth-land-' + label.toLowerCase (),
+                                            id: 'idrinth-land-' + label.toLowerCase ( ),
                                             attributes: [
                                                 {
                                                     name: 'value',
-                                                    value: idrinth.settings.get ( "land#" + label.toLowerCase () )
+                                                    value: idrinth.settings.get ( "land#" + label.toLowerCase ( ) )
                                                 },
                                                 {
                                                     name: 'type',
@@ -829,7 +829,7 @@ idrinth.ui = {
                             attributes: [
                                 {
                                     name: 'title',
-                                    value: idrinth.land.data[label.toLowerCase ()].perHour + idrinth.text.get ( "land.hour" )
+                                    value: idrinth.land.data[label.toLowerCase ( )].perHour + idrinth.text.get ( "land.hour" )
                                 }
                             ]
                         };
@@ -901,6 +901,100 @@ idrinth.ui = {
                 };
                 /**
                  *
+                 * @returns {Array}
+                 */
+                var buildStats = function ( ) {
+                    /**
+                     *
+                     * @param {string} label
+                     * @returns {object}
+                     */
+                    var buildItem = function ( label ) {
+                        var isCheck = label === 'mirele' || label === 'kraken' || label === 'utym';
+                        return {
+                            type: 'tr',
+                            children: [ {
+                                    type: 'th',
+                                    content: idrinth.text.get ( "stats." + label )
+                                }, {
+                                    type: 'td',
+                                    children: [ {
+                                            type: 'input',
+                                            id: 'idrinth-stats-' + label,
+                                            attributes: [
+                                                {
+                                                    name: isCheck ? 'checked' : 'value',
+                                                    value: idrinth.settings.get ( "stats#" + label )
+                                                },
+                                                {
+                                                    name: 'type',
+                                                    value: isCheck ? 'checkbox' : 'number'
+                                                },
+                                                {
+                                                    names: [ 'onchange', 'onblur' ],
+                                                    value: 'idrinth.settings.change(\'stats#' + label + '\',' + ( isCheck ? 'this.checked' : 'Number.parseInt ( this.value, 10 )' ) + ')'
+                                                }
+                                            ]
+                                        } ]
+                                }, {
+                                    type: 'td',
+                                    content: '-'
+                                } ]
+                        };
+                    };
+                    return [ {
+                            type: 'table',
+                            id: 'idrinth-stat-buy-table',
+                            children: [
+                                buildItem ( 'stats' ),
+                                buildItem ( 'perception' ),
+                                buildItem ( 'attack' ),
+                                buildItem ( 'defense' ),
+                                buildItem ( 'mirele' ),
+                                buildItem ( 'utym' ),
+                                buildItem ( 'kraken' ),
+                                buildItem ( 'level' ),
+                                buildItem ( 'mount' ),
+                                buildItem ( 'critchance' ),
+                                {
+                                    type: 'tr',
+                                    children: [ {
+                                            type: 'td'
+                                        }, {
+                                            type: 'td'
+                                        }, {
+                                            type: 'td'
+                                        } ]
+                                },
+                                {
+                                    type: 'tr',
+                                    children: [ {
+                                            type: 'th'
+                                        }, {
+                                            type: 'td'
+                                        }, {
+                                            type: 'td',
+                                            children: [ {
+                                                    type: 'button',
+                                                    content: idrinth.text.get ( "land.calc" ),
+                                                    attributes: [
+                                                        {
+                                                            name: 'onclick',
+                                                            value: 'idrinth.stats.calculate();'
+                                                        },
+                                                        {
+                                                            name: 'type',
+                                                            value: 'button'
+                                                        }
+                                                    ]
+                                                } ]
+                                        } ]
+                                }
+                            ]
+                        } ];
+                };
+                /**
+                 *
                  * @param {object} config
                  * @returns {Array}
                  */
@@ -918,13 +1012,13 @@ idrinth.ui = {
                     var buildHead = function ( name, width, first ) {
                         return {
                             type: 'li',
-                            content: idrinth.text.get( "ui.tabs." + name ),
+                            content: idrinth.text.get ( "ui.tabs." + name ),
                             css: 'tab-activator' + ( first ? ' active' : '' ),
-                            id: 'tab-activator-' + name.toLowerCase (),
+                            id: 'tab-activator-' + name.toLowerCase ( ),
                             attributes: [
                                 {
                                     name: 'onclick',
-                                    value: 'idrinth.ui.activateTab(\'' + name.toLowerCase () + '\');'
+                                    value: 'idrinth.ui.activateTab(\'' + name.toLowerCase ( ) + '\');'
                                 },
                                 {
                                     name: 'style',
@@ -944,7 +1038,7 @@ idrinth.ui = {
                         return {
                             type: 'li',
                             css: 'tab-element' + ( first ? '' : ' idrinth-hide' ),
-                            id: 'tab-element-' + name.toLowerCase (),
+                            id: 'tab-element-' + name.toLowerCase ( ),
                             children: children
                         };
                     };
@@ -977,7 +1071,7 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-                var buildRaidJoinList = function () {
+                var buildRaidJoinList = function ( ) {
                     return [ {
                             content: idrinth.text.get ( "raids.clickCopy" ),
                             type: 'strong'
@@ -991,14 +1085,15 @@ idrinth.ui = {
                         } ];
                 };
                 return makeTabs ( {
-                    'Actions': buildActions (),
-                    'Raids': buildRaidJoinList (),
-                    'Settings': buildControls (),
-                    'Tiers': buildTiers (),
-                    'Land': buildLand ()
+                    'Actions': buildActions ( ),
+                    'Raids': buildRaidJoinList ( ),
+                    'Settings': buildControls ( ),
+                    'Tiers': buildTiers ( ),
+                    'Land': buildLand ( ),
+                    'Stats': buildStats ( )
                 } );
             };
-            var children = wrapper ();
+            var children = wrapper ( );
             children.unshift ( {
                 css: 'idrinth-line',
                 type: 'strong',
@@ -1042,6 +1137,6 @@ idrinth.ui = {
                     value: 'https://dotd.idrinth.de/static/userscript-styles/###RELOAD-VERSION###/'
                 } ]
         } ) );
-        build ();
+        build ( );
     }
 };
