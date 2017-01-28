@@ -312,8 +312,7 @@
                         type: 'li',
                         attributes: [ {
                                 name: 'onclick',
-                                value: 'idrinth.chat.useroptions(' + node.chat + ',' + user + ',\'' + node.rank + '\');'
-                                        + 'this.parentNode.parentNode.removeChild(this.parentNode);'
+                                value: 'idrinth.chat.useroptions(' + node.chat + ',' + user + ',\'' + node.rank + '\');this.parentNode.parentNode.removeChild(this.parentNode);'
                             } ]
                     };
                 };
