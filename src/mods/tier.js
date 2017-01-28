@@ -189,7 +189,7 @@ idrinth.tier = {
                     type: 'td'
                 };
                 try {
-                    ln.styles = idrinth.tier.list[listKey].os[difficulty] === idrinth.tier[listKey][difficulty][ic] ? 'is-os' : '';
+                    ln.styles = idrinth.tier.list[listKey].os[difficulty] === idrinth.tier.list[listKey][difficulty][ic] ? 'is-os' : '';
                 } catch ( E ) {
                     idrinth.core.log ( E.toString ( ) );
                 }

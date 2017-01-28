@@ -316,7 +316,6 @@ idrinth.core = {
         worker.onmessage = function ( message ) {
             message.target.resultHandler ( message.data );
         };
-        worker.onmessage.bind ( worker );
         worker.resultHandler = resultHandler;
         worker.postMessage ( values );
         window.URL.revokeObjectURL ( blobURL );
