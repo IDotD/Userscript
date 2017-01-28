@@ -12,12 +12,12 @@
          */
         restart: function () {
             try {
-                idrinth.core.timeouts.remove( 'facebook' );
-                idrinth.facebook.popup.close();
-                idrinth.ui.reloadGame();
-                idrinth.raids.clearAll();
+                idrinth.core.timeouts.remove ( 'facebook' );
+                idrinth.facebook.popup.close ();
+                idrinth.ui.reloadGame ();
+                idrinth.raids.clearAll ();
             } catch ( e ) {
-                idrinth.core.log( e );
+                idrinth.core.log ( e );
             }
         },
         /**
@@ -25,13 +25,13 @@
          * @returns {undefined}
          */
         rejoin: function () {
-            idrinth.core.timeouts.remove( 'raids' );
-            idrinth.facebook.popup = window.open( "https://apps.facebook.com/dawnofthedragons/" );
+            idrinth.core.timeouts.remove ( 'raids' );
+            idrinth.facebook.popup = window.open ( "https://apps.facebook.com/dawnofthedragons/" );
             idrinth.facebook.popup.onload = function () {
-                idrinth.core.timeouts.add( 'facebook', idrinth.facebook.restart, 3333 );
+                idrinth.core.timeouts.add ( 'facebook', idrinth.facebook.restart, 3333 );
             };
             // in case onload fails
-            idrinth.core.timeouts.add( 'facebook', idrinth.facebook.restart, 11111 );
+            idrinth.core.timeouts.add ( 'facebook', idrinth.facebook.restart, 11111 );
         }
     };
-} ());
+} () );

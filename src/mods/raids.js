@@ -2,8 +2,8 @@
     'use strict';
     window.idrinth.raids = {
         script: null,
-        list: {},
-        joined: {},
+        list: { },
+        joined: { },
         requested: 0,
         import: function ( id ) {
             if ( !idrinth.platform ) {
@@ -12,8 +12,8 @@
             var getImportLink = function ( toImport ) {
                 return 'raid-service/' + ( toImport === '' ? '_' : toImport ) + '/';
             };
-            idrinth.core.ajax.runHome(
-                    getImportLink( id ),
+            idrinth.core.ajax.runHome (
+                    getImportLink ( id ),
                     function ( responseText ) {
                         var delHandler = function ( key ) {
                             if ( key in idrinth.raids.list ) {
@@ -22,14 +22,14 @@
                             if ( key in idrinth.raids.joined ) {
                                 delete idrinth.raids.joined[key];
                             }
-                            if ( document.getElementById( 'idrinth-raid-link-' + key ) ) {
-                                idrinth.ui.removeElement( 'idrinth-raid-link-' + key );
+                            if ( document.getElementById ( 'idrinth-raid-link-' + key ) ) {
+                                idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
                             }
                         };
-                        var list = JSON.parse( responseText );
-                        for ( var key in list ) {
+                        var list = JSON.parse ( responseText );
+                        for (var key in list) {
                             if ( list[key].delete ) {
-                                delHandler( key );
+                                delHandler ( key );
                             } else {
                                 //worst case: overwriting itself
                                 idrinth.raids.list[key] = list[key];
@@ -40,20 +40,20 @@
                     },
                     function () {
                     },
-                    idrinth.raids.knowRaids()
+                    idrinth.raids.knowRaids ()
                     );
         },
         knowRaids: function () {
-            return (( Object.keys( idrinth.raids.joined ) ).concat( Object.keys( idrinth.raids.list ) ) ).join();
+            return ( ( Object.keys ( idrinth.raids.joined ) ).concat ( Object.keys ( idrinth.raids.list ) ) ).join ();
         },
         clearAll: function () {
-            idrinth.core.timeouts.remove( 'raids' );
-            while ( document.getElementById( "idrinth-raid-link-list" ).firstChild ) {
-                idrinth.ui.removeElement( document.getElementById( "idrinth-raid-link-list" ).firstChild.id );
+            idrinth.core.timeouts.remove ( 'raids' );
+            while ( document.getElementById ( "idrinth-raid-link-list" ).firstChild ) {
+                idrinth.ui.removeElement ( document.getElementById ( "idrinth-raid-link-list" ).firstChild.id );
             }
-            idrinth.raids.list = {};
-            idrinth.raids.joined = {};
-            idrinth.raids.start();
+            idrinth.raids.list = { };
+            idrinth.raids.joined = { };
+            idrinth.raids.start ();
         },
         join: {
             data: {
@@ -69,13 +69,13 @@
                                     tag + 'raid_id=' + data.raidId + '&' +
                                     tag + 'difficulty=' + data.difficulty + '&' +
                                     tag + 'hash=' + data.hash +
-                                    ( idrinth.settings.get( "isWorldServer" ) ? '&' + tag + 'serverid=' + 2 : '' );
+                                    ( idrinth.settings.get ( "isWorldServer" ) ? '&' + tag + 'serverid=' + 2 : '' );
                         } catch ( e1 ) {
                             return false;
                         }
                     };
                     if ( list[key] ) {
-                        var link = build( list[key], tag, prefix );
+                        var link = build ( list[key], tag, prefix );
                         if ( link ) {
                             return link;
                         }
@@ -90,11 +90,11 @@
                             dawnofthedragons: 'https://web1.dawnofthedragons.com/live_iframe/raidjoin.php?',
                             facebook: 'https://web1.dawnofthedragons.com/live_iframe/raidjoin.php?'
                         };
-                        idrinth.raids.join.data.prefix = ((( sites[idrinth.platform].replace(
+                        idrinth.raids.join.data.prefix = ( ( ( sites[idrinth.platform].replace (
                                 '###id###', idrinth.user.id
-                                ) ).replace(
+                                ) ).replace (
                                 '###token###', idrinth.user.token
-                                ) ).replace(
+                                ) ).replace (
                                 '###name###', idrinth.user.name
                                 ) );
                     }
@@ -113,13 +113,13 @@
                     }
                     return idrinth.raids.join.data.tag;
                 };
-                var prefix = makePrefix();
-                var tag = makeTag();
-                var link = getLink( idrinth.raids.list, key, prefix, tag );
+                var prefix = makePrefix ();
+                var tag = makeTag ();
+                var link = getLink ( idrinth.raids.list, key, prefix, tag );
                 if ( link ) {
                     return link;
                 }
-                link = getLink( idrinth.raids.joined, key, prefix, tag );
+                link = getLink ( idrinth.raids.joined, key, prefix, tag );
                 if ( link ) {
                     return link;
                 }
@@ -127,81 +127,81 @@
             },
             messages: {
                 log: function ( string, key ) {
-                    var message = ( string.replace( '#name#', idrinth.raids.list[key].name ) ).replace( '#raid#', idrinth.raids.list[key].raid );
-                    idrinth.core.log( message );
-                    var li = document.createElement( 'li' );
-                    var ul = document.getElementById( 'idrinth-joined-raids' ).getElementsByTagName( 'ul' )[0];
-                    li.appendChild( document.createTextNode(( new Date() ).toLocaleTimeString() + ' ' + message ) );
+                    var message = ( string.replace ( '#name#', idrinth.raids.list[key].name ) ).replace ( '#raid#', idrinth.raids.list[key].raid );
+                    idrinth.core.log ( message );
+                    var li = document.createElement ( 'li' );
+                    var ul = document.getElementById ( 'idrinth-joined-raids' ).getElementsByTagName ( 'ul' )[0];
+                    li.appendChild ( document.createTextNode ( ( new Date () ).toLocaleTimeString () + ' ' + message ) );
                     if ( !ul.firstChild ) {
-                        ul.appendChild( li );
+                        ul.appendChild ( li );
                     } else {
                         if ( ul.childNodes.length > 9 ) {
-                            ul.removeChild( ul.lastChild );
+                            ul.removeChild ( ul.lastChild );
                         }
-                        ul.insertBefore( li, ul.firstChild );
+                        ul.insertBefore ( li, ul.firstChild );
                     }
                 },
                 addToJoined: function ( key ) {
-                    if ( key && idrinth.raids.list.hasOwnProperty( key ) ) {
+                    if ( key && idrinth.raids.list.hasOwnProperty ( key ) ) {
                         idrinth.raids.joined[key] = idrinth.raids.list[key];
                         delete idrinth.raids.list[key];
                     }
                 },
                 success: function ( key ) {
-                    idrinth.raids.join.messages.log( 'Joined #name#\'s #raid#.', key );
-                    idrinth.ui.removeElement( 'idrinth-raid-link-' + key );
-                    this.addToJoined( key );
+                    idrinth.raids.join.messages.log ( 'Joined #name#\'s #raid#.', key );
+                    idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
+                    this.addToJoined ( key );
                 },
                 failed: function ( key ) {
-                    idrinth.raids.join.messages.log( 'Could not join #name#\'s #raid#', key );
+                    idrinth.raids.join.messages.log ( 'Could not join #name#\'s #raid#', key );
                 },
                 trying: function ( key ) {
-                    (( function ( key ) {
-                        idrinth.core.timeouts.add( 'raid.join.' + key, function () {
+                    ( ( function ( key ) {
+                        idrinth.core.timeouts.add ( 'raid.join.' + key, function () {
                             var id = 'idrinth-raid-link-' + key;
-                            if ( document.getElementById( id ) ) {
-                                idrinth.ui.removeElement( id );
+                            if ( document.getElementById ( id ) ) {
+                                idrinth.ui.removeElement ( id );
                             }
                         }, 300 );
-                    } )( key ) );
+                    } ) ( key ) );
                     if ( idrinth.raids.list[key] ) {
-                        idrinth.raids.join.messages.log( 'Trying to join #name#\'s #raid#', key );
+                        idrinth.raids.join.messages.log ( 'Trying to join #name#\'s #raid#', key );
                     }
-                    this.addToJoined( key );
+                    this.addToJoined ( key );
                 }
             },
             process: function () {
                 var join = function () {
                     var getServerMethods = function () {
                         var byAjax = function ( key ) {
-                            idrinth.core.ajax.run(
-                                    idrinth.raids.join.getServerLink( key ),
+                            idrinth.core.ajax.run (
+                                    idrinth.raids.join.getServerLink ( key ),
                                     function () {
-                                        idrinth.raids.join.messages.success( key );
+                                        idrinth.raids.join.messages.success ( key );
                                     },
                                     function () {
-                                        idrinth.raids.join.messages.failed( key );
+                                        idrinth.raids.join.messages.failed ( key );
                                     },
                                     function () {
                                         idrinth.raids[key].joined = false;
-                                        idrinth.raids.join.messages.failed( key );
+                                        idrinth.raids.join.messages.failed ( key );
                                     }
                             );
                         };
                         var byFrame = function ( key ) {
-                            var exist = document.getElementsByClassName( 'idrinth-join-frame' ).length;
-                            if ( exist >= idrinth.settings.get( "windows" ) ) {
+                            var exist = document.getElementsByClassName ( 'idrinth-join-frame' ).length;
+                            if ( exist >= idrinth.settings.get ( "windows" ) ) {
                                 idrinth.raids.list[key].joined = false;
                                 return;
                             }
-                            var frame = idrinth.ui.buildElement( {
+                            var frame = idrinth.ui.buildElement ( {
                                 type: 'iframe',
                                 css: 'idrinth-join-frame',
                                 id: 'join-' + key,
                                 attributes: [
                                     {
                                         name: 'src',
-                                        value: idrinth.raids.join.getServerLink( key )
+                                        value: idrinth.raids.join.getServerLink ( key )
                                     },
                                     {
                                         name: 'sandbox',
@@ -221,18 +221,18 @@
                                     }
                                 ]
                             } );
-                            (( function ( key ) {
-                                return idrinth.core.timeouts.add( 'raids.join.remove.' + key, function () {
-                                    idrinth.ui.removeElement( 'join-' + key );
+                            ( ( function ( key ) {
+                                return idrinth.core.timeouts.add ( 'raids.join.remove.' + key, function () {
+                                    idrinth.ui.removeElement ( 'join-' + key );
                                 }, 30000 );
-                            } )( key ) );
-                            idrinth.ui.base.appendChild( frame );
-                            idrinth.raids.join.messages.trying( key );
+                            } ) ( key ) );
+                            idrinth.ui.base.appendChild ( frame );
+                            idrinth.raids.join.messages.trying ( key );
                         };
                         var postLink = function ( key ) {
-                            if ( !document.getElementById( 'idrinth-raid-link-' + key ) ) {
-                                document.getElementById( 'idrinth-raid-link-list' ).appendChild(
-                                        idrinth.ui.buildElement(
+                            if ( !document.getElementById ( 'idrinth-raid-link-' + key ) ) {
+                                document.getElementById ( 'idrinth-raid-link-list' ).appendChild (
+                                        idrinth.ui.buildElement (
                                                 {
                                                     children: [
                                                         {
@@ -242,7 +242,7 @@
                                                             attributes: [
                                                                 {
                                                                     name: 'data-clipboard-text',
-                                                                    value: idrinth.raids.join.getServerLink( key )
+                                                                    value: idrinth.raids.join.getServerLink ( key )
                                                                 }
                                                             ],
                                                             content: idrinth.raids.list[key].name + '\'s ' + idrinth.raids.list[key].raid
@@ -253,51 +253,51 @@
                                         );
                             }
                         };
-                        var options = [postLink];
+                        var options = [ postLink ];
                         if ( idrinth.platform === 'armorgames' || idrinth.platform === 'kongregate' ) {
-                            options.push( byAjax );
+                            options.push ( byAjax );
                         } else if ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) {
-                            options.push( byFrame );
+                            options.push ( byFrame );
                         }
                         return options;
                     };
                     var reachedMax = function ( amount ) {
-                        return amount > 99 || ( ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) && amount >= idrinth.settings.get( "windows" ) );
+                        return amount > 99 || ( ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) && amount >= idrinth.settings.get ( "windows" ) );
                     };
                     var handleKey = function ( added, key, options ) {
                         var raid = idrinth.raids.list[key];
                         if ( !raid.joined ) {
                             added++;
-                            options[0]( key );//post link
-                            if ( !idrinth.settings.get( "bannedRaids#" + raid.raid ) ) {
-                                for ( var count = 1; count < options.length; count++ ) {
-                                    options[count]( key );
+                            options[0] ( key );//post link
+                            if ( !idrinth.settings.get ( "bannedRaids#" + raid.raid ) ) {
+                                for (var count = 1; count < options.length; count++) {
+                                    options[count] ( key );
                                 }
                             }
                         }
                         return added;
                     };
                     var added = 0;
-                    var options = getServerMethods();
-                    for ( var key in idrinth.raids.list ) {
+                    var options = getServerMethods ();
+                    for (var key in idrinth.raids.list) {
                         if ( typeof idrinth.raids.list[key] === 'object' ) {
-                            added = handleKey( added, key, options );
+                            added = handleKey ( added, key, options );
                         }
-                        if ( reachedMax( added ) ) {
+                        if ( reachedMax ( added ) ) {
                             return true;
                         }
                     }
                     return false;
                 };
-                if ( !join() && Date.now() - 60000 > idrinth.raids.requested ) {
-                    idrinth.raids.requested = Date.now();
-                    idrinth.raids.import( idrinth.settings.get( "raids" ) ? idrinth.settings.get( "favs" ) : '-1' );
+                if ( !join () && Date.now () - 60000 > idrinth.raids.requested ) {
+                    idrinth.raids.requested = Date.now ();
+                    idrinth.raids.import ( idrinth.settings.get ( "raids" ) ? idrinth.settings.get ( "favs" ) : '-1' );
                 }
             }
         },
         start: function () {
-            idrinth.core.timeouts.remove( 'raids' );
-            idrinth.core.timeouts.add( 'raids', idrinth.raids.join.process, 1500, -1 );
+            idrinth.core.timeouts.remove ( 'raids' );
+            idrinth.core.timeouts.add ( 'raids', idrinth.raids.join.process, 1500, -1 );
         }
     };
-} ());
+} () );
