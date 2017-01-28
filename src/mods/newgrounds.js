@@ -1,6 +1,18 @@
 idrinth.newgrounds = {
+    /**
+     *
+     * @type String
+     */
     originalUrl: '',
+    /**
+     *
+     * @type Array
+     */
     raids: [ ],
+    /**
+     *
+     * @returns {undefined}
+     */
     joinRaids: function () {
         for (var key in idrinth.raids.list) {
             if ( idrinth.raids.list[key].hash && idrinth.raids.list[key].raidId ) {
@@ -9,6 +21,10 @@ idrinth.newgrounds = {
         }
         idrinth.newgrounds.join ();
     },
+    /**
+     *
+     * @returns {undefined}
+     */
     alarmCheck: function () {
         var now = new Date ();
         if ( idrinth.settings.get ( "alarmActive" ) && now.getHours () + ':' + now.getMinutes () === idrinth.settings.get ( "alarmTime" ) ) {
@@ -16,6 +32,10 @@ idrinth.newgrounds = {
         }
         idrinth.core.timeouts.add ( 'newgrounds', idrinth.newgrounds.alarmCheck, 60000 );
     },
+    /**
+     *
+     * @returns {undefined}
+     */
     join: function () {
         if ( idrinth.newgrounds.raids.length === 0 ) {
             idrinth.core.alert ( 'We\'re done! Have fun playing.' );
@@ -27,6 +47,11 @@ idrinth.newgrounds = {
         frame.setAttribute ( 'onload', 'idrinth.newgrounds.remove(\'' + key + '\')' );
         frame.setAttribute ( 'src', link );
     },
+    /**
+     *
+     * @param {string} key
+     * @returns {undefined}
+     */
     remove: function ( key ) {
         idrinth.core.timeouts.add (
                 'newgrounds.remove',
