@@ -52,13 +52,13 @@ idrinth.tier = {
                 };
             };
             var info = [
-                makeElement ( 'FS', boss.fs.nm, idrinth.text.get( "tier.FS" ) ),
-                makeElement ( 'AP', boss.ap, idrinth.text.get( "tier.AP" ) )
+                makeElement ( 'FS', boss.fs.nm, idrinth.text.get ( "tier.FS" ) ),
+                makeElement ( 'AP', boss.ap, idrinth.text.get ( "tier.AP" ) )
             ];
             if ( boss.os && boss.os.nm ) {
-                info.push( makeElement( 'OS', boss.os.nm, idrinth.text.get( "tier.OS" ) ) );
-                info.unshift ( makeElement ( 'MA', boss.nm[boss.nm.length - 1], idrinth.text.get( "tier.MA" ) ) );
-                info.unshift ( makeElement ( 'MI', boss.nm[0], idrinth.text.get( "tier.MI" ) ) );
+                info.push ( makeElement ( 'OS', boss.os.nm, idrinth.text.get ( "tier.OS" ) ) );
+                info.unshift ( makeElement ( 'MA', boss.nm[boss.nm.length - 1], idrinth.text.get ( "tier.MA" ) ) );
+                info.unshift ( makeElement ( 'MI', boss.nm[0], idrinth.text.get ( "tier.MI" ) ) );
             }
             info.unshift (
                     {
@@ -75,7 +75,7 @@ idrinth.tier = {
                         attributes: [
                             {
                                 name: 'title',
-                                value: idrinth.text.get("tier.clickClose")
+                                value: idrinth.text.get ( "tier.clickClose" )
                             },
                             {
                                 name: 'onclick',
@@ -163,22 +163,20 @@ idrinth.tier = {
      * @returns {undefined}
      */
     getMatchingTiers: function ( ) {
-        var name = document.getElementById ( 'idrinth-tierlist-namesearch' ).value;
-        var type = document.getElementById ( 'idrinth-tierlist-typesearch' ).value;
-        /**
-         *
-         * @param {HTMLElement} elem
-         * @returns {undefined}
-         */
-        var clearInnerHtml = function ( elem ) {
-            elem.innerHTML = '';
-        };
         /**
          *
          * @param {string} list
          * @returns {undefined}
          */
         var makeList = function ( list ) {
+            /**
+             *
+             * @param {HTMLElement} elem
+             * @returns {undefined}
+             */
+            var clearInnerHtml = function ( elem ) {
+                elem.innerHTML = '';
+            };
             /**
              *
              * @param {string} listKey
@@ -351,30 +349,41 @@ idrinth.tier = {
         };
         /**
          *
-         * @param {Array} list
-         * @param {RegExp} regExp
-         * @returns {Boolean}
+         * @param {object} data
+         * @returns {Array}
          */
-        var matchesAny = function ( list, regExp ) {
-            for (var count = 0; count < list.length; count++) {
-                if ( list[count] && list[count].match ( regExp ) ) {
-                    return true;
+        var filter = function ( data ) {
+            /**
+             *
+             * @param {Array} list
+             * @param {RegExp} regExp
+             * @returns {Boolean}
+             */
+            var matchesAny = function ( list, regExp ) {
+                for (var count = 0; count < list.length; count++) {
+                    if ( list[count] && list[count].match ( regExp ) ) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            if ( ( !data.name || data.name.length === 0 ) && ( !data.type || data.type.length === 0 ) ) {
+                return [ ];
+            }
+            var result = [ ];
+            var nameRegExp = new RegExp ( data.name, 'i' );
+            var typeRegExp = new RegExp ( data.type, 'i' );
+            for (var key in data.list) {
+                if ( key.match ( nameRegExp ) && matchesAny ( data.list[key].types, typeRegExp ) ) {
+                    result.push ( key );
                 }
             }
-            return false;
+            return result;
         };
-        if ( ( !name || name.length === 0 ) && ( !type || type.length === 0 ) ) {
-            clearInnerHtml ( document.getElementById ( 'idrinth-tierlist' ) );
-            return;
-        }
-        var result = [ ];
-        var nameRegExp = new RegExp ( name, 'i' );
-        var typeRegExp = new RegExp ( type, 'i' );
-        for (var key in idrinth.tier.list) {
-            if ( key.match ( nameRegExp ) && matchesAny ( idrinth.tier.list[key].types, typeRegExp ) ) {
-                result.push ( key );
-            }
-        }
-        makeList ( result );
+        idrinth.core.addWorker ( filter, makeList, {
+            name: document.getElementById ( 'idrinth-tierlist-namesearch' ).value,
+            type: document.getElementById ( 'idrinth-tierlist-typesearch' ).value,
+            list: idrinth.tier.list
+        } );
     }
 };
