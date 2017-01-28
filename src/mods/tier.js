@@ -188,20 +188,18 @@ idrinth.tier = {
                 var ln = {
                     type: 'td'
                 };
-                try {
+                if (
+                        idrinth.tier.list[listKey].hasOwnProperty ( difficulty ) &&
+                        idrinth.tier.list[listKey][difficulty].hasOwnProperty ( ic )
+                        ) {
                     ln.styles = idrinth.tier.list[listKey].os[difficulty] === idrinth.tier.list[listKey][difficulty][ic] ? 'is-os' : '';
-                } catch ( E ) {
-                    idrinth.core.log ( E.toString ( ) );
-                }
-                try {
-                    ln.content = idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic] ) + ' ' +
-                            idrinth.tier.list[listKey].epics[difficulty][ic] + 'E';
-                } catch ( E2 ) {
-                    idrinth.core.log ( E2.toString ( ) );
-                    try {
-                        ln.content = idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic] );
-                    } catch ( E3 ) {
-                        idrinth.core.log ( E3.toString ( ) );
+                    ln.content = idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic] );
+                    if (
+                            idrinth.tier.list[listKey].epics &&
+                            idrinth.tier.list[listKey].epics.hasOwnProperty ( difficulty ) &&
+                            idrinth.tier.list[listKey].epics[difficulty].hasOwnProperty ( ic )
+                            ) {
+                        ln.content += ' ' + idrinth.tier.list[listKey].epics[difficulty][ic] + 'E';
                     }
                 }
                 return ln;
