@@ -306,11 +306,7 @@ idrinth.core = {
             return resultHandler ( inWorker ( values ) );
         }
         var blobURL = window.URL.createObjectURL ( new Blob ( [
-            "self.onmessage = function(message) {\n\
-                var work=" + inWorker.toString () + ";\n\
-                self.postMessage(work(message.data));\n\
-                self.close();\n\
-            }"
+            "self.onmessage = function(message) {var work=" + inWorker.toString () + ";self.postMessage(work(message.data));self.close();}"
         ] ) );
         var worker = new Worker ( blobURL );
         worker.onmessage = function ( message ) {
