@@ -250,7 +250,7 @@
                     for (var count = 0; count < list.length; count++) {
                         fList.push ( idrinth.ui.formatNumber ( list[count] ) );
                     }
-                    return fList.join ( '|' );
+                    return fList.join ( ' | ' );
                 };
                 /**
                  *
@@ -275,6 +275,7 @@
                     };
                 };
                 for (var count = list.length - 1; count >= 0; count--) {
+                    var boss = idrinth.tier.list[list[count]];
                     var sub = idrinth.ui.buildElement ( {
                         css: 'tier-wrapper',
                         children: [
@@ -282,20 +283,20 @@
                                 type: 'img',
                                 attributes: [ {
                                         name: 'src',
-                                        value: 'https://dotd.idrinth.de/static/raid-image-service/' + idrinth.tier.list[list[count]].url + '/'
+                                        value: 'https://dotd.idrinth.de/static/raid-image-service/' + boss.url + '/'
                                     } ]
                             },
                             {
                                 type: 'strong',
-                                content: idrinth.tier.list[list[count]].name
+                                content: boss.name
                             },
                             {
                                 type: 'span',
-                                content: idrinth.tier.list[list[count]].types.join ( ', ' )
+                                content: boss.types.join ( ', ' )
                             },
                             makeButton (
                                     'copy',
-                                    'idrinth.core.copyToClipboard.text("' + list[count].name + ': OS ' + idrinth.tier.list[list[count]].os.nm + ', FS ' + idrinth.tier.list[list[count]].fs.nm + ', Tiers ' + formattedList ( idrinth.tier.list[list[count]].nm ) + '")'
+                                    'idrinth.core.copyToClipboard.text("' + boss.name + '(NM): OS ' + idrinth.ui.formatNumber ( boss.os.nm ) + ', FS ' + idrinth.ui.formatNumber ( boss.fs.nm ) + ', Tiers ' + formattedList ( boss.nm ) + ' by IDotD")'
                                     ),
                             makeButton (
                                     'tag',
@@ -303,7 +304,7 @@
                                     ),
                             {
                                 type: 'span',
-                                content: 'AP: ' + idrinth.ui.formatNumber ( idrinth.tier.list[list[count]].ap )
+                                content: 'AP: ' + idrinth.ui.formatNumber ( boss.ap )
                             },
                             {
                                 type: 'table',
@@ -341,8 +342,8 @@
                                     {
                                         type: 'tbody',
                                         children: [
-                                            makeRow ( 'FS', idrinth.tier.list[list[count]].fs ),
-                                            makeRow ( 'OS', idrinth.tier.list[list[count]].os ),
+                                            makeRow ( 'FS', boss.fs ),
+                                            makeRow ( 'OS', boss.os ),
                                             makeRow ( '', {
                                                 n: '',
                                                 l: '',
@@ -355,7 +356,7 @@
                             }
                         ]
                     } );
-                    var maxTiers = Math.max ( idrinth.tier.list[list[count]].n.length, idrinth.tier.list[list[count]].h.length, idrinth.tier.list[list[count]].l.length, idrinth.tier.list[list[count]].nm.length );
+                    var maxTiers = Math.max ( boss.n.length, boss.h.length, boss.l.length, boss.nm.length );
                     for (var ic = 0; ic < maxTiers; ic++) {
                         sub.lastChild.lastChild.appendChild ( idrinth.ui.buildElement ( {
                             type: 'tr',
