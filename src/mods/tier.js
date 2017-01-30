@@ -251,6 +251,28 @@
                     }
                     return fList.join ( '|' );
                 };
+                /**
+                 *
+                 * @param {string} label
+                 * @param {string} click
+                 * @returns {object}
+                 */
+                var makeButton = function ( label, click ) {
+                    return {
+                        type: 'button',
+                        content: idrinth.text.get ( "tier." + label ),
+                        attributes: [
+                            {
+                                name: 'onclick',
+                                value: click
+                            },
+                            {
+                                name: 'type',
+                                value: 'action'
+                            }
+                        ]
+                    };
+                };
                 for (var count = list.length - 1; count >= 0; count--) {
                     var sub = idrinth.ui.buildElement ( {
                         css: 'tier-wrapper',
@@ -270,34 +292,14 @@
                                 type: 'span',
                                 content: idrinth.tier.list[list[count]].types.join ( ', ' )
                             },
-                            {
-                                type: 'button',
-                                content: idrinth.text.get ( "tier.copy" ),
-                                attributes: [
-                                    {
-                                        name: 'onclick',
-                                        value: 'idrinth.core.copyToClipboard.text(("' + list[count].name + ': OS ' + idrinth.tier.list[list[count]].os.nm + ', FS ' + idrinth.tier.list[list[count]].fs.nm + ', Tiers ' + formattedList ( idrinth.tier.list[list[count]].nm ) + '");'
-                                    },
-                                    {
-                                        name: 'type',
-                                        value: 'action'
-                                    }
-                                ]
-                            },
-                            {
-                                type: 'button',
-                                content: idrinth.text.get ( "tier.tag" ),
-                                attributes: [
-                                    {
-                                        name: 'onclick',
-                                        value: 'idrinth.tier.getAsText(\'' + list[count].replace ( /'/g, '\\\'' ) + '\');'
-                                    },
-                                    {
-                                        name: 'type',
-                                        value: 'action'
-                                    }
-                                ]
-                            },
+                            makeButton (
+                                    'copy',
+                                    'idrinth.core.copyToClipboard.text("' + list[count].name + ': OS ' + idrinth.tier.list[list[count]].os.nm + ', FS ' + idrinth.tier.list[list[count]].fs.nm + ', Tiers ' + formattedList ( idrinth.tier.list[list[count]].nm ) + '")'
+                                    ),
+                            makeButton (
+                                    'tag',
+                                    'idrinth.tier.addTagged(\'' + list[count].replace ( /'/g, '\\\'' ) + '\');'
+                                    ),
                             {
                                 type: 'span',
                                 content: 'AP: ' + idrinth.ui.formatNumber ( idrinth.tier.list[list[count]].ap )
