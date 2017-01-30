@@ -1,6 +1,6 @@
-( function ( ) {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.war = {
+    idrinth.war = {
         /**
          *
          * @type {string}
@@ -324,4 +324,4 @@
             build ();
         }
     };
-} ) ();
+} ( idrinth ) );

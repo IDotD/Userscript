@@ -1,6 +1,6 @@
-( function () {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.tier = {
+    idrinth.tier = {
         /**
          *
          * @type {object}
@@ -414,4 +414,4 @@
             } );
         }
     };
-} ) ();
+} ( idrinth ) );

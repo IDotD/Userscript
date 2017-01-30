@@ -1,6 +1,6 @@
-( function () {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.core = {
+    idrinth.core = {
         /**
          *
          * @param {string} str
@@ -377,4 +377,4 @@
             }
         }
     };
-} () );
+} ( idrinth ) );

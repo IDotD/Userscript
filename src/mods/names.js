@@ -1,6 +1,6 @@
-( function () {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.names = {
+    idrinth.names = {
         /**
          * @type {object}
          */
@@ -266,4 +266,4 @@
             }
         }
     };
-} () );
+} ( idrinth ) );

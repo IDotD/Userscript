@@ -1,6 +1,6 @@
-( function () {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.user = {
+    idrinth.user = {
         /**
          *
          * @type String
@@ -97,4 +97,4 @@
             idrinth.core.timeouts.add ( 'user', sendAlive, 20000 );
         }
     };
-} () );
+} ( idrinth ) );

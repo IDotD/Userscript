@@ -1,6 +1,6 @@
-( function () {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.facebook = {
+    idrinth.facebook = {
         /**
          *
          * @type window
@@ -34,4 +34,4 @@
             idrinth.core.timeouts.add ( 'facebook', idrinth.facebook.restart, 11111 );
         }
     };
-} () );
+} ( idrinth ) );

@@ -1,6 +1,6 @@
-( function () {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.settings = {
+    idrinth.settings = {
         /**
          *
          * @type {object}
@@ -422,4 +422,4 @@
             }
         }
     };
-} () );
+} ( idrinth ) );

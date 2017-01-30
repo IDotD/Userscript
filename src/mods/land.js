@@ -1,6 +1,6 @@
-( function () {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.land = {
+    idrinth.land = {
         /**
          *
          * @returns {undefined}
@@ -263,4 +263,4 @@
             }
         }
     };
-} () );
+} ( idrinth ) );

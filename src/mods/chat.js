@@ -1,6 +1,6 @@
-( function () {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.chat = {
+    idrinth.chat = {
         self: 0,
         maxId: 0,
         messages: [ ],
@@ -960,4 +960,4 @@
             idrinth.core.ajax.runHome ( urls[key], success, fail, timeout, JSON.stringify ( headers ) );
         }
     };
-} () );
+} ( idrinth ) );

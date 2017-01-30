@@ -1,6 +1,6 @@
-( function () {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.stats = {
+    idrinth.stats = {
         /**
          *
          * @returns {undefined}
@@ -111,4 +111,4 @@
             }
         }
     };
-} () );
+} ( idrinth ) );

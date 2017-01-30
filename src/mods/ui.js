@@ -1,6 +1,6 @@
-( function () {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.ui = {
+    idrinth.ui = {
         /**
          *
          * @type HTMLElement
@@ -1134,4 +1134,4 @@
             build ();
         }
     };
-} () );
+} ( idrinth ) );

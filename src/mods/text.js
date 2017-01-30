@@ -1,6 +1,6 @@
-( function () {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.text = {
+    idrinth.text = {
         /**
          * if the language files have been applied correctly, this is true
          * @type Boolean
@@ -73,4 +73,4 @@
             return getSub ( idrinth.text.data, key.split ( '.' ), getSub );
         }
     };
-} () );
+} ( idrinth ) );

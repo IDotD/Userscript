@@ -1,6 +1,6 @@
-( function ( ) {
+( function ( idrinth ) {
     'use strict';
-    window.idrinth.newgrounds = {
+    idrinth.newgrounds = {
         /**
          *
          * @type String
@@ -87,4 +87,4 @@
                     );
         }
     };
-} ( ) );
+} ( idrinth ) );
