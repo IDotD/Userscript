@@ -250,7 +250,7 @@
                     for (var count = 0; count < list.length; count++) {
                         fList.push ( idrinth.ui.formatNumber ( list[count] ) );
                     }
-                    return fList.join ( '|' );
+                    return fList.join ( ' | ' );
                 };
                 /**
                  *
@@ -296,7 +296,7 @@
                             },
                             makeButton (
                                     'copy',
-                                    'idrinth.core.copyToClipboard.text("' + boss.name + ': OS ' + idrinth.ui.formatNumber ( boss.os.nm ) + ', FS ' + idrinth.ui.formatNumber ( boss.fs.nm ) + ', Tiers ' + formattedList ( boss.nm ) + '")'
+                                    'idrinth.core.copyToClipboard.text("' + boss.name + ': OS ' + idrinth.ui.formatNumber ( boss.os.nm ) + ', FS ' + idrinth.ui.formatNumber ( boss.fs.nm ) + ', Tiers ' + formattedList ( boss.nm ) + ' by IDotD")'
                                     ),
                             makeButton (
                                     'tag',
