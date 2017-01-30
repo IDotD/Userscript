@@ -37,8 +37,13 @@
                         }
                     }
                 };
-                applyRecursive ( idrinth.text.data, JSON.parse ( file ), applyRecursive );
-                idrinth.text.initialized = true;
+                try {
+                    applyRecursive ( idrinth.text.data, JSON.parse ( file ), applyRecursive );
+                    idrinth.text.initialized = true;
+                } catch ( e ) {
+                    idrinth.core.log ( e.message ? e.message : e.getMessage ( ) );
+                    return idrinth.text.start ();
+                }
             }, idrinth.text.start, idrinth.text.start, null, true );
         },
         /**
