@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           Idrinth's DotD Script
-// @description    This script collects Kongregate Usernames to match them to ingame names and provides autojoining for raids
+// @description    A userscript for the game Dawn of the Dragons which provides multiple useful tools, like time-saving raid catching, private chatrooms and much more to discover, see the manual at https://idotd.github.io/ 
 // @author         Idrinth
 // @version        2.2.0
 // @grant          none
