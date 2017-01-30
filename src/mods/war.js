@@ -1,4 +1,4 @@
-( function () {
+( function ( ) {
     'use strict';
     window.idrinth.war = {
         /**
@@ -20,7 +20,7 @@
          * sets the timeout
          * @returns {undefined}
          */
-        setTO: function () {
+        setTO: function ( ) {
             var active = ( idrinth.war.element.getAttribute ( 'class' ) ).match ( /(^|\s)idrinth-hide($|\s)/ ) !== null;
             idrinth.core.timeouts.add ( 'war', idrinth.war.getData, active ? 30000 : 120000 );
         },
@@ -256,7 +256,7 @@
              * build the gui part
              * @returns {undefined}
              */
-            var build = function () {
+            var build = function ( ) {
                 idrinth.war.element = idrinth.ui.buildElement (
                         {
                             id: 'idrinth-war',
@@ -271,6 +271,12 @@
                                         {
                                             type: 'span',
                                             css: 'idrinth-circle',
+                                            attributes: [
+                                                {
+                                                    name: 'onclick',
+                                                    value: 'this.parentNode.parentNode.hasAttribute("style")?this.parentNode.parentNode.removeAttribute("style"):this.parentNode.parentNode.setAttribute("style","bottom:0;top:auto");'
+                                                }
+                                            ],
                                             content: '\u2195'
                                         }
                                     ]
@@ -312,81 +318,10 @@
                             ]
                         }
                 );
-    },
-    /**
-     * initializes the module
-     * @returns {undefined}
-     */
-    start: function () {
-        /**
-         * build the gui part
-         * @returns {undefined}
-         */
-        var build = function ( ) {
-            idrinth.war.element = idrinth.ui.buildElement (
-                    {
-                        id: 'idrinth-war',
-                        css: 'idrinth-central-box idrinth-hovering-box idrinth-hide',
-                        children: [
-                            {
-                                children: [
-                                    {
-                                        type: 'span',
-                                        content: 'current WAR'
-                                    },
-                                    {
-                                        type: 'span',
-                                        css: 'idrinth-circle',
-                                        attributes: [
-                                            {
-                                                name: 'onclick',
-                                                value: 'this.parentNode.parentNode.hasAttribute("style")?this.parentNode.parentNode.removeAttribute("style"):this.parentNode.parentNode.setAttribute("style","bottom:0;top:auto");'
-                                            }
-                                        ],
-                                        content: '\u2195'
-                                    }
-                                ]
-                            },
-                            {
-                                type: 'table',
-                                children: [
-                                    {
-                                        type: 'thead',
-                                        children: [
-                                            {
-                                                type: 'tr',
-                                                children: [
-                                                    {
-                                                        type: 'th',
-                                                        content: 'summon?'
-                                                    },
-                                                    {
-                                                        type: 'th',
-                                                        content: 'raid'
-                                                    },
-                                                    {
-                                                        type: 'th',
-                                                        content: 'join'
-                                                    },
-                                                    {
-                                                        type: 'th',
-                                                        content: 'magic2use'
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        type: 'tbody'
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-            );
-            idrinth.ui.base.appendChild ( idrinth.war.element );
-        };
-        idrinth.core.timeouts.add ( 'war', idrinth.war.getData, 5000 );
-        build ();
-    }
-};
+                idrinth.ui.base.appendChild ( idrinth.war.element );
+            };
+            idrinth.core.timeouts.add ( 'war', idrinth.war.getData, 5000 );
+            build ();
+        }
+    };
+} ) ();

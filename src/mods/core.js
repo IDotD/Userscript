@@ -55,7 +55,8 @@
              * @returns {undefined}
              */
             run: function ( url, success, failure, timeout, additionalHeader ) {
-                var requestHandler = new XMLHttpRequest ();
+                'use strict';
+                var requestHandler = new XMLHttpRequest ( );
                 requestHandler.onreadystatechange = function ( event ) {
                     var request = ( event || window.event ).target;
                     var call = function ( func, value ) {
@@ -99,7 +100,7 @@
                     requestHandler.withCredentials = true;
                 }
                 idrinth.core.ajax.active[url] = requestHandler;
-                idrinth.core.ajax.active[url].send ();
+                idrinth.core.ajax.active[url].send ( );
             }
         },
         /**
@@ -121,10 +122,10 @@
                     } );
                     textAreaElement.value = text;
                     idrinth.ui.base.appendChild ( textAreaElement );
-                    textAreaElement.select ();
+                    textAreaElement.select ( );
                     success = document.execCommand ( 'copy' );
                 } catch ( exception ) {
-                    idrinth.core.log ( exception.getMessage () );
+                    idrinth.core.log ( exception.getMessage ( ) );
                     success = false;
                 }
                 idrinth.ui.removeElement ( "idrinth-copy-helper" );
@@ -156,7 +157,7 @@
                 return false;
             }
             if ( window.Notification.permission === "default" ) {
-                window.Notification.requestPermission ();
+                window.Notification.requestPermission ( );
             }
             if ( window.Notification.permission === "denied" ) {
                 return false;
@@ -187,6 +188,7 @@
              * @returns {undefined}
              */
             remove: function ( identifier ) {
+                'use strict';
                 if ( idrinth.core.timeouts.list[identifier] !== undefined ) {
                     idrinth.core.timeouts.list[identifier].repeats = 1;
                     idrinth.core.timeouts.list[identifier].func = function () {
@@ -202,6 +204,7 @@
              * @returns {undefined}
              */
             add: function ( identifier, func, time, maxRepeats ) {
+                'use strict';
                 var date = new Date ();
                 idrinth.core.timeouts.list[identifier] = {
                     func: func,
@@ -218,6 +221,7 @@
              * @returns {undefined}
              */
             process: function () {
+                'use strict';
                 var date = ( new Date () ).getTime () + ( new Date () ).getMilliseconds () / 1000;
                 var min = 10;
                 /**
@@ -272,6 +276,7 @@
          * @returns {undefined}
          */
         log: function ( string ) {
+            'use strict';
             console.log ( '[IDotDS] ' + string );
         },
         /**
@@ -292,6 +297,28 @@
             idrinth.ui.buildModal ( 'Do you?', text, callback );
         },
         /**
+         * runs the inWorker function in the worker and let's the resultHandler handle the result
+         * @param {Function} inWorker
+         * @param {Function} resultHandler
+         * @param {object} values
+         * @returns {undefined}
+         */
+        addWorker: function ( inWorker, resultHandler, values ) {
+            if ( !window.Worker ) {
+                return resultHandler ( inWorker ( values ) );
+            }
+            var blobURL = window.URL.createObjectURL ( new Blob ( [
+                "self.onmessage = function(message) {var work=" + inWorker.toString () + ";self.postMessage(work(message.data));self.close();}"
+            ] ) );
+            var worker = new Worker ( blobURL );
+            worker.onmessage = function ( message ) {
+                message.target.resultHandler ( message.data );
+            };
+            worker.resultHandler = resultHandler;
+            worker.postMessage ( values );
+            window.URL.revokeObjectURL ( blobURL );
+        },
+        /**
          *
          * @type {object}
          */
@@ -303,123 +330,6 @@
             events: { },
             /**
              *
-             * @param {string} property
-             * @returns {undefined}
-             */
-            var handle = function ( property, min ) {
-                idrinth.core.timeouts.list[property].func ();
-                idrinth.core.timeouts.list[property].repeats = Math.max ( -1, idrinth.core.timeouts.list[property].repeats - 1 );
-                if ( idrinth.core.timeouts.list[property].repeats ) {
-                    min = getVal ( idrinth.core.timeouts.list[property].duration, min );
-                    idrinth.core.timeouts.list[property].next = date + idrinth.core.timeouts.list[property].duration / 1000;
-                } else {
-                    delete idrinth.core.timeouts.list[property];
-                }
-                return min;
-            };
-            for (var property in idrinth.core.timeouts.list) {
-                if ( idrinth.core.timeouts.list.hasOwnProperty ( property ) ) {
-                    if ( date >= idrinth.core.timeouts.list[property].next ) {
-                        try {
-                            min = handle ( property, min );
-                        } catch ( e ) {
-                            idrinth.core.log ( e.message ? e.message : e.getMessage () );
-                        }
-                    } else {
-                        min = getVal ( idrinth.core.timeouts.list[property].next - date, min );
-                    }
-                }
-            }
-            if ( Object.keys ( idrinth.core.timeouts.list ).length ) {
-                idrinth.core.timeouts.next = window.setTimeout ( idrinth.core.timeouts.process, Math.ceil ( min * 1000 ) );
-            }
-        }
-    },
-    /**
-     *
-     * @param {string} string
-     * @returns {undefined}
-     */
-    log: function ( string ) {
-        'use strict';
-        console.log ( '[IDotDS] ' + string );
-    },
-    /**
-     *
-     * @param {string} text
-     * @returns {undefined}
-     */
-    alert: function ( text ) {
-        idrinth.ui.buildModal ( 'Info', text );
-    },
-    /**
-     *
-     * @param {string} text
-     * @param {function} callback
-     * @returns {undefined}
-     */
-    confirm: function ( text, callback ) {
-        idrinth.ui.buildModal ( 'Do you?', text, callback );
-    },
-    /**
-     * runs the inWorker function in the worker and let's the resultHandler handle the result
-     * @param {Function} inWorker
-     * @param {Function} resultHandler
-     * @param {object} values
-     * @returns {undefined}
-     */
-    addWorker: function ( inWorker, resultHandler, values ) {
-        if ( !window.Worker ) {
-            return resultHandler ( inWorker ( values ) );
-        }
-        var blobURL = window.URL.createObjectURL ( new Blob ( [
-            "self.onmessage = function(message) {var work=" + inWorker.toString () + ";self.postMessage(work(message.data));self.close();}"
-        ] ) );
-        var worker = new Worker ( blobURL );
-        worker.onmessage = function ( message ) {
-            message.target.resultHandler ( message.data );
-        };
-        worker.resultHandler = resultHandler;
-        worker.postMessage ( values );
-        window.URL.revokeObjectURL ( blobURL );
-    },
-    /**
-     *
-     * @type {object}
-     */
-    multibind: {
-        /**
-         *
-         * @type {object}
-         */
-        events: { },
-        /**
-         *
-         * @param {string} event
-         * @param {string} selector
-         * @param {function} method
-         * @returns {undefined}
-         */
-        add: function ( event, selector, method ) {
-            var bind = function ( event, selector, method ) {
-                idrinth.core.multibind.events[event] = idrinth.core.multibind.events[event] ? idrinth.core.multibind.events[event] : { };
-                idrinth.core.multibind.events[event][selector] = idrinth.core.multibind.events[event][selector] ? idrinth.core.multibind.events[event][selector] : [ ];
-                idrinth.core.multibind.events[event][selector].push ( method );
-            };
-            if ( !idrinth.core.multibind.events[event] ) {
-                idrinth.ui.base.addEventListener ( event, idrinth.core.multibind.triggered );
-            }
-            bind ( event, selector, method );
-        },
-        /**
-         *
-         * @param {Event} [window.event] event
-         * @returns {undefined}
-         */
-        triggered: function ( event ) {
-            /**
-             *
-             * @param {HTMLElement} el
              * @param {string} event
              * @param {string} selector
              * @param {function} method

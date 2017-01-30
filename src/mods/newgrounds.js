@@ -1,64 +1,63 @@
-idrinth.newgrounds = {
-    /**
-     *
-     * @type String
-     */
-    originalUrl: '',
-    /**
-     *
-     * @type Array
-     */
-    raids: [ ],
-    /**
-     *
-     * @returns {undefined}
-     */
-    joinRaids: function () {
-        for (var key in idrinth.raids.list) {
-            if ( idrinth.raids.list[key].hash && idrinth.raids.list[key].raidId ) {
-                idrinth.newgrounds.raids.push ( key );
+( function ( ) {
+    'use strict';
+    window.idrinth.newgrounds = {
+        /**
+         *
+         * @type String
+         */
+        originalUrl: '',
+        /**
+         *
+         * @type Array
+         */
+        raids: [ ],
+        /**
+         *
+         * @returns {undefined}
+         */
+        joinRaids: function () {
+            for (var key in idrinth.raids.list) {
+                if ( idrinth.raids.list[key].hash && idrinth.raids.list[key].raidId ) {
+                    idrinth.newgrounds.raids.push ( key );
+                }
             }
-        }
-        idrinth.newgrounds.join ();
-    },
-    /**
-     *
-     * @returns {undefined}
-     */
-    alarmCheck: function () {
-        var now = new Date ();
-        if ( idrinth.settings.get ( "alarmActive" ) && now.getHours () + ':' + now.getMinutes () === idrinth.settings.get ( "alarmTime" ) ) {
-            idrinth.core.timeouts.add ( 'newgrounds', idrinth.newgrounds.joinRaids, 1 );
-        }
-        idrinth.core.timeouts.add ( 'newgrounds', idrinth.newgrounds.alarmCheck, 60000 );
-    },
-    /**
-     *
-     * @returns {undefined}
-     */
-    join: function () {
-        if ( idrinth.newgrounds.raids.length === 0 ) {
-            idrinth.core.alert ( 'We\'re done! Have fun playing.' );
-            return;
-        }
-        var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
-        var key = idrinth.newgrounds.raids.pop ();
-        var link = idrinth.newgrounds.originalUrl + '&' + ( idrinth.raids.join.getServerLink ( key ) ).replace ( /^.*?\?/, '' );
-        frame.setAttribute ( 'onload', 'idrinth.newgrounds.remove(\'' + key + '\')' );
-        frame.setAttribute ( 'src', link );
-    },
-    /**
-     *
-     * @param {string} key
-     * @returns {undefined}
-     */
-    remove: function ( key ) {
-        idrinth.core.timeouts.add (
-                'newgrounds.remove',
-                function () {
-                    try {
-                        idrinth.raids.list[key].joined = true;
-                    } catch ( e ) {
+            idrinth.newgrounds.join ();
+        },
+        /**
+         *
+         * @returns {undefined}
+         */
+        alarmCheck: function () {
+            var now = new Date ();
+            if ( idrinth.settings.get ( "alarmActive" ) && now.getHours () + ':' + now.getMinutes () === idrinth.settings.get ( "alarmTime" ) ) {
+                idrinth.core.timeouts.add ( 'newgrounds', idrinth.newgrounds.joinRaids, 1 );
+            }
+            idrinth.core.timeouts.add ( 'newgrounds', idrinth.newgrounds.alarmCheck, 60000 );
+        },
+        /**
+         *
+         * @returns {undefined}
+         */
+        join: function () {
+            if ( idrinth.newgrounds.raids.length === 0 ) {
+                idrinth.core.alert ( 'We\'re done! Have fun playing.' );
+                return;
+            }
+            var frame = document.getElementById ( 'iframe_embed' ).getElementsByTagName ( 'iframe' )[0];
+            var key = idrinth.newgrounds.raids.pop ();
+            var link = idrinth.newgrounds.originalUrl + '&' + ( idrinth.raids.join.getServerLink ( key ) ).replace ( /^.*?\?/, '' );
+            frame.setAttribute ( 'onload', 'idrinth.newgrounds.remove(\'' + key + '\')' );
+            frame.setAttribute ( 'src', link );
+        },
+        /**
+         *
+         * @param {string} key
+         * @returns {undefined}
+         */
+        remove: function ( key ) {
+            idrinth.core.timeouts.add (
+                    'newgrounds.remove',
+                    function () {
                         try {
                             idrinth.raids.list[key].joined = true;
                         } catch ( e ) {
@@ -88,4 +87,4 @@ idrinth.newgrounds = {
                     );
         }
     };
-} () );
+} ( ) );
