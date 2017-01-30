@@ -104,7 +104,6 @@
          * @returns {undefined}
          */
         start: function ( ) {
-            'use strict';
             var pos = 1;
             /**
              * parsed a json-response and fills tier list and exclusion list

@@ -55,7 +55,6 @@
              * @returns {undefined}
              */
             run: function ( url, success, failure, timeout, additionalHeader ) {
-                'use strict';
                 var requestHandler = new XMLHttpRequest ( );
                 requestHandler.onreadystatechange = function ( event ) {
                     var request = ( event || window.event ).target;
@@ -188,7 +187,6 @@
              * @returns {undefined}
              */
             remove: function ( identifier ) {
-                'use strict';
                 if ( idrinth.core.timeouts.list[identifier] !== undefined ) {
                     idrinth.core.timeouts.list[identifier].repeats = 1;
                     idrinth.core.timeouts.list[identifier].func = function () {
@@ -204,7 +202,6 @@
              * @returns {undefined}
              */
             add: function ( identifier, func, time, maxRepeats ) {
-                'use strict';
                 var date = new Date ();
                 idrinth.core.timeouts.list[identifier] = {
                     func: func,
@@ -221,7 +218,6 @@
              * @returns {undefined}
              */
             process: function () {
-                'use strict';
                 var date = ( new Date () ).getTime () + ( new Date () ).getMilliseconds () / 1000;
                 var min = 10;
                 /**
@@ -276,7 +272,6 @@
          * @returns {undefined}
          */
         log: function ( string ) {
-            'use strict';
             console.log ( '[IDotDS] ' + string );
         },
         /**
