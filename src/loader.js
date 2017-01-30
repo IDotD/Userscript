@@ -4,7 +4,7 @@
 // @author         Idrinth
 // @version        2.2.0
 // @grant          none
-// @hompage        http://dotd.idrinth.de
+// @hompage        https://dotd.idrinth.de
 // @include        http://www.kongregate.com/games/5thplanetgames/dawn-of-the-dragons*
 // @include        https://www.kongregate.com/games/5thplanetgames/dawn-of-the-dragons*
 // @include        http://www.kongregate.com/games/5thPlanetGames/dawn-of-the-dragons*
@@ -24,6 +24,26 @@
 // @include        http://armorgames.com/dawn-of-the-dragons-game/13509*
 // @include        http://www.armorgames.com/dawn-of-the-dragons-game/13509*
 // ==/UserScript==
-var sc = document.createElement ( 'script' );
-sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/2.0.0/' );
-document.getElementsByTagName ( 'body' )[0].appendChild ( sc );
+(function () {
+  var sc = document.createElement ( 'script' );
+  sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/' + GM_info.script.version + '/' );
+  sc.setAttribute( 'async', 'async' );
+  sc.errorCounter = 0;
+  sc.errorFunction = function(){
+      this.parentNode.removeChild(this);
+      var sc = document.createElement ( 'script' );
+      sc.onerror=this.onerror;
+      sc.errorCounter = sc.errorCounter + 1;
+      sc.errorFunction=this.errorFunction;
+      sc.errorFunction.bind(sc);
+      sc.setAttribute( 'async', 'async' );
+      sc.setAttribute ( 'src', this.getAttribute( 'src' ) + Math.random() + '/' );
+      document.getElementsByTagName ( 'head' )[0].appendChild ( sc );
+  };
+  sc.errorFunction.bind( sc );
+  sc.onerror=function(){
+      console.log("Failed loading IDotD, retry in " + (500+100*this.errorCounter/1000) + "sec." );
+      window.setTimeout( this.errorFunction, 500+100*this.errorCounter );
+  };
+  document.getElementsByTagName ( 'head' )[0].appendChild ( sc );
+}());
