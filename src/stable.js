@@ -1,6 +1,6 @@
 var idrinth = ( function () {
     'use strict';
-    return {
+    var idrinth = {
         /**
          * @type String
          */
@@ -100,4 +100,5 @@ var idrinth = ( function () {
         }
     };
     window.setTimeout ( idrinth.start, 6666 );
+    return idrinth;
 } () );
