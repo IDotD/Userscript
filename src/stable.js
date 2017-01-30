@@ -27,7 +27,7 @@ var idrinth = ( function () {
             window.setTimeout ( function () {
                 idrinth = { };
             }, 1 );
-            document.getElementById( 'idotd-loader' ).onerror();
+            document.getElementById ( 'idotd-loader' ).onerror ();
         },
         /**
          * initializes the whole script
