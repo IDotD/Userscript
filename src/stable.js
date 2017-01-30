@@ -20,19 +20,14 @@ var idrinth = ( function () {
          */
         reload: function ( ) {
             window.clearTimeout ( idrinth.core.timeouts.next );
-            idrinth.ui.removeElement ( 'idrinth-controls' );
-            idrinth.ui.removeElement ( 'idrinth-chat' );
-            idrinth.ui.removeElement ( 'idrinth-war' );
-            idrinth.ui.removeElement ( 'idrinth-tooltip' );
-            var sc = document.createElement ( 'script' );
-            sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/###RELOAD-VERSION###/' + Math.random () + '/' );
-            document.getElementsByTagName ( 'head' )[0].appendChild ( sc );
+            idrinth.ui.removeElement ( 'idotd-base' );
             for (var event in idrinth.core.multibind.events) {
                 idrinth.ui.base.removeEventListener ( event, idrinth.core.multibind.triggered );
             }
             window.setTimeout ( function () {
                 idrinth = { };
             }, 1 );
+            document.getElementById( 'idotd-loader' ).onerror();
         },
         /**
          * initializes the whole script
