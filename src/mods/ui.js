@@ -1120,7 +1120,9 @@
                 idrinth.ui.base.appendChild ( idrinth.ui.controls );
                 document.getElementById ( 'idrinth-favs' ).setAttribute ( 'onkeyup', 'this.value=this.value.replace(/[^a-f0-9,]/g,\'\')' );
             };
-            idrinth.ui.base = document.getElementsByTagName ( 'body' )[0];
+            idrinth.ui.base = document.createElement ( 'div' );
+            idrinth.ui.base.setAttribute ( 'id', 'idotd-base' );
+            document.getElementsByTagName ( 'body' )[0].appendChild ( idrinth.ui.base )
             document.getElementsByTagName ( 'head' )[0].appendChild ( idrinth.ui.buildElement ( {
                 type: 'link',
                 attributes: [ {
