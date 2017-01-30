@@ -244,6 +244,13 @@
                 };
                 var wrapper = document.getElementById ( 'idrinth-tierlist' );
                 clearInnerHtml ( wrapper );
+                var formattedList = function ( list ) {
+                    var fList = [ ];
+                    for (var count = 0; count < list.length; count++) {
+                        fList.push ( idrinth.ui.formatNumber ( list[count] ) );
+                    }
+                    return fList.join ( '|' );
+                };
                 for (var count = list.length - 1; count >= 0; count--) {
                     var sub = idrinth.ui.buildElement ( {
                         css: 'tier-wrapper',
@@ -265,11 +272,25 @@
                             },
                             {
                                 type: 'button',
+                                content: idrinth.text.get ( "tier.copy" ),
+                                attributes: [
+                                    {
+                                        name: 'onclick',
+                                        value: 'idrinth.core.copyToClipboard.text(("' + list[count].name + ': OS ' + idrinth.tier.list[list[count]].os.nm + ', FS ' + idrinth.tier.list[list[count]].fs.nm + ', Tiers ' + formattedList ( idrinth.tier.list[list[count]].nm ) + '");'
+                                    },
+                                    {
+                                        name: 'type',
+                                        value: 'action'
+                                    }
+                                ]
+                            },
+                            {
+                                type: 'button',
                                 content: idrinth.text.get ( "tier.tag" ),
                                 attributes: [
                                     {
                                         name: 'onclick',
-                                        value: 'idrinth.tier.addTagged(\'' + list[count].replace ( /'/g, '\\\'' ) + '\');'
+                                        value: 'idrinth.tier.getAsText(\'' + list[count].replace ( /'/g, '\\\'' ) + '\');'
                                     },
                                     {
                                         name: 'type',
