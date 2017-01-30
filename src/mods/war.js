@@ -269,6 +269,12 @@ idrinth.war = {
                                     {
                                         type: 'span',
                                         css: 'idrinth-circle',
+                                        attributes: [
+                                            {
+                                                name: 'onclick',
+                                                value: 'this.parentNode.parentNode.hasAttribute("style")?this.parentNode.parentNode.removeAttribute("style"):this.parentNode.parentNode.setAttribute("style","bottom:0;top:auto");'
+                                            }
+                                        ],
                                         content: '\u2195'
                                     }
                                 ]
