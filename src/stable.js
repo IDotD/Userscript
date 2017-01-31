@@ -1,4 +1,4 @@
-var idrinth = ( function () {
+window.idrinth = ( function () {
     'use strict';
     var idrinth = {
         /**
