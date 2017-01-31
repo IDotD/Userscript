@@ -335,7 +335,7 @@ idrinth.core = {
                 idrinth.core.multibind.events[event][selector].push ( method );
             };
             if ( !idrinth.core.multibind.events[event] ) {
-                idrinth.ui.base.addEventListener ( event, idrinth.core.multibind.triggered );
+                document.getElementsByTagName ( 'body' )[0].addEventListener ( event, idrinth.core.multibind.triggered );
             }
             bind ( event, selector, method );
         },
