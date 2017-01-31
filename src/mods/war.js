@@ -278,6 +278,17 @@
                                                 }
                                             ],
                                             content: '\u2195'
+                                        },
+                                        {
+                                            type: 'span',
+                                            css: 'idrinth-circle',
+                                            attributes: [
+                                                {
+                                                    name: 'onclick',
+                                                    value: 'this.parentNode.nextSibling.hasAttribute("style")?this.parentNode.nextSibling.removeAttribute("style"):this.parentNode.nextSibling.setAttribute("style","display:none");'
+                                                }
+                                            ],
+                                            content: 'X'
                                         }
                                     ]
                                 },
