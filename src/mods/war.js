@@ -329,7 +329,7 @@ idrinth.war = {
             );
             idrinth.ui.base.appendChild ( idrinth.war.element );
         };
-        idrinth.core.timeouts.add ( 'war', idrinth.war.getData, 5000 );
+        idrinth.core.timeouts.add ( 'war', idrinth.war.getData, 5000, -1 );
         build ();
     }
 };
