@@ -20,7 +20,7 @@ idrinth.war = {
      */
     setTO: function ( ) {
         var active = ( idrinth.war.element.getAttribute ( 'class' ) ).match ( /(^|\s)idrinth-hide($|\s)/ ) !== null;
-        idrinth.core.timeouts.add ( 'war', idrinth.war.getData, active ? 30000 : 120000 );
+        idrinth.core.timeouts.add ( 'war', idrinth.war.getData, active ? 30000 : 120000, -1 );
     },
     /**
      * requests data from the server

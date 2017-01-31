@@ -108,7 +108,6 @@ idrinth.names = {
             idrinth.core.log ( e );
         }
         idrinth.names.counter = ( idrinth.names.counter + 1 ) % 300;
-        idrinth.core.timeouts.add ( 'names', idrinth.names.run, 6666 );
     },
     /**
      * initialises the module
@@ -259,7 +258,7 @@ idrinth.names = {
         };
         if ( idrinth.platform === 'kongregate' ) {
             idrinth.core.multibind.add ( 'mouseover', '.chat_message_window .username', showTooltip );
-            idrinth.core.timeouts.add ( 'names', idrinth.names.run, 10000 );
+            idrinth.core.timeouts.add ( 'names', idrinth.names.run, 6666, -1 );
             build ();
         }
     }
