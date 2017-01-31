@@ -1,4 +1,4 @@
-window.idrinth = ( function () {
+( function () {
     'use strict';
     var idrinth = {
         /**
@@ -95,5 +95,5 @@ window.idrinth = ( function () {
         }
     };
     window.setTimeout ( idrinth.start, 6666 );
-    return idrinth;
+    window.idrinth = idrinth;
 } () );
