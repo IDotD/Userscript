@@ -266,4 +266,4 @@
             }
         }
     };
-} ( idrinth ) );
+} ( window.idrinth ) );

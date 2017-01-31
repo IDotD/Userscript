@@ -335,4 +335,4 @@
             build ();
         }
     };
-} ( idrinth ) );
+} ( window.idrinth ) );

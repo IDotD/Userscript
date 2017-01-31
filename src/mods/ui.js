@@ -1136,4 +1136,4 @@
             build ();
         }
     };
-} ( idrinth ) );
+} ( window.idrinth ) );

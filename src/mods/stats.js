@@ -111,4 +111,4 @@
             }
         }
     };
-} ( idrinth ) );
+} ( window.idrinth ) );

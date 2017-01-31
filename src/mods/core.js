@@ -377,4 +377,4 @@
             }
         }
     };
-} ( idrinth ) );
+} ( window.idrinth ) );

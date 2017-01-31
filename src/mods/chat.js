@@ -960,4 +960,4 @@
             idrinth.core.ajax.runHome ( urls[key], success, fail, timeout, JSON.stringify ( headers ) );
         }
     };
-} ( idrinth ) );
+} ( window.idrinth ) );

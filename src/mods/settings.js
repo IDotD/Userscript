@@ -422,4 +422,4 @@
             }
         }
     };
-} ( idrinth ) );
+} ( window.idrinth ) );

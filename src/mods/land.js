@@ -263,4 +263,4 @@
             }
         }
     };
-} ( idrinth ) );
+} ( window.idrinth ) );
