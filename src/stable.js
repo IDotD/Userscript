@@ -1,4 +1,6 @@
-var idrinth = {
+var idrinth = ( function () {
+    'use strict';
+    var idrinth = {
         /**
          * @type String
          */
@@ -93,3 +95,5 @@ var idrinth = {
         }
     };
     window.setTimeout ( idrinth.start, 6666 );
+    return idrinth;
+} () );
