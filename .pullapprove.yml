@@ -4,7 +4,8 @@ requirements:
     required: false
 group_defaults:
   approve_by_comment:
-    approve_regex: '(?i)^(:shipit:|:\\+1:|LGTM|Approved|Looks\\s+Good\\s+To\\s+Me|Seems\\s+good|Looks\\s+good)'
+    approve_regex: '^(:shipit:|:\+1:|LGTM|Approved|Looks\s+Good|Seems\s+Good)/i'
+    reject_regex: '^(Rejected|:-1:)/i'
   reset_on_push:
     enabled: true
 groups:
