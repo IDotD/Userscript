@@ -414,33 +414,6 @@ idrinth.ui = {
     },
     /**
      *
-     * @returns {undefined}
-     */
-    reloadGame: function () {
-        /**
-         * @param {HTMLElement} parent
-         */
-        var handleFrame = function ( parent ) {
-            var frame = parent.getElementsByTagName ( 'iframe' )[0];
-            var src = ( frame.getAttribute ( 'src' ) ).replace ( /&ir=.*/, '' );
-            frame.setAttribute ( 'src', src + ( src.indexOf ( '?' ) > -1 ? '&' : '?' ) + 'ir=' + Math.random () );
-        };
-        try {
-            if ( idrinth.platform === 'kongregate' ) {
-                window.activateGame ();
-            } else if ( idrinth.platform === 'facebook'/*'dawnofthedragons'*/ ) {
-                handleFrame ( document );
-            } else if ( idrinth.platform === 'newgrounds' ) {
-                handleFrame ( document.getElementById ( 'iframe_embed' ) );
-            } else if ( idrinth.platform === 'armorgames' ) {
-                handleFrame ( document.getElementById ( 'gamefilearea' ) );
-            }
-        } catch ( e ) {
-            idrinth.core.alert ( idrinth.text.get ( "ui.reloadGameFail" ) );
-        }
-    },
-    /**
-     *
      * @param {HTMLElement} element
      * @param {Array|String} add
      * @param {Array|String} remove
@@ -559,7 +532,8 @@ idrinth.ui = {
                             children: [
                                 buttonMaker ( idrinth.text.get ( "raids.imports.manually" ), 'idrinth.raids.import(\'\');' ),
                                 buttonMaker ( idrinth.text.get ( "raids.imports.favs" ), 'idrinth.raids.import(idrinth.settings.get("favs"));' ),
-                                buttonMaker ( idrinth.text.get ( "button.reloadGame" ), 'idrinth.ui.reloadGame();' ),
+                                buttonMaker ( idrinth.text.get ( "button.reloadGame" ), 'idrinth.inframe.send(\'game\');' ),
+                                buttonMaker ( idrinth.text.get ( "button.reloadChat" ), 'idrinth.inframe.send(\'chat\');' ),
                                 buttonMaker ( idrinth.text.get ( "raids.clear" ), 'idrinth.raids.clearAll();' ),
                                 buttonMaker ( idrinth.text.get ( "button.reloadScript" ), 'idrinth.reload();' ),
                                 buttonMaker ( idrinth.text.get ( "raids.imports.restart" ), 'idrinth.raids.start();' ),
