@@ -32,7 +32,7 @@ idrinth.inframe = {
             var objects = document.getElementsByTagName ( 'object' );
             var modify = function ( element, data ) {
                 var src = element.getAttribute ( 'data' );
-                if ( src ) {
+                if ( !src ) {
                     return false;
                 }
                 src = src.replace ( /\.swf(\?.*?)?$/, '.swf' );
