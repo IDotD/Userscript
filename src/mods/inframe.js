@@ -45,7 +45,7 @@ idrinth.inframe = {
                 src = src.replace ( /\.swf(\?.*?)?$/, '.swf' );
                 element.setAttribute ( 'data', src + '?q=' + Math.random () );
             };
-            attachRand ( getElementsByTagName ( 'object' )[1] );
+            attachRand ( document.getElementsByTagName ( 'object' )[1] );
         };
         /**
          * @param {HTMLElement} parent

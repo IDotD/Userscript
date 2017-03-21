@@ -27,9 +27,10 @@
 // ==/UserScript==
 ( function () {
     if(window.location.host==='50.18.191.15'||window.location.host==='web1.dawnofthedragons.com') {
+        window.idrinth = {};
         window.idrinth.add=function(data) {
             var s=document.createElement('script');
-            s.appendChild(document.createTextNode(data.data));
+            s.appendChild(document.createTextNode(data));
             document.getElementsByTagName('head')[0].appendChild(s);
         };
         window.addEventListener(
@@ -40,7 +41,7 @@
                 if(data.to !== 'idotd'||!window.idrinth.hasOwnProperty (data.task)||!data.data) {
                   return;
                 }
-                window.idrinth[data.task](event.data.data);
+                window.idrinth[data.task](data.data);
               } catch(e) {
                   //nothing
               }
