@@ -27,7 +27,7 @@
 // ==/UserScript==
 ( function () {
     if(window.location.host==='50.18.191.15'||window.location.host==='web1.dawnofthedragons.com') {
-        window.addEventListener(
+        document.addEventListener(
           "message",
           function (event){
               try{

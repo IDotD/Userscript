@@ -1,5 +1,15 @@
 idrinth.inframe = {
+    /**
+     * the game's iframe
+     * @type HTMLElement
+     */
     game: null,
+    /**
+     * 
+     * @param {string} task
+     * @param {string} data
+     * @returns {undefined}
+     */
     send: function ( task, data ) {
         idrinth.inframe.game.sendMessage (
                 JSON.stringify ( {
@@ -9,8 +19,16 @@ idrinth.inframe = {
                 } )
                 );
     },
-    init: function () {
-        var initRemote = function () {
+    /**
+     * 
+     * @returns {undefined}
+     */
+    start: function () {
+        /**
+         * remote initialisation
+         * @returns {undefined}
+         */
+        var init = function () {
             window.addEventListener (
                     "message",
                     function ( event ) {
@@ -53,7 +71,7 @@ idrinth.inframe = {
             } else if ( idrinth.platform === 'armorgames' ) {
                 handleFrame ( document.getElementById ( 'gamefilearea' ) );
             }
-            idrinth.inframe.send ( 'init', '(' + initRemote.toString () + ')();' );
+            idrinth.inframe.send ( 'init', '(' + init.toString () + ')();' );
         } catch ( e ) {
             idrinth.core.log ( 'failed to find frame' );
         }

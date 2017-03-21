@@ -391,7 +391,7 @@ idrinth.ui = {
      */
     childOf: function ( element, cssClass ) {
         do {
-            if ( element.className.match ( new RegExp ( '(^|\s)' + cssClass + '(\s|$)' ) ) ) {
+            if ( element.className && element.className.match ( new RegExp ( '(^|\s)' + cssClass + '(\s|$)' ) ) ) {
                 return true;
             }
             if ( !element.parentNode || element === idrinth.ui.base ) {
