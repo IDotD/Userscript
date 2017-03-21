@@ -24,6 +24,8 @@
 // @include        http://www.armorgames.com/dawn-of-the-dragons-game/13509*
 // @include        http://web1.dawnofthedragons.com/*
 // @include        http://50.18.191.15/*
+// @include        https://web1.dawnofthedragons.com/*
+// @include        https://50.18.191.15/*
 // ==/UserScript==
 ( function () {
     if(window.location.host==='50.18.191.15'||window.location.host==='web1.dawnofthedragons.com') {
