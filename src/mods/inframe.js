@@ -11,7 +11,7 @@ idrinth.inframe = {
      * @returns {undefined}
      */
     send: function ( task, data ) {
-        idrinth.inframe.game.sendMessage (
+        idrinth.inframe.game.postMessage (
                 JSON.stringify ( {
                     to: 'idotd',
                     task: task,
