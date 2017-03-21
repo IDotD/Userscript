@@ -26,37 +26,26 @@ idrinth.inframe = {
      */
     start: function () {
         /**
-         * remote initialisation
          * @returns {undefined}
          */
-        var init = function () {
-            window.addEventListener (
-                    "message",
-                    function ( event ) {
-                        var attachRand = function ( element ) {
-                            var src = element.getAttribute ( 'data' );
-                            src = src.replace ( /\.swf(\?.*?)?$/, '.swf' );
-                            element.setAttribute ( 'data', src + '?q=' + Math.random () );
-                        };
-                        try {
-                            var data = JSON.parse ( event.data );
-                            if ( data.to !== 'idotd' ) {
-                                return;
-                            }
-                            switch ( data.task ) {
-                                case 'game':
-                                    attachRand ( getElementsByTagName ( 'object' )[0] );
-                                    break;
-                                case 'chat':
-                                    attachRand ( getElementsByTagName ( 'object' )[1] );
-                                    break;
-                            }
-                        } catch ( e ) {
-                            //nothing
-                        }
-                    },
-                    false
-                    );
+        var game = function (data) {
+            var attachRand = function ( element ) {
+                var src = element.getAttribute ( 'data' );
+                src = src.replace ( /\.swf(\?.*?)?$/, '.swf' );
+                element.setAttribute ( 'data', src + '?q=' + Math.random () );
+            };
+            attachRand ( getElementsByTagName ( 'object' )[0] );
+        };
+        /**
+         * @returns {undefined}
+         */
+        var chat = function (data) {
+            var attachRand = function ( element ) {
+                var src = element.getAttribute ( 'data' );
+                src = src.replace ( /\.swf(\?.*?)?$/, '.swf' );
+                element.setAttribute ( 'data', src + '?q=' + Math.random () );
+            };
+            attachRand ( getElementsByTagName ( 'object' )[1] );
         };
         /**
          * @param {HTMLElement} parent
@@ -74,7 +63,8 @@ idrinth.inframe = {
             } else if ( idrinth.platform === 'armorgames' ) {
                 handleFrame ( document.getElementById ( 'gamefilearea' ) );
             }
-            idrinth.inframe.send ( 'init', '(' + init.toString () + ')();' );
+            idrinth.inframe.send ( 'add', 'window.idrinth.game=' + game.toString () + ';' );
+            idrinth.inframe.send ( 'add', 'window.idrinth.chat=' + chat.toString () + ';' );
         } catch ( e ) {
             idrinth.core.log ( 'failed to find frame' );
         }
