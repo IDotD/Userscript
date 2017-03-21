@@ -15,7 +15,7 @@ idrinth.inframe = {
                 JSON.stringify ( {
                     to: 'idotd',
                     task: task,
-                    data: !data?true:data
+                    data: !data ? true : data
                 } ),
                 '*'
                 );
@@ -28,22 +28,22 @@ idrinth.inframe = {
         /**
          * @returns {undefined}
          */
-        var reload = function (data) {
+        var reload = function ( data ) {
             var objects = document.getElementsByTagName ( 'object' );
-            var modify = function(element,data) {
+            var modify = function ( element, data ) {
                 var src = element.getAttribute ( 'data' );
-                if(src) {
+                if ( src ) {
                     return false;
                 }
                 src = src.replace ( /\.swf(\?.*?)?$/, '.swf' );
-                if(src.match (new RegExp(data+'\\.swf$'))) {
+                if ( src.match ( new RegExp ( data + '\\.swf$' ) ) ) {
                     objects[count].setAttribute ( 'data', src + '?q=' + Math.random () );
                     return true;
                 }
                 return false;
             };
-            for(var count=0;count<objects.length;count++ ) {
-                if(modify(objects[count],data)) {
+            for (var count = 0; count < objects.length; count++) {
+                if ( modify ( objects[count], data ) ) {
                     return;
                 }
             }
@@ -58,7 +58,7 @@ idrinth.inframe = {
             if ( idrinth.platform === 'facebook'/*'dawnofthedragons'*/ ) {
                 handleFrame ( document );
             } else if ( idrinth.platform === 'kongregate' ) {
-                handleFrame ( document.getElementById('game') );
+                handleFrame ( document.getElementById ( 'game' ) );
             } else if ( idrinth.platform === 'newgrounds' ) {
                 handleFrame ( document.getElementById ( 'iframe_embed' ) );
             } else if ( idrinth.platform === 'armorgames' ) {
