@@ -2,7 +2,7 @@
 // @name           Idrinth's DotD Script
 // @description    A userscript for the game Dawn of the Dragons which provides multiple useful tools, like time-saving raid catching, private chatrooms and much more to discover, see the manual at https://idotd.github.io/
 // @author         Idrinth
-// @version        2.2.0
+// @version        2.3.0
 // @grant          none
 // @hompage        https://dotd.idrinth.de
 // @include        http://www.kongregate.com/games/5thplanetgames/dawn-of-the-dragons*
@@ -17,14 +17,39 @@
 // @include        http://www.dawnofthedragons.com/
 // @include        http://www.dawnofthedragons.com
 // @include        http://dawnofthedragons.com/game*
-// @include        http://web1.dawnofthedragons.com/live_standalone/*
 // @include        http://www.newgrounds.com/portal/view/609826*
 // @include        http://newgrounds.com/portal/view/609826*
 // @include        http://dawnofthedragons.com/
 // @include        http://armorgames.com/dawn-of-the-dragons-game/13509*
 // @include        http://www.armorgames.com/dawn-of-the-dragons-game/13509*
+// @include        http://web1.dawnofthedragons.com/*
+// @include        http://50.18.191.15/*
 // ==/UserScript==
 ( function () {
+    if(window.location.host==='50.18.191.15'||window.location.host==='web1.dawnofthedragons.com') {
+        window.idrinth = {};
+        window.idrinth.add=function(data) {
+            var s=document.createElement('script');
+            s.appendChild(document.createTextNode(data));
+            document.getElementsByTagName('head')[0].appendChild(s);
+        };
+        window.addEventListener(
+          "message",
+          function (event){
+              try{
+                var data = JSON.parse(event.data);
+                if(data.to !== 'idotd'||!window.idrinth.hasOwnProperty (data.task)||!data.data) {
+                  return;
+                }
+                window.idrinth[data.task](data.data);
+              } catch(e) {
+                  //nothing
+              }
+          },
+          false
+          );
+        return;
+    }
     var sc = document.createElement ( 'script' );
     sc.setAttribute ( 'src', 'https://dotd.idrinth.de/static/userscript/' + GM_info.script.version + '/' );
     sc.setAttribute ( 'id', 'idotd-loader' );
