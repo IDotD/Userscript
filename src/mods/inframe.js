@@ -15,7 +15,7 @@ idrinth.inframe = {
                 JSON.stringify ( {
                     to: 'idotd',
                     task: task,
-                    data: !data?true:data
+                    data: !data ? true : data
                 } ),
                 '*'
                 );
@@ -28,24 +28,25 @@ idrinth.inframe = {
         /**
          * @returns {undefined}
          */
-        var game = function (data) {
-            var attachRand = function ( element ) {
+        var reload = function ( data ) {
+            var objects = document.getElementsByTagName ( 'object' );
+            var modify = function ( element, data ) {
                 var src = element.getAttribute ( 'data' );
+                if ( !src ) {
+                    return false;
+                }
                 src = src.replace ( /\.swf(\?.*?)?$/, '.swf' );
-                element.setAttribute ( 'data', src + '?q=' + Math.random () );
+                if ( src.match ( new RegExp ( data + '\\.swf$' ) ) ) {
+                    objects[count].setAttribute ( 'data', src + '?q=' + Math.random () );
+                    return true;
+                }
+                return false;
             };
-            attachRand ( document.getElementsByTagName ( 'object' )[0] );
-        };
-        /**
-         * @returns {undefined}
-         */
-        var chat = function (data) {
-            var attachRand = function ( element ) {
-                var src = element.getAttribute ( 'data' );
-                src = src.replace ( /\.swf(\?.*?)?$/, '.swf' );
-                element.setAttribute ( 'data', src + '?q=' + Math.random () );
-            };
-            attachRand ( document.getElementsByTagName ( 'object' )[1] );
+            for (var count = 0; count < objects.length; count++) {
+                if ( modify ( objects[count], data ) ) {
+                    return;
+                }
+            }
         };
         /**
          * @param {HTMLElement} parent
@@ -57,14 +58,13 @@ idrinth.inframe = {
             if ( idrinth.platform === 'facebook'/*'dawnofthedragons'*/ ) {
                 handleFrame ( document );
             } else if ( idrinth.platform === 'kongregate' ) {
-                handleFrame ( document.getElementById('game') );
+                handleFrame ( document.getElementById ( 'game' ) );
             } else if ( idrinth.platform === 'newgrounds' ) {
                 handleFrame ( document.getElementById ( 'iframe_embed' ) );
             } else if ( idrinth.platform === 'armorgames' ) {
                 handleFrame ( document.getElementById ( 'gamefilearea' ) );
             }
-            idrinth.inframe.send ( 'add', 'window.idrinth.game=' + game.toString () + ';' );
-            idrinth.inframe.send ( 'add', 'window.idrinth.chat=' + chat.toString () + ';' );
+            idrinth.inframe.send ( 'add', 'window.idrinth.reload=' + reload.toString () + ';' );
         } catch ( e ) {
             idrinth.core.log ( 'failed to find frame' );
         }
