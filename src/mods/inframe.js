@@ -64,8 +64,10 @@ idrinth.inframe = {
             idrinth.inframe.game = parent.getElementsByTagName ( 'iframe' )[0];
         };
         try {
-            if ( idrinth.platform === 'kongregate' || idrinth.platform === 'facebook'/*'dawnofthedragons'*/ ) {
+            if ( idrinth.platform === 'facebook'/*'dawnofthedragons'*/ ) {
                 handleFrame ( document );
+            } else if ( idrinth.platform === 'kongregate' ) {
+                handleFrame ( document.getElementById('game') );
             } else if ( idrinth.platform === 'newgrounds' ) {
                 handleFrame ( document.getElementById ( 'iframe_embed' ) );
             } else if ( idrinth.platform === 'armorgames' ) {
