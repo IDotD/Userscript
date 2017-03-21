@@ -532,8 +532,8 @@ idrinth.ui = {
                             children: [
                                 buttonMaker ( idrinth.text.get ( "raids.imports.manually" ), 'idrinth.raids.import(\'\');' ),
                                 buttonMaker ( idrinth.text.get ( "raids.imports.favs" ), 'idrinth.raids.import(idrinth.settings.get("favs"));' ),
-                                buttonMaker ( idrinth.text.get ( "button.reloadGame" ), 'idrinth.inframe.send(\'game\');' ),
-                                buttonMaker ( idrinth.text.get ( "button.reloadChat" ), 'idrinth.inframe.send(\'chat\');' ),
+                                buttonMaker ( idrinth.text.get ( "button.reloadGame" ), 'idrinth.inframe.send(\'reload\',\'game\');' ),
+                                buttonMaker ( idrinth.text.get ( "button.reloadChat" ), 'idrinth.inframe.send(\'reload\',\'chat\');' ),
                                 buttonMaker ( idrinth.text.get ( "raids.clear" ), 'idrinth.raids.clearAll();' ),
                                 buttonMaker ( idrinth.text.get ( "button.reloadScript" ), 'idrinth.reload();' ),
                                 buttonMaker ( idrinth.text.get ( "raids.imports.restart" ), 'idrinth.raids.start();' ),
