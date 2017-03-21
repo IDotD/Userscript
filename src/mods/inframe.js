@@ -15,7 +15,7 @@ idrinth.inframe = {
                 JSON.stringify ( {
                     to: 'idotd',
                     task: task,
-                    data: data
+                    data: !data?true:data
                 } ),
                 '*'
                 );
