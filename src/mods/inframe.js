@@ -16,7 +16,8 @@ idrinth.inframe = {
                     to: 'idotd',
                     task: task,
                     data: data
-                } )
+                } ),
+                '*'
                 );
     },
     /**
@@ -61,7 +62,7 @@ idrinth.inframe = {
          * @param {HTMLElement} parent
          */
         var handleFrame = function ( parent ) {
-            idrinth.inframe.game = parent.getElementsByTagName ( 'iframe' )[0];
+            idrinth.inframe.game = parent.getElementsByTagName ( 'iframe' )[0].contentWindow;
         };
         try {
             if ( idrinth.platform === 'facebook'/*'dawnofthedragons'*/ ) {
