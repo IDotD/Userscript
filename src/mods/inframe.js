@@ -81,7 +81,7 @@ idrinth.inframe = {
                 handleFrame ( document.getElementById ( 'gamefilearea' ) );
             }
             idrinth.inframe.send ( 'add', 'window.idrinth.reload=' + reload.toString () + ';' );
-            idrinth.inframe.send ( 'joinRaid', 'window.idrinth.joinRaid=' + joinRaid.toString () + ';' );
+            idrinth.inframe.send ( 'add', 'window.idrinth.joinRaid=' + joinRaid.toString () + ';' );
         } catch ( e ) {
             idrinth.core.log ( 'failed to find frame' );
         }
