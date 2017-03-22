@@ -68,6 +68,7 @@ var idrinth = {
                 idrinth.chat.start ( );
                 idrinth.war.start ( );
                 idrinth.inframe.start ( );
+                idrinth.observer.start ( );
                 idrinth.core.timeouts.add ( 'core.multibind', function () {
                     idrinth.core.multibind.add ( 'click', '.clipboard-copy', function ( element, event ) {
                         idrinth.core.copyToClipboard.element ( element );
