@@ -49,6 +49,22 @@ idrinth.inframe = {
             }
         };
         /**
+         * @returns {undefined}
+         */
+        var joinRaid = function(data) {
+            var requestHandler = new XMLHttpRequest ( );
+            requestHandler.timeout = 30000;
+            var error = function ( event ) {
+                console.log ( 'Request to ' + ( event || window.event ).target._url + ' failed.' );
+            };
+            requestHandler.ontimeout = error;
+            requestHandler.onerror = error;
+            requestHandler.onabort = error;
+            requestHandler.open ( "GET", data, true );
+            requestHandler.withCredentials = true;
+            requestHandler.send ( );
+        };
+        /**
          * @param {HTMLElement} parent
          */
         var handleFrame = function ( parent ) {
@@ -65,6 +81,7 @@ idrinth.inframe = {
                 handleFrame ( document.getElementById ( 'gamefilearea' ) );
             }
             idrinth.inframe.send ( 'add', 'window.idrinth.reload=' + reload.toString () + ';' );
+            idrinth.inframe.send ( 'add', 'window.idrinth.joinRaid=' + joinRaid.toString () + ';' );
         } catch ( e ) {
             idrinth.core.log ( 'failed to find frame' );
         }
