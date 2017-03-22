@@ -277,65 +277,16 @@ idrinth.raids = {
                  * @returns {function[]}
                  */
                 var getServerMethods = function () {
-                    var byAjax = function ( key ) {
-                        idrinth.core.ajax.run (
-                                idrinth.raids.join.getServerLink ( key ),
-                                function () {
-                                    idrinth.raids.join.messages.success ( key );
-                                },
-                                function () {
-                                    idrinth.raids.join.messages.failed ( key );
-                                },
-                                function () {
-                                    idrinth.raids[key].joined = false;
-                                    idrinth.raids.join.messages.failed ( key );
-                                }
-                        );
-                    };
                     /**
                      * 
                      * @param {String} key
-                     * @returns {undefined}
+                     * @returns {Function}
                      */
-                    var byFrame = function ( key ) {
-                        var exist = document.getElementsByClassName ( 'idrinth-join-frame' ).length;
-                        if ( exist >= idrinth.settings.get ( "windows" ) ) {
-                            idrinth.raids.list[key].joined = false;
-                            return;
-                        }
-                        var frame = idrinth.ui.buildElement ( {
-                            type: 'iframe',
-                            css: 'idrinth-join-frame',
-                            id: 'join-' + key,
-                            attributes: [
-                                {
-                                    name: 'src',
-                                    value: idrinth.raids.join.getServerLink ( key )
-                                },
-                                {
-                                    name: 'sandbox',
-                                    value: 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
-                                },
-                                {
-                                    name: 'style',
-                                    value: 'top:' + exist + 'px;'
-                                },
-                                {
-                                    name: 'onload',
-                                    value: 'try{event.stopPropagation();}catch(e){}idrinth.core.timeouts.add(\'raids.join.cleanup.' + key + '\',{function(){idrinth.ui.removeElement(\'' + key + '\');},1234);'
-                                },
-                                {
-                                    name: 'onunload',
-                                    value: 'try{event.stopPropagation();}catch(e){}'
-                                }
-                            ]
-                        } );
-                        ( ( function ( key ) {
-                            return idrinth.core.timeouts.add ( 'raids.join.remove.' + key, function () {
-                                idrinth.ui.removeElement ( 'join-' + key );
-                            }, 30000 );
-                        } ) ( key ) );
-                        idrinth.ui.base.appendChild ( frame );
+                    var byMessage = function(key) {
+                        idrinth.inframe.send (
+                                'joinRaid',
+                                (idrinth.raids.join.getServerLink ( key )).replace(/^.*raidjoin\.php/,'raidjoin.php')
+                        );
                         idrinth.raids.join.messages.trying ( key );
                     };
                     /**
@@ -368,10 +319,8 @@ idrinth.raids = {
                         }
                     };
                     var options = [ postLink ];
-                    if ( idrinth.platform === 'armorgames' || idrinth.platform === 'kongregate' ) {
-                        options.push ( byAjax );
-                    } else if ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) {
-                        options.push ( byFrame );
+                    if ( idrinth.platform !== 'newgrounds') {
+                        options.push ( byMessage );
                     }
                     return options;
                 };
