@@ -1,6 +1,21 @@
 idrinth.observer = {
+    /**
+     * 
+     * @type MutationObserver[]
+     */
     list: { },
+    /**
+     * 
+     * @param {MutationRecord[]} mutations
+     * @param {boolean} isPrivate
+     * @returns {undefined}
+     */
     handle: function ( mutations, isPrivate ) {
+        /**
+         * 
+         * @param {HTMLElement} element
+         * @returns {undefined}
+         */
         var handleLink = function ( element ) {
             var href = element.getAttribute ( 'href' );
             if ( href && href.match ( /action_type=raidhelp/ ) ) {
@@ -15,7 +30,7 @@ idrinth.observer = {
                         hash = parts[count].split ( '=' )[1];
                     } else if ( parts[count].match ( 'serverid=2' ) && !idrinth.settings.get ( "world" ) ) {
                         return;
-                    } else if ( parts[count].match ( 'server_id=2' ) && !idrinth.settings.get ( "world" ) ) {
+                    } else if ( !parts[count].match ( 'server_id=2' ) && idrinth.settings.get ( "world" ) ) {
                         return;
                     }
                 }
@@ -40,6 +55,10 @@ idrinth.observer = {
             } );
         } );
     },
+    /**
+     * 
+     * @returns {undefined}
+     */
     start: function () {
         if ( idrinth.platform !== 'kongregate' ) {
             return;

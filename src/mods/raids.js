@@ -1,18 +1,44 @@
 idrinth.raids = {
-    script: null,
+    /**
+     * @type Object
+     */
     list: { },
+    /**
+     * @type Object
+     */
     private: {},
+    /**
+     * @type Object
+     */
     joined: { },
+    /**
+     * @type Number
+     */
     requested: 0,
+    /**
+     * 
+     * @param {Number} id
+     * @returns {undefined}
+     */
     import: function ( id ) {
         if ( !idrinth.platform ) {
             return;
         }
+        /**
+         * 
+         * @param {String} toImport
+         * @returns {String}
+         */
         var getImportLink = function ( toImport ) {
             return 'raid-service/' + ( toImport === '' ? '_' : toImport ) + '/';
         };
         idrinth.core.ajax.runHome (
                 getImportLink ( id ),
+                /**
+                 * 
+                 * @param {string} responseText
+                 * @returns {undefined}
+                 */
                 function ( responseText ) {
                     var delHandler = function ( key ) {
                         if ( key in idrinth.raids.list ) {
@@ -42,9 +68,17 @@ idrinth.raids = {
                 idrinth.raids.knowRaids ()
                 );
     },
+    /**
+     * 
+     * @returns {String}
+     */
     knowRaids: function () {
         return ( ( Object.keys ( idrinth.raids.joined ) ).concat ( Object.keys ( idrinth.raids.list ) ) ).join ();
     },
+    /**
+     * 
+     * @returns {undefined}
+     */
     clearAll: function () {
         idrinth.core.timeouts.remove ( 'raids' );
         while ( document.getElementById ( "idrinth-raid-link-list" ).firstChild ) {
@@ -55,11 +89,33 @@ idrinth.raids = {
         idrinth.raids.start ();
     },
     join: {
+        /**
+         * 
+         */
         data: {
+            /**
+             * @type String
+             */
             prefix: null,
+            /**
+             * @type String
+             */
             tag: null
         },
+        /**
+         * 
+         * @param {String} key
+         * @returns {String}
+         */
         getServerLink: function ( key ) {
+            /**
+             * 
+             * @param {Object} list
+             * @param {String} key
+             * @param {String} prefix
+             * @param {String} tag
+             * @returns {String|Boolean}
+             */
             var getLink = function ( list, key, prefix, tag ) {
                 var build = function ( data, tag, prefix ) {
                     try {
@@ -80,6 +136,10 @@ idrinth.raids = {
                     }
                 }
             };
+            /**
+             * 
+             * @returns {String}
+             */
             var makePrefix = function () {
                 if ( idrinth.raids.join.data.prefix === null ) {
                     var sites = {
@@ -99,6 +159,10 @@ idrinth.raids = {
                 }
                 return idrinth.raids.join.data.prefix;
             };
+            /**
+             * 
+             * @returns {String}
+             */
             var makeTag = function () {
                 if ( idrinth.raids.join.data.tag === null ) {
                     var sites = {
@@ -124,7 +188,16 @@ idrinth.raids = {
             }
             return prefix;
         },
+        /**
+         * 
+         */
         messages: {
+            /**
+             * 
+             * @param {String} string
+             * @param {String} key
+             * @returns {undefined}
+             */
             log: function ( string, key ) {
                 var message = ( string.replace ( '#name#', idrinth.raids.list[key].name ) ).replace ( '#raid#', idrinth.raids.list[key].raid );
                 idrinth.core.log ( message );
@@ -140,20 +213,40 @@ idrinth.raids = {
                     ul.insertBefore ( li, ul.firstChild );
                 }
             },
+            /**
+             * 
+             * @param {String} key
+             * @returns {undefined}
+             */
             addToJoined: function ( key ) {
                 if ( key && idrinth.raids.list.hasOwnProperty ( key ) ) {
                     idrinth.raids.joined[key] = idrinth.raids.list[key];
                     delete idrinth.raids.list[key];
                 }
             },
+            /**
+             * 
+             * @param {String} key
+             * @returns {undefined}
+             */
             success: function ( key ) {
                 idrinth.raids.join.messages.log ( 'Joined #name#\'s #raid#.', key );
                 idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
                 this.addToJoined ( key );
             },
+            /**
+             * 
+             * @param {String} key
+             * @returns {undefined}
+             */
             failed: function ( key ) {
                 idrinth.raids.join.messages.log ( 'Could not join #name#\'s #raid#', key );
             },
+            /**
+             * 
+             * @param {String} key
+             * @returns {undefined}
+             */
             trying: function ( key ) {
                 ( ( function ( key ) {
                     idrinth.core.timeouts.add ( 'raid.join.' + key, function () {
@@ -169,8 +262,20 @@ idrinth.raids = {
                 this.addToJoined ( key );
             }
         },
+        /**
+         * 
+         * @returns {undefined}
+         */
         process: function () {
+            /**
+             * 
+             * @returns {Boolean}
+             */
             var join = function () {
+                /**
+                 * 
+                 * @returns {function[]}
+                 */
                 var getServerMethods = function () {
                     var byAjax = function ( key ) {
                         idrinth.core.ajax.run (
@@ -187,6 +292,11 @@ idrinth.raids = {
                                 }
                         );
                     };
+                    /**
+                     * 
+                     * @param {String} key
+                     * @returns {undefined}
+                     */
                     var byFrame = function ( key ) {
                         var exist = document.getElementsByClassName ( 'idrinth-join-frame' ).length;
                         if ( exist >= idrinth.settings.get ( "windows" ) ) {
@@ -228,6 +338,11 @@ idrinth.raids = {
                         idrinth.ui.base.appendChild ( frame );
                         idrinth.raids.join.messages.trying ( key );
                     };
+                    /**
+                     * 
+                     * @param {String} key
+                     * @returns {undefined}
+                     */
                     var postLink = function ( key ) {
                         if ( !document.getElementById ( 'idrinth-raid-link-' + key ) ) {
                             document.getElementById ( 'idrinth-raid-link-list' ).appendChild (
@@ -260,9 +375,21 @@ idrinth.raids = {
                     }
                     return options;
                 };
+                /**
+                 * 
+                 * @param {Number} amount
+                 * @returns {Boolean}
+                 */
                 var reachedMax = function ( amount ) {
                     return amount > 99 || ( ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) && amount >= idrinth.settings.get ( "windows" ) );
                 };
+                /**
+                 * 
+                 * @param {Number} added
+                 * @param {String} key
+                 * @param {function[]} options
+                 * @returns {Number}
+                 */
                 var handleKey = function ( added, key, options ) {
                     var raid = idrinth.raids.list[key];
                     if ( !raid.joined ) {
@@ -288,6 +415,10 @@ idrinth.raids = {
                 }
                 return false;
             };
+            /**
+             * requests information for raids caught from a third party(chat for example)
+             * @returns {undefined}
+             */
             var handlePrivates = function() {
                 for(var raidId in idrinth.raids.private) {
                     idrinth.core.ajax.runHome (
@@ -319,6 +450,10 @@ idrinth.raids = {
             handlePrivates();
         }
     },
+    /**
+     * 
+     * @returns {undefined}
+     */
     start: function () {
         idrinth.core.timeouts.remove ( 'raids' );
         idrinth.core.timeouts.add ( 'raids', idrinth.raids.join.process, 1500, -1 );
