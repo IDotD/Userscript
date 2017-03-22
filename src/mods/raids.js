@@ -1,6 +1,7 @@
 idrinth.raids = {
     script: null,
     list: { },
+    private: {},
     joined: { },
     requested: 0,
     import: function ( id ) {
@@ -40,6 +41,28 @@ idrinth.raids = {
                 },
                 idrinth.raids.knowRaids ()
                 );
+        for(var raidId in idrinth.raids.private) {
+            idrinth.core.ajax.runHome (
+                'get-raid-service/'+raidId+'/'+idrinth.raids.private[raidId]+'/',
+                function(reply){
+                    if(!reply) {
+                        return;
+                    }
+                    reply=JSON.parse(reply);
+                    if(!reply) {
+                        return;
+                    }
+                    if(!reply.hasOwnProperty ('delete')) {
+                        idrinth.raids.list[reply.aid] = reply;
+                    }
+                    try{
+                        delete idrinth.raids.private[reply.raidId];
+                    }catch(e) {
+                        idrinth.core.log (e.getMessage?e.getMessage():e.message);
+                    }
+                }
+            );
+        }
     },
     knowRaids: function () {
         return ( ( Object.keys ( idrinth.raids.joined ) ).concat ( Object.keys ( idrinth.raids.list ) ) ).join ();

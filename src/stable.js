@@ -22,6 +22,7 @@ var idrinth = {
         for (var event in idrinth.core.multibind.events) {
             idrinth.ui.base.removeEventListener ( event, idrinth.core.multibind.triggered );
         }
+        idrinth.observer.list.forEach(function(observer){observer.disconnect();});
         window.setTimeout ( function () {
             idrinth = { };
             document.getElementById ( 'idotd-loader' ).errorFunction ();
