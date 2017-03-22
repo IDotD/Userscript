@@ -687,6 +687,11 @@ idrinth.ui = {
                                 rType: '#input',
                                 type: 'checkbox',
                                 label: "setting.enableFavRequest"
+                            },{
+                                name: 'raidWhitelist',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.raidWhitelist"
                             }, {
                                 name: 'favs',
                                 rType: '#input',

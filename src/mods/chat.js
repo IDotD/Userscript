@@ -854,7 +854,7 @@ idrinth.chat = {
         event.preventDefault ();
         idrinth.ui.base.appendChild ( idrinth.ui.buildElement ( {
             type: 'ul',
-            css: 'idrinth-hovering-box',
+            css: 'idrinth-hovering-box hover-over',
             children: [ {
                     css: 'clipboard-copy',
                     content: idrinth.text.get ( "chat.actions.copyIdPasswort" ),
