@@ -11,6 +11,11 @@ idrinth.settings = {
         raids: false,
         /**
          *
+         * @type Boolean
+         */
+        raidWhitelist: false,
+        /**
+         *
          * @type String
          */
         favs: '',
