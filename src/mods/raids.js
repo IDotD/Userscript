@@ -319,7 +319,7 @@ idrinth.raids = {
                         }
                     };
                     var options = [ postLink ];
-                    if ( idrinth.platform !== 'newgrounds') {
+                    if ( idrinth.platform === 'armorgames' || idrinth.platform === 'kongregate') {
                         options.push ( byMessage );
                     }
                     return options;
@@ -330,7 +330,7 @@ idrinth.raids = {
                  * @returns {Boolean}
                  */
                 var reachedMax = function ( amount ) {
-                    return amount > 99 || ( ( idrinth.platform === 'facebook' || idrinth.platform === 'dawnofthedragons' ) && amount >= idrinth.settings.get ( "windows" ) );
+                    return amount > 99;
                 };
                 /**
                  * 

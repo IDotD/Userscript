@@ -537,7 +537,6 @@ idrinth.ui = {
                                 buttonMaker ( idrinth.text.get ( "raids.clear" ), 'idrinth.raids.clearAll();' ),
                                 buttonMaker ( idrinth.text.get ( "button.reloadScript" ), 'idrinth.reload();' ),
                                 buttonMaker ( idrinth.text.get ( "raids.imports.restart" ), 'idrinth.raids.start();' ),
-                                buttonMaker ( idrinth.text.get ( "button.refreshFBGameLogin" ), 'idrinth.facebook.rejoin()', 'facebook' ),
                                 buttonMaker ( idrinth.text.get ( "button.ngRaidJoin" ), 'idrinth.newgrounds.joinRaids()', 'newgrounds' ),
                                 buttonMaker ( idrinth.settings.get ( "alarmActive" ) ? idrinth.text.get ( "button.disableTimedAutoJoin" ) : idrinth.text.get ( "button.enableTimedAutoJoin" ),
                                         'idrinth.settings.change(\'alarmActive\',!idrinth.settings.get("alarmActive"));this.innerHTML=idrinth.settings.get("alarmActive") ? idrinth.text.get ( "button.disableTimedAutoJoin" ):"button.enableTimedAutoJoin"', 'newgrounds' )
@@ -714,12 +713,6 @@ idrinth.ui = {
                                 type: 'text',
                                 platforms: [ 'newgrounds' ],
                                 label: "ui.timeAutoJoin"
-                            }, {
-                                name: 'windows',
-                                rType: '#input',
-                                type: 'number',
-                                platforms: [ 'dawnofthedragons', 'facebook' ],
-                                label: "ui.maxPopupsFrame"
                             } ], 'raidjoining' ),
                         wrap ( [ {
                                 name: 'chatting',

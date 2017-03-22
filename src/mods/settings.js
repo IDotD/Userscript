@@ -51,16 +51,6 @@ idrinth.settings = {
         timeout: 5000,
         /**
          *
-         * @type Number
-         */
-        loadtime: 5000,
-        /**
-         *
-         * @type Number
-         */
-        windows: 3,
-        /**
-         *
          * @type Boolean
          */
         warBottom: false,
