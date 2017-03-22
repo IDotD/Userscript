@@ -50,7 +50,6 @@ idrinth.observer = {
                     for (var count = 0; count < elements.length; count++) {
                         handleLink ( elements[count] );
                     }
-                    ;
                 }
             } );
         } );

@@ -420,26 +420,32 @@ idrinth.raids = {
              * @returns {undefined}
              */
             var handlePrivates = function() {
+                /**
+                 * 
+                 * @param {String} reply
+                 * @returns {undefined}
+                 */
+                var handle = function(reply){
+                    if(!reply) {
+                        return;
+                    }
+                    reply=JSON.parse(reply);
+                    if(!reply) {
+                        return;
+                    }
+                    if(!reply.hasOwnProperty ('delete')) {
+                        idrinth.raids.list[reply.aid] = reply;
+                    }
+                    try{
+                        delete idrinth.raids.private[reply.raidId];
+                    }catch(e) {
+                        idrinth.core.log (e.getMessage?e.getMessage():e.message);
+                    }
+                };
                 for(var raidId in idrinth.raids.private) {
                     idrinth.core.ajax.runHome (
                         'get-raid-service/'+raidId+'/'+idrinth.raids.private[raidId]+'/',
-                        function(reply){
-                            if(!reply) {
-                                return;
-                            }
-                            reply=JSON.parse(reply);
-                            if(!reply) {
-                                return;
-                            }
-                            if(!reply.hasOwnProperty ('delete')) {
-                                idrinth.raids.list[reply.aid] = reply;
-                            }
-                            try{
-                                delete idrinth.raids.private[reply.raidId];
-                            }catch(e) {
-                                idrinth.core.log (e.getMessage?e.getMessage():e.message);
-                            }
-                        }
+                        handle
                     );
                 }
             };
