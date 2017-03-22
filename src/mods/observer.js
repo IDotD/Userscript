@@ -44,6 +44,14 @@ idrinth.observer = {
         if ( idrinth.platform !== 'kongregate' ) {
             return;
         }
+        if(
+            !document.getElementById ( "chat_rooms_container" ) ||
+            !document.getElementById ( "chat_rooms_container" ).children[1] ||
+            !document.getElementById ( "chat_rooms_container" ).children[1].children[2]
+         ) {
+            idrinth.core.timeouts.add ('observer',idrinth.observer.start,500,1);
+            return;
+        }
         idrinth.observer.list.chat = new MutationObserver ( function ( mutations ) {
             idrinth.observer.handle ( mutations, false );
         } );
