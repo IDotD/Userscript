@@ -26,9 +26,6 @@ idrinth.observer = {
             if ( !name ) {
                 return;
             }
-            if ( !element.getAttribute ( 'data-idrinth-parsed' ) && idrinth.ui.childOf ( element, 'chat_message_window' ) ) {
-                element.setAttribute ( 'data-idrinth-parsed', '1' );
-            }
             if ( !idrinth.names.users[name.toLowerCase ()] && name.length > 0 ) {
                 idrinth.names.users[name.toLowerCase ()] = { };
                 idrinth.core.ajax.runHome ( 'users-service/add/' + encodeURIComponent ( name ) + '/' );
