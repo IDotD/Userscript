@@ -226,6 +226,7 @@ idrinth.names = {
         if ( idrinth.platform === 'kongregate' ) {
             idrinth.core.multibind.add ( 'mouseover', '.chat_message_window .username', showTooltip );
             idrinth.core.timeouts.add ( 'names', idrinth.names.run, 300000, -1 );
+            idrinth.core.timeouts.add ( 'names-init', idrinth.names.run, 1 );
             build ();
         }
     }
