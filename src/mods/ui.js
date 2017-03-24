@@ -1088,11 +1088,11 @@ idrinth.ui = {
                 children: children
             } );
             idrinth.ui.base.appendChild ( idrinth.ui.controls );
-            document.getElementById ( 'idrinth-favs' ).setAttribute ( 'onkeyup', 'this.value=this.value.replace(/[^a-f0-9,]/g,\'\')' );
+            document.getElementById ( 'idrinth-favs' ).setAttribute ( 'onkeyup', 'idrinth.ui.replaceInValue(this);' );
         };
         idrinth.ui.base = document.createElement ( 'div' );
         idrinth.ui.base.setAttribute ( 'id', 'idotd-base' );
-        document.getElementsByTagName ( 'body' )[0].appendChild ( idrinth.ui.base )
+        document.getElementsByTagName ( 'body' )[0].appendChild ( idrinth.ui.base );
         document.getElementsByTagName ( 'head' )[0].appendChild ( idrinth.ui.buildElement ( {
             type: 'link',
             attributes: [ {
@@ -1104,5 +1104,17 @@ idrinth.ui = {
                 } ]
         } ) );
         build ();
+    },
+    /**
+     * 
+     * @param {HTMLElement} element
+     * @returns {undefined}
+     */
+    replaceInValue: function(element) {
+        var pos = element.selectionStart;
+        element.value=element.value.replace(/[^a-f0-9,]/g,'');
+        element.value=element.value.replace(/,{2,}/g,',');
+        pos = Math.min(pos,element.value.length);
+        element.setSelectionRange(pos,pos);
     }
 };
