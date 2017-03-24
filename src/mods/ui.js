@@ -1112,9 +1112,15 @@ idrinth.ui = {
      */
     replaceInValue: function(element) {
         var pos = element.selectionStart;
+        var part = element.value.substr(0,pos);
+        var pre = part.length;
+        part.value=element.value.replace(/[^a-f0-9,]/g,'');
+        part.value=element.value.replace(/,{2,}/g,',');
+        pos = pos + part.length - pre;
         element.value=element.value.replace(/[^a-f0-9,]/g,'');
         element.value=element.value.replace(/,{2,}/g,',');
         pos = Math.min(pos,element.value.length);
+        pos = Math.max(pos,0);
         element.setSelectionRange(pos,pos);
     }
 };
