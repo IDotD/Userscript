@@ -20,7 +20,7 @@ var idrinth = {
         window.clearTimeout ( idrinth.core.timeouts.next );
         idrinth.ui.removeElement ( 'idotd-base' );
         for (var event in idrinth.core.multibind.events) {
-            idrinth.ui.base.removeEventListener ( event, idrinth.core.multibind.triggered );
+            document.getElementsByTagName ( 'body' )[0].removeEventListener ( event, idrinth.core.multibind.triggered );
         }
         for (var observer in idrinth.observer.list) {
             idrinth.observer.list[observer].disconnect();

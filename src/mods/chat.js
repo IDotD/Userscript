@@ -1067,7 +1067,7 @@ idrinth.chat = {
                 idrinth.ui.buildChat ( chatId, list[chatId].name, list[chatId].access, list[chatId].pass );
             }
         }
-        idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 1500 );
+        idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 500 );
     },
     /**
      * 
