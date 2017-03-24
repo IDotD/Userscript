@@ -12,9 +12,9 @@ idrinth.names = {
      */
     guilds: { },
     /**
-     * @type {Number}
+     * @type {Boolean}
      */
-    counter: 0,
+    initialized: false,
     /**
      *
      * @param {HTMLElement} element
@@ -65,49 +65,16 @@ idrinth.names = {
                     importNames
                     );
         };
-        /**
-         * adds names from elements on the page
-         * @returns {undefined}
-         */
-        var add = function () {
-            /**
-             *
-             * @param {HTMLElement} element
-             * @returns {undefined}
-             */
-            var processName = function ( element ) {
-                var name = '';
-                try {
-                    name = idrinth.names.parse ( element );
-                } catch ( e ) {
-                    return;
-                }
-                if ( !name ) {
-                    return;
-                }
-                if ( !element.getAttribute ( 'data-idrinth-parsed' ) && idrinth.ui.childOf ( element, 'chat_message_window' ) ) {
-                    element.setAttribute ( 'data-idrinth-parsed', '1' );
-                }
-                if ( !idrinth.names.users[name.toLowerCase ()] && name.length > 0 ) {
-                    idrinth.names.users[name.toLowerCase ()] = { };
-                    idrinth.core.ajax.runHome ( 'users-service/add/' + encodeURIComponent ( name ) + '/' );
-                }
-            };
-            var el = document.getElementsByClassName ( 'username' );
-            for (var count = el.length - 1; count >= 0; count--) {
-                processName ( el[count] );
-            }
-        };
         try {
-            if ( idrinth.names.counter === 0 || Object.keys ( idrinth.names.users ).length === 0 ) {
-                load ( Object.keys ( idrinth.names.classes ).length === 0 ? 'init/' : 'get/' );
-            } else if ( Object.keys ( idrinth.names.users ).length > 0 ) {
-                add ();
+            if ( idrinth.names.initialized ) {
+                load ( 'get/' );
+            } else {
+                load ( 'init/' );
             }
         } catch ( e ) {
             idrinth.core.log ( e );
         }
-        idrinth.names.counter = ( idrinth.names.counter + 1 ) % 300;
+        idrinth.names.initialized = true;
     },
     /**
      * initialises the module
@@ -258,7 +225,7 @@ idrinth.names = {
         };
         if ( idrinth.platform === 'kongregate' ) {
             idrinth.core.multibind.add ( 'mouseover', '.chat_message_window .username', showTooltip );
-            idrinth.core.timeouts.add ( 'names', idrinth.names.run, 6666, -1 );
+            idrinth.core.timeouts.add ( 'names', idrinth.names.run, 300000, -1 );
             build ();
         }
     }

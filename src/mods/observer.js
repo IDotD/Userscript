@@ -12,6 +12,29 @@ idrinth.observer = {
      */
     handle: function ( mutations, isPrivate ) {
         /**
+         *
+         * @param {HTMLElement} element
+         * @returns {undefined}
+         */
+        var processName = function ( element ) {
+            var name = '';
+            try {
+                name = idrinth.names.parse ( element );
+            } catch ( e ) {
+                return;
+            }
+            if ( !name ) {
+                return;
+            }
+            if ( !element.getAttribute ( 'data-idrinth-parsed' ) && idrinth.ui.childOf ( element, 'chat_message_window' ) ) {
+                element.setAttribute ( 'data-idrinth-parsed', '1' );
+            }
+            if ( !idrinth.names.users[name.toLowerCase ()] && name.length > 0 ) {
+                idrinth.names.users[name.toLowerCase ()] = { };
+                idrinth.core.ajax.runHome ( 'users-service/add/' + encodeURIComponent ( name ) + '/' );
+            }
+        };
+        /**
          * 
          * @param {HTMLElement} element
          * @returns {undefined}
@@ -51,6 +74,10 @@ idrinth.observer = {
                         handleLink ( elements[count] );
                     }
                 }
+                var el = node.getElementsByClassName ( 'username' );
+                for (var count = el.length - 1; count >= 0; count--) {
+                    processName ( el[count] );
+                }
             } );
         } );
     },
@@ -62,12 +89,12 @@ idrinth.observer = {
         if ( idrinth.platform !== 'kongregate' ) {
             return;
         }
-        if(
-            !document.getElementById ( "chat_rooms_container" ) ||
-            !document.getElementById ( "chat_rooms_container" ).children[1] ||
-            !document.getElementById ( "chat_rooms_container" ).children[1].children[2]
-         ) {
-            idrinth.core.timeouts.add ('observer',idrinth.observer.start,500,1);
+        if (
+                !document.getElementById ( "chat_rooms_container" ) ||
+                !document.getElementById ( "chat_rooms_container" ).children[1] ||
+                !document.getElementById ( "chat_rooms_container" ).children[1].children[2]
+                ) {
+            idrinth.core.timeouts.add ( 'observer', idrinth.observer.start, 500, 1 );
             return;
         }
         idrinth.observer.list.chat = new MutationObserver ( function ( mutations ) {
