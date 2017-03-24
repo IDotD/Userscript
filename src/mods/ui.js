@@ -1112,7 +1112,7 @@ idrinth.ui = {
      */
     replaceInValue: function(element) {
         var pos = element.selectionStart;
-        var part = element.value.substr(0,pos);
+        var part = element.value.substr(0,pos+1);
         var pre = part.length;
         part.value=element.value.replace(/[^a-f0-9,]/g,'');
         part.value=element.value.replace(/,{2,}/g,',');
