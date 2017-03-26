@@ -336,27 +336,35 @@ idrinth.settings = {
          * @returns {undefined}
          */
         var getCurrent = function () {
-            var data = JSON.parse ( window.localStorage.getItem ( 'idotd' ) );
-            /**
-             *
-             * @param {object} to
-             * @param {object} from
-             * @param {function} apply
-             * @returns {undefined}
-             */
-            var apply = function ( to, from, apply ) {
-                for (var key in from) {
-                    if ( from.hasOwnProperty ( key ) ) {
-                        if ( typeof from[key] === 'object' ) {
-                            to[key] = typeof to[key] === 'object' ? to[key] : { };
-                            apply ( to[key], from[key] );
-                        } else {
-                            to[key] = from[key];
+            try{
+                var data = JSON.parse ( window.localStorage.getItem ( 'idotd' ) );
+                /**
+                 *
+                 * @param {object} to
+                 * @param {object} from
+                 * @param {function} apply
+                 * @returns {undefined}
+                 */
+                var apply = function ( to, from, apply ) {
+                    for (var key in from) {
+                        if ( from.hasOwnProperty ( key ) ) {
+                            if ( typeof from[key] === 'object' ) {
+                                to[key] = typeof to[key] === 'object' ? to[key] : { };
+                                apply ( to[key], from[key] );
+                            } else {
+                                to[key] = from[key];
+                            }
                         }
                     }
+                };
+                if(!data) {
+                    return;
                 }
-            };
-            apply ( idrinth.settings.data, data, apply );
+                apply ( idrinth.settings.data, data, apply );
+            } catch (exception) {
+                idrinth.core.alert ("There was a failure when trying to handle settings, the have been reset to default.");
+                idrinth.core.log (exception.getMessage?exception.getMessage( ):exception.message);
+            }
         };
         /**
          * fills the data from seperate storages

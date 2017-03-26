@@ -1,20 +1,95 @@
 idrinth.chat = {
+    /**
+     * own user id
+     * @type Number
+     */
     self: 0,
+    /**
+     * Maximum message id
+     * @type Number
+     */
     maxId: 0,
+    /**
+     * 
+     * @type Array
+     */
     messages: [ ],
+    /**
+     * 
+     * @type Array
+     */
     oldMessages: [ ],
+    /**
+     * 
+     * @type Object
+     */
     elements: {
+        /**
+         * 
+         * @type HTMLElement
+         */
         chats: null,
+        /**
+         * 
+         * @type HTMLElement
+         */
         menu: null
     },
+    /**
+     * 
+     * @type {Object}
+     */
     chatRank: { },
+    /**
+     * 
+     * @type Number
+     */
     refreshCount: 0,
+    /**
+     * 
+     * @returns {undefined}
+     */
     refreshChats: function () {
+        /**
+         * 
+         * @param {String} data
+         * @returns {undefined}
+         */
         var applyMessages = function ( data ) {
+            /**
+             * 
+             * @param {String} messages
+             * @returns {undefined}
+             */
             var processMessages = function ( messages ) {
+                /**
+                 * 
+                 * @param {Array} chatMessages
+                 * @param {Number} chatId
+                 * @param {HTMLElement} chatElement
+                 * @returns {Boolean}
+                 */
                 var addMessages = function ( chatMessages, chatId, chatElement ) {
+                    /**
+                     * 
+                     * @param {String} message
+                     * @param {HTMLElement} chat
+                     * @param {Number} chatId
+                     * @param {Number} messageId
+                     * @returns {undefined}
+                     */
                     var buildMessage = function ( message, chat, chatId, messageId ) {
+                        /**
+                         * 
+                         * @returns {String}
+                         */
                         var getfullDateInt = function () {
+                            /**
+                             * 
+                             * @param {Number} x
+                             * @param {Number} n
+                             * @returns {String}
+                             */
                             function addZero ( x, n ) {
                                 while ( x.toString ().length < n ) {
                                     x = "0" + x;
@@ -30,7 +105,19 @@ idrinth.chat = {
                                     addZero ( d.getSeconds (), 2 ) +
                                     addZero ( d.getMilliseconds (), 3 );
                         };
+                        /**
+                         * 
+                         * @param {String} message
+                         * @param {Boolean} own
+                         * @param {Number} chatId
+                         * @returns {undefined}
+                         */
                         var notify = function ( message, own, chatId ) {
+                            /**
+                             * 
+                             * @param {Number} chatId
+                             * @returns {Boolean}
+                             */
                             var notActive = function ( chatId ) {
                                 try {
                                     return !idrinth.windowactive ||
@@ -41,6 +128,11 @@ idrinth.chat = {
                                     return true;
                                 }
                             };
+                            /**
+                             * 
+                             * @param {String} text
+                             * @returns {Boolean}
+                             */
                             var messageAllowed = function ( text ) {
                                 try {
                                     return ( idrinth.settings.get ( "notification#message" ) && text.match ( /\{[A-Z]{2}-Raid / ) === null ) ||
@@ -118,7 +210,19 @@ idrinth.chat = {
                     }
                     return isNew;
                 };
+                /**
+                 * 
+                 * @param {Boolean} isNew
+                 * @param {HTMLElement} chat
+                 * @param {Number} chatId
+                 * @returns {undefined}
+                 */
                 var setChatClass = function ( isNew, chat, chatId ) {
+                    /**
+                     * 
+                     * @param {HTMLElement} element
+                     * @returns {Boolean}
+                     */
                     var isActive = function ( element ) {
                         var cssClass = element.getAttribute ( 'class' );
                         return !( !cssClass ) && !( !cssClass.match ( /(^|\s)active(\s|$)/ ) );
@@ -168,9 +272,29 @@ idrinth.chat = {
             idrinth.chat.oldMessages = [ ];
             idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 999 );
         };
+        /**
+         * 
+         * @returns {undefined}
+         */
         var refreshMembers = function () {
+            /**
+             * 
+             * @param {String} data
+             * @returns {undefined}
+             */
             var applyMembers = function ( data ) {
+                /**
+                 * 
+                 * @returns {undefined}
+                 */
                 var applyMemberData = function () {
+                    /**
+                     * 
+                     * @param {HTMLElement} chat
+                     * @param {Number} chatId
+                     * @param {Number} userId
+                     * @returns {undefined}
+                     */
                     var addMemberElement = function ( chat, chatId, userId ) {
                         var usedPlatforms = '';
                         for (var pkey in idrinth.chat.users[userId].platforms) {
@@ -243,6 +367,11 @@ idrinth.chat = {
         }
         idrinth.chat.refreshCount++;
     },
+    /**
+     * 
+     * @param {String} data
+     * @returns {undefined}
+     */
     returnMessages: function ( data ) {
         for (var count = idrinth.chat.oldMessages.length - 1; count >= 0; count--) {
             idrinth.chat.messages.unshift ( idrinth.chat.oldMessages[count] );
@@ -250,11 +379,30 @@ idrinth.chat = {
         idrinth.chat.oldMessages = [ ];
         idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 999 );
     },
+    /**
+     * 
+     * @param {HTMLElement} element
+     * @param {Number} user
+     * @param {Number} chat
+     * @returns {undefined}
+     */
     userclick: function ( element, user, chat ) {
         if ( !idrinth.chat.chatRank[chat][idrinth.chat.self] || parseInt ( user, 10 ) === parseInt ( idrinth.chat.self, 10 ) ) {
             return;
         }
+        /**
+         * 
+         * @param {Number} chat
+         * @param {Number} user
+         * @param {Number} rankId
+         * @returns {Array}
+         */
         var getPopupContent = function ( chat, user, rankId ) {
+            /**
+             * 
+             * @param {Number} chat
+             * @returns {Array}
+             */
             var getPromotionOptions = function ( chat ) {
                 var promotionModes = [
                     {
@@ -297,7 +445,20 @@ idrinth.chat = {
                 }
                 return promotionModes;
             };
+            /**
+             * 
+             * @param {Object} node
+             * @param {Number} user
+             * @param {Number} ownRank
+             * @returns {Array}
+             */
             var promoteNode = function ( node, user, ownRank ) {
+                /**
+                 * 
+                 * @param {Number} reqRank
+                 * @param {Number} ownRank
+                 * @returns {Boolean}
+                 */
                 var hasRights = function ( reqRank, ownRank ) {
                     return reqRank <= ownRank;
                 };
@@ -347,6 +508,13 @@ idrinth.chat = {
                 } ]
         } ) );
     },
+    /**
+     * changes the rank of a person
+     * @param {Number} chat
+     * @param {String} user
+     * @param {String} rank
+     * @returns {undefined}
+     */
     useroptions: function ( chat, user, rank ) {
         idrinth.core.ajax.runHome (
                 'chat-service/rank/',
@@ -371,9 +539,40 @@ idrinth.chat = {
                 } )
                 );
     },
+    /**
+     * 
+     * @param {String} message
+     * @param {RegExp} regex
+     * @param {Array} callbacks
+     * @param {String} lastField
+     * @returns {Array}
+     */
     replaceInText: function ( message, regex, callbacks, lastField ) {
+        /**
+         * 
+         * @param {String} message
+         * @param {RegExp} regex
+         * @param {Array} callbacks
+         * @param {String} lastField
+         * @returns {Array}
+         */
         var complexHandler = function ( message, regex, callbacks, lastField ) {
+            /**
+             * 
+             * @param {Number} count
+             * @param {Array} callbacks
+             * @param {String} text
+             * @param {Array} textcontent
+             * @returns {Array}
+             */
             var partHandler = function ( count, callbacks, text, textcontent ) {
+                /**
+                 * 
+                 * @param {Array} textcontent
+                 * @param {Function} func
+                 * @param {String} text
+                 * @returns {unresolved}
+                 */
                 var callbackHandler = function ( textcontent, func, text ) {
                     var tmp = func ( text );
                     for (var c2 = 0; c2 < tmp.length; c2++) {
@@ -404,6 +603,12 @@ idrinth.chat = {
             }
             return textcontent;
         };
+        /**
+         * 
+         * @param {String} message
+         * @param {Array} callbacks
+         * @returns {Array}
+         */
         var simpleHandler = function ( message, callbacks ) {
             if ( typeof callbacks[1] === 'function' ) {
                 var textcontent = [ ];
@@ -424,6 +629,11 @@ idrinth.chat = {
             return simpleHandler ( message, callbacks );
         }
     },
+    /**
+     * 
+     * @param {String} message
+     * @returns {Object}
+     */
     buildEmoticons: function ( message ) {
         if ( !idrinth.chat.emotes.lookup ) {
             return message;
@@ -457,6 +667,11 @@ idrinth.chat = {
                 };
             } ], 3 );
     },
+    /**
+     * 
+     * @param {String} message
+     * @returns {Object}
+     **/
     buildMessageText: function ( message ) {
         var reg = new RegExp ( '(^|\\W)(https?://([^/ ]+)(/.*?)?)($| )', 'ig' );
         return idrinth.chat.replaceInText ( message, reg, [
@@ -481,10 +696,30 @@ idrinth.chat = {
                 };
             }, idrinth.chat.buildEmoticons ], 5 );
     },
+    /**
+     * Rank-Classes & Names
+     * @type Array
+     */
     ranks: [ '', 'banned', 'user', 'mod', 'owner' ],
+    /**
+     * @type Object
+     */
     emotes: { },
+    /**
+     * 
+     * @returns {undefined}
+     */
     start: function () {
+        /**
+         * 
+         * @returns {HTMLElement}
+         */
         var build = function () {
+            /**
+             * 
+             * @param {String} label
+             * @returns {Object}
+             */
             var makeInput = function ( label ) {
                 var translation = idrinth.text.get ( label );
                 return {
@@ -510,6 +745,12 @@ idrinth.chat = {
                     ]
                 };
             };
+            /**
+             * 
+             * @param {String} label
+             * @param {String} onclick
+             * @returns {Object}
+             */
             var makeButton = function ( label, onclick ) {
                 var translation = idrinth.text.get ( label );
                 return {
@@ -734,6 +975,10 @@ idrinth.chat = {
                     );
         }, 1 );
     },
+    /**
+     * 
+     * @returns {undefined}
+     */
     create: function () {
         idrinth.core.ajax.runHome (
                 'chat-service/create/',
@@ -747,6 +992,11 @@ idrinth.chat = {
                 document.getElementById ( 'idrinth-make-chat' ).getElementsByTagName ( 'input' )[0].value
                 );
     },
+    /**
+     * 
+     * @param {String} reply
+     * @returns {undefined}
+     */
     joinCallback: function ( reply ) {
         if ( !reply ) {
             idrinth.core.alert ( idrinth.text.get ( "chat.error.join" ) );
@@ -770,7 +1020,14 @@ idrinth.chat = {
         document.getElementById ( 'idrinth-add-chat' ).getElementsByTagName ( 'input' )[1].value = '';
         document.getElementById ( 'idrinth-make-chat' ).getElementsByTagName ( 'input' )[0].value = '';
     },
+    /**
+     * @type {Object}
+     */
     users: { },
+    /**
+     * 
+     * @returns {undefined}
+     */
     add: function () {
         idrinth.core.ajax.runHome (
                 'chat-service/join/',
@@ -787,6 +1044,11 @@ idrinth.chat = {
                 } )
                 );
     },
+    /**
+     * 
+     * @param {Number} id
+     * @returns {undefined}
+     */
     send: function ( id ) {
         idrinth.chat.messages.push ( {
             chat: id,
@@ -794,14 +1056,24 @@ idrinth.chat = {
         } );
         document.getElementById ( 'idrinth-chat-input-' + id ).value = '';
     },
+    /**
+     * 
+     * @param {Object} list
+     * @returns {undefined}
+     */
     join: function ( list ) {
         for (var chatId in list) {
             if ( !document.getElementById ( 'idrinth-chat-tab-' + chatId ) ) {
                 idrinth.ui.buildChat ( chatId, list[chatId].name, list[chatId].access, list[chatId].pass );
             }
         }
-        idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 1500 );
+        idrinth.core.timeouts.add ( 'chat', idrinth.chat.refreshChats, 500 );
     },
+    /**
+     * 
+     * @param {String} data
+     * @returns {undefined}
+     */
     startLoginCallback: function ( data ) {
         if ( !data ) {
             return;
@@ -813,6 +1085,11 @@ idrinth.chat = {
         idrinth.ui.removeElement ( 'idrinth-chat-login' );
         idrinth.chat.join ( data.data );
     },
+    /**
+     * 
+     * @param {String} data
+     * @returns {undefined}
+     */
     loginCallback: function ( data ) {
         if ( !data ) {
             idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
@@ -841,15 +1118,33 @@ idrinth.chat = {
         }
         idrinth.core.alert ( idrinth.text.get ( "chat.error.login" ) );
     },
+    /**
+     * 
+     * @returns {undefined}
+     */
     register: function () {
         this.loginActions ( 'register' );
     },
+    /**
+     * 
+     * @returns {undefined}
+     */
     login: function () {
         this.loginActions ( 'login' );
     },
+    /**
+     * 
+     * @returns {undefined}
+     */
     relogin: function () {
         this.loginActions ( 'relogin' );
     },
+    /**
+     * 
+     * @param {Event} event
+     * @param {HTMLElement} element
+     * @returns {undefined}
+     */
     showOptions: function ( event, element ) {
         event.preventDefault ();
         idrinth.ui.base.appendChild ( idrinth.ui.buildElement ( {
@@ -892,6 +1187,11 @@ idrinth.chat = {
                 } ]
         } ) );
     },
+    /**
+     * 
+     * @param {HTMLElement} element
+     * @returns {undefined}
+     */
     enableChat: function ( element ) {
         var tabs = document.getElementsByClassName ( 'chat-tabs' )[0].children,
                 labels = document.getElementsByClassName ( 'chat-labels' )[0].children;
@@ -909,6 +1209,11 @@ idrinth.chat = {
             element.setAttribute ( 'class', 'active' );
         }
     },
+    /**
+     * 
+     * @param {HTMLElement} element
+     * @returns {undefined}
+     */
     openCloseChat: function ( element ) {
         var chat = element.parentNode;
         if ( chat.getAttribute ( 'class' ) === 'idrinth-hovering-box active' || chat.getAttribute ( 'class' ) === 'idrinth-hovering-box active left-sided' ) {
@@ -920,6 +1225,11 @@ idrinth.chat = {
             element.innerHTML = '&gt;&gt;';
         }
     },
+    /**
+     * 
+     * @param {String} key
+     * @returns {undefined}
+     */
     loginActions: function ( key ) {
         var chatLogin,
                 success,
