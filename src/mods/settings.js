@@ -362,7 +362,13 @@ idrinth.settings = {
                 }
                 apply ( idrinth.settings.data, data, apply );
             } catch (exception) {
-                idrinth.core.alert ("There was a failure when trying to handle settings, the have been reset to default.");
+                idrinth.core.timeouts.add (
+                        'settings-fail',
+                        function(){
+                            idrinth.core.alert ("There was a failure when trying to handle settings, they have been reset to default.");
+                        },
+                        1000
+                    );
                 idrinth.core.log (exception.getMessage?exception.getMessage( ):exception.message);
             }
         };
