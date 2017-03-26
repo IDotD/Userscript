@@ -278,6 +278,10 @@ idrinth.core = {
      * @returns {undefined}
      */
     alert: function ( text ) {
+        if(!idrinth.ui.base) {
+            window.alert (text);
+            return;
+        }
         idrinth.ui.buildModal ( 'Info', text );
     },
     /**
