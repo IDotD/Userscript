@@ -702,6 +702,16 @@ idrinth.ui = {
                                 type: 'checkbox',
                                 label: "setting.worldserver"
                             }, {
+                                name: 'raid#requestPrivate',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.raid.requestPrivate"
+                            }, {
+                                name: 'raid#joinPrivate',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: "setting.raid.joinPrivate"
+                            }, {
                                 name: 'newgroundLoad',
                                 rType: '#input',
                                 type: 'number',

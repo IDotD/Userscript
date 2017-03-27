@@ -6,7 +6,7 @@ idrinth.raids = {
     /**
      * @type Object
      */
-    private: {},
+    private: { },
     /**
      * @type Object
      */
@@ -39,35 +39,36 @@ idrinth.raids = {
                  * @param {string} responseText
                  * @returns {undefined}
                  */
-                function ( responseText ) {
-                    var delHandler = function ( key ) {
-                        if ( key in idrinth.raids.list ) {
-                            delete idrinth.raids.list[key];
-                        }
-                        if ( key in idrinth.raids.joined ) {
-                            delete idrinth.raids.joined[key];
-                        }
-                        if ( document.getElementById ( 'idrinth-raid-link-' + key ) ) {
-                            idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
-                        }
-                    };
-                    var list = JSON.parse ( responseText );
-                    for (var key in list) {
-                        if ( list[key].delete ) {
-                            delHandler ( key );
-                        } else {
-                            //worst case: overwriting itself
-                            idrinth.raids.list[key] = list[key];
-                        }
-                    }
-                },
-                function () {
-                },
-                function () {
-                },
-                idrinth.raids.knowRaids ()
-                );
-    },
+                        function ( responseText ) {
+                            var delHandler = function ( key ) {
+                                if ( key in idrinth.raids.list ) {
+                                    delete idrinth.raids.list[key];
+                                }
+                                if ( key in idrinth.raids.joined ) {
+                                    delete idrinth.raids.joined[key];
+                                }
+                                if ( document.getElementById ( 'idrinth-raid-link-' + key ) ) {
+                                    idrinth.ui.removeElement ( 'idrinth-raid-link-' + key );
+                                }
+                            };
+                            var list = JSON.parse ( responseText );
+                            for (var key in list) {
+                                if ( list[key].delete ) {
+                                    delHandler ( key );
+                                } else {
+                                    //worst case: overwriting itself
+                                    list[key].private = idrinth.raids.list[key] && idrinth.raids.list[key].private;
+                                    idrinth.raids.list[key] = list[key];
+                                }
+                            }
+                        },
+                        function () {
+                        },
+                        function () {
+                        },
+                        idrinth.raids.knowRaids ()
+                        );
+            },
     /**
      * 
      * @returns {String}
@@ -282,11 +283,11 @@ idrinth.raids = {
                      * @param {String} key
                      * @returns {Function}
                      */
-                    var byMessage = function(key) {
+                    var byMessage = function ( key ) {
                         idrinth.inframe.send (
                                 'joinRaid',
-                                (idrinth.raids.join.getServerLink ( key )).replace(/^.*raidjoin\.php/,'raidjoin.php')
-                        );
+                                ( idrinth.raids.join.getServerLink ( key ) ).replace ( /^.*raidjoin\.php/, 'raidjoin.php' )
+                                );
                         idrinth.raids.join.messages.trying ( key );
                     };
                     /**
@@ -319,7 +320,7 @@ idrinth.raids = {
                         }
                     };
                     var options = [ postLink ];
-                    if ( idrinth.platform === 'armorgames' || idrinth.platform === 'kongregate') {
+                    if ( idrinth.platform === 'armorgames' || idrinth.platform === 'kongregate' ) {
                         options.push ( byMessage );
                     }
                     return options;
@@ -345,9 +346,14 @@ idrinth.raids = {
                         added++;
                         options[0] ( key );//post link
                         if (
-                            (!idrinth.settings.get ( "bannedRaids#" + raid.raid ) && !idrinth.settings.get("raidWhitelist")) ||
-                            (idrinth.settings.get ( "bannedRaids#" + raid.raid ) && idrinth.settings.get("raidWhitelist"))
-                        ) {
+                                (
+                                        ( !idrinth.settings.get ( "bannedRaids#" + raid.raid ) && !idrinth.settings.get ( "raidWhitelist" ) ) ||
+                                        ( idrinth.settings.get ( "bannedRaids#" + raid.raid ) && idrinth.settings.get ( "raidWhitelist" ) )
+                                        ) && (
+                                !raid.private ||
+                                idrinth.settings.get ( 'raid#joinPrivate' )
+                                )
+                                ) {
                             for (var count = 1; count < options.length; count++) {
                                 options[count] ( key );
                             }
@@ -371,41 +377,45 @@ idrinth.raids = {
              * requests information for raids caught from a third party(chat for example)
              * @returns {undefined}
              */
-            var handlePrivates = function() {
+            var handlePrivates = function () {
                 /**
                  * 
                  * @param {String} reply
                  * @returns {undefined}
                  */
-                var handle = function(reply){
-                    if(!reply) {
+                var handle = function ( reply ) {
+                    if ( !reply ) {
                         return;
                     }
-                    reply=JSON.parse(reply);
-                    if(!reply) {
+                    reply = JSON.parse ( reply );
+                    if ( !reply ) {
                         return;
                     }
-                    if(!reply.hasOwnProperty ('delete')) {
+                    if ( !reply.hasOwnProperty ( 'delete' ) ) {
                         idrinth.raids.list[reply.aid] = reply;
+                        idrinth.raids.list[reply.aid].private = true;
                     }
-                    try{
+                    try {
                         delete idrinth.raids.private[reply.raidId];
-                    }catch(e) {
-                        idrinth.core.log (e.getMessage?e.getMessage():e.message);
+                    } catch ( e ) {
+                        idrinth.core.log ( e.getMessage ? e.getMessage () : e.message );
                     }
                 };
-                for(var raidId in idrinth.raids.private) {
+                if ( !idrinth.settings.get ( 'stat#requestPrivate' ) ) {
+                    return;
+                }
+                for (var raidId in idrinth.raids.private) {
                     idrinth.core.ajax.runHome (
-                        'get-raid-service/'+raidId+'/'+idrinth.raids.private[raidId]+'/',
-                        handle
-                    );
+                            'get-raid-service/' + raidId + '/' + idrinth.raids.private[raidId] + '/',
+                            handle
+                            );
                 }
             };
             if ( !join () && Date.now () - 60000 > idrinth.raids.requested ) {
                 idrinth.raids.requested = Date.now ();
                 idrinth.raids.import ( idrinth.settings.get ( "raids" ) ? idrinth.settings.get ( "favs" ) : '-1' );
             }
-            handlePrivates();
+            handlePrivates ();
         }
     },
     /**
