@@ -401,7 +401,7 @@ idrinth.raids = {
                         idrinth.core.log ( e.getMessage ? e.getMessage () : e.message );
                     }
                 };
-                if ( !idrinth.settings.get ( 'stat#requestPrivate' ) ) {
+                if ( !idrinth.settings.get ( 'raid#requestPrivate' ) ) {
                     return;
                 }
                 for (var raidId in idrinth.raids.private) {
