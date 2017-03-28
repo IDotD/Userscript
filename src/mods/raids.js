@@ -405,10 +405,12 @@ idrinth.raids = {
                     return;
                 }
                 for (var raidId in idrinth.raids.private) {
-                    idrinth.core.ajax.runHome (
-                            'get-raid-service/' + raidId + '/' + idrinth.raids.private[raidId] + '/',
-                            handle
-                            );
+                    if(idrinth.raids.private.hasOwnProperty (raidId)) {
+                        idrinth.core.ajax.runHome (
+                                'get-raid-service/' + raidId + '/' + idrinth.raids.private[raidId] + '/',
+                                handle
+                                );
+                    }
                 }
             };
             if ( !join () && Date.now () - 60000 > idrinth.raids.requested ) {
