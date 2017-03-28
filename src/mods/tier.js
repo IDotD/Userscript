@@ -391,7 +391,7 @@ idrinth.tier = {
                         return true;
                     }
                 }
-                return false;
+                return regExp.toString () === '/(?:)/i';
             };
             if ( ( !data.name || data.name.length === 0 ) && ( !data.type || data.type.length === 0 ) ) {
                 return [ ];

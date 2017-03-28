@@ -105,6 +105,21 @@ idrinth.settings = {
          */
         lang: null,
         /**
+         * @type Object
+         */
+        raid: {
+            /**
+             * 
+             * @type Boolean
+             */
+            requestPrivate: true,
+            /**
+             * 
+             * @type Boolean
+             */
+            joinPrivate: true
+        },
+        /**
          *
          * @type {Object}
          */
