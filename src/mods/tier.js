@@ -197,7 +197,7 @@ idrinth.tier = {
                     var title = "";
                     for(var key in idrinth.tier.list[listKey].loot[difficulty][ic]) {
                         if(idrinth.tier.list[listKey].loot[difficulty][ic].hasOwnProperty (key)) {
-                            title += key.toUpperCase()+": "+idrinth.tier.list[listKey].loot[difficulty][ic][key]+"\n";
+                            title += idrinth.tier.list[listKey].loot[difficulty][ic][key]+" "+idrinth.text.get ('tier.loot.'+key)+"\n";
                         }
                     }
                     ln.attributes.push({name:'title',value:title});
