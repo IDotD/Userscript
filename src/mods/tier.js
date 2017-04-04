@@ -188,6 +188,21 @@ idrinth.tier = {
                     type: 'td'
                 };
                 if (
+                    idrinth.tier.list[listKey].hasOwnProperty ( 'loot' ) &&
+                    idrinth.tier.list[listKey].loot.hasOwnProperty ( difficulty ) &&
+                    idrinth.tier.list[listKey].loot[difficulty].hasOwnProperty ( ic ) &&
+                    idrinth.tier.list[listKey].loot[difficulty][ic]
+                ) {
+                    ln.attributes = ln.attributes?ln.attributes:new Array();
+                    var title = "";
+                    for(var key in idrinth.tier.list[listKey].loot[difficulty][ic]) {
+                        if(idrinth.tier.list[listKey].loot[difficulty][ic].hasOwnProperty (key)) {
+                            title += key.toUpperCase()+": "+idrinth.tier.list[listKey].loot[difficulty][ic][key]+"\n";
+                        }
+                    }
+                    ln.attributes.push({name:'title',value:title});
+                }
+                if (
                         idrinth.tier.list[listKey].hasOwnProperty ( difficulty ) &&
                         idrinth.tier.list[listKey][difficulty].hasOwnProperty ( ic )
                         ) {
