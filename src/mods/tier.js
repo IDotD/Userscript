@@ -193,7 +193,7 @@ idrinth.tier = {
                     idrinth.tier.list[listKey].loot[difficulty].hasOwnProperty ( ic ) &&
                     idrinth.tier.list[listKey].loot[difficulty][ic]
                 ) {
-                    ln.attributes = ln.attributes?ln.attributes:new Array();
+                    ln.attributes = ln.attributes?ln.attributes:[];
                     var title = "";
                     for(var key in idrinth.tier.list[listKey].loot[difficulty][ic]) {
                         if(idrinth.tier.list[listKey].loot[difficulty][ic].hasOwnProperty (key)) {
