@@ -220,43 +220,52 @@ idrinth.core = {
             var min = 10;
             /**
              *
-             * @param {Number} durationLeft
-             * @param {Number} minDuration
+             * @param {Number} min
+             * @param {Number} property
              * @returns {Number}
              */
-            var getVal = function ( durationLeft, minDuration ) {
-                if ( durationLeft < 0.1 ) {
-                    return 0.1;
+            var check = function(min, property, date) {
+                /**
+                 *
+                 * @param {Number} durationLeft
+                 * @param {string} minDuration
+                 * @returns {Number}
+                 */
+                var getVal = function ( durationLeft, minDuration ) {
+                    if ( durationLeft < 0.1 ) {
+                        return 0.1;
+                    }
+                    return durationLeft < minDuration ? durationLeft : minDuration;
+                };
+                /**
+                 *
+                 * @param {string} property
+                 * @returns {undefined}
+                 */
+                var handle = function ( property, min ) {
+                    idrinth.core.timeouts.list[property].func ();
+                    idrinth.core.timeouts.list[property].repeats = Math.max ( -1, idrinth.core.timeouts.list[property].repeats - 1 );
+                    if ( idrinth.core.timeouts.list[property].repeats ) {
+                        min = getVal ( idrinth.core.timeouts.list[property].duration, min );
+                        idrinth.core.timeouts.list[property].next = date + idrinth.core.timeouts.list[property].duration / 1000;
+                    } else {
+                        delete idrinth.core.timeouts.list[property];
+                    }
+                    return min;
+                };
+                if ( date < idrinth.core.timeouts.list[property].next ) {
+                    return getVal ( idrinth.core.timeouts.list[property].next - date, min );
                 }
-                return durationLeft < minDuration ? durationLeft : minDuration;
-            };
-            /**
-             *
-             * @param {string} property
-             * @returns {undefined}
-             */
-            var handle = function ( property, min ) {
-                idrinth.core.timeouts.list[property].func ();
-                idrinth.core.timeouts.list[property].repeats = Math.max ( -1, idrinth.core.timeouts.list[property].repeats - 1 );
-                if ( idrinth.core.timeouts.list[property].repeats ) {
-                    min = getVal ( idrinth.core.timeouts.list[property].duration, min );
-                    idrinth.core.timeouts.list[property].next = date + idrinth.core.timeouts.list[property].duration / 1000;
-                } else {
-                    delete idrinth.core.timeouts.list[property];
+                try {
+                    return handle ( property, min );
+                } catch ( e ) {
+                    idrinth.core.log ( e.message ? e.message : e.getMessage () );
+                    return min;
                 }
-                return min;
             };
             for (var property in idrinth.core.timeouts.list) {
                 if ( idrinth.core.timeouts.list.hasOwnProperty ( property ) ) {
-                    if ( date >= idrinth.core.timeouts.list[property].next ) {
-                        try {
-                            min = handle ( property, min );
-                        } catch ( e ) {
-                            idrinth.core.log ( e.message ? e.message : e.getMessage () );
-                        }
-                    } else {
-                        min = getVal ( idrinth.core.timeouts.list[property].next - date, min );
-                    }
+                    min = check(min, property, date);
                 }
             }
             if ( Object.keys ( idrinth.core.timeouts.list ).length ) {
