@@ -19,11 +19,15 @@ var idrinth = {
     reload: function ( ) {
         window.clearTimeout ( idrinth.core.timeouts.next );
         idrinth.ui.removeElement ( 'idotd-base' );
-        for (var event in idrinth.core.multibind.events) {
-            document.getElementsByTagName ( 'body' )[0].removeEventListener ( event, idrinth.core.multibind.triggered );
+        for ( var event in idrinth.core.multibind.events ) {
+            if ( idrinth.core.multibind.events.hasOwnProperty( event ) ) {
+                document.getElementsByTagName( 'body' )[0].removeEventListener( event, idrinth.core.multibind.triggered );
+            }
         }
         for (var observer in idrinth.observer.list) {
-            idrinth.observer.list[observer].disconnect();
+            if ( idrinth.observer.list.hasOwnProperty( observer ) ) {
+                idrinth.observer.list[observer].disconnect();
+            }
         }
         window.setTimeout ( function () {
             idrinth = { };
