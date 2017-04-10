@@ -129,8 +129,9 @@ idrinth.land = {
             }
             document.getElementById ( 'idrinth-land-gold' ).value = idrinth.settings.get ( "land#gold" );
         };
-        for (var key in idrinth.settings.get ( "land", true )) {
-            if ( idrinth.settings.get( "land", true ).hasOwnProperty( key ) ) {
+        var landSettings = idrinth.settings.get( "land", true );
+        for (var key in landSettings ) {
+            if ( landSettings.hasOwnProperty( key ) ) {
                 idrinth.settings.change( 'land#' + key, parseInt( document.getElementById( 'idrinth-land-' + key ).value, 10 ) );
             }
         }
