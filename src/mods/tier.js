@@ -186,7 +186,7 @@ idrinth.tier = {
             var makeField = function ( listKey, difficulty, ic ) {
                 var ln = {
                     type: 'td',
-                    attributes: []
+                    attributes: [ ]
                 };
                 /**
                  * 
@@ -201,8 +201,8 @@ idrinth.tier = {
                             !idrinth.tier.list[listKey].hasOwnProperty ( 'loot' ) ||
                             !idrinth.tier.list[listKey].loot.hasOwnProperty ( difficulty ) ||
                             !idrinth.tier.list[listKey].loot[difficulty].hasOwnProperty ( ic ) ||
-                            !idrinth.tier.list[listKey].loot[difficulty][ic] 
-                     ) {
+                            !idrinth.tier.list[listKey].loot[difficulty][ic]
+                            ) {
                         return ln;
                     }
                     var title = "";
@@ -226,13 +226,22 @@ idrinth.tier = {
                  * @returns {object} for the buildElement wrapper
                  */
                 var addContent = function ( ln, listKey, difficulty, ic ) {
+                    /**
+                     * 
+                     * @param {string} os numeric string
+                     * @param {string} current numeric string
+                     * @returns {Boolean}
+                     */
+                    var isOs = function ( os, current ) {
+                        return Number.parseInt ( os ) === Number.parseInt ( current );
+                    };
                     if (
                             !idrinth.tier.list[listKey].hasOwnProperty ( difficulty ) ||
                             !idrinth.tier.list[listKey][difficulty].hasOwnProperty ( ic )
                             ) {
                         return ln;
                     }
-                    ln.styles = idrinth.tier.list[listKey].os[difficulty] === idrinth.tier.list[listKey][difficulty][ic] ? 'is-os' : '';
+                    ln.styles = isOs ( idrinth.tier.list[listKey].os[difficulty], idrinth.tier.list[listKey][difficulty][ic] ) ? 'is-os' : '';
                     ln.content = idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic] );
                     if (
                             idrinth.tier.list[listKey].epics &&
