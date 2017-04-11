@@ -185,7 +185,8 @@ idrinth.tier = {
              */
             var makeField = function ( listKey, difficulty, ic ) {
                 var ln = {
-                    type: 'td'
+                    type: 'td',
+                    attributes: []
                 };
                 /**
                  * 
@@ -196,19 +197,14 @@ idrinth.tier = {
                  * @returns {object} for the buildElement wrapper
                  */
                 var addTitle = function ( ln, listKey, difficulty, ic ) {
-                    if ( !idrinth.tier.list[listKey].hasOwnProperty ( 'loot' ) ) {
+                    if (
+                            !idrinth.tier.list[listKey].hasOwnProperty ( 'loot' ) ||
+                            !idrinth.tier.list[listKey].loot.hasOwnProperty ( difficulty ) ||
+                            !idrinth.tier.list[listKey].loot[difficulty].hasOwnProperty ( ic ) ||
+                            !idrinth.tier.list[listKey].loot[difficulty][ic] 
+                     ) {
                         return ln;
                     }
-                    if ( !idrinth.tier.list[listKey].loot.hasOwnProperty ( difficulty ) ) {
-                        return ln;
-                    }
-                    if ( !idrinth.tier.list[listKey].loot[difficulty].hasOwnProperty ( ic ) ) {
-                        return ln;
-                    }
-                    if ( !idrinth.tier.list[listKey].loot[difficulty][ic] ) {
-                        return ln;
-                    }
-                    ln.attributes = ln.attributes ? ln.attributes : [ ];
                     var title = "";
                     for (var key in idrinth.tier.list[listKey].loot[difficulty][ic]) {
                         if ( idrinth.tier.list[listKey].loot[difficulty][ic].hasOwnProperty ( key ) ) {
