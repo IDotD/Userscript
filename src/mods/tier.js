@@ -197,12 +197,20 @@ idrinth.tier = {
                  * @returns {object} for the buildElement wrapper
                  */
                 var addTitle = function ( ln, listKey, difficulty, ic ) {
-                    if (
-                            !idrinth.tier.list[listKey].hasOwnProperty ( 'loot' ) ||
-                            !idrinth.tier.list[listKey].loot.hasOwnProperty ( difficulty ) ||
-                            !idrinth.tier.list[listKey].loot[difficulty].hasOwnProperty ( ic ) ||
-                            !idrinth.tier.list[listKey].loot[difficulty][ic]
-                            ) {
+                    /**
+                     * 
+                     * @param {string} listKey
+                     * @param {string} difficulty
+                     * @param {string} ic
+                     * @returns {Boolean}
+                     */
+                    var isUseable = function ( listKey, difficulty, ic ) {
+                        return idrinth.tier.list[listKey].hasOwnProperty ( 'loot' ) &&
+                                idrinth.tier.list[listKey].loot.hasOwnProperty ( difficulty ) &&
+                                idrinth.tier.list[listKey].loot[difficulty].hasOwnProperty ( ic ) &&
+                                idrinth.tier.list[listKey].loot[difficulty][ic];
+                    };
+                    if ( !isUseable ( listKey, difficulty, ic ) ) {
                         return ln;
                     }
                     var title = "";
