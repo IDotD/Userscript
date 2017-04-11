@@ -187,25 +187,55 @@ idrinth.tier = {
                 var ln = {
                     type: 'td'
                 };
-                if (
-                    idrinth.tier.list[listKey].hasOwnProperty ( 'loot' ) &&
-                    idrinth.tier.list[listKey].loot.hasOwnProperty ( difficulty ) &&
-                    idrinth.tier.list[listKey].loot[difficulty].hasOwnProperty ( ic ) &&
-                    idrinth.tier.list[listKey].loot[difficulty][ic]
-                ) {
-                    ln.attributes = ln.attributes?ln.attributes:[];
+                /**
+                 * 
+                 * @param {object} ln
+                 * @param {string} listKey
+                 * @param {string} difficulty
+                 * @param {string} ic
+                 * @returns {object} for the buildElement wrapper
+                 */
+                var addTitle = function ( ln, listKey, difficulty, ic ) {
+                    if ( !idrinth.tier.list[listKey].hasOwnProperty ( 'loot' ) ) {
+                        return ln;
+                    }
+                    if ( !idrinth.tier.list[listKey].loot.hasOwnProperty ( difficulty ) ) {
+                        return ln;
+                    }
+                    if ( !idrinth.tier.list[listKey].loot[difficulty].hasOwnProperty ( ic ) ) {
+                        return ln;
+                    }
+                    if ( !idrinth.tier.list[listKey].loot[difficulty][ic] ) {
+                        return ln;
+                    }
+                    ln.attributes = ln.attributes ? ln.attributes : [ ];
                     var title = "";
-                    for(var key in idrinth.tier.list[listKey].loot[difficulty][ic]) {
-                        if(idrinth.tier.list[listKey].loot[difficulty][ic].hasOwnProperty (key)) {
-                            title += idrinth.tier.list[listKey].loot[difficulty][ic][key]+" "+idrinth.text.get ('tier.loot.'+key)+"\n";
+                    for (var key in idrinth.tier.list[listKey].loot[difficulty][ic]) {
+                        if ( idrinth.tier.list[listKey].loot[difficulty][ic].hasOwnProperty ( key ) ) {
+                            title += idrinth.tier.list[listKey].loot[difficulty][ic][key] + " " + idrinth.text.get ( 'tier.loot.' + key ) + "\n";
                         }
                     }
-                    ln.attributes.push({name:'title',value:title});
-                }
-                if (
-                        idrinth.tier.list[listKey].hasOwnProperty ( difficulty ) &&
-                        idrinth.tier.list[listKey][difficulty].hasOwnProperty ( ic )
-                        ) {
+                    ln.attributes.push ( {
+                        name: 'title',
+                        value: title
+                    } );
+                    return ln;
+                };
+                /**
+                 * 
+                 * @param {object} ln
+                 * @param {string} listKey
+                 * @param {string} difficulty
+                 * @param {string} ic
+                 * @returns {object} for the buildElement wrapper
+                 */
+                var addContent = function ( ln, listKey, difficulty, ic ) {
+                    if (
+                            !idrinth.tier.list[listKey].hasOwnProperty ( difficulty ) ||
+                            !idrinth.tier.list[listKey][difficulty].hasOwnProperty ( ic )
+                            ) {
+                        return ln;
+                    }
                     ln.styles = idrinth.tier.list[listKey].os[difficulty] === idrinth.tier.list[listKey][difficulty][ic] ? 'is-os' : '';
                     ln.content = idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic] );
                     if (
@@ -215,8 +245,9 @@ idrinth.tier = {
                             ) {
                         ln.content += ' ' + idrinth.tier.list[listKey].epics[difficulty][ic] + 'E';
                     }
-                }
-                return ln;
+                    return ln;
+                };
+                return addContent ( addTitle ( ln, listKey, difficulty, ic ), listKey, difficulty, ic );
             };
             /**
              *

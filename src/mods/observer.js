@@ -30,9 +30,9 @@ idrinth.observer = {
                  * @param {string} prefix
                  * @returns {null|string}
                  */
-                var getData = function(parts,prefix) {
+                var getData = function ( parts, prefix ) {
                     for (var count = 0; count < parts.length; count++) {
-                        if ( parts[count].match ( prefix+'=' ) ) {
+                        if ( parts[count].match ( prefix + '=' ) ) {
                             return parts[count].split ( '=' )[1];
                         }
                     }
@@ -44,22 +44,22 @@ idrinth.observer = {
                  * @param {Boolean} isWorld
                  * @returns {Boolean}
                  */
-                var correctServer = function(href, isWorld) {
-                    if (href.match ( 'serverid=2' )) {
+                var correctServer = function ( href, isWorld ) {
+                    if ( href.match ( 'serverid=2' ) ) {
                         return isWorld;
                     }
                     return !isWorld;
                 };
-                if(!href || !href.match ( /action_type=raidhelp/ )) {
+                if ( !href || !href.match ( /action_type=raidhelp/ ) ) {
                     return;
                 }
                 href = href.replace ( /^.*\?/, '' );
-                if ( !correctServer(href, idrinth.settings.get ( "world" )) ) {
+                if ( !correctServer ( href, idrinth.settings.get ( "world" ) ) ) {
                     return;
                 }
                 var parts = href.split ( "&" );
-                var id = getData(parts, 'raid_id');
-                var hash = getData(parts, 'hash');
+                var id = getData ( parts, 'raid_id' );
+                var hash = getData ( parts, 'hash' );
                 if ( !id || !hash ) {
                     return;
                 }
