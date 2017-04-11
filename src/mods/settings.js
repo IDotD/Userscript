@@ -138,6 +138,16 @@ idrinth.settings = {
              *
              * @type Boolean
              */
+            content: true,
+            /**
+             *
+             * @type Boolean
+             */
+            image: true,
+            /**
+             *
+             * @type Boolean
+             */
             raid: true
         },
         /**

@@ -159,10 +159,14 @@ idrinth.core = {
         if ( window.Notification.permission === "denied" ) {
             return false;
         }
-        return new window.Notification ( title, {
-            icon: "https://dotd.idrinth.de/Resources/Images/logo.png",
-            body: content
-        } );
+        var data = {};
+        if(idrinth.settings.get ('notification#image')) {
+            data.icon = "https://dotd.idrinth.de/Resources/Images/logo.png";
+        }
+        if(idrinth.settings.get ('notification#content')) {
+            data.body = content;
+        }
+        return new window.Notification ( title, data );
     },
     /**
      *
