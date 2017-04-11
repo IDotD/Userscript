@@ -24,28 +24,44 @@ idrinth.observer = {
              */
             var handleLink = function ( element ) {
                 var href = element.getAttribute ( 'href' );
-                if ( href && href.match ( /action_type=raidhelp/ ) ) {
-                    var hash = '';
-                    var id = '';
-                    href = href.replace ( /^.*\?/, '' );
-                    var parts = href.split ( "&" );
+                /**
+                 * 
+                 * @param {Array} parts
+                 * @param {string} prefix
+                 * @returns {null|string}
+                 */
+                var getData = function(parts,prefix) {
                     for (var count = 0; count < parts.length; count++) {
-                        if ( parts[count].match ( 'raid_id=' ) ) {
-                            id = parts[count].split ( '=' )[1];
-                        } else if ( parts[count].match ( 'hash=' ) ) {
-                            hash = parts[count].split ( '=' )[1];
-                        } else if ( parts[count].match ( 'serverid=2' ) && !idrinth.settings.get ( "world" ) ) {
-                            return;
-                        } else if ( !parts[count].match ( 'server_id=2' ) && idrinth.settings.get ( "world" ) ) {
-                            return;
+                        if ( parts[count].match ( prefix+'=' ) ) {
+                            return parts[count].split ( '=' )[1];
                         }
                     }
-                    if ( !id || !hash ) {
-                        return;
-                    }
-                    idrinth.raids.private[id] = hash;
-                    idrinth.core.ajax.runHome ( 'get-raid-service/' + id + '/' + hash + '/' );
+                    return null;
+                };
+                /**
+                 * 
+                 * @param {string} href
+                 * @param {Boolean} isWorld
+                 * @returns {Boolean}
+                 */
+                var correctServer = function(href, isWorld) {
+                    return (!href.match ( 'serverid=2' )) === !isWorld;
+                };
+                if(!href || !href.match ( /action_type=raidhelp/ )) {
+                    return;
                 }
+                href = href.replace ( /^.*\?/, '' );
+                if ( !correctServer(href, idrinth.settings.get ( "world" )) ) {
+                    return;
+                }
+                var parts = href.split ( "&" );
+                var id = getData(parts, 'raid_id');
+                var hash = getData(parts, 'hash');
+                if ( !id || !hash ) {
+                    return;
+                }
+                idrinth.raids.private[id] = hash;
+                idrinth.core.ajax.runHome ( 'get-raid-service/' + id + '/' + hash + '/' );
             };
             if ( node.tagName === 'A' || node.tagName === 'a' ) {
                 handleLink ( node );
