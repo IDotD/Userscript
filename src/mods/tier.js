@@ -241,7 +241,7 @@ idrinth.tier = {
                      * @returns {Boolean}
                      */
                     var isOs = function ( os, current ) {
-                        return Number.parseInt ( os ) === Number.parseInt ( current );
+                        return Number.parseInt ( os, 10 ) === Number.parseInt ( current, 10 );
                     };
                     if (
                             !idrinth.tier.list[listKey].hasOwnProperty ( difficulty ) ||
