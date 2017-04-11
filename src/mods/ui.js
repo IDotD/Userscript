@@ -744,6 +744,16 @@ idrinth.ui = {
                                 rType: '#input',
                                 type: 'checkbox',
                                 label: 'chat.notification.message'
+                            }, {
+                                name: 'notification#content',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: 'chat.notification.content'
+                            }, {
+                                name: 'notification#image',
+                                rType: '#input',
+                                type: 'checkbox',
+                                label: 'chat.notification.image'
                             } ], 'chat' ),
                         {
                             css: 'idrinth-line',
