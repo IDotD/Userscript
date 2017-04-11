@@ -249,7 +249,7 @@ idrinth.tier = {
                             ) {
                         return ln;
                     }
-                    ln.styles = isOs ( idrinth.tier.list[listKey].os[difficulty], idrinth.tier.list[listKey][difficulty][ic] ) ? 'is-os' : '';
+                    ln.css = isOs ( idrinth.tier.list[listKey].os[difficulty], idrinth.tier.list[listKey][difficulty][ic] ) ? 'is-os' : '';
                     ln.content = idrinth.ui.formatNumber ( idrinth.tier.list[listKey][difficulty][ic] );
                     if (
                             idrinth.tier.list[listKey].epics &&
