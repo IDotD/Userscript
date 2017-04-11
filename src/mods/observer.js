@@ -45,7 +45,10 @@ idrinth.observer = {
                  * @returns {Boolean}
                  */
                 var correctServer = function(href, isWorld) {
-                    return (!href.match ( 'serverid=2' )) !== isWorld;
+                    if (href.match ( 'serverid=2' )) {
+                        return isWorld;
+                    }
+                    return !isWorld;
                 };
                 if(!href || !href.match ( /action_type=raidhelp/ )) {
                     return;
