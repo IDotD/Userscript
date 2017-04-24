@@ -353,7 +353,7 @@ idrinth.tier = {
                         },
                         makeButton (
                                 'copy',
-                                'idrinth.core.copyToClipboard.text("' + boss.name + '(NM): OS ' + idrinth.ui.formatNumber ( boss.os.nm ) + ', FS ' + idrinth.ui.formatNumber ( boss.fs.nm ) + ', Tiers ' + formattedList ( boss.nm ) + ' by IDotD")'
+                                'idrinth.core.copyToClipboard.text("' + boss.name + '(NM): OS ' + idrinth.ui.formatNumber ( boss.os.nm ) + ', AP ' + idrinth.ui.formatNumber ( boss.ap ) + ', Tiers ' + formattedList ( boss.nm ) + ' by IDotD")'
                                 ),
                         makeButton (
                                 'tag',
