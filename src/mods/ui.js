@@ -1067,11 +1067,25 @@ idrinth.ui = {
                         }, {
                             content: idrinth.text.get ( "raids.disable.none" ),
                             type: 'button',
-                            attributes: [{name:'onclick',value:'idrinth.tier.allCheck(false)'}]
+                            attributes: [
+                                {
+                                    name: 'onclick',
+                                    value: 'idrinth.tier.allCheck(false)'
+                                }, {
+                                    name: 'style',
+                                    value: 'width:50%;'
+                                } ]
                         }, {
                             content: idrinth.text.get ( "raids.disable.all" ),
                             type: 'button',
-                            attributes: [{name:'onclick',value:'idrinth.tier.allCheck(false)'}]
+                            attributes: [
+                                {
+                                    name: 'onclick',
+                                    value: 'idrinth.tier.allCheck(true)'
+                                }, {
+                                    name: 'style',
+                                    value: 'width:50%;'
+                                } ]
                         }, {
                             id: 'idrinth-raid-may-join-list'
                         } ];
