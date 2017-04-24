@@ -481,7 +481,7 @@ idrinth.tier = {
         for (var counter = boxes.length - 1; counter >= 0; counter--) {
             if ( boxes[counter].getAttribute ( 'type' ) === 'checkbox' && boxes[counter].checked !== yes ) {
                 boxes[counter].checked = yes;
-                idrinth.settings.change ( boxes[counter].getAttribute ( 'name' ), yes );
+                idrinth.settings.change ( (boxes[counter].getAttribute ( 'id' )).replace(/idrinth-/), yes );
             }
         }
     }
