@@ -1065,6 +1065,14 @@ idrinth.ui = {
                             content: idrinth.text.get ( "raids.disableSpecific" ),
                             type: 'strong'
                         }, {
+                            content: idrinth.text.get ( "raids.disable.none" ),
+                            type: 'button',
+                            attributes: [{name:'onclick',value:'idrinth.tier.allCheck(false)'}]
+                        }, {
+                            content: idrinth.text.get ( "raids.disable.all" ),
+                            type: 'button',
+                            attributes: [{name:'onclick',value:'idrinth.tier.allCheck(false)'}]
+                        }, {
                             id: 'idrinth-raid-may-join-list'
                         } ];
                 };

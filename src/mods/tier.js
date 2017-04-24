@@ -470,5 +470,19 @@ idrinth.tier = {
             type: document.getElementById ( 'idrinth-tierlist-typesearch' ).value,
             list: idrinth.tier.list
         } );
+    },
+    /**
+     * 
+     * @param {Boolean} yes
+     * @returns {undefined}
+     */
+    allCheck: function(yes) {
+        var boxes = document.getElementById('idrinth-raid-may-join-list').getElementsByTagName('input');
+        for(var counter=boxes.length-1;counter>=0;counter--) {
+            if(boxes[counter].getAttribute('type')==='checkbox' && boxes[counter].checked!==yes) {
+                boxes[counter].checked = yes;
+                idrinth.settings.change (boxes[counter].getAttribute('name'),yes);
+            }
+        }
     }
 };
