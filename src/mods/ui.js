@@ -1056,17 +1056,57 @@ idrinth.ui = {
                  * @returns {Array}
                  */
                 var buildRaidJoinList = function () {
-                    return [ {
-                            content: idrinth.text.get ( "raids.clickCopy" ),
-                            type: 'strong'
-                        }, {
-                            id: 'idrinth-raid-link-list'
-                        }, {
-                            content: idrinth.text.get ( "raids.disableSpecific" ),
-                            type: 'strong'
-                        }, {
-                            id: 'idrinth-raid-may-join-list'
-                        } ];
+                    /**
+                     *
+                     * @param {Array} list
+                     * @param {String} header
+                     * @returns {object}
+                     */
+                    var wrap = function ( list, header ) {
+                        return {
+                            children: [
+                                {
+                                    type: 'strong',
+                                    content: idrinth.text.get ( "raids." + header )
+                                },
+                                {
+                                    children: list
+                                }
+                            ],
+                            css: 'idrinth-openclick'
+                        };
+                    };
+                    return [
+                        wrap ( [ {
+                                id: 'idrinth-raid-link-list'
+                            } ],
+                                "clickCopy"
+                                ),
+                        wrap ( [ {
+                                content: idrinth.text.get ( "raids.disable.none" ),
+                                type: 'button',
+                                attributes: [
+                                    {
+                                        name: 'onclick',
+                                        value: 'idrinth.tier.allCheck(false)'
+                                    }, {
+                                        name: 'style',
+                                        value: 'width:50%;'
+                                    } ]
+                            }, {
+                                content: idrinth.text.get ( "raids.disable.all" ),
+                                type: 'button',
+                                attributes: [
+                                    {
+                                        name: 'onclick',
+                                        value: 'idrinth.tier.allCheck(true)'
+                                    }, {
+                                        name: 'style',
+                                        value: 'width:50%;'
+                                    } ]
+                            }, {
+                                id: 'idrinth-raid-may-join-list'
+                            } ], "disableSpecific" ) ];
                 };
                 return makeTabs ( {
                     'Actions': buildActions (),

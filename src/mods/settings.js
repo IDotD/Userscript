@@ -310,7 +310,7 @@ idrinth.settings = {
     /**
      *
      * @param {String} field
-     * @param {String|Booleab|Number} value
+     * @param {String|Boolean|Number} value
      * @returns {undefined}
      */
     change: function ( field, value ) {
