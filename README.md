@@ -11,7 +11,7 @@ IDotD combines a raid catcher, a way of automatically joining desired raids, wit
 
 Additionally there are a few platform specific features, for example quick information about players in the kongregate chat rooms or a timeable autojoin for newgrounds to replace the usual ones on other platforms.
 
-Most information is avaible at [this project's wiki](https://idotd.github.io/).
+Most information is avaible at [this project's wiki](https://idotd.github.io/) - feel free to help out there.
 
 ## Bugs, desired Features etc.
 
