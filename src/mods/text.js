@@ -61,11 +61,12 @@ idrinth.text = {
       true
     );
   },
+  // prettier-ignore
   /**
      * See languages/en.json for an example
      * @type {object}
      */
-  data: JSON.parse("###LANG###"),
+  data: JSON.parse('###LANG###'),
   /**
      * returns the translation of a provided key or an error-message if no
      * matching translation is found
