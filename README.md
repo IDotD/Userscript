@@ -1,5 +1,5 @@
 # IDotD
-A script for dawn of the dragons, that works based on data provided to https://dotd.idrinth.de via UgUp.
+A script for Dawn of the Dragons, that works based on data provided to https://dotd.idrinth.de via UgUp.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e80204911a734a56a471ab9b9ac649db)](https://www.codacy.com/app/IDotD/IDotD?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=IDotD/Userscript&amp;utm_campaign=Badge_Grade)
 
