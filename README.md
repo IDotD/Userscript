@@ -18,6 +18,8 @@ Most information is avaible at [this project's wiki](https://idotd.github.io/) -
 We prefer the usage of the [tracker](https://github.com/IDotD/Userscript/issues) here, otherwise we do import requests from [GoogleDocs](https://docs.google.com/document/d/1ozOWQuAEKCNnt2cwQ4SZtkpYM_pvrl8Bnj0e_O1KKWs/edit) from time to time.
 [Previous GoogleDoc Tickets](https://github.com/IDotD/Userscript/issues?utf8=%E2%9C%93&q=is%3Aissue%20label%3A%22Source%20GoogleDocs%22%20)
 
+Otherwise feel free to contact us via chat.
+
 ## How To Help
 
 We can use helpers for the following:
