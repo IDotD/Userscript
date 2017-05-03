@@ -1,416 +1,423 @@
 idrinth.settings = {
-    /**
+  /**
      *
      * @type {object}
      */
-    data: {
-        /**
+  data: {
+    /**
          *
          * @type Boolean
          */
-        raids: false,
-        /**
+    raids: false,
+    /**
          *
          * @type Boolean
          */
-        raidWhitelist: false,
-        /**
+    raidWhitelist: false,
+    /**
          *
          * @type String
          */
-        favs: '',
-        /**
+    favs: "",
+    /**
          *
          * @type Boolean
          */
-        factor: true,
-        /**
+    factor: true,
+    /**
          *
          * @type Boolean
          */
-        moveLeft: false,
-        /**
+    moveLeft: false,
+    /**
          *
          * @type Boolean
          */
-        minimalist: false,
-        /**
+    minimalist: false,
+    /**
          *
          * @type Boolean
          */
-        chatHiddenOnStart: true,
-        /**
+    chatHiddenOnStart: true,
+    /**
          *
          * @type Boolean
          */
-        names: true,
-        /**
+    names: true,
+    /**
          *
          * @type Number
          */
-        timeout: 5000,
-        /**
+    timeout: 5000,
+    /**
          *
          * @type Boolean
          */
-        warBottom: false,
-        /**
+    warBottom: false,
+    /**
          *
          * @type Boolean
          */
-        landMax: true,
-        /**
+    landMax: true,
+    /**
          *
          * @type Boolean
          */
-        chatting: true,
-        /**
+    chatting: true,
+    /**
          *
          * @type String
          */
-        chatuser: '',
-        /**
+    chatuser: "",
+    /**
          *
          * @type Number
          */
-        newgroundLoad: 30,
-        /**
+    newgroundLoad: 30,
+    /**
          *
          * @type String
          */
-        chatpass: '',
-        /**
+    chatpass: "",
+    /**
          *
          * @type Boolean
          */
-        isWorldServer: false,
-        /**
+    isWorldServer: false,
+    /**
          *
          * @type String
          */
-        alarmTime: '8:0',
-        /**
+    alarmTime: "8:0",
+    /**
          *
          * @type Boolean
          */
-        alarmActive: false,
-        /**
+    alarmActive: false,
+    /**
          *
          * @type Object
          */
-        bannedRaids: { },
-        /**
+    bannedRaids: {},
+    /**
          *
          * @type String
          */
-        lang: null,
-        /**
+    lang: null,
+    /**
          * @type Object
          */
-        raid: {
-            /**
+    raid: {
+      /**
              * 
              * @type Boolean
              */
-            requestPrivate: true,
-            /**
+      requestPrivate: true,
+      /**
              * 
              * @type Boolean
              */
-            joinPrivate: true
-        },
-        /**
+      joinPrivate: true
+    },
+    /**
          *
          * @type {Object}
          */
-        notification: {
-            /**
+    notification: {
+      /**
              *
              * @type Boolean
              */
-            mention: true,
-            /**
+      mention: true,
+      /**
              *
              * @type Boolean
              */
-            message: true,
-            /**
+      message: true,
+      /**
              *
              * @type Boolean
              */
-            content: true,
-            /**
+      content: true,
+      /**
              *
              * @type Boolean
              */
-            image: true,
-            /**
+      image: true,
+      /**
              *
              * @type Boolean
              */
-            raid: true
-        },
-        /**
+      raid: true
+    },
+    /**
          *
          * @type Object
          */
-        land: {
-            /**
+    land: {
+      /**
              *
              * @type Number
              */
-            cornfield: 0,
-            /**
+      cornfield: 0,
+      /**
              *
              * @type Number
              */
-            stable: 0,
-            /**
+      stable: 0,
+      /**
              *
              * @type Number
              */
-            barn: 0,
-            /**
+      barn: 0,
+      /**
              *
              * @type Number
              */
-            store: 0,
-            /**
+      store: 0,
+      /**
              *
              * @type Number
              */
-            pub: 0,
-            /**
+      pub: 0,
+      /**
              *
              * @type Number
              */
-            inn: 0,
-            /**
+      inn: 0,
+      /**
              *
              * @type Number
              */
-            tower: 0,
-            /**
+      tower: 0,
+      /**
              *
              * @type Number
              */
-            fort: 0,
-            /**
+      fort: 0,
+      /**
              *
              * @type Number
              */
-            castle: 0,
-            /**
+      castle: 0,
+      /**
              *
              * @type Number
              */
-            gold: 0
-        },
-        /**
+      gold: 0
+    },
+    /**
          *
          * @type {object}
          */
-        stats: {
-            /**
+    stats: {
+      /**
              *
              * @type Number
              */
-            stats: 0,
-            /**
+      stats: 0,
+      /**
              *
              * @type Number
              */
-            level: 1,
-            /**
+      level: 1,
+      /**
              *
              * @type Number
              */
-            perception: 0,
-            /**
+      perception: 0,
+      /**
              *
              * @type Number
              */
-            attack: 0,
-            /**
+      attack: 0,
+      /**
              *
              * @type Number
              */
-            defense: 0,
-            /**
+      defense: 0,
+      /**
              *
              * @type Number
              */
-            critchance: 5,
-            /**
+      critchance: 5,
+      /**
              *
              * @type Number
              */
-            mount: 0,
-            /**
+      mount: 0,
+      /**
              *
              * @type Boolean
              */
-            kraken: false,
-            /**
+      kraken: false,
+      /**
              *
              * @type Boolean
              */
-            mirele: false,
-            /**
+      mirele: false,
+      /**
              *
              * @type Boolean
              */
-            utym: false
-        }
-    },
-    /**
+      utym: false
+    }
+  },
+  /**
      *
      * @param {string} field
      * @param {Boolean} allowObject
      * @returns {int|string|object}
      */
-    get: function ( field, allowObject ) {
-        /**
+  get: function(field, allowObject) {
+    /**
          *
          * @param {object} parent
          * @param {string} field
          * @param {Boolean} allowObject
          * @returns {int|string|object}
          */
-        var getValue = function ( parent, field, allowObject ) {
-            if ( idrinth.core.fieldIsSetting ( parent, field, allowObject ) ) {
-                return parent[field];
-            }
-            return null;
-        };
-        /**
+    var getValue = function(parent, field, allowObject) {
+      if (idrinth.core.fieldIsSetting(parent, field, allowObject)) {
+        return parent[field];
+      }
+      return null;
+    };
+    /**
          *
          * @param {string} key
          * @returns {undefined}
          */
-        var remove = function ( key ) {
-            try {
-                window.localStorage.removeItem ( key );
-            } catch ( e ) {
-                //not really relevant
-            }
-        };
-        if ( !field ) {
-            return;
-        }
-        var value = getValue ( idrinth.settings.data, field, allowObject );
-        if ( value !== null && ( typeof value !== 'object' || allowObject ) ) {
-            remove ( 'idrinth-dotd-' + field );
-            return value;
-        }
-        field = field.split ( '#' );
-        remove ( 'idrinth-dotd-' + field[0] + '-' + field[1] );
-        return getValue ( idrinth.settings.data[field[0]], field[1], allowObject );
-    },
-    /**
+    var remove = function(key) {
+      try {
+        window.localStorage.removeItem(key);
+      } catch (e) {
+        //not really relevant
+      }
+    };
+    if (!field) {
+      return;
+    }
+    var value = getValue(idrinth.settings.data, field, allowObject);
+    if (value !== null && (typeof value !== "object" || allowObject)) {
+      remove("idrinth-dotd-" + field);
+      return value;
+    }
+    field = field.split("#");
+    remove("idrinth-dotd-" + field[0] + "-" + field[1]);
+    return getValue(idrinth.settings.data[field[0]], field[1], allowObject);
+  },
+  /**
      *
      * @param {String} field
      * @param {String|Boolean|Number} value
      * @returns {undefined}
      */
-    change: function ( field, value ) {
-        /**
+  change: function(field, value) {
+    /**
          *
          * @param {obect} parent
          * @param {string} field
          * @param {String|Booleab|Number} value
          * @returns {Boolean}
          */
-        var setValue = function ( parent, field, value ) {
-            if ( idrinth.core.fieldIsSetting ( parent, field ) ) {
-                parent[field] = value;
-                return true;
-            }
-            return false;
-        };
-        /**
+    var setValue = function(parent, field, value) {
+      if (idrinth.core.fieldIsSetting(parent, field)) {
+        parent[field] = value;
+        return true;
+      }
+      return false;
+    };
+    /**
          * saves the data to local storage
          * @returns {undefined}
          */
-        var store = function () {
-            window.localStorage.setItem ( 'idotd', JSON.stringify ( idrinth.settings.data ) );
-        };
-        if ( !field ) {
-            return;
-        }
-        if ( setValue ( idrinth.settings.data, field, value ) ) {
-            store ();
-            return;
-        }
-        field = field.split ( '#' );
-        if ( !idrinth.settings.data[field[0]] || !field[1] ) {
-            return;
-        }
-        if ( setValue ( idrinth.settings.data[field[0]], field[1], value ) ) {
-            store ();
-            return;
-        }
-    },
-    /**
+    var store = function() {
+      window.localStorage.setItem(
+        "idotd",
+        JSON.stringify(idrinth.settings.data)
+      );
+    };
+    if (!field) {
+      return;
+    }
+    if (setValue(idrinth.settings.data, field, value)) {
+      store();
+      return;
+    }
+    field = field.split("#");
+    if (!idrinth.settings.data[field[0]] || !field[1]) {
+      return;
+    }
+    if (setValue(idrinth.settings.data[field[0]], field[1], value)) {
+      store();
+      return;
+    }
+  },
+  /**
      * initializes the module
      * @returns {undefined}
      */
-    start: function () {
-        /**
+  start: function() {
+    /**
          * fills the data from json in idotd
          * @returns {undefined}
          */
-        var getCurrent = function () {
-            try{
-                var data = JSON.parse ( window.localStorage.getItem ( 'idotd' ) );
-                /**
+    var getCurrent = function() {
+      try {
+        var data = JSON.parse(window.localStorage.getItem("idotd"));
+        /**
                  *
                  * @param {object} to
                  * @param {object} from
                  * @param {function} apply
                  * @returns {undefined}
                  */
-                var apply = function ( to, from, apply ) {
-                    for (var key in from) {
-                        if ( from.hasOwnProperty ( key ) ) {
-                            if ( typeof from[key] === 'object' ) {
-                                to[key] = typeof to[key] === 'object' ? to[key] : { };
-                                apply ( to[key], from[key] );
-                            } else {
-                                to[key] = from[key];
-                            }
-                        }
-                    }
-                };
-                if(!data) {
-                    return;
-                }
-                apply ( idrinth.settings.data, data, apply );
-            } catch (exception) {
-                idrinth.core.timeouts.add (
-                        'settings-fail',
-                        function(){
-                            idrinth.core.alert ("There was a failure when trying to handle settings, they have been reset to default.");
-                        },
-                        1000
-                    );
-                idrinth.core.log (exception.getMessage?exception.getMessage( ):exception.message);
+        var apply = function(to, from, apply) {
+          for (var key in from) {
+            if (from.hasOwnProperty(key)) {
+              if (typeof from[key] === "object") {
+                to[key] = typeof to[key] === "object" ? to[key] : {};
+                apply(to[key], from[key]);
+              } else {
+                to[key] = from[key];
+              }
             }
+          }
         };
-        /**
+        if (!data) {
+          return;
+        }
+        apply(idrinth.settings.data, data, apply);
+      } catch (exception) {
+        idrinth.core.timeouts.add(
+          "settings-fail",
+          function() {
+            idrinth.core.alert(
+              "There was a failure when trying to handle settings, they have been reset to default."
+            );
+          },
+          1000
+        );
+        idrinth.core.log(
+          exception.getMessage ? exception.getMessage() : exception.message
+        );
+      }
+    };
+    /**
          * fills the data from seperate storages
          * @returns {undefined}
          */
-        var getOld = function () {
-            /**
+    var getOld = function() {
+      /**
              *
              * @param {object} object
              * @param {String} prefix
              * @param {function} objectIterator
              * @returns {Boolean}
              */
-            var objectIterator = function ( object, prefix, objectIterator ) {
-                /**
+      var objectIterator = function(object, prefix, objectIterator) {
+        /**
                  *
                  * @param {String} prefix
                  * @param {String} key
@@ -418,39 +425,46 @@ idrinth.settings = {
                  * @returns {Boolean}
                  * @todo remove this once old data is unlikely to exist
                  */
-                var itemHandler = function ( prefix, key, item ) {
-                    if ( typeof item !== 'function' ) {
-                        var tmp = window.localStorage.getItem ( 'idrinth-dotd-' + prefix + key );
-                        if ( tmp ) {
-                            if ( tmp === 'false' ) {
-                                tmp = false;
-                            } else if ( tmp === 'true' ) {
-                                tmp = true;
-                            }
-                            item = tmp;
-                        }
-                    }
-                    return item;
-                };
-                for (var key in object) {
-                    if ( object.hasOwnProperty ( key ) ) {
-                        if ( typeof object[key] !== 'object' ) {
-                            object[key] = itemHandler ( prefix, key, object[key] );
-                        } else {
-                            object[key] = objectIterator ( object[key], prefix + key + '-', itemHandler, objectIterator );
-                        }
-                    }
-                }
-                return object;
-            };
-            objectIterator ( idrinth.settings.data, '', objectIterator );
-        };
-        if ( window.localStorage ) {
-            if ( window.localStorage.getItem ( 'idotd' ) ) {
-                getCurrent ();
-            } else {
-                getOld ();
+        var itemHandler = function(prefix, key, item) {
+          if (typeof item !== "function") {
+            var tmp = window.localStorage.getItem(
+              "idrinth-dotd-" + prefix + key
+            );
+            if (tmp) {
+              if (tmp === "false") {
+                tmp = false;
+              } else if (tmp === "true") {
+                tmp = true;
+              }
+              item = tmp;
             }
+          }
+          return item;
+        };
+        for (var key in object) {
+          if (object.hasOwnProperty(key)) {
+            if (typeof object[key] !== "object") {
+              object[key] = itemHandler(prefix, key, object[key]);
+            } else {
+              object[key] = objectIterator(
+                object[key],
+                prefix + key + "-",
+                itemHandler,
+                objectIterator
+              );
+            }
+          }
         }
+        return object;
+      };
+      objectIterator(idrinth.settings.data, "", objectIterator);
+    };
+    if (window.localStorage) {
+      if (window.localStorage.getItem("idotd")) {
+        getCurrent();
+      } else {
+        getOld();
+      }
     }
+  }
 };
