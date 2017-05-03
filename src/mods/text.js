@@ -65,6 +65,7 @@ idrinth.text = {
   /**
      * See languages/en.json for an example
      * @type {object}
+     * prettier-ignore
      */
   data: JSON.parse('###LANG###'),
   /**
