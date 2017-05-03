@@ -1,8 +1,6 @@
 # IDotD
 A script for Dawn of the Dragons, that works based on data provided to https://dotd.idrinth.de via UgUp.
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e80204911a734a56a471ab9b9ac649db)](https://www.codacy.com/app/IDotD/IDotD?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=IDotD/Userscript&amp;utm_campaign=Badge_Grade)
-
 We support Opera, Firefox and Chrome. Please make sure to update your installation of those on a regular basis, since we can't guarantee, that the script will work on outdated versions.
 
 ## What is it?
@@ -11,7 +9,7 @@ IDotD combines a raid catcher, a way of automatically joining desired raids, wit
 
 Additionally there are a few platform specific features, for example quick information about players in the kongregate chat rooms or a timeable autojoin for newgrounds to replace the usual ones on other platforms.
 
-Most information is avaible at [this project's wiki](https://idotd.github.io/) - feel free to help out there.
+Most information is avaible at [this project's wiki](https://idotd.github.io/).
 
 ## Bugs, desired Features etc.
 
