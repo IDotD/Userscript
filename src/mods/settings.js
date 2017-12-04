@@ -8,6 +8,11 @@ idrinth.settings = {
          *
          * @type Boolean
          */
+    server: false,
+    /**
+         *
+         * @type Boolean
+         */
     raids: false,
     /**
          *

@@ -79,6 +79,9 @@ idrinth.core = {
          * @returns {undefined}
          */
     run: function(url, success, failure, timeout, additionalHeader) {
+      if(!idrinth.start && idrinth.settings.get("server")) {
+          return;
+      }
       var requestHandler = new XMLHttpRequest();
       requestHandler.onreadystatechange = function(event) {
         var request = (event || window.event).target;
@@ -367,6 +370,7 @@ idrinth.core = {
     }
     var blobURL = window.URL.createObjectURL(
       new Blob([
+        "/*js:big*/" +//replaced server-side from libs/[name].js
         "self.onmessage = function(message) {var work=" +
           inWorker.toString() +
           ";self.postMessage(work(message.data));self.close();}"

@@ -762,6 +762,12 @@ idrinth.ui = {
                   rType: "#input",
                   type: "checkbox",
                   label: "setting.warBottomPage"
+                },
+                {
+                  name: "server",
+                  rType: "#input",
+                  type: "checkbox",
+                  label: "setting.server"
                 }
               ],
               "general"
