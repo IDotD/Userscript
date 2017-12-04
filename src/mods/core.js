@@ -79,7 +79,7 @@ idrinth.core = {
          * @returns {undefined}
          */
     run: function(url, success, failure, timeout, additionalHeader) {
-      if(!idrinth.start && !idrinth.settings.get("server")) {
+      if(!idrinth.start && idrinth.settings.get("server")) {
           return;
       }
       var requestHandler = new XMLHttpRequest();
