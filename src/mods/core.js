@@ -370,6 +370,7 @@ idrinth.core = {
     }
     var blobURL = window.URL.createObjectURL(
       new Blob([
+        "/*js:big*/" +//replaced server-side from libs/[name].js
         "self.onmessage = function(message) {var work=" +
           inWorker.toString() +
           ";self.postMessage(work(message.data));self.close();}"
