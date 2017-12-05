@@ -34,31 +34,39 @@
     window.location.host === "web1.dawnofthedragons.com" ||
     window.location.host === "dotd-web1.5thplanetgames.com"
   ) {
-    window.idrinth = {};
-    window.idrinth.add = function(data) {
-      var s = document.createElement("script");
-      s.appendChild(document.createTextNode(data));
-      document.getElementsByTagName("head")[0].appendChild(s);
-    };
-    window.addEventListener(
-      "message",
-      function(event) {
-        try {
-          var data = JSON.parse(event.data);
-          if (
-            data.to !== "idotd" ||
-            !window.idrinth.hasOwnProperty(data.task) ||
-            !data.data
-          ) {
-            return;
+    var f = function() {
+      console.log("s");
+      window.idrinth = {};
+      window.idrinth.add= function(data) {
+          var s = document.createElement("script");
+          s.appendChild(document.createTextNode(data));
+          document.getElementsByTagName("head")[0].appendChild(s);
+      };
+      window.addEventListener(
+        "message",
+        function(event) {
+          try {
+            var data = JSON.parse(event.data);
+            if (
+              !data ||
+              data.to !== "idotd" ||
+              !window.idrinth.hasOwnProperty(data.task) ||
+              !data.data
+            ) {
+              return;
+            }
+            window.idrinth[data.task](data.data);
+          } catch (e) {
+            //nothing
           }
-          window.idrinth[data.task](data.data);
-        } catch (e) {
-          //nothing
-        }
-      },
-      false
-    );
+        },
+        false
+      );
+    };
+    var sc = document.createElement("script");
+    sc.setAttribute("id", "idotd-loader");
+    sc.appendChild(document.createTextNode('('+f.toString()+'());'));
+    document.getElementsByTagName("head")[0].appendChild(sc);
     return;
   }
   var sc = document.createElement("script");
