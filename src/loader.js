@@ -2,7 +2,7 @@
 // @name           Idrinth's DotD Script
 // @description    A userscript for the game Dawn of the Dragons which provides multiple useful tools, like time-saving raid catching, private chatrooms and much more to discover, see the manual at https://idotd.github.io/
 // @author         Idrinth
-// @version        2.3.1
+// @version        2.3.2
 // @grant          none
 // @hompage        https://dotd.idrinth.de
 // @include        http://www.kongregate.com/games/5thplanetgames/dawn-of-the-dragons*
@@ -34,31 +34,39 @@
     window.location.host === "web1.dawnofthedragons.com" ||
     window.location.host === "dotd-web1.5thplanetgames.com"
   ) {
-    window.idrinth = {};
-    window.idrinth.add = function(data) {
-      var s = document.createElement("script");
-      s.appendChild(document.createTextNode(data));
-      document.getElementsByTagName("head")[0].appendChild(s);
-    };
-    window.addEventListener(
-      "message",
-      function(event) {
-        try {
-          var data = JSON.parse(event.data);
-          if (
-            data.to !== "idotd" ||
-            !window.idrinth.hasOwnProperty(data.task) ||
-            !data.data
-          ) {
-            return;
+    var f = function() {
+      console.log("s");
+      window.idrinth = {};
+      window.idrinth.add= function(data) {
+          var s = document.createElement("script");
+          s.appendChild(document.createTextNode(data));
+          document.getElementsByTagName("head")[0].appendChild(s);
+      };
+      window.addEventListener(
+        "message",
+        function(event) {
+          try {
+            var data = JSON.parse(event.data);
+            if (
+              !data ||
+              data.to !== "idotd" ||
+              !window.idrinth.hasOwnProperty(data.task) ||
+              !data.data
+            ) {
+              return;
+            }
+            window.idrinth[data.task](data.data);
+          } catch (e) {
+            //nothing
           }
-          window.idrinth[data.task](data.data);
-        } catch (e) {
-          //nothing
-        }
-      },
-      false
-    );
+        },
+        false
+      );
+    };
+    var sc = document.createElement("script");
+    sc.setAttribute("id", "idotd-loader");
+    sc.appendChild(document.createTextNode('('+f.toString()+'());'));
+    document.getElementsByTagName("head")[0].appendChild(sc);
     return;
   }
   var sc = document.createElement("script");
