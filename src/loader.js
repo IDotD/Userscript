@@ -2,7 +2,7 @@
 // @name           Idrinth's DotD Script
 // @description    A userscript for the game Dawn of the Dragons which provides multiple useful tools, like time-saving raid catching, private chatrooms and much more to discover, see the manual at https://idotd.github.io/
 // @author         Idrinth
-// @version        2.3.1
+// @version        2.3.2
 // @grant          none
 // @hompage        https://dotd.idrinth.de
 // @include        http://www.kongregate.com/games/5thplanetgames/dawn-of-the-dragons*
