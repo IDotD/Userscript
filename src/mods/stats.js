@@ -53,7 +53,7 @@ idrinth.stats = {
             idrinth.settings.get("stats#legion") /
             100;
         }
-        if (idrinth.settings.get("stats#utym")) {
+        if (idrinth.settings.get("stats#kraken")) {
           base +=
             (idrinth.settings.get("stats#defense") <= 10000 ? 0.2 : 0.01) *
             1.8 *
