@@ -70,7 +70,7 @@ idrinth.text = {
   /**
      * returns the translation of a provided key or an error-message if no
      * matching translation is found
-     * @param string key
+     * @param {string} key
      * @returns {string}
      */
   get: function(key) {
