@@ -16,21 +16,21 @@ idrinth.observer = {
          * @param {HTMLElement} element
          * @returns {undefined}
          */
-    var checkLinks = function(node) {
+    let checkLinks = function(node) {
       /**
              * 
              * @param {HTMLElement} element
              * @returns {undefined}
              */
-      var handleLink = function(element) {
-        var href = element.getAttribute("href");
+      let handleLink = function(element) {
+        let href = element.getAttribute("href");
         /**
                  * 
                  * @param {Array} parts
                  * @param {string} prefix
                  * @returns {null|string}
                  */
-        var getData = function(parts, prefix) {
+        let getData = function(parts, prefix) {
           for (var count = 0; count < parts.length; count++) {
             if (parts[count].match(prefix + "=")) {
               return parts[count].split("=")[1];
@@ -44,7 +44,7 @@ idrinth.observer = {
                  * @param {Boolean} isWorld
                  * @returns {Boolean}
                  */
-        var correctServer = function(href, isWorld) {
+        let correctServer = function(href, isWorld) {
           if (href.match("serverid=2")) {
             return isWorld;
           }
@@ -57,9 +57,9 @@ idrinth.observer = {
         if (!correctServer(href, idrinth.settings.get("world"))) {
           return;
         }
-        var parts = href.split("&");
-        var id = getData(parts, "raid_id");
-        var hash = getData(parts, "hash");
+        let parts = href.split("&");
+        let id = getData(parts, "raid_id");
+        let hash = getData(parts, "hash");
         if (!id || !hash) {
           return;
         }
@@ -69,7 +69,7 @@ idrinth.observer = {
       if (node.tagName === "A" || node.tagName === "a") {
         handleLink(node);
       } else {
-        var elements = node.getElementsByTagName("a");
+        let elements = node.getElementsByTagName("a");
         for (var count = 0; count < elements.length; count++) {
           handleLink(elements[count]);
         }
@@ -80,14 +80,14 @@ idrinth.observer = {
          * @param {HTMLElement} element
          * @returns {undefined}
          */
-    var checkNames = function(node) {
+    let checkNames = function(node) {
       /**
              *
              * @param {HTMLElement} element
              * @returns {undefined}
              */
-      var processName = function(element) {
-        var name = "";
+      let processName = function(element) {
+        let name = "";
         try {
           name = idrinth.names.parse(element);
         } catch (e) {
@@ -103,7 +103,7 @@ idrinth.observer = {
           );
         }
       };
-      var elements = node.getElementsByClassName("username");
+      let elements = node.getElementsByClassName("username");
       for (var count = elements.length - 1; count >= 0; count--) {
         processName(elements[count]);
       }

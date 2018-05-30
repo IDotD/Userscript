@@ -45,18 +45,18 @@ var idrinth = {
          *
          * @returns {undefined}
          */
-    var startInternal = function() {
+    let startInternal = function() {
       /**
              * initializes all modules
              * @returns {undefined}
              */
-      var init = function() {
+      let init = function() {
         if (!idrinth.text.initialized) {
           return;
         }
         if (idrinth.platform === "newgrounds") {
           try {
-            var frame = document
+            let frame = document
               .getElementById("iframe_embed")
               .getElementsByTagName("iframe")[0];
             idrinth.newgrounds.originalUrl = frame.getAttribute("src");

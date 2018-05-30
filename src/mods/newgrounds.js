@@ -26,7 +26,7 @@ idrinth.newgrounds = {
      * @returns {undefined}
      */
   alarmCheck: function() {
-    var now = new Date();
+    let now = new Date();
     if (
       idrinth.settings.get("alarmActive") &&
       now.getHours() + ":" + now.getMinutes() ===
@@ -49,11 +49,11 @@ idrinth.newgrounds = {
       idrinth.core.alert("We're done! Have fun playing.");
       return;
     }
-    var frame = document
+    let frame = document
       .getElementById("iframe_embed")
       .getElementsByTagName("iframe")[0];
-    var key = idrinth.newgrounds.raids.pop();
-    var link =
+    let key = idrinth.newgrounds.raids.pop();
+    let link =
       idrinth.newgrounds.originalUrl +
       "&" +
       idrinth.raids.join.getServerLink(key).replace(/^.*?\?/, "");

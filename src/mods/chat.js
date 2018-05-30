@@ -55,13 +55,13 @@ idrinth.chat = {
          * @param {String} data
          * @returns {undefined}
          */
-    var applyMessages = function(data) {
+    let applyMessages = function(data) {
       /**
              * 
              * @param {String} messages
              * @returns {undefined}
              */
-      var processMessages = function(messages) {
+      let processMessages = function(messages) {
         /**
                  * 
                  * @param {Array} chatMessages
@@ -69,7 +69,7 @@ idrinth.chat = {
                  * @param {HTMLElement} chatElement
                  * @returns {Boolean}
                  */
-        var addMessages = function(chatMessages, chatId, chatElement) {
+        let addMessages = function(chatMessages, chatId, chatElement) {
           /**
                      * 
                      * @param {String} message
@@ -78,12 +78,12 @@ idrinth.chat = {
                      * @param {Number} messageId
                      * @returns {undefined}
                      */
-          var buildMessage = function(message, chat, chatId, messageId) {
+          let buildMessage = function(message, chat, chatId, messageId) {
             /**
                          * 
                          * @returns {String}
                          */
-            var getfullDateInt = function() {
+            let getfullDateInt = function() {
               /**
                              * 
                              * @param {Number} x
@@ -96,7 +96,7 @@ idrinth.chat = {
                 }
                 return x;
               }
-              var d = new Date();
+              let d = new Date();
               return (
                 addZero(d.getFullYear(), 2) +
                 addZero(d.getMonth(), 2) +
@@ -114,13 +114,13 @@ idrinth.chat = {
                          * @param {Number} chatId
                          * @returns {undefined}
                          */
-            var notify = function(message, own, chatId) {
+            let notify = function(message, own, chatId) {
               /**
                              * 
                              * @param {Number} chatId
                              * @returns {Boolean}
                              */
-              var notActive = function(chatId) {
+              let notActive = function(chatId) {
                 try {
                   return (
                     !idrinth.windowactive ||
@@ -143,7 +143,7 @@ idrinth.chat = {
                              * @param {String} text
                              * @returns {Boolean}
                              */
-              var messageAllowed = function(text) {
+              let messageAllowed = function(text) {
                 try {
                   return (
                     (idrinth.settings.get("notification#message") &&
@@ -183,7 +183,7 @@ idrinth.chat = {
                 }
               }
             };
-            var own =
+            let own =
               parseInt(message.user, 10) === parseInt(idrinth.chat.self, 10);
             notify(message, own, chatId);
             chat.appendChild(
@@ -243,7 +243,7 @@ idrinth.chat = {
               })
             );
           };
-          var isNew = false;
+          let isNew = false;
           for (var messageId in chatMessages) {
             if (
               parseInt(messageId, 10) < 1 ||
@@ -272,24 +272,24 @@ idrinth.chat = {
                  * @param {Number} chatId
                  * @returns {undefined}
                  */
-        var setChatClass = function(isNew, chat, chatId) {
+        let setChatClass = function(isNew, chat, chatId) {
           /**
                      * 
                      * @param {HTMLElement} element
                      * @returns {Boolean}
                      */
-          var isActive = function(element) {
-            var cssClass = element.getAttribute("class");
+          let isActive = function(element) {
+            let cssClass = element.getAttribute("class");
             return !!cssClass && !!cssClass.match(/(^|\s)active(\s|$)/);
           };
-          var chatActive = isActive(document.getElementById("idrinth-chat"));
+          let chatActive = isActive(document.getElementById("idrinth-chat"));
           if (isNew && !chatActive) {
             document
               .getElementById("idrinth-chat")
               .setAttribute("class", "new-message");
           }
-          var tab = document.getElementById("idrinth-chat-tab-click-" + chatId);
-          var tabActive = isActive(tab);
+          let tab = document.getElementById("idrinth-chat-tab-click-" + chatId);
+          let tabActive = isActive(tab);
           if (isNew && !tabActive) {
             tab.setAttribute(
               "class",
@@ -319,7 +319,7 @@ idrinth.chat = {
               .getElementById("idrinth-chat-tab-" + key)
               .getElementsByTagName("ul")[1]
           ) {
-            var chat = document
+            let chat = document
               .getElementById("idrinth-chat-tab-" + key)
               .getElementsByTagName("ul")[1];
             setChatClass(addMessages(messages[key], key, chat), chat, key);
@@ -346,18 +346,18 @@ idrinth.chat = {
          * 
          * @returns {undefined}
          */
-    var refreshMembers = function() {
+    let refreshMembers = function() {
       /**
              * 
              * @param {String} data
              * @returns {undefined}
              */
-      var applyMembers = function(data) {
+      let applyMembers = function(data) {
         /**
                  * 
                  * @returns {undefined}
                  */
-        var applyMemberData = function() {
+        let applyMemberData = function() {
           /**
                      * 
                      * @param {HTMLElement} chat
@@ -365,8 +365,8 @@ idrinth.chat = {
                      * @param {Number} userId
                      * @returns {undefined}
                      */
-          var addMemberElement = function(chat, chatId, userId) {
-            var usedPlatforms = "";
+          let addMemberElement = function(chat, chatId, userId) {
+            let usedPlatforms = "";
             for (var pkey in idrinth.chat.users[userId].platforms) {
               if (idrinth.chat.users[userId].platforms[pkey]) {
                 usedPlatforms += pkey;
@@ -402,7 +402,7 @@ idrinth.chat = {
           };
           for (var chatId in idrinth.chat.chatRank) {
             if (document.getElementById("idrinth-chat-tab-" + chatId)) {
-              var chat = document
+              let chat = document
                 .getElementById("idrinth-chat-tab-" + chatId)
                 .getElementsByTagName("ul")[0];
               while (chat.firstChild) {
@@ -482,14 +482,14 @@ idrinth.chat = {
          * @param {Number} rankId
          * @returns {Array}
          */
-    var getPopupContent = function(chat, user, rankId) {
+    let getPopupContent = function(chat, user, rankId) {
       /**
              * 
              * @param {Number} chat
              * @returns {Array}
              */
-      var getPromotionOptions = function(chat) {
-        var promotionModes = [
+      let getPromotionOptions = function(chat) {
+        let promotionModes = [
           {
             chat: chat,
             label: "chat.actions.banUser",
@@ -517,7 +517,7 @@ idrinth.chat = {
         ];
         for (var chatId in idrinth.chat.chatRank) {
           if (idrinth.chat.chatRank.hasOwnProperty(chatId)) {
-            var intChatId = parseInt(chatId, 10);
+            let intChatId = parseInt(chatId, 10);
             if (
               document.getElementById("idrinth-chat-tab-click-" + chatId) &&
               intChatId !== chat &&
@@ -544,20 +544,20 @@ idrinth.chat = {
              * @param {Number} ownRank
              * @returns {Array}
              */
-      var promoteNode = function(node, user, ownRank) {
+      let promoteNode = function(node, user, ownRank) {
         /**
                  * 
                  * @param {Number} reqRank
                  * @param {Number} ownRank
                  * @returns {Boolean}
                  */
-        var hasRights = function(reqRank, ownRank) {
+        let hasRights = function(reqRank, ownRank) {
           return reqRank <= ownRank;
         };
         if (!hasRights(node.requiredRank, ownRank)) {
           return;
         }
-        var translation = idrinth.text.get(node.label);
+        let translation = idrinth.text.get(node.label);
         return {
           content: translation === idrinth.text.data.default
             ? node.label
@@ -577,18 +577,18 @@ idrinth.chat = {
           ]
         };
       };
-      var popupContent = [];
-      var promotionModes = getPromotionOptions(parseInt(chat, 10), user);
+      let popupContent = [];
+      let promotionModes = getPromotionOptions(parseInt(chat, 10), user);
       for (var count = 0; count < promotionModes.length; count++) {
-        var tmp = promoteNode(promotionModes[count], user, rankId);
+        let tmp = promoteNode(promotionModes[count], user, rankId);
         if (tmp) {
           popupContent.push(tmp);
         }
       }
       return popupContent;
     };
-    var rankId = parseInt(idrinth.chat.chatRank[chat][idrinth.chat.self], 10);
-    var popupContent = getPopupContent(chat, user, rankId);
+    let rankId = parseInt(idrinth.chat.chatRank[chat][idrinth.chat.self], 10);
+    let popupContent = getPopupContent(chat, user, rankId);
     if (popupContent.length === 0) {
       return;
     }
@@ -664,7 +664,7 @@ idrinth.chat = {
          * @param {String} lastField
          * @returns {Array}
          */
-    var complexHandler = function(message, regex, callbacks, lastField) {
+    let complexHandler = function(message, regex, callbacks, lastField) {
       /**
              * 
              * @param {Number} count
@@ -673,7 +673,7 @@ idrinth.chat = {
              * @param {Array} textcontent
              * @returns {Array}
              */
-      var partHandler = function(count, callbacks, text, textcontent) {
+      let partHandler = function(count, callbacks, text, textcontent) {
         /**
                  * 
                  * @param {Array} textcontent
@@ -681,8 +681,8 @@ idrinth.chat = {
                  * @param {String} text
                  * @returns {unresolved}
                  */
-        var callbackHandler = function(textcontent, func, text) {
-          var tmp = func(text);
+        let callbackHandler = function(textcontent, func, text) {
+          let tmp = func(text);
           for (var c2 = 0; c2 < tmp.length; c2++) {
             if (tmp[c2] !== undefined) {
               textcontent.push(tmp[c2]);
@@ -709,12 +709,12 @@ idrinth.chat = {
         }
         return textcontent;
       };
-      var matches = message.match(regex);
-      var text = message
+      let matches = message.match(regex);
+      let text = message
         .replace(regex, "$1########$" + lastField)
         .split("########");
-      var textcontent = [];
-      var length =
+      let textcontent = [];
+      let length =
         (matches && Array.isArray(matches) ? matches.length : 0) +
         (text && Array.isArray(text) ? text.length : 0);
       for (var count = 0; count < length; count++) {
@@ -728,10 +728,10 @@ idrinth.chat = {
          * @param {Array} callbacks
          * @returns {Array}
          */
-    var simpleHandler = function(message, callbacks) {
+    let simpleHandler = function(message, callbacks) {
       if (typeof callbacks[1] === "function") {
-        var textcontent = [];
-        var tmp = callbacks[1](message);
+        let textcontent = [];
+        let tmp = callbacks[1](message);
         for (var c2 = 0; c2 < tmp.length; c2++) {
           textcontent.push(tmp[c2]);
         }
@@ -759,16 +759,16 @@ idrinth.chat = {
     if (!idrinth.chat.emotes.lookup) {
       return message;
     }
-    var part = idrinth.core.escapeRegExp(
+    let part = idrinth.core.escapeRegExp(
       Object.keys(idrinth.chat.emotes.lookup).join("TTTT")
     );
-    var reg = new RegExp("(^| )(" + part.replace(/TTTT/g, "|") + ")($| )", "g");
+    let reg = new RegExp("(^| )(" + part.replace(/TTTT/g, "|") + ")($| )", "g");
     return idrinth.chat.replaceInText(
       message,
       reg,
       [
         function(match) {
-          var el =
+          let el =
             idrinth.chat.emotes.positions[
               idrinth.chat.emotes.lookup[match.replace(/ /g, "")]
             ];
@@ -808,7 +808,7 @@ idrinth.chat = {
      * @returns {Object}
      **/
   buildMessageText: function(message) {
-    var reg = new RegExp("(^|\\W)(https?://([^/ ]+)(/.*?)?)($| )", "ig");
+    let reg = new RegExp("(^|\\W)(https?://([^/ ]+)(/.*?)?)($| )", "ig");
     return idrinth.chat.replaceInText(
       message,
       reg,
@@ -856,14 +856,14 @@ idrinth.chat = {
          * 
          * @returns {HTMLElement}
          */
-    var build = function() {
+    let build = function() {
       /**
              * 
              * @param {String} label
              * @returns {Object}
              */
-      var makeInput = function(label) {
-        var translation = idrinth.text.get(label);
+      let makeInput = function(label) {
+        let translation = idrinth.text.get(label);
         return {
           type: "li",
           children: [
@@ -895,8 +895,8 @@ idrinth.chat = {
              * @param {String} onclick
              * @returns {Object}
              */
-      var makeButton = function(label, onclick) {
-        var translation = idrinth.text.get(label);
+      let makeButton = function(label, onclick) {
+        let translation = idrinth.text.get(label);
         return {
           type: "li",
           children: [
@@ -1318,7 +1318,7 @@ idrinth.chat = {
       return;
     }
     if (data.success) {
-      var login = document
+      let login = document
         .getElementById("idrinth-chat-login")
         .getElementsByTagName("input");
       idrinth.settings.change("chatuser", login[0].value);
@@ -1426,10 +1426,10 @@ idrinth.chat = {
      * @returns {undefined}
      */
   enableChat: function(element) {
-    var tabs = document.getElementsByClassName("chat-tabs")[0].children,
+    let tabs = document.getElementsByClassName("chat-tabs")[0].children,
       labels = document.getElementsByClassName("chat-labels")[0].children;
     for (var counter = 0; counter < labels.length; counter++) {
-      var cur = labels[counter].getAttribute("class") + "";
+      let cur = labels[counter].getAttribute("class") + "";
       labels[counter].setAttribute(
         "class",
         cur.replace(/(^|\s)active(\s|$)/, " ")
@@ -1458,7 +1458,7 @@ idrinth.chat = {
      * @returns {undefined}
      */
   openCloseChat: function(element) {
-    var chat = element.parentNode;
+    let chat = element.parentNode;
     if (
       chat.getAttribute("class") === "idrinth-hovering-box active" ||
       chat.getAttribute("class") === "idrinth-hovering-box active left-sided"
@@ -1488,7 +1488,7 @@ idrinth.chat = {
      * @returns {undefined}
      */
   loginActions: function(key) {
-    var chatLogin,
+    let chatLogin,
       success,
       urls = {
         register: "chat-service/register/",

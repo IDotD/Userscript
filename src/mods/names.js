@@ -39,13 +39,13 @@ idrinth.names = {
          * @param {string} added the path-segment defining the data returned
          * @returns {undefined}
          */
-    var load = function(added) {
+    let load = function(added) {
       /**
              *
              * @param {string} data
              * @returns {undefined}
              */
-      var importNames = function(data) {
+      let importNames = function(data) {
         data = JSON.parse(data);
         if (!data) {
           return;
@@ -82,7 +82,7 @@ idrinth.names = {
          * creates the tooltip-element
          * @returns {undefined}
          */
-    var build = function() {
+    let build = function() {
       /**
              *
              * @param {string} name
@@ -210,7 +210,7 @@ idrinth.names = {
          * @param {HTMLElement} element
          * @returns {undefined}
          */
-    var showTooltip = function(element) {
+    let showTooltip = function(element) {
       /**
              *
              * @param {object} set
@@ -223,7 +223,7 @@ idrinth.names = {
           idrinth.ui.updateClassesList(element, ["idrinth-hide"], []);
           return;
         }
-        var baseUrl =
+        let baseUrl =
           "https://dotd.idrinth.de/" +
           (world ? "world-kongregate" : "kongregate");
         idrinth.ui.updateClassesList(idrinth.ui.tooltip, [], ["idrinth-hide"]);
@@ -250,7 +250,7 @@ idrinth.names = {
         );
       }
       idrinth.names.isHovering = false;
-      var name = idrinth.names.parse(element).toLowerCase();
+      let name = idrinth.names.parse(element).toLowerCase();
       if (
         idrinth.settings.get("names") &&
         idrinth.ui.tooltip &&

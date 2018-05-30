@@ -29,7 +29,7 @@ idrinth.raids = {
          * @param {String} toImport
          * @returns {String}
          */
-    var getImportLink = function(toImport) {
+    let getImportLink = function(toImport) {
       return "raid-service/" + (toImport === "" ? "_" : toImport) + "/";
     };
     idrinth.core.ajax.runHome(
@@ -40,7 +40,7 @@ idrinth.raids = {
                  * @returns {undefined}
                  */
       function(responseText) {
-        var delHandler = function(key) {
+        let delHandler = function(key) {
           if (key in idrinth.raids.list) {
             delete idrinth.raids.list[key];
           }
@@ -51,7 +51,7 @@ idrinth.raids = {
             idrinth.ui.removeElement("idrinth-raid-link-" + key);
           }
         };
-        var list = JSON.parse(responseText);
+        let list = JSON.parse(responseText);
         for (var key in list) {
           if (list[key].delete) {
             delHandler(key);
@@ -120,8 +120,8 @@ idrinth.raids = {
              * @param {String} tag
              * @returns {String|Boolean}
              */
-      var getLink = function(list, key, prefix, tag) {
-        var build = function(data, tag, prefix) {
+      let getLink = function(list, key, prefix, tag) {
+        let build = function(data, tag, prefix) {
           try {
             return (
               prefix +
@@ -147,7 +147,7 @@ idrinth.raids = {
           }
         };
         if (list[key]) {
-          var link = build(list[key], tag, prefix);
+          let link = build(list[key], tag, prefix);
           if (link) {
             return link;
           }
@@ -157,9 +157,9 @@ idrinth.raids = {
              * 
              * @returns {String}
              */
-      var makePrefix = function() {
+      let makePrefix = function() {
         if (idrinth.raids.join.data.prefix === null) {
-          var sites = {
+          let sites = {
             armorgames: "http://50.18.191.15/armor/raidjoin.php?user_id=###id###&auth_token=###token###&",
             kongregate: "http://50.18.191.15/kong/raidjoin.php?kongregate_username=###name###&kongregate_user_id=###id###&kongregate_game_auth_token=###token###&",
             newgrounds: "https://newgrounds.com/portal/view/609826?",
@@ -177,9 +177,9 @@ idrinth.raids = {
              * 
              * @returns {String}
              */
-      var makeTag = function() {
+      let makeTag = function() {
         if (idrinth.raids.join.data.tag === null) {
-          var sites = {
+          let sites = {
             armorgames: "ar_",
             kongregate: "kv_",
             newgrounds: "ng_",
@@ -190,9 +190,9 @@ idrinth.raids = {
         }
         return idrinth.raids.join.data.tag;
       };
-      var prefix = makePrefix();
-      var tag = makeTag();
-      var link = getLink(idrinth.raids.list, key, prefix, tag);
+      let prefix = makePrefix();
+      let tag = makeTag();
+      let link = getLink(idrinth.raids.list, key, prefix, tag);
       if (link) {
         return link;
       }
@@ -213,12 +213,12 @@ idrinth.raids = {
              * @returns {undefined}
              */
       log: function(string, key) {
-        var message = string
+        let message = string
           .replace("#name#", idrinth.raids.list[key].name)
           .replace("#raid#", idrinth.raids.list[key].raid);
         idrinth.core.log(message);
-        var li = document.createElement("li");
-        var ul = document
+        let li = document.createElement("li");
+        let ul = document
           .getElementById("idrinth-joined-raids")
           .getElementsByTagName("ul")[0];
         li.appendChild(
@@ -274,7 +274,7 @@ idrinth.raids = {
           idrinth.core.timeouts.add(
             "raid.join." + key,
             function() {
-              var id = "idrinth-raid-link-" + key;
+              let id = "idrinth-raid-link-" + key;
               if (document.getElementById(id)) {
                 idrinth.ui.removeElement(id);
               }
@@ -300,18 +300,18 @@ idrinth.raids = {
              * 
              * @returns {Boolean}
              */
-      var join = function() {
+      let join = function() {
         /**
                  * 
                  * @returns {function[]}
                  */
-        var getServerMethods = function() {
+        let getServerMethods = function() {
           /**
                      * 
                      * @param {String} key
                      * @returns {Function}
                      */
-          var byMessage = function(key) {
+          let byMessage = function(key) {
             idrinth.inframe.send(
               "joinRaid",
               idrinth.raids.join
@@ -325,7 +325,7 @@ idrinth.raids = {
                      * @param {String} key
                      * @returns {undefined}
                      */
-          var postLink = function(key) {
+          let postLink = function(key) {
             if (!document.getElementById("idrinth-raid-link-" + key)) {
               document.getElementById("idrinth-raid-link-list").appendChild(
                 idrinth.ui.buildElement({
@@ -349,7 +349,7 @@ idrinth.raids = {
               );
             }
           };
-          var options = [postLink];
+          let options = [postLink];
           if (
             idrinth.platform === "armorgames" ||
             idrinth.platform === "kongregate"
@@ -363,7 +363,7 @@ idrinth.raids = {
                  * @param {Number} amount
                  * @returns {Boolean}
                  */
-        var reachedMax = function(amount) {
+        let reachedMax = function(amount) {
           return amount > 99;
         };
         /**
@@ -373,8 +373,8 @@ idrinth.raids = {
                  * @param {function[]} options
                  * @returns {Number}
                  */
-        var handleKey = function(added, key, options) {
-          var raid = idrinth.raids.list[key];
+        let handleKey = function(added, key, options) {
+          let raid = idrinth.raids.list[key];
           if (!raid.joined) {
             added++;
             options[0](key); //post link
@@ -392,8 +392,8 @@ idrinth.raids = {
           }
           return added;
         };
-        var added = 0;
-        var options = getServerMethods();
+        let added = 0;
+        let options = getServerMethods();
         for (var key in idrinth.raids.list) {
           if (typeof idrinth.raids.list[key] === "object") {
             added = handleKey(added, key, options);
@@ -408,13 +408,13 @@ idrinth.raids = {
              * requests information for raids caught from a third party(chat for example)
              * @returns {undefined}
              */
-      var handlePrivates = function() {
+      let handlePrivates = function() {
         /**
                  * 
                  * @param {String} reply
                  * @returns {undefined}
                  */
-        var handle = function(reply) {
+        let handle = function(reply) {
           if (!reply) {
             return;
           }

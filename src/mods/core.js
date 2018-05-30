@@ -54,11 +54,11 @@ idrinth.core = {
       additionalHeader,
       isStatic
     ) {
-      var server = isStatic
+      let server = isStatic
         ? "static"
         : (idrinth.settings.get("isWorldServer") ? "world-" : "") +
             idrinth.platform;
-      var homeUrl =
+      let homeUrl =
         "https://dotd.idrinth.de/" + server + ("/" + url).replace(/\/\//, "/");
       idrinth.core.ajax.run(
         homeUrl,
@@ -82,10 +82,10 @@ idrinth.core = {
       if(!idrinth.start && idrinth.settings.get("server")) {
           return;
       }
-      var requestHandler = new XMLHttpRequest();
+      let requestHandler = new XMLHttpRequest();
       requestHandler.onreadystatechange = function(event) {
-        var request = (event || window.event).target;
-        var call = function(func, value) {
+        let request = (event || window.event).target;
+        let call = function(func, value) {
           if (typeof func !== "function") {
             return;
           }
@@ -101,7 +101,7 @@ idrinth.core = {
           }
         };
         if (request.readyState === 4) {
-          var status =
+          let status =
             (request.status > 199 && request.status < 300) ||
             request.status === 0;
           call(
@@ -113,14 +113,14 @@ idrinth.core = {
       };
       requestHandler.timeout = 30000;
       requestHandler.ontimeout = function(event) {
-        var request = (event || window.event).target;
+        let request = (event || window.event).target;
         if (typeof timeout === "function") {
           timeout.bind(request);
         }
         delete idrinth.core.ajax.active[request._url];
         idrinth.core.log("Request to " + request._url + " failed.");
       };
-      var error = function(event) {
+      let error = function(event) {
         delete idrinth.core.ajax.active[(event || window.event).target._url];
         idrinth.core.log(
           "Request to " + (event || window.event).target._url + " failed."
@@ -151,9 +151,9 @@ idrinth.core = {
          * @returns {Boolean}
          */
     text: function(text) {
-      var success;
+      let success;
       try {
-        var textAreaElement = idrinth.ui.buildElement({
+        let textAreaElement = idrinth.ui.buildElement({
           type: "textarea",
           id: "idrinth-copy-helper"
         });
@@ -201,7 +201,7 @@ idrinth.core = {
     if (window.Notification.permission === "denied") {
       return false;
     }
-    var data = {};
+    let data = {};
     if (idrinth.settings.get("notification#image")) {
       data.icon = "https://dotd.idrinth.de/Resources/Images/logo.png";
     }
@@ -245,7 +245,7 @@ idrinth.core = {
          * @returns {undefined}
          */
     add: function(identifier, func, time, maxRepeats) {
-      var date = new Date();
+      let date = new Date();
       idrinth.core.timeouts.list[identifier] = {
         func: func,
         next: date.getTime() + date.getMilliseconds() / 1000 + time / 1000,
@@ -264,22 +264,22 @@ idrinth.core = {
          * @returns {undefined}
          */
     process: function() {
-      var date = new Date().getTime() + new Date().getMilliseconds() / 1000;
-      var min = 10;
+      let date = new Date().getTime() + new Date().getMilliseconds() / 1000;
+      let min = 10;
       /**
              *
              * @param {Number} min
              * @param {Number} property
              * @returns {Number}
              */
-      var check = function(min, property, date) {
+      let check = function(min, property, date) {
         /**
                  *
                  * @param {Number} durationLeft
                  * @param {string} minDuration
                  * @returns {Number}
                  */
-        var getVal = function(durationLeft, minDuration) {
+        let getVal = function(durationLeft, minDuration) {
           if (durationLeft < 0.1) {
             return 0.1;
           }
@@ -290,7 +290,7 @@ idrinth.core = {
                  * @param {string} property
                  * @returns {undefined}
                  */
-        var handle = function(property, min) {
+        let handle = function(property, min) {
           idrinth.core.timeouts.list[property].func();
           idrinth.core.timeouts.list[property].repeats = Math.max(
             -1,
@@ -368,7 +368,7 @@ idrinth.core = {
     if (!window.Worker) {
       return resultHandler(inWorker(values));
     }
-    var blobURL = window.URL.createObjectURL(
+    let blobURL = window.URL.createObjectURL(
       new Blob([
         "/*js:big*/" +//replaced server-side from libs/[name].js
         "self.onmessage = function(message) {var work=" +
@@ -376,7 +376,7 @@ idrinth.core = {
           ";self.postMessage(work(message.data));self.close();}"
       ])
     );
-    var worker = new Worker(blobURL);
+    let worker = new Worker(blobURL);
     worker.onmessage = function(message) {
       message.target.resultHandler(message.data);
     };
@@ -402,7 +402,7 @@ idrinth.core = {
          * @returns {undefined}
          */
     add: function(event, selector, method) {
-      var bind = function(event, selector, method) {
+      let bind = function(event, selector, method) {
         idrinth.core.multibind.events[event] = idrinth.core.multibind.events[
           event
         ]
@@ -434,12 +434,12 @@ idrinth.core = {
              * @param {string} selector
              * @returns {undefined}
              */
-      var handleElement = function(el, event, selector) {
+      let handleElement = function(el, event, selector) {
         if (!el) {
           return;
         }
         for (
-          var pos = 0;
+          let pos = 0;
           pos < idrinth.core.multibind.events[event][selector].length;
           pos++
         ) {

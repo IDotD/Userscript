@@ -9,20 +9,20 @@ idrinth.land = {
          * @param {function[]} checkElementFunc
          * @returns {object}
          */
-    var baseCalculator = function(checkElementFunc) {
-      var factor = idrinth.settings.get("factor") ? 10 : 1;
+    let baseCalculator = function(checkElementFunc) {
+      let factor = idrinth.settings.get("factor") ? 10 : 1;
       /**
              *
              * @param {string} building
              * @returns {Number}
              */
-      var nextPrice = function(building) {
+      let nextPrice = function(building) {
         return (
           (10 + idrinth.settings.get("land#" + building)) *
           idrinth.land.data[building].base
         );
       };
-      var results = {};
+      let results = {};
       /**
              *
              * @param {type} results
@@ -31,7 +31,7 @@ idrinth.land = {
              * @param {type} nextPrice
              * @returns {Number|@var;factor}
              */
-      var applyResult = function(results, res, factor, nextPrice) {
+      let applyResult = function(results, res, factor, nextPrice) {
         idrinth.settings.change(
           "land#gold",
           idrinth.settings.get("land#gold") - nextPrice(res.key) * factor / 10
@@ -51,7 +51,7 @@ idrinth.land = {
              * @param {function} nextPrice
              * @returns {object}
              */
-      var processBuildings = function(checkElementFunc, factor, nextPrice) {
+      let processBuildings = function(checkElementFunc, factor, nextPrice) {
         /**
                  *
                  * @param {function[]} checkElementFunc
@@ -61,7 +61,7 @@ idrinth.land = {
                  * @param {function} nextPrice
                  * @returns {object}
                  */
-        var check = function(
+        let check = function(
           checkElementFunc,
           building,
           factor,
@@ -78,7 +78,7 @@ idrinth.land = {
             key: building
           };
         };
-        var res = {
+        let res = {
           key: null,
           min: null
         };
@@ -94,7 +94,7 @@ idrinth.land = {
         return res;
       };
       while (idrinth.settings.get("land#gold") >= 0) {
-        var res = processBuildings(checkElementFunc, factor, nextPrice);
+        let res = processBuildings(checkElementFunc, factor, nextPrice);
         if (res.key === null) {
           return results;
         }
@@ -106,7 +106,7 @@ idrinth.land = {
          *
          * @returns {function[]}
          */
-    var getRequirements = function() {
+    let getRequirements = function() {
       /**
              *
              * @param {String} building
@@ -115,7 +115,7 @@ idrinth.land = {
              * @param {function} nextPrice
              * @returns {Boolean}
              */
-      var bestPrice = function(building, factor, res, nextPrice) {
+      let bestPrice = function(building, factor, res, nextPrice) {
         return (
           res.min === null ||
           nextPrice(building) / idrinth.land.data[building].perHour < res.min
@@ -129,12 +129,12 @@ idrinth.land = {
              * @param {function} nextPrice
              * @returns {Boolean}
              */
-      var useUp = function(building, factor, res, nextPrice) {
+      let useUp = function(building, factor, res, nextPrice) {
         return (
           nextPrice(building) * factor / 10 <= idrinth.settings.get("land#gold")
         );
       };
-      var funcs = [useUp];
+      let funcs = [useUp];
       if (idrinth.settings.get("landMax")) {
         funcs.push(bestPrice);
       }
@@ -145,7 +145,7 @@ idrinth.land = {
          * @param {object} results
          * @returns {undefined}
          */
-    var putResults = function(results) {
+    let putResults = function(results) {
       for (var key in results) {
         if (results.hasOwnProperty(key)) {
           document.getElementById(
@@ -161,7 +161,7 @@ idrinth.land = {
         "land#gold"
       );
     };
-    var landSettings = idrinth.settings.get("land", true);
+    let landSettings = idrinth.settings.get("land", true);
     for (var key in landSettings) {
       if (landSettings.hasOwnProperty(key)) {
         idrinth.settings.change(
@@ -170,7 +170,7 @@ idrinth.land = {
         );
       }
     }
-    var results = baseCalculator(getRequirements());
+    let results = baseCalculator(getRequirements());
     if (Object.keys(results).length === 0) {
       idrinth.core.alert(idrinth.text.get("land.lack"));
     }

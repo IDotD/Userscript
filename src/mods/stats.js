@@ -9,13 +9,13 @@ idrinth.stats = {
          * @param {object} result
          * @returns {Boolean} is last?
          */
-    var increaseSingle = function(result) {
+    let increaseSingle = function(result) {
       /**
              *
              * @returns {Number}
              */
-      var addOnePerc = function() {
-        var base = 0;
+      let addOnePerc = function() {
+        let base = 0;
         if (idrinth.settings.get("stats#mirele")) {
           base +=
             1.8 *
@@ -29,8 +29,8 @@ idrinth.stats = {
              *
              * @returns {Number}
              */
-      var addOneAttack = function() {
-        var base = 4;
+      let addOneAttack = function() {
+        let base = 4;
         if (idrinth.settings.get("stats#utym")) {
           base +=
             (idrinth.settings.get("stats#attack") <= 10000 ? 0.1 : 1 / 35) *
@@ -44,8 +44,8 @@ idrinth.stats = {
              *
              * @returns {Number}
              */
-      var addOneDefense = function() {
-        var base = 1;
+      let addOneDefense = function() {
+        let base = 1;
         if (idrinth.settings.get("stats#utym")) {
           base +=
             (idrinth.settings.get("stats#defense") <= 10000 ? 0.1 : 1 / 35) *
@@ -68,9 +68,9 @@ idrinth.stats = {
              * @param {string} added
              * @returns {Number}
              */
-      var addProcs = function(base, added) {
-        var perc = idrinth.settings.get("stats#perception") + 1;
-        var total =
+      let addProcs = function(base, added) {
+        let perc = idrinth.settings.get("stats#perception") + 1;
+        let total =
           base *
           (100 +
             idrinth.settings.get("stats#mount") +
@@ -92,7 +92,7 @@ idrinth.stats = {
              * @param {string} stat
              * @returns {Number}
              */
-      var getCost = function(stat) {
+      let getCost = function(stat) {
         return (
           Math.ceil(
             Math.max(
@@ -107,10 +107,10 @@ idrinth.stats = {
           ) + 1
         );
       };
-      var perc = addProcs(addOnePerc(), "perception") / getCost("perception");
-      var defense = addProcs(addOneDefense(), "defense") / getCost("defense");
-      var attack = addProcs(addOneAttack(), "attack") / getCost("attack");
-      var stat = null;
+      let perc = addProcs(addOnePerc(), "perception") / getCost("perception");
+      let defense = addProcs(addOneDefense(), "defense") / getCost("defense");
+      let attack = addProcs(addOneAttack(), "attack") / getCost("attack");
+      let stat = null;
       if (
         perc >= defense &&
         perc >= attack &&
@@ -144,7 +144,7 @@ idrinth.stats = {
       );
       return false;
     };
-    var result = {
+    let result = {
       stats: 0,
       attack: 0,
       defense: 0,

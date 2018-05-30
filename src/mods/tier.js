@@ -20,7 +20,7 @@ idrinth.tier = {
          * @param {string} key
          * @returns {Boolean}
          */
-    var isValidParameter = function(name) {
+    let isValidParameter = function(name) {
       return (
         name &&
         idrinth.tier.list.hasOwnProperty(name) &&
@@ -33,7 +33,7 @@ idrinth.tier = {
          * @param {string} key
          * @returns {Boolean}
          */
-    var isFreeSlot = function(key) {
+    let isFreeSlot = function(key) {
       return (
         idrinth.tier.taggedSlots.hasOwnProperty(key) &&
         typeof key !== "function" &&
@@ -43,15 +43,15 @@ idrinth.tier = {
     if (!isValidParameter(name)) {
       return;
     }
-    var boss = this.list[name];
+    let boss = this.list[name];
     /**
          *
          * @param {int} x
          * @param {string} name
          * @returns {undefined}
          */
-    var make = function(x, name) {
-      var makeElement = function(label, number, description) {
+    let make = function(x, name) {
+      let makeElement = function(label, number, description) {
         return {
           content: label + " " + idrinth.ui.formatNumber(number),
           attributes: [
@@ -62,7 +62,7 @@ idrinth.tier = {
           ]
         };
       };
-      var info = [
+      let info = [
         makeElement("FS", boss.fs.nm, idrinth.text.get("tier.FS")),
         makeElement("AP", boss.ap, idrinth.text.get("tier.AP"))
       ];
@@ -126,13 +126,13 @@ idrinth.tier = {
      * @returns {undefined}
      */
   start: function() {
-    var pos = 1;
+    let pos = 1;
     /**
          * parsed a json-response and fills tier list and exclusion list
          * @param {string} data
          * @returns {undefined}
          */
-    var importData = function(data) {
+    let importData = function(data) {
       data = JSON.parse(data);
       if (data) {
         idrinth.tier.list = data;
@@ -142,7 +142,7 @@ idrinth.tier = {
                  * @param {string} url
                  * @returns {undefined}
                  */
-        var create = function(name, url) {
+        let create = function(name, url) {
           if (!idrinth.settings.data.bannedRaids[name]) {
             idrinth.settings.data.bannedRaids[name] = false;
             window.localStorage.setItem(
@@ -202,13 +202,13 @@ idrinth.tier = {
          * @param {string} list
          * @returns {undefined}
          */
-    var makeList = function(list) {
+    let makeList = function(list) {
       /**
              *
              * @param {HTMLElement} elem
              * @returns {undefined}
              */
-      var clearInnerHtml = function(elem) {
+      let clearInnerHtml = function(elem) {
         elem.innerHTML = "";
       };
       /**
@@ -218,8 +218,8 @@ idrinth.tier = {
              * @param {string} ic
              * @returns {object} for the buildElement wrapper
              */
-      var makeField = function(listKey, difficulty, ic) {
-        var ln = {
+      let makeField = function(listKey, difficulty, ic) {
+        let ln = {
           type: "td",
           attributes: []
         };
@@ -231,7 +231,7 @@ idrinth.tier = {
                  * @param {string} ic
                  * @returns {object} for the buildElement wrapper
                  */
-        var addTitle = function(ln, listKey, difficulty, ic) {
+        let addTitle = function(ln, listKey, difficulty, ic) {
           /**
                      * 
                      * @param {string} listKey
@@ -239,7 +239,7 @@ idrinth.tier = {
                      * @param {string} ic
                      * @returns {Boolean}
                      */
-          var isUseable = function(listKey, difficulty, ic) {
+          let isUseable = function(listKey, difficulty, ic) {
             return (
               idrinth.tier.list[listKey].hasOwnProperty("loot") &&
               idrinth.tier.list[listKey].loot.hasOwnProperty(difficulty) &&
@@ -250,7 +250,7 @@ idrinth.tier = {
           if (!isUseable(listKey, difficulty, ic)) {
             return ln;
           }
-          var title = "";
+          let title = "";
           for (var key in idrinth.tier.list[listKey].loot[difficulty][ic]) {
             if (
               idrinth.tier.list[listKey].loot[difficulty][ic].hasOwnProperty(
@@ -278,14 +278,14 @@ idrinth.tier = {
                  * @param {string} ic
                  * @returns {object} for the buildElement wrapper
                  */
-        var addContent = function(ln, listKey, difficulty, ic) {
+        let addContent = function(ln, listKey, difficulty, ic) {
           /**
                      * 
                      * @param {string} os numeric string
                      * @param {string} current numeric string
                      * @returns {Boolean}
                      */
-          var isOs = function(os, current) {
+          let isOs = function(os, current) {
             return Number.parseInt(os, 10) === Number.parseInt(current, 10);
           };
           if (
@@ -326,7 +326,7 @@ idrinth.tier = {
              * @param {object} dataset
              * @returns {HTMLElement}
              */
-      var makeRow = function(title, dataset) {
+      let makeRow = function(title, dataset) {
         return {
           type: "tr",
           children: [
@@ -353,15 +353,15 @@ idrinth.tier = {
           ]
         };
       };
-      var wrapper = document.getElementById("idrinth-tierlist");
+      let wrapper = document.getElementById("idrinth-tierlist");
       clearInnerHtml(wrapper);
       /**
              *
              * @param {Array} list
              * @returns {String}
              */
-      var formattedList = function(list) {
-        var fList = [];
+      let formattedList = function(list) {
+        let fList = [];
         for (var count = 0; count < list.length; count++) {
           fList.push(idrinth.ui.formatNumber(list[count]));
         }
@@ -373,7 +373,7 @@ idrinth.tier = {
              * @param {string} click
              * @returns {object}
              */
-      var makeButton = function(label, click) {
+      let makeButton = function(label, click) {
         return {
           type: "button",
           content: idrinth.text.get("tier." + label),
@@ -390,8 +390,8 @@ idrinth.tier = {
         };
       };
       for (var count = list.length - 1; count >= 0; count--) {
-        var boss = idrinth.tier.list[list[count]];
-        var sub = idrinth.ui.buildElement({
+        let boss = idrinth.tier.list[list[count]];
+        let sub = idrinth.ui.buildElement({
           css: "tier-wrapper",
           children: [
             {
@@ -485,7 +485,7 @@ idrinth.tier = {
             }
           ]
         });
-        var maxTiers = Math.max(
+        let maxTiers = Math.max(
           boss.n.length,
           boss.h.length,
           boss.l.length,
@@ -516,14 +516,14 @@ idrinth.tier = {
          * @param {object} data
          * @returns {Array}
          */
-    var filter = function(data) {
+    let filter = function(data) {
       /**
              *
              * @param {Array} list
              * @param {RegExp} regExp
              * @returns {Boolean}
              */
-      var matchesAny = function(list, regExp) {
+      let matchesAny = function(list, regExp) {
         for (var count = 0; count < list.length; count++) {
           if (list[count] && list[count].match(regExp)) {
             return true;
@@ -537,9 +537,9 @@ idrinth.tier = {
       ) {
         return [];
       }
-      var result = [];
-      var nameRegExp = new RegExp(data.name, "i");
-      var typeRegExp = new RegExp(data.type, "i");
+      let result = [];
+      let nameRegExp = new RegExp(data.name, "i");
+      let typeRegExp = new RegExp(data.type, "i");
       for (var key in data.list) {
         if (
           key.match(nameRegExp) &&
@@ -562,7 +562,7 @@ idrinth.tier = {
      * @returns {undefined}
      */
   allCheck: function(yes) {
-    var boxes = document
+    let boxes = document
       .getElementById("idrinth-raid-may-join-list")
       .getElementsByTagName("input");
     for (var counter = boxes.length - 1; counter >= 0; counter--) {
