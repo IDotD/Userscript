@@ -127,7 +127,7 @@ var idrinth = {
         /**
          * @returns {Number}
          */
-        addOnePerc () {
+        addOnePerception () {
             if (! this.premium.mirele ) {
                 return 0;
             }
@@ -179,25 +179,33 @@ var idrinth = {
             }
             return value;
         }
+        _getSet() {
+            return {
+                perception: this.addPercProcs(this.addProcs ( this.addOnePerception ())) / this.stat.getCost ( this.stat.perception ),
+                defense: this.addProcs ( this.addOneDefense ()) / this.stat.getCost ( this.stat.defense ),
+                attack: this.addProcs ( this.addOneAttack ()) / this.stat.getCost ( this.stat.attack )
+            };
+        }
         /**
          * @return {Boolean} was modified
          */
         increase () {
-            let perc = this.addPercProcs(this.addProcs ( this.addOnePerc ())) / this.stat.getCost ( this.stat.perception );
-            let defense = this.addProcs ( this.addOneDefense ()) / this.stat.getCost ( this.stat.defense );
-            let attack = this.addProcs ( this.addOneAttack ()) / this.stat.getCost ( this.stat.attack );
-            let stat = null;
-            if (perc >= attack && perc >= defense && this.stats.getCost(this.stats.perception) < this.stats.stats) {
-                stat = "perception";
-            } else if (attack >= perc && attack >= defense && this.stats.getCost(this.stats.attack) < this.stats.stats) {
-                stat = "attack";
-            } else if (defense >= attack && defense >= perc && this.stats.getCost(this.stats.defense) < this.stats.stats) {
-                stat = "defense";
-            } else {
-                return false;
+            let data = this._getSet();
+            let isBiggest = function(key, data) {
+                for (let prop in data) {
+                    if(data[prop] > data[key]) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+            for (let key in data) {
+                if (isBiggest(key, data) && this.stats.getCost(this.stats[key]) < this.stats.stats) {
+                    this.stats.increase(key);
+                    return true;
+                }
             }
-            this.stats.increase(stat);
-            return true;
+            return false;
         }
         /**
          * @return {StatSet}
