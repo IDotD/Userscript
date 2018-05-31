@@ -335,8 +335,8 @@ idrinth.workers = {
     if(typeof idrinth.workers.list[name] === 'string') {
         let blobURL = window.URL.createObjectURL(
           new Blob([
-            "/*js:big*/" +//replaced server-side from libs/[name].js
-            "self.onmessage = function(message) {self.postMessage(idrinth.work(message.data));}" +
+            "/*js:big*/\n" +//replaced server-side from libs/[name].js
+            "self.onmessage = function(message) {self.postMessage(idrinth.work(message.data));};\n" +
             this.list[name]
           ])
         );
