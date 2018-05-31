@@ -8,10 +8,10 @@ var idrinth = {
     */
    work: function ( data ) {
        let calc = new idrinth.Calculator (
-               new idrinth.StatSet ( data.attack, data.defense, data.perception, data.level, data.stats ),
-               new idrinth.PremiumSet ( data.utym, data.mirele, data.kraken ),
-               new idrinth.MultiplierSet ( data.legion, data.mount, data.critchance )
-               );
+           new idrinth.StatSet ( data.attack, data.defense, data.perception, data.level, data.stats ),
+           new idrinth.PremiumSet ( data.utym, data.mirele, data.kraken ),
+           new idrinth.MultiplierSet ( data.legion, data.mount, data.critchance )
+       );
        return calc.calculate ();
    },
     /**
@@ -90,22 +90,6 @@ var idrinth = {
             let modifier = 10000 + Math.floor ( toPositive ( this.level / 500 - 2 ) ) * 1500;
             return 1 + Math.ceil ( toPositive ( value - modifier ) / 1500 );
         }
-        /**
-         * @return {Array}
-         */
-        getIncreaseableStats () {
-            let stats = [ ];
-            if ( this.getCost ( this.attack ) <= this.stats ) {
-                stats.push ( 'attack' );
-            }
-            if ( this.getCost ( this.defense ) <= this.stats ) {
-                stats.push ( 'defense' );
-            }
-            if ( this.getCost ( this.perception ) <= this.stats ) {
-                stats.push ( 'perception' );
-            }
-            return stats;
-        }
     },
     /**
      * @class Actual logic for stat calculation
@@ -119,7 +103,7 @@ var idrinth = {
          * @param {idrinth.MultiplierSet} multiplier
          * @return {StatSet}
          */
-        construct ( stat, premium, multiplier ) {
+        constructor ( stat, premium, multiplier ) {
             this.stat = stat;
             this.premium = premium;
             this.multiplier = multiplier;
@@ -131,7 +115,7 @@ var idrinth = {
             if (! this.premium.mirele ) {
                 return 0;
             }
-            return 1.8 * ( this.stats.perception <= 10000 ? 10 : 35 ) * this.multipliers.legion;
+            return 1.8 * ( this.stat.perception <= 10000 ? 10 : 35 ) * this.multipliers.legion;
         }
         /**
          * @returns {Number}
@@ -139,7 +123,7 @@ var idrinth = {
         addOneAttack () {
             let base = 4;
             if ( this.premium.utym ) {
-                base += ( this.stats.attack <= 10000 ? 0.1 : 1 / 35 ) * 1.8 * this.multiplier.legion;
+                base += ( this.stat.attack <= 10000 ? 0.1 : 1 / 35 ) * 1.8 * this.multiplier.legion;
             }
             return base;
         }
@@ -149,10 +133,10 @@ var idrinth = {
         addOneDefense () {
             let base = 1;
             if ( this.premium.utym ) {
-                base += ( this.stats.defense <= 10000 ? 0.1 : 1 / 35 ) * 1.8 * this.multiplier.legion;
+                base += ( this.stat.defense <= 10000 ? 0.1 : 1 / 35 ) * 1.8 * this.multiplier.legion;
             }
             if ( this.premium.kraken ) {
-                base += ( this.stats.defense <= 10000 ? 0.2 : 0.01 ) * 1.8 * this.multiplier.legion;
+                base += ( this.stat.defense <= 10000 ? 0.2 : 0.01 ) * 1.8 * this.multiplier.legion;
             }
             return base;
         }
@@ -162,7 +146,7 @@ var idrinth = {
          * @returns {Number}
          */
         addProcs ( value ) {
-            let perc = this.stats.perception + 1;
+            let perc = this.stat.perception + 1;
             return value * ( 1 + this.multiplier.mount + this.multiplier.critchance * 0.01 * Math.floor ( perc < 500000 ? perc / 5000 : 50 + perc / 10000 ) );
         }
         /**
@@ -179,7 +163,7 @@ var idrinth = {
             }
             return value;
         }
-        _getSet() {
+        getSet() {
             return {
                 perception: this.addPercProcs(this.addProcs ( this.addOnePerception ())) / this.stat.getCost ( this.stat.perception ),
                 defense: this.addProcs ( this.addOneDefense ()) / this.stat.getCost ( this.stat.defense ),
@@ -190,7 +174,7 @@ var idrinth = {
          * @return {Boolean} was modified
          */
         increase () {
-            let data = this._getSet();
+            let data = this.getSet();
             let isBiggest = function(key, data) {
                 for (let prop in data) {
                     if(data[prop] > data[key]) {
@@ -200,8 +184,8 @@ var idrinth = {
                 return true;
             };
             for (let key in data) {
-                if (isBiggest(key, data) && this.stats.getCost(this.stats[key]) < this.stats.stats) {
-                    this.stats.increase(key);
+                if (isBiggest(key, data) && this.stat.getCost(this.stat[key]) < this.stat.stats) {
+                    this.stat.increase(key);
                     return true;
                 }
             }
@@ -215,7 +199,7 @@ var idrinth = {
             do {
                 modified = this.increase();
             } while ( modified )
-            return stat;
+            return this.stat;
         }
     }
 };
