@@ -1,8 +1,9 @@
 var should = require ( 'chai' ).should ();
 var expect = require ( 'chai' ).expect;
+var rewire = require( 'rewire' );
 describe ( 'worker/stat.js', function ( ) {
     it ( 'should have a idrinth variable in scope', function ( ) {
-        var idrinth = require( 'rewire' ) ( "../../src/workers/stats" ).__get__( 'idrinth' );
+        var idrinth = rewire ( "../../src/workers/stats" ).__get__( 'idrinth' );
         should.exist ( idrinth );
         idrinth.should.be.an ( 'object' );
         describe ( 'idrinth', function ( ) {
@@ -34,6 +35,13 @@ describe ( 'worker/stat.js', function ( ) {
                 describe ( 'idrinth.MultiplierSet', function ( ) {
                     it ( 'MultiplierSet should be a function', function ( ) {
                         idrinth.MultiplierSet.should.be.a( 'function' );
+                        describe ( 'idrinth.MultiplierSet#Instance', function ( ) {
+                            var multiplier = new idrinth.MultiplierSet( );
+                            it ( 'MultiplierSet should return an object', function ( ) {
+                                should.exist( multiplier );
+                                multiplier.should.be.an( 'object' );
+                            } );
+                        } );
                     } );
                 } );
             } );
@@ -42,6 +50,13 @@ describe ( 'worker/stat.js', function ( ) {
                 describe ( 'idrinth.StatSet', function ( ) {
                     it ( 'StatSet should be a function', function ( ) {
                         idrinth.StatSet.should.be.a( 'function' );
+                        describe ( 'idrinth.StatSet#Instance', function ( ) {
+                            var stat = new idrinth.StatSet( );
+                            it ( 'StatSet should return an object', function ( ) {
+                                should.exist( stat );
+                                stat.should.be.an( 'object' );
+                            } );
+                        } );
                     } );
                 } );
             } );
@@ -49,7 +64,14 @@ describe ( 'worker/stat.js', function ( ) {
                 expect( idrinth ).to.have.property( 'Calculator' );
                 describe ( 'idrinth.Calculator', function ( ) {
                     it ( 'Calculator should be a function', function ( ) {
-                         idrinth.Calculator.should.be.a( 'function' );
+                        idrinth.Calculator.should.be.a( 'function' );
+                        describe ( 'idrinth.Calculator#Instance', function ( ) {
+                            var calculator = new idrinth.Calculator( );
+                            it ( 'Calculator should return an object', function ( ) {
+                                should.exist( calculator );
+                                calculator.should.be.an( 'object' );
+                            } );
+                        } );
                     } );
                 } );
             } );
