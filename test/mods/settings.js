@@ -1,4 +1,4 @@
-describe ( 'Settings.js tests', function () {
+/*describe ( 'Settings.js tests', function () {
 
     it ( 'should have a idrinth variable in scope', function () {
         expect ( idrinth ).toBeDefined ();
@@ -58,4 +58,4 @@ describe ( 'Settings.js tests', function () {
         expect ( copySettings ).toEqual ( defaults );
     } );
 
-} );
+} );*/
