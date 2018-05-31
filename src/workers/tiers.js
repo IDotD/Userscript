@@ -13,26 +13,28 @@ var idrinth = {
         }
         return regExp.toString () === "/(?:)/i";
     },
+    isFilterValid: function (data) {
+        if(data.name && data.name.length > 0) {
+            return true;
+        }
+        return data.type && data.type.length > 0;
+    },
     /**
      * @param {Object} data
      * @return {Array}
      */
     work: function ( data ) {
-        if (
-                ( !data.name || data.name.length === 0 ) &&
-                ( !data.type || data.type.length === 0 )
-                ) {
-            return [ ];
-        }
         let result = [ ];
-        let nameRegExp = new RegExp ( data.name, "i" );
-        let typeRegExp = new RegExp ( data.type, "i" );
-        for (let key in data.list) {
-            if (
-                key.match ( nameRegExp ) &&
-                idrinth.matchesAny ( data.list[key].types, typeRegExp )
-            ) {
-                result.push ( key );
+        if (idrinth.isFilterValid(data)) {
+            let nameRegExp = new RegExp ( data.name, "i" );
+            let typeRegExp = new RegExp ( data.type, "i" );
+            for (let key in data.list) {
+                if (
+                    key.match ( nameRegExp ) &&
+                    idrinth.matchesAny ( data.list[key].types, typeRegExp )
+                ) {
+                    result.push ( key );
+                }
             }
         }
         return result;
