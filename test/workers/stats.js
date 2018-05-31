@@ -12,6 +12,35 @@ describe ( 'worker/stat.js', function ( ) {
                 describe ( 'idrinth.work', function ( ) {
                     it ( 'work should be a function', function ( ) {
                         idrinth.work.should.be.a( 'function' );
+                        describe ('idrinth.work()', function () {
+                            [
+                                [
+                                    {
+                                        attack: 1,
+                                        defense: 1,
+                                        perception: 1,
+                                        level: 1,
+                                        stats: 1000,
+                                        utym: false,
+                                        mirele: false,
+                                        kraken: false,
+                                        legion: 0,
+                                        mount: 0,
+                                        critchance: 5
+                                    }, {
+                                        attack: 1,
+                                        defense: 1,
+                                        perception: 1,
+                                        level: 1,
+                                        stats: 0
+                                    }
+                                ]
+                            ].forEach(function(set) {
+                                it ('Case '+JSON.stringify(set[0])+' should return '+JSON.stringify(set[1]), function() {
+                                    idrinth.work(set[0]).should.be.equal.to(set[1]);
+                                });
+                            });
+                        });
                     } );
                 } );
             } );

@@ -358,33 +358,6 @@ idrinth.core = {
     idrinth.ui.buildModal("Do you?", text, callback);
   },
   /**
-     * runs the inWorker function in the worker and let's the resultHandler handle the result
-     * @param {Function} inWorker
-     * @param {Function} resultHandler
-     * @param {object} values
-     * @returns {undefined}
-     */
-  addWorker: function(inWorker, resultHandler, values) {
-    if (!window.Worker) {
-      return resultHandler(inWorker(values));
-    }
-    let blobURL = window.URL.createObjectURL(
-      new Blob([
-        "/*js:big*/" +//replaced server-side from libs/[name].js
-        "self.onmessage = function(message) {var work=" +
-          inWorker.toString() +
-          ";self.postMessage(work(message.data));self.close();}"
-      ])
-    );
-    let worker = new Worker(blobURL);
-    worker.onmessage = function(message) {
-      message.target.resultHandler(message.data);
-    };
-    worker.resultHandler = resultHandler;
-    worker.postMessage(values);
-    window.URL.revokeObjectURL(blobURL);
-  },
-  /**
      *
      * @type {object}
      */

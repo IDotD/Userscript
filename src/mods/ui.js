@@ -1165,7 +1165,7 @@ idrinth.ui = {
                           attributes: [
                             {
                               name: "onclick",
-                              value: "idrinth.stats.calculate();"
+                              value: "idrinth.workers.run ('stats', idrinth.settings.get ('stats', true));"
                             },
                             {
                               name: "type",
