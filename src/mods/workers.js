@@ -192,6 +192,17 @@ idrinth.workers = {
           ]
         };
       };
+      let makeTableRow = function (data, tag) {
+          tag = typeof tag === 'string'?tag:'td';
+          let row = {
+            type: "tr",
+            children: []
+          };
+          for(let pos=0;pos<data.length;pos++) {
+              row.children.push ({type: tag, content: data[pos]});
+          }
+          return row;
+      };
       for (var count = list.length - 1; count >= 0; count--) {
         let boss = idrinth.tier.list[list[count]];
         let sub = idrinth.ui.buildElement({
@@ -244,31 +255,13 @@ idrinth.workers = {
                 {
                   type: "thead",
                   children: [
-                    {
-                      type: "tr",
-                      children: [
-                        {
-                          type: "th",
-                          content: "#"
-                        },
-                        {
-                          type: "th",
-                          content: idrinth.text.get("tier.diff.normal")
-                        },
-                        {
-                          type: "th",
-                          content: idrinth.text.get("tier.diff.hard")
-                        },
-                        {
-                          type: "th",
-                          content: idrinth.text.get("tier.diff.legend")
-                        },
-                        {
-                          type: "th",
-                          content: idrinth.text.get("tier.diff.night")
-                        }
-                      ]
-                    }
+                      makeTableRow([
+                          '#',
+                          idrinth.text.get("tier.diff.normal"),
+                          idrinth.text.get("tier.diff.hard"),
+                          idrinth.text.get("tier.diff.legend"),
+                          idrinth.text.get("tier.diff.night")
+                      ], 'th')
                   ]
                 },
                 {
