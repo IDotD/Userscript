@@ -10,7 +10,7 @@ idrinth.text = {
      * @returns {undefined}
      */
   start: function() {
-    var language =
+    let language =
       idrinth.settings.get("lang") ||
       window.navigator.userLanguage ||
       window.navigator.language ||
@@ -30,7 +30,7 @@ idrinth.text = {
              * @param {function} func
              * @returns {undefined}
              */
-        var applyRecursive = function(to, from, func) {
+        let applyRecursive = function(to, from, func) {
           for (var prop in from) {
             if (from.hasOwnProperty(prop)) {
               if (
@@ -81,8 +81,8 @@ idrinth.text = {
          * @param {function} func
          * @returns {string}
          */
-    var getSub = function(obj, keys, func) {
-      var key = keys.shift();
+    let getSub = function(obj, keys, func) {
+      let key = keys.shift();
       if (obj.hasOwnProperty(key)) {
         if (keys.length > 0) {
           return func(obj[key], keys, func);

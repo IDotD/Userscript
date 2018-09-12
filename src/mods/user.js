@@ -29,8 +29,8 @@ idrinth.user = {
          * @param {Sstring} name
          * @returns {String}
          */
-    var getCookie = function(name) {
-      var ca = document.cookie.split(";");
+    let getCookie = function(name) {
+      let ca = document.cookie.split(";");
       for (var i = 0; i < ca.length; i++) {
         ca[i] = ca[i].replace(/^\s*|\s*$/, "");
         if (ca[i].indexOf(name + "=") === 0) {
@@ -46,7 +46,7 @@ idrinth.user = {
     } else if (idrinth.platform === "newgrounds") {
       idrinth.user.name = getCookie("NG_GG_username");
     } else if (idrinth.platform === "armorgames") {
-      var ag = document
+      let ag = document
         .getElementById("gamefilearea")
         .children[0].src.match(
           /^.+user_id=([a-f\d]{32})&auth_token=([a-f\d]{32}).+$/
@@ -59,22 +59,22 @@ idrinth.user = {
          * sends an id to the server for statistic purposes
          * @returns {undefined}
          */
-    var sendAlive = function() {
+    let sendAlive = function() {
       /**
              *
              * @returns {String|idrinth.user.identifier}
              */
-      var getIdentifier = function() {
+      let getIdentifier = function() {
         /**
                  * from http://stackoverflow.com/a/105074
                  * @returns {String}
                  */
-        var guid = function() {
+        let guid = function() {
           /**
                      *
                      * @returns {String}
                      */
-          var s4 = function() {
+          let s4 = function() {
             return Math.floor((1 + Math.random()) * 0x10000).toString(36);
           };
           return (

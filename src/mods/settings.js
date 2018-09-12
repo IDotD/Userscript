@@ -282,7 +282,7 @@ idrinth.settings = {
          * @param {Boolean} allowObject
          * @returns {int|string|object}
          */
-    var getValue = function(parent, field, allowObject) {
+    let getValue = function(parent, field, allowObject) {
       if (idrinth.core.fieldIsSetting(parent, field, allowObject)) {
         return parent[field];
       }
@@ -293,7 +293,7 @@ idrinth.settings = {
          * @param {string} key
          * @returns {undefined}
          */
-    var remove = function(key) {
+    let remove = function(key) {
       try {
         window.localStorage.removeItem(key);
       } catch (e) {
@@ -303,7 +303,7 @@ idrinth.settings = {
     if (!field) {
       return;
     }
-    var value = getValue(idrinth.settings.data, field, allowObject);
+    let value = getValue(idrinth.settings.data, field, allowObject);
     if (value !== null && (typeof value !== "object" || allowObject)) {
       remove("idrinth-dotd-" + field);
       return value;
@@ -326,7 +326,7 @@ idrinth.settings = {
          * @param {String|Booleab|Number} value
          * @returns {Boolean}
          */
-    var setValue = function(parent, field, value) {
+    let setValue = function(parent, field, value) {
       if (idrinth.core.fieldIsSetting(parent, field)) {
         parent[field] = value;
         return true;
@@ -337,7 +337,7 @@ idrinth.settings = {
          * saves the data to local storage
          * @returns {undefined}
          */
-    var store = function() {
+    let store = function() {
       window.localStorage.setItem(
         "idotd",
         JSON.stringify(idrinth.settings.data)
@@ -368,9 +368,9 @@ idrinth.settings = {
          * fills the data from json in idotd
          * @returns {undefined}
          */
-    var getCurrent = function() {
+    let getCurrent = function() {
       try {
-        var data = JSON.parse(window.localStorage.getItem("idotd"));
+        let data = JSON.parse(window.localStorage.getItem("idotd"));
         /**
                  *
                  * @param {object} to
@@ -378,7 +378,7 @@ idrinth.settings = {
                  * @param {function} apply
                  * @returns {undefined}
                  */
-        var apply = function(to, from, apply) {
+        let apply = function(to, from, apply) {
           for (var key in from) {
             if (from.hasOwnProperty(key)) {
               if (typeof from[key] === "object") {
@@ -413,7 +413,7 @@ idrinth.settings = {
          * fills the data from seperate storages
          * @returns {undefined}
          */
-    var getOld = function() {
+    let getOld = function() {
       /**
              *
              * @param {object} object
@@ -421,7 +421,7 @@ idrinth.settings = {
              * @param {function} objectIterator
              * @returns {Boolean}
              */
-      var objectIterator = function(object, prefix, objectIterator) {
+      let objectIterator = function(object, prefix, objectIterator) {
         /**
                  *
                  * @param {String} prefix
@@ -430,9 +430,9 @@ idrinth.settings = {
                  * @returns {Boolean}
                  * @todo remove this once old data is unlikely to exist
                  */
-        var itemHandler = function(prefix, key, item) {
+        let itemHandler = function(prefix, key, item) {
           if (typeof item !== "function") {
-            var tmp = window.localStorage.getItem(
+            let tmp = window.localStorage.getItem(
               "idrinth-dotd-" + prefix + key
             );
             if (tmp) {

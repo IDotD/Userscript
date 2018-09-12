@@ -28,10 +28,10 @@ idrinth.inframe = {
     /**
          * @returns {undefined}
          */
-    var reload = function(data) {
-      var objects = document.getElementsByTagName("object");
-      var modify = function(element, data) {
-        var src = element.getAttribute("data");
+    let reload = function(data) {
+      let objects = document.getElementsByTagName("object");
+      let modify = function(element, data) {
+        let src = element.getAttribute("data");
         if (!src) {
           return false;
         }
@@ -51,10 +51,10 @@ idrinth.inframe = {
     /**
          * @returns {undefined}
          */
-    var joinRaid = function(data) {
-      var requestHandler = new XMLHttpRequest();
+    let joinRaid = function(data) {
+      let requestHandler = new XMLHttpRequest();
       requestHandler.timeout = 30000;
-      var error = function(event) {
+      let error = function(event) {
         console.log(
           "Request to " + (event || window.event).target._url + " failed."
         );
@@ -69,7 +69,7 @@ idrinth.inframe = {
     /**
          * @param {HTMLElement} parent
          */
-    var handleFrame = function(parent) {
+    let handleFrame = function(parent) {
       idrinth.inframe.game = parent.getElementsByTagName("iframe")[
         0
       ].contentWindow;

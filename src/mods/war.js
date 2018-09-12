@@ -19,7 +19,7 @@ idrinth.war = {
      * @returns {undefined}
      */
   setTO: function() {
-    var active =
+    let active =
       idrinth.war.element
         .getAttribute("class")
         .match(/(^|\s)idrinth-hide($|\s)/) !== null;
@@ -40,22 +40,22 @@ idrinth.war = {
          * @param {object} data
          * @returns {undefined}
          */
-    var updateData = function(data) {
+    let updateData = function(data) {
       /**
              *
              * @param {object} data
              * @returns {undefined}
              */
-      var process = function(data) {
+      let process = function(data) {
         /**
                  *
                  * @param {Boolean} onOff
                  * @returns {undefined}
                  */
-        var toggleGUI = function(onOff) {
-          var toggle = onOff || false;
-          var addClasses = [];
-          var removeClasses = [];
+        let toggleGUI = function(onOff) {
+          let toggle = onOff || false;
+          let addClasses = [];
+          let removeClasses = [];
           if (toggle === true) {
             removeClasses.push("idrinth-hide");
             addClasses.push("bottom");
@@ -81,23 +81,23 @@ idrinth.war = {
                  * @param {object} data
                  * @returns {undefined}
                  */
-        var processJson = function(data) {
-          var magicIgmSrv =
+        let processJson = function(data) {
+          let magicIgmSrv =
             "https://dotd.idrinth.de/static/magic-image-service/";
           /**
                      *
                      * @param {object} data
                      * @returns {Array}
                      */
-          var getMagic = function(data) {
-            var magics = [];
+          let getMagic = function(data) {
+            let magics = [];
             if (!data || (data.magics === null || data.magics === "")) {
               return [];
             }
-            var tmp = data.magics.split(",");
+            let tmp = data.magics.split(",");
             for (var key = 0; key < tmp.length; key++) {
-              var magic = tmp[key];
-              var magicObj = {
+              let magic = tmp[key];
+              let magicObj = {
                 type: "img",
                 attributes: [
                   {
@@ -148,7 +148,7 @@ idrinth.war = {
             }
 
             cleanUp();
-            var tmpMagics = getMagic(data);
+            let tmpMagics = getMagic(data);
             for (var m = 0; m < tmpMagics.length; m++) {
               element
                 .getElementsByTagName("td")[3]
@@ -274,8 +274,8 @@ idrinth.war = {
          *
          * @returns {String}
          */
-    var raids2Join = function() {
-      var list = [];
+    let raids2Join = function() {
+      let list = [];
       for (var input in idrinth.war.element.getElementsByTagName("input")) {
         if (idrinth.war.element.getElementsByTagName("input")[input].checked) {
           list.push(
@@ -307,7 +307,7 @@ idrinth.war = {
          * build the gui part
          * @returns {undefined}
          */
-    var build = function() {
+    let build = function() {
       idrinth.war.element = idrinth.ui.buildElement({
         id: "idrinth-war",
         css: "idrinth-central-box idrinth-hovering-box idrinth-hide",

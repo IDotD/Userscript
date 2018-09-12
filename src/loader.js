@@ -34,19 +34,19 @@
     window.location.host === "web1.dawnofthedragons.com" ||
     window.location.host === "dotd-web1.5thplanetgames.com"
   ) {
-    var f = function() {
-      console.log("s");
-      window.idrinth = {};
-      window.idrinth.add= function(data) {
-          var s = document.createElement("script");
-          s.appendChild(document.createTextNode(data));
-          document.getElementsByTagName("head")[0].appendChild(s);
-      };
+    let f = function() {
+      window.idrinth = {
+          add: function(data) {
+            let s = document.createElement("script");
+            s.appendChild(document.createTextNode(data));
+            document.getElementsByTagName("head")[0].appendChild(s);
+        }
+    };
       window.addEventListener(
         "message",
         function(event) {
           try {
-            var data = JSON.parse(event.data);
+            let data = JSON.parse(event.data);
             if (
               !data ||
               data.to !== "idotd" ||
@@ -63,13 +63,13 @@
         false
       );
     };
-    var sc = document.createElement("script");
+    let sc = document.createElement("script");
     sc.setAttribute("id", "idotd-loader");
     sc.appendChild(document.createTextNode('('+f.toString()+'());'));
     document.getElementsByTagName("head")[0].appendChild(sc);
     return;
   }
-  var sc = document.createElement("script");
+  let sc = document.createElement("script");
   sc.setAttribute(
     "src",
     "https://dotd.idrinth.de/static/userscript/" + GM_info.script.version + "/"
@@ -78,9 +78,9 @@
   sc.setAttribute("async", "async");
   sc.errorCounter = 0;
   sc.errorFunction = function() {
-    var self = document.getElementById("idotd-loader");
+    let self = document.getElementById("idotd-loader");
     self.parentNode.removeChild(self);
-    var sc = document.createElement("script");
+    let sc = document.createElement("script");
     sc.onerror = self.onerror;
     sc.errorCounter = self.errorCounter + 1;
     sc.errorFunction = self.errorFunction;

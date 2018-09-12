@@ -23,8 +23,8 @@ idrinth.ui = {
     if (isNaN(number)) {
       return "";
     }
-    var count = 0;
-    var post = ["", "k", "m", "b", "t", "qa", "qi", "s"];
+    let count = 0;
+    let post = ["", "k", "m", "b", "t", "qa", "qi", "s"];
     while (number > 999 && count < post.length) {
       number = Math.round(number / 10) / 100;
       count++;
@@ -123,7 +123,7 @@ idrinth.ui = {
      * @returns {String}
      */
   getElementPositioning: function(element, offsetX, offsetY) {
-    var pos = {
+    let pos = {
       x: element.getBoundingClientRect().left + (offsetX ? offsetX : 0),
       y: element.getBoundingClientRect().top + (offsetY ? offsetY : 0)
     };
@@ -141,7 +141,7 @@ idrinth.ui = {
          * @param {object} config
          * @returns {undefined}
          */
-    var setBase = function(el, config) {
+    let setBase = function(el, config) {
       if (config.id) {
         el.id = config.id;
       }
@@ -158,7 +158,7 @@ idrinth.ui = {
          * @param {object} config
          * @returns {undefined}
          */
-    var addChildren = function(el, config) {
+    let addChildren = function(el, config) {
       if (!config.children || !config.children.length) {
         return;
       }
@@ -172,14 +172,14 @@ idrinth.ui = {
          * @param {object} config
          * @returns {undefined}
          */
-    var addAttributes = function(el, config) {
+    let addAttributes = function(el, config) {
       /**
              *
              * @param {HTMLElement} el
              * @param {object} set
              * @returns {undefined}
              */
-      var applyValue = function(el, set) {
+      let applyValue = function(el, set) {
         if (!set || set.value === undefined) {
           return;
         }
@@ -204,14 +204,14 @@ idrinth.ui = {
          * @param {object} config
          * @returns {HTMLElement}
          */
-    var makeInputLabel = function(config) {
+    let makeInputLabel = function(config) {
       /**
              *
              * @param {String|Number} value
              * @param {Array} list
              * @returns {Boolean}
              */
-      var inArray = function(value, list) {
+      let inArray = function(value, list) {
         if (!Array.isArray(list)) {
           return false;
         }
@@ -220,7 +220,7 @@ idrinth.ui = {
         }
         return list.indexOf(value) > -1;
       };
-      var input = [
+      let input = [
         {
           name: "type",
           value: config.type
@@ -247,7 +247,7 @@ idrinth.ui = {
           value: "idrinth.settings.change('" + config.name + "',this.checked)"
         });
       }
-      var translation = idrinth.text.get(config.label);
+      let translation = idrinth.text.get(config.label);
       return idrinth.ui.buildElement({
         css: "idrinth-line" +
           (config.platforms && !inArray(idrinth.platform, config.platforms)
@@ -282,7 +282,7 @@ idrinth.ui = {
     if (config.rType === "#input") {
       return makeInputLabel(config);
     }
-    var el = document.createElement(config.type ? config.type : "div");
+    let el = document.createElement(config.type ? config.type : "div");
     setBase(el, config);
     addChildren(el, config);
     addAttributes(el, config);
@@ -296,7 +296,7 @@ idrinth.ui = {
      * @returns {undefined}
      */
   buildModal: function(title, content, altFunc) {
-    var mod = {
+    let mod = {
       children: [],
       css: "idrinth-hovering-box idrinth-popup idrinth-" +
         (typeof altFunc === "string" ? "confim" : "alert")
@@ -337,7 +337,7 @@ idrinth.ui = {
          * @param {String} func
          * @returns {object}
          */
-    var makeButton = function(text, func) {
+    let makeButton = function(text, func) {
       return {
         type: "button",
         content: idrinth.text.get("button." + text),
@@ -400,7 +400,7 @@ idrinth.ui = {
      * @returns {undefined}
      */
   openCloseSettings: function() {
-    var toRemove = [
+    let toRemove = [
       idrinth.ui.controls.getAttribute("class").match(/(^|\s)inactive($|\s)/)
         ? "inactive"
         : "active"
@@ -444,7 +444,7 @@ idrinth.ui = {
      * @returns {undefined}
      */
   removeElement: function(id) {
-    var el = document.getElementById(id);
+    let el = document.getElementById(id);
     if (el) {
       el.parentNode.removeChild(el);
     }
@@ -464,13 +464,13 @@ idrinth.ui = {
          * @param {Array|String} remove
          * @returns {unresolved}
          */
-    var getClassesList = function(classString, add, remove) {
+    let getClassesList = function(classString, add, remove) {
       /**
              *
              * @param {String|Array} value
              * @returns {Array}
              */
-      var forceToArray = function(value) {
+      let forceToArray = function(value) {
         return value &&
           typeof value === "object" &&
           Array.isArray(value) &&
@@ -478,10 +478,10 @@ idrinth.ui = {
           ? value
           : [];
       };
-      var original = classString === null
+      let original = classString === null
         ? []
         : classString.split(" ").concat(forceToArray(add));
-      var list = [];
+      let list = [];
       remove = forceToArray(remove);
       /**
              *
@@ -490,7 +490,7 @@ idrinth.ui = {
              * @param {Array} forbidden
              * @returns {unresolved}
              */
-      var addUnique = function(list, element, forbidden) {
+      let addUnique = function(list, element, forbidden) {
         if (list.indexOf(element) === -1 && forbidden.indexOf(element) === -1) {
           list.push(element);
         }
@@ -512,9 +512,9 @@ idrinth.ui = {
      * @returns {undefined}
      */
   activateTab: function(name) {
-    var head = document.getElementById("tab-activator-" + name).parentNode
+    let head = document.getElementById("tab-activator-" + name).parentNode
       .childNodes;
-    var body = document.getElementById("tab-element-" + name).parentNode
+    let body = document.getElementById("tab-element-" + name).parentNode
       .childNodes;
     /**
          *
@@ -523,7 +523,7 @@ idrinth.ui = {
          * @param {string} name
          * @returns {undefined}
          */
-    var setClasses = function(head, body, name) {
+    let setClasses = function(head, body, name) {
       if (head === document.getElementById("tab-activator-" + name)) {
         idrinth.ui.updateClassesList(head, ["active"], []);
         idrinth.ui.updateClassesList(body, [], ["idrinth-hide"]);
@@ -545,17 +545,17 @@ idrinth.ui = {
          * builds most of the gui
          * @returns {undefined}
          */
-    var build = function() {
+    let build = function() {
       /**
              *
              * @returns {Array}
              */
-      var wrapper = function() {
+      let wrapper = function() {
         /**
                  * creates the action tab
                  * @returns {Array}
                  */
-        var buildActions = function() {
+        let buildActions = function() {
           /**
                      *
                      * @param {string} label
@@ -563,7 +563,7 @@ idrinth.ui = {
                      * @param {string} platform
                      * @returns {object}
                      */
-          var buttonMaker = function(label, onclick, platform) {
+          let buttonMaker = function(label, onclick, platform) {
             return {
               css: "idrinth-float-half" +
                 (platform && platform !== idrinth.platform
@@ -644,13 +644,13 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-        var buildTiers = function() {
+        let buildTiers = function() {
           /**
                      *
                      * @param {string} label
                      * @returns {object}
                      */
-          var makeSearch = function(label) {
+          let makeSearch = function(label) {
             return {
               type: "input",
               css: "idrinth-float-half",
@@ -695,14 +695,14 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-        var buildControls = function() {
+        let buildControls = function() {
           /**
                      *
                      * @param {Array} list
                      * @param {String} header
                      * @returns {object}
                      */
-          var wrap = function(list, header) {
+          let wrap = function(list, header) {
             return {
               children: [
                 {
@@ -721,8 +721,8 @@ idrinth.ui = {
                      * @param {HTMLElement} element
                      * @returns {undefined}
                      */
-          var openCloseSwitch = function(element) {
-            var isActive = element.parentElement
+          let openCloseSwitch = function(element) {
+            let isActive = element.parentElement
               .getAttribute("class")
               .match(/(^|\s)active($|\s)/);
             idrinth.ui.updateClassesList(
@@ -934,13 +934,13 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-        var buildLand = function() {
+        let buildLand = function() {
           /**
                      *
                      * @param {string} label
                      * @returns {object}
                      */
-          var buildItem = function(label) {
+          let buildItem = function(label) {
             return {
               type: "tr",
               children: [
@@ -1066,14 +1066,14 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-        var buildStats = function() {
+        let buildStats = function() {
           /**
                      *
                      * @param {string} label
                      * @returns {object}
                      */
-          var buildItem = function(label) {
-            var isCheck =
+          let buildItem = function(label) {
+            let isCheck =
               label === "mirele" || label === "kraken" || label === "utym";
             return {
               type: "tr",
@@ -1165,7 +1165,7 @@ idrinth.ui = {
                           attributes: [
                             {
                               name: "onclick",
-                              value: "idrinth.stats.calculate();"
+                              value: "idrinth.workers.run ('stats', idrinth.settings.get ('stats', true));"
                             },
                             {
                               name: "type",
@@ -1186,10 +1186,10 @@ idrinth.ui = {
                  * @param {object} config
                  * @returns {Array}
                  */
-        var makeTabs = function(config) {
-          var head = [];
-          var first = true;
-          var body = [];
+        let makeTabs = function(config) {
+          let head = [];
+          let first = true;
+          let body = [];
           /**
                      *
                      * @param {string} name
@@ -1197,7 +1197,7 @@ idrinth.ui = {
                      * @param {Boolean} first
                      * @returns {object}
                      */
-          var buildHead = function(name, width, first) {
+          let buildHead = function(name, width, first) {
             return {
               type: "li",
               content: idrinth.text.get("ui.tabs." + name),
@@ -1222,7 +1222,7 @@ idrinth.ui = {
                      * @param {Boolean} first
                      * @returns {object}
                      */
-          var buildBody = function(name, children, first) {
+          let buildBody = function(name, children, first) {
             return {
               type: "li",
               css: "tab-element" + (first ? "" : " idrinth-hide"),
@@ -1230,7 +1230,7 @@ idrinth.ui = {
               children: children
             };
           };
-          var width = Math.floor(100 / Object.keys(config).length);
+          let width = Math.floor(100 / Object.keys(config).length);
           for (var name in config) {
             if (typeof name === "string") {
               head.push(buildHead(name, width, first));
@@ -1261,14 +1261,14 @@ idrinth.ui = {
                  *
                  * @returns {Array}
                  */
-        var buildRaidJoinList = function() {
+        let buildRaidJoinList = function() {
           /**
                      *
                      * @param {Array} list
                      * @param {String} header
                      * @returns {object}
                      */
-          var wrap = function(list, header) {
+          let wrap = function(list, header) {
             return {
               children: [
                 {
@@ -1338,7 +1338,7 @@ idrinth.ui = {
           Stats: buildStats()
         });
       };
-      var children = wrapper();
+      let children = wrapper();
       children.unshift({
         css: "idrinth-line",
         type: "strong",
@@ -1405,9 +1405,9 @@ idrinth.ui = {
      * @returns {undefined}
      */
   replaceInValue: function(element) {
-    var pos = element.selectionStart;
-    var part = element.value.substr(0, pos + 1);
-    var pre = part.length;
+    let pos = element.selectionStart;
+    let part = element.value.substr(0, pos + 1);
+    let pre = part.length;
     part = part.replace(/[^a-f0-9,]/g, "");
     part = part.replace(/,{2,}/g, ",");
     pos = pos + part.length - pre;
